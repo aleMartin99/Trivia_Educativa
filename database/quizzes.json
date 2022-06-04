@@ -1,0 +1,102 @@
+[
+    {
+        "title":"Historia",
+        "image":"blocks",
+        "questionsAnswered":0,
+        "level":"facil",
+        "questions":[
+            {
+                "title":"Triunfo de la revolucion",
+                "answers":[
+                    {
+                        "title":"5 de abril"
+                    },
+                    {
+                        "title":"21 de mayo"
+                    },
+                    {
+                        "title":"No me interesa!"
+                    },
+                    {
+                        "title":"1ro de enero",
+                        "isRight" :true
+                    }
+                ]
+            },
+            {
+                "title":"Quien es una figura historica",
+                "answers":[
+                    {
+                        "title":"El choco"
+                    },
+                    {
+                        "title":"Fidelito el tiza"
+                    },
+                    {
+                        "title":"Raul Castro",
+                        "isRight" :true
+                    },
+                    {
+                        "title":"Pablo tolete"
+                    }
+                ]
+            }            
+        ]
+    },
+    {
+        "title":"Matematica",
+        "image":"blocks",
+        "questionsAnswered":0,
+        "level":"facil",
+        "questions":[
+            {
+                "title":"Cual de estas no es un contenido de calculo",
+                "answers":[
+                    {
+                        "title":"Diferenciales"
+                    },
+                    {
+                        "title":"Integrales"
+                    },
+                    {
+                        "title":"Fortnite",
+                        "isRight" :true
+                    },
+                    {
+                        "title":"Geometria"
+                    }
+                ]
+            }
+              
+        ]
+    },
+    {
+        "title":"Gerenciamento de estados",
+        "image":"blocks",
+        "questionsAnswered":1,
+        "level":"facil",
+        "questions":[
+            {
+                "title":"Qual dessas opções não é uma biblioteca de gerencimento de estados?",
+                "answers":[
+                    {
+                        "title":"Mobx"
+                    },
+                    {
+                        "title":"Provider"
+                    },
+                    {
+                        "title":"Locale",
+                        "isRight" :true
+                    },
+                    {
+                        "title":"Bloc"
+                    }
+                ]
+            }
+              
+        ]
+    }
+
+    
+]
