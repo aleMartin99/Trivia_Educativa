@@ -37,7 +37,7 @@ class SplashPage extends StatelessWidget {
         ),
         child: Center(
           child: Image.asset(
-            AppImages.logo,
+            'assets/images/colorful_logo.png',
           ),
         ),
       ),

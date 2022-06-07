@@ -51,10 +51,20 @@ class QuizCardWidget extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            Text(
-              title,
-              style: AppTextStyles.heading15.copyWith(
-                color: settingsController.currentAppTheme.primaryColor,
+            Expanded(
+              child: ListTile(
+                title: Text(
+                  title,
+                  style: AppTextStyles.heading15.copyWith(
+                    color: settingsController.currentAppTheme.primaryColor,
+                  ),
+                ),
+                subtitle: Text(
+                  'Unidad 4',
+                  style: AppTextStyles.body11.copyWith(
+                    color: settingsController.currentAppTheme.primaryColor,
+                  ),
+                ),
               ),
             ),
             const SizedBox(

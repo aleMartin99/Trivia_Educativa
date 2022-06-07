@@ -23,21 +23,21 @@ class ResultPage extends StatelessWidget {
 
   String get resultImage => this.percentage < 0.5
       ? AppImages.badResult
-      : ((this.percentage < 1 && this.percentage > 0.5)
+      : ((percentage < 1 && percentage > 0.5)
           ? AppImages.mediumResult
           : AppImages.trophy);
 
   String get title => this.percentage < 0.5
       ? "Que triste!"
-      : ((this.percentage < 1 && this.percentage > 0.5)
-          ? "Continue assim!"
-          : "Parabéns!");
+      : ((percentage < 1 && percentage > 0.5)
+          ? "Continua asi!"
+          : "Felicidades!");
 
-  String get subtitle => this.percentage < 0.5
-      ? "Você só fez $result de $questionsLenght questões. Tente novamente para fixar o conhecimento"
-      : ((this.percentage < 1 && this.percentage > 0.5)
-          ? "Você fez $result de $questionsLenght questões. Siga tentando e você chegará lá!"
-          : "Você acertou $result de $questionsLenght questões! Mostra a sua excelência!");
+  String get subtitle => percentage < 0.5
+      ? "Acertaste $result de $questionsLenght preguntas. Inténtalo de nuevo para hacerlo mejor"
+      : ((percentage < 1 && percentage > 0.5)
+          ? "Acertaste $result de $questionsLenght preguntas. Sigue intentándolo!"
+          : "Acertaste $result de $questionsLenght preguntas! Excelente!!");
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class ResultPage extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  this.title,
+                  title,
                   style: AppTextStyles.heading40.copyWith(
                     color: settingsController.currentAppTheme.primaryColor,
                   ),
@@ -70,7 +70,7 @@ class ResultPage extends StatelessWidget {
                   width: 189,
                   padding: const EdgeInsets.only(top: 16),
                   child: Text(
-                    this.subtitle,
+                    subtitle,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,10 +84,10 @@ class ResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 68.0),
                         child: NextButtonWidget.purple(
-                          label: "Compartilhar",
+                          label: "Compartir ",
                           onTap: () {
                             Share.share(
-                                "Eu fiz $result de $questionsLenght acertos no DevQuiz_!");
+                                "Obtuve $result de $questionsLenght en $quizTitle en la aplicacion Educational Quiz app!");
                           },
                         ),
                       ),
@@ -103,7 +103,7 @@ class ResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 68.0),
                         child: NextButtonWidget.transparent(
-                          label: "Voltar ao inicio",
+                          label: "Volver al inicio",
                           onTap: () {
                             //podemos usar o pop pq foi substituido do quiz para o resultado
                             Navigator.pop(context);

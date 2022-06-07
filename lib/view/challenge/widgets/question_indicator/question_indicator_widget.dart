@@ -30,7 +30,7 @@ class QuestionIndicatorWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Questão $currentPage",
+                "Pregunta $currentPage",
                 style: AppTextStyles.body.copyWith(
                   color: settingsController.currentAppTheme.primaryColor,
                 ),

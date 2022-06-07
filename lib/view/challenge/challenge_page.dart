@@ -109,7 +109,7 @@ class _ChallengePageState extends State<ChallengePage> {
                 if (value < widget.questions.length)
                   Expanded(
                     child: NextButtonWidget.white(
-                      label: "Pular",
+                      label: "Saltar pregunta",
                       onTap: nextPage,
                     ),
                   ),
@@ -120,7 +120,7 @@ class _ChallengePageState extends State<ChallengePage> {
                 if (value == widget.questions.length)
                   Expanded(
                     child: NextButtonWidget.green(
-                      label: "Confirmar",
+                      label: "Terminar/Evaluar",
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,

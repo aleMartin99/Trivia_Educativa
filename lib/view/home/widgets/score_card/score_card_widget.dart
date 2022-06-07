@@ -57,14 +57,14 @@ class ScoreCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Vamos começar",
+                        "Tus aprobados",
                         style: AppTextStyles.heading.copyWith(
                           color:
                               settingsController.currentAppTheme.primaryColor,
                         ),
                       ),
                       Text(
-                        "Complete os desafios e avance em conhecimento",
+                        "Complete los desafios para mejorar su puntuacion",
                         style: AppTextStyles.body.copyWith(
                           color:
                               settingsController.currentAppTheme.primaryColor,

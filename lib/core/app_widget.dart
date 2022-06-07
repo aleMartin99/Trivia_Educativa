@@ -6,12 +6,13 @@ import 'package:provider/provider.dart';
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
 
+//ToDO bloqear orientacion
   @override
   Widget build(BuildContext context) {
     return Provider<SettingsController>(
       create: (context) => SettingsController(),
       builder: (context, _) => MaterialApp(
-        title: "DevQuiz",
+        title: "Educational Quiz App",
         debugShowCheckedModeBanner: false,
         // home: SettingsPage(),
         initialRoute: "/",

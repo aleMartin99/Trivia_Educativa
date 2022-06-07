@@ -40,6 +40,25 @@
                         "title":"Pablo tolete"
                     }
                 ]
+            }    ,
+            {
+                "title":"Quien no es una figura historica",
+                "answers":[
+                    {
+                        "title":"El choco",
+                        "isRight" :true
+                    },
+                    {
+                        "title":"Fidel Castro"
+                    },
+                    {
+                        "title":"Raul Castro"
+                        
+                    },
+                    {
+                        "title":"Pablo de la Torriente"
+                    }
+                ]
             }            
         ]
     },

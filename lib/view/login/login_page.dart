@@ -6,7 +6,7 @@ import 'package:educational_quiz_app/core/core.dart';
 import 'package:educational_quiz_app/routers/routers.dart';
 import 'package:educational_quiz_app/view/challenge/widgets/next_button/next_button_widget.dart';
 //import 'package:dev_quiz/view/home/home_page.dart';
-import 'package:educational_quiz_app/view/login/login_controller.dart';
+// import 'package:educational_quiz_app/view/login/login_controller.dart';
 import 'package:educational_quiz_app/view/settings/settings_controller.dart';
 import 'package:educational_quiz_app/view/shared/models/user_model.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +21,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final LoginController controller = LoginController();
+  // final LoginController controller = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   Text(
-                    "Bem-vindo ao \nDev Quiz!",
+                    "Bienvenido a \nEducational Quiz app!",
                     style: AppTextStyles.heading40.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: deviceSize.height * 0.02,
                   ),
                   Text(
-                    "O aplicativo que vai elevar o seu sucesso!",
+                    "Una aplicacion que mezcla la educacion con diversion!",
                     style: AppTextStyles.body.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
@@ -75,29 +75,30 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Row(
               children: [
-                ValueListenableBuilder<bool>(
-                  valueListenable: controller.loadingNotifier,
-                  builder: (ctx, loadingValue, _) => Expanded(
-                    child: controller.isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : ValueListenableBuilder<bool>(
-                            valueListenable: controller.loginNotifier,
-                            builder: (ctx, loginValue, _) =>
-                                NextButtonWidget.purple(
-                              label: "Login",
-                              onTap: () async {
-                                UserModel user = UserModel();
-                                await Navigator.of(context).pushNamed(
-                                  AppRoutes.homeRoute,
-                                  arguments: HomePageArgs(user: user),
-                                );
+                // ValueListenableBuilder<bool>(
+                //   valueListenable: controller.loadingNotifier,
+                //   builder: (ctx, loadingValue, _) => Expanded(
+                //     child: controller.isLoading
+                //         ? const Center(child: CircularProgressIndicator())
+                //         : ValueListenableBuilder<bool>(
+                //             valueListenable: controller.loginNotifier,
+                //             builder: (ctx, loginValue, _) =>
+                NextButtonWidget.purple(
+                  label: "Login",
+                  onTap: () async {
+                    UserModel user = UserModel();
+                    await Navigator.of(context).pushNamed(
+                      AppRoutes.homeRoute,
+                      arguments: HomePageArgs(user: user),
+                    );
 
-                                log("ok!");
-                              },
-                            ),
-                          ),
-                  ),
+                    log("ok!");
+                  },
                 ),
+
+                //           ),
+                //   ),
+                // ),
               ],
             ),
           ],

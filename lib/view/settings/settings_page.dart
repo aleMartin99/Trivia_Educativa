@@ -59,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               Text(
-                "Configurações",
+                "Configuraciones",
                 style: AppTextStyles.titleBold.copyWith(
                   color: AppColors.white,
                 ),
@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ValueListenableBuilder(
               valueListenable: controller.themeNotifier,
               builder: (ctx, value, _) => SettingsTile(
-                title: "Tema escuro",
+                title: "Tema oscuro",
                 switchValue: controller.currentAppTheme == AppTheme.darkTheme,
                 onChanged: (v) {
                   log("entrou aqui");
@@ -97,25 +97,25 @@ class _SettingsPageState extends State<SettingsPage> {
           horizontal: deviceSize.width * 0.1,
           vertical: deviceSize.height * 0.05,
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: NextButtonWidget.purple(
-                label: "Sair",
-                onTap: () async {
-                  LoginController loginController = LoginController();
-                  bool signedOut =
-                      await loginController.signOut(context: context);
+        // child: Row(
+        //   children: [
+        //     Expanded(
+        //       child: NextButtonWidget.purple(
+        //         label: "Sair",
+        //         onTap: () async {
+        //           LoginController loginController = LoginController();
+        //           bool signedOut =
+        //               await loginController.signOut(context: context);
 
-                  if (signedOut) {
-                    Navigator.pushReplacementNamed(
-                        context, AppRoutes.loginRoute);
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
+        //           if (signedOut) {
+        //             Navigator.pushReplacementNamed(
+        //                 context, AppRoutes.loginRoute);
+        //           }
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
