@@ -1,21 +1,23 @@
 import 'package:educational_quiz_app/core/app_theme.dart';
 import 'package:educational_quiz_app/core/core.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
-import 'package:educational_quiz_app/presentation/shared/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class QuizCardWidget extends StatelessWidget {
-  final String title;
-  final int completed;
-  final int totalQuestions;
+import '../../../../data/models/curso_model.dart';
+
+class AsignaturaCardWidget extends StatelessWidget {
+  final String nombre;
+  final List<Curso> cursos;
+  final int cantTemas;
+
   final VoidCallback onTap;
 
-  const QuizCardWidget({
+  const AsignaturaCardWidget({
     Key? key,
-    required this.title,
-    required this.completed,
-    required this.totalQuestions,
+    required this.nombre,
+    required this.cursos,
+    required this.cantTemas,
     required this.onTap,
   }) : super(key: key);
 
@@ -57,10 +59,20 @@ class QuizCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
-                      maxLines: 2,
+                      nombre,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading15.copyWith(
+                        color: settingsController.currentAppTheme.primaryColor,
+                      ),
+                    ),
+                    Text(
+                      //*cambiar este jpoin, me interesa solamente el nombre del curso
+                      cursos.join(),
+                      //textAlign: TextAlign.end,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body11.copyWith(
                         color: settingsController.currentAppTheme.primaryColor,
                       ),
                     ),
@@ -74,16 +86,10 @@ class QuizCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "$completed de $totalQuestions",
+                    "Temas:$cantTemas",
                     style: AppTextStyles.body11.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: ProgressIndicatorWidget(
-                    value: completed / totalQuestions,
                   ),
                 ),
               ],

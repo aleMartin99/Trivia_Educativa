@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:educational_quiz_app/data/models/asingatura_model.dart';
-import 'package:educational_quiz_app/data/models/curso_model.dart';
 import 'package:educational_quiz_app/data/models/profesor_model.dart';
 import 'package:educational_quiz_app/data/models/quiz_model.dart';
 import 'package:educational_quiz_app/data/models/tema_model.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
-class HomeRepository {
+class TemaRepository {
   final String _baseUrl = '10.0.2.2:3000';
   // Future<UserModel> getUser() async {
   //   // o rootBundle vai acessar os arquivos
@@ -84,25 +83,6 @@ class HomeRepository {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load Temas');
-    }
-    //return getJson(uri).then((value) => value);
-  }
-
-  Future<List<Curso>> getCursos() async {
-    var uri = Uri.http(
-      _baseUrl,
-      "curso",
-    );
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body) as List;
-      final cursos = jsonResponse.map((e) => Curso.fromJson(e)).toList();
-      //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-      return cursos;
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load Cursos');
     }
     //return getJson(uri).then((value) => value);
   }

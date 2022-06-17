@@ -1,23 +1,34 @@
 import 'package:educational_quiz_app/core/app_theme.dart';
 import 'package:educational_quiz_app/core/core.dart';
+import 'package:educational_quiz_app/data/models/pregunta_model.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
 import 'package:educational_quiz_app/presentation/shared/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class QuizCardWidget extends StatelessWidget {
-  final String title;
-  final int completed;
-  final int totalQuestions;
+class NivelCardWidget extends StatelessWidget {
+  late String nombre;
+  // late String subtitle;
+  late List<Pregunta> preguntas;
+  late int rango3;
+  late int rango4;
+  late int rango5;
+
   final VoidCallback onTap;
 
-  const QuizCardWidget({
+  NivelCardWidget({
     Key? key,
-    required this.title,
-    required this.completed,
-    required this.totalQuestions,
+    required this.nombre,
+    //  required this.subtitle,
     required this.onTap,
+    required rango3,
+    required rango4,
+    required rango5,
+    required this.preguntas,
   }) : super(key: key);
+  //todo VER coMPLETADO JALARLO DINAMICO
+  int completed = 0;
+  //int totalQuestions = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class QuizCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      nombre,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading15.copyWith(
@@ -74,7 +85,7 @@ class QuizCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "$completed de $totalQuestions",
+                    "$completed de ${preguntas.length}",
                     style: AppTextStyles.body11.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
@@ -83,7 +94,7 @@ class QuizCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: ProgressIndicatorWidget(
-                    value: completed / totalQuestions,
+                    value: completed / preguntas.length,
                   ),
                 ),
               ],

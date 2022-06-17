@@ -1,6 +1,7 @@
 import 'package:educational_quiz_app/core/routers/routers.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AppWidget extends StatelessWidget {
@@ -9,6 +10,9 @@ class AppWidget extends StatelessWidget {
 //ToDO bloqear orientacion
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return Provider<SettingsController>(
       create: (context) => SettingsController(),
       builder: (context, _) => MaterialApp(

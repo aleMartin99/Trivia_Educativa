@@ -1,4 +1,5 @@
 import 'package:educational_quiz_app/core/app_routes.dart';
+import 'package:educational_quiz_app/data/models/pregunta_model.dart';
 import 'package:educational_quiz_app/data/models/question_model.dart';
 import 'package:educational_quiz_app/core/routers/routers.dart';
 import 'package:educational_quiz_app/presentation/challenge/challenge_controller.dart';
@@ -10,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChallengePage extends StatefulWidget {
-  final List<QuestionModel> questions;
+  final List<Pregunta> preguntas;
   final String quizTitle;
 
   const ChallengePage(
-      {Key? key, required this.questions, required this.quizTitle})
+      {Key? key, required this.preguntas, required this.quizTitle})
       : super(key: key);
 
   @override
@@ -26,7 +27,7 @@ class _ChallengePageState extends State<ChallengePage> {
   final pageController = PageController();
 
   void nextPage() {
-    if (controller.currentPage < widget.questions.length) {
+    if (controller.currentPage < widget.preguntas.length) {
       pageController.nextPage(
         duration: const Duration(milliseconds: 100),
         curve: Curves.linear,
@@ -55,6 +56,7 @@ class _ChallengePageState extends State<ChallengePage> {
   Widget build(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
+
     return Scaffold(
       backgroundColor:
           settingsController.currentAppTheme.scaffoldBackgroundColor,
@@ -73,7 +75,7 @@ class _ChallengePageState extends State<ChallengePage> {
                 valueListenable: controller.currentPageNotifier,
                 builder: (context, value, _) => QuestionIndicatorWidget(
                   currentPage: value,
-                  pagesLenght: widget.questions.length,
+                  pagesLenght: widget.preguntas.length,
                 ),
               ),
             ],
@@ -83,10 +85,10 @@ class _ChallengePageState extends State<ChallengePage> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: widget.questions
+        children: widget.preguntas
             .map(
-              (question) => QuizWidget(
-                question: question,
+              (pregunta) => QuizWidget(
+                pregunta: pregunta,
                 onAnswerSelected: (valueIsRight) {
                   onSelected(valueIsRight);
                 },
@@ -106,28 +108,28 @@ class _ChallengePageState extends State<ChallengePage> {
             builder: (context, int value, _) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                if (value < widget.questions.length)
+                if (value < widget.preguntas.length)
                   Expanded(
                     child: NextButtonWidget.white(
                       label: "Saltar pregunta",
                       onTap: nextPage,
                     ),
                   ),
-                if (value == widget.questions.length)
+                if (value == widget.preguntas.length)
                   const SizedBox(
                     width: 7,
                   ),
-                if (value == widget.questions.length)
+                if (value == widget.preguntas.length)
                   Expanded(
                     child: NextButtonWidget.green(
-                      label: "Terminar/Evaluar",
+                      label: "Terminar",
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,
                           AppRoutes.resultRoute,
                           arguments: ResultPageArgs(
                             quizTitle: widget.quizTitle,
-                            questionsLenght: widget.questions.length,
+                            questionsLenght: widget.preguntas.length,
                             result: controller.qtdRightAnswers,
                           ),
                         );

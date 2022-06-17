@@ -1,21 +1,19 @@
 import 'package:educational_quiz_app/core/app_theme.dart';
 import 'package:educational_quiz_app/core/core.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
-import 'package:educational_quiz_app/presentation/shared/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class QuizCardWidget extends StatelessWidget {
-  final String title;
-  final int completed;
-  final int totalQuestions;
+class TemaCardWidget extends StatelessWidget {
+  final String nombre;
+  final int cantNiveles;
+
   final VoidCallback onTap;
 
-  const QuizCardWidget({
+  const TemaCardWidget({
     Key? key,
-    required this.title,
-    required this.completed,
-    required this.totalQuestions,
+    required this.nombre,
+    required this.cantNiveles,
     required this.onTap,
   }) : super(key: key);
 
@@ -57,7 +55,7 @@ class QuizCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      nombre,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading15.copyWith(
@@ -74,16 +72,10 @@ class QuizCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "$completed de $totalQuestions",
+                    "Niveles:$cantNiveles",
                     style: AppTextStyles.body11.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: ProgressIndicatorWidget(
-                    value: completed / totalQuestions,
                   ),
                 ),
               ],

@@ -1,6 +1,7 @@
 [
     {
         "title":"Historia",
+        "subtitle":"Revolucion en el poder",
         "image":"blocks",
         "questionsAnswered":0,
         "level":"facil",
@@ -9,113 +10,76 @@
                 "title":"Triunfo de la revolucion",
                 "answers":[
                     {
-                        "title":"5 de abril"
+                        "title":"5 de abril 2011"
                     },
                     {
-                        "title":"21 de mayo"
+                        "title":"21 de mayo 1510"
                     },
                     {
-                        "title":"No me interesa!"
+                        "title":"No me acuerdo!"
                     },
                     {
-                        "title":"1ro de enero",
+                        "title":"1ro de enero 1959",
                         "isRight" :true
                     }
                 ]
             },
             {
-                "title":"Quien es una figura historica",
+                "title":"Quien fue una el lider de la revolucion",
                 "answers":[
                     {
-                        "title":"El choco"
+                        "title":"Elpidio Valdez"
                     },
                     {
-                        "title":"Fidelito el tiza"
+                        "title":"El tio Manolo"
                     },
                     {
-                        "title":"Raul Castro",
+                        "title":"Fidel Castro",
                         "isRight" :true
                     },
                     {
-                        "title":"Pablo tolete"
+                        "title":"Ignacio Agramonte"
                     }
                 ]
             }    ,
             {
-                "title":"Quien no es una figura historica",
+                "title":"Desembarco del Granma en suelo cubano",
                 "answers":[
                     {
-                        "title":"El choco",
+                        "title":"15 de abril 2011"
+                    },
+                    {
+                        "title":"10 de mayo 1510"
+                    },
+                    {
+                        "title":"No me se la respuesta!"
+                    },
+                    {
+                        "title":"2 de diciembre 1956",
+                        "isRight" :true
+                    }
+                ]
+            },
+            {
+                "title":"Quien le dio la libertad a sus esclavos y los invito a luchar",
+                "answers":[
+                    {
+                        "title":"Carlos Manuel de Cespedes",
                         "isRight" :true
                     },
                     {
                         "title":"Fidel Castro"
                     },
                     {
-                        "title":"Raul Castro"
+                        "title":"Jose Antonio Echeverria"
                         
                     },
                     {
-                        "title":"Pablo de la Torriente"
+                        "title":"Pablo de la Torriente Brau"
                     }
                 ]
             }            
         ]
-    },
-    {
-        "title":"Matematica",
-        "image":"blocks",
-        "questionsAnswered":0,
-        "level":"facil",
-        "questions":[
-            {
-                "title":"Cual de estas no es un contenido de calculo",
-                "answers":[
-                    {
-                        "title":"Diferenciales"
-                    },
-                    {
-                        "title":"Integrales"
-                    },
-                    {
-                        "title":"Fortnite",
-                        "isRight" :true
-                    },
-                    {
-                        "title":"Geometria"
-                    }
-                ]
-            }
-              
-        ]
-    },
-    {
-        "title":"Gerenciamento de estados",
-        "image":"blocks",
-        "questionsAnswered":1,
-        "level":"facil",
-        "questions":[
-            {
-                "title":"Qual dessas opções não é uma biblioteca de gerencimento de estados?",
-                "answers":[
-                    {
-                        "title":"Mobx"
-                    },
-                    {
-                        "title":"Provider"
-                    },
-                    {
-                        "title":"Locale",
-                        "isRight" :true
-                    },
-                    {
-                        "title":"Bloc"
-                    }
-                ]
-            }
-              
-        ]
     }
-
     
 ]
