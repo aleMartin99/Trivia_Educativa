@@ -1,11 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:educational_quiz_app/data/models/asingatura_model.dart';
-import 'package:educational_quiz_app/data/models/curso_model.dart';
-import 'package:educational_quiz_app/data/models/profesor_model.dart';
-import 'package:educational_quiz_app/data/models/quiz_model.dart';
-import 'package:educational_quiz_app/data/models/tema_model.dart';
-import 'package:flutter/services.dart';
+import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
+import 'package:educational_quiz_app/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomeRepository {
@@ -29,7 +27,6 @@ class HomeRepository {
   //   return quizzes;
   // }
 
-//TODO fix this repository shit
   Future<List<Asignatura>> getAsignaturas() async {
     var uri = Uri.http(
       _baseUrl,
@@ -50,62 +47,145 @@ class HomeRepository {
     //return getJson(uri).then((value) => value);
   }
 
-  Future<List<Profesor>> getProfesores() async {
+  Future<List<User>> getUsers() async {
     var uri = Uri.http(
       _baseUrl,
-      "profesores",
+      "usuarios",
     );
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body) as List;
-      final profesores = jsonResponse.map((e) => Profesor.fromJson(e)).toList();
+      final usuarios = jsonResponse.map((e) => User.fromJson(e)).toList();
       //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-      return profesores;
+
+      return usuarios;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load Profesores');
+      throw Exception('Failed to load Users');
+    }
+
+    //return getJson(uri).then((value) => value);
+  }
+
+  Future<List<NotaProv>> getNotasProv() async {
+    var uri = Uri.http(
+      _baseUrl,
+      "notas",
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body) as List;
+      final notasProv = jsonResponse.map((e) => NotaProv.fromJson(e)).toList();
+      return notasProv;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load Notas');
     }
     //return getJson(uri).then((value) => value);
   }
 
-  Future<List<Tema>> getTemas() async {
+  Future asignarNota(String idAsignatura, String idCurso, String idTema,
+      String idNivel, String idNotaProv) async {
     var uri = Uri.http(
       _baseUrl,
-      "temas",
+      "notas" "/$idNotaProv",
     );
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body) as List;
-      final temas = jsonResponse.map((e) => Tema.fromJson(e)).toList();
-      //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-      return temas;
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load Temas');
+
+    try {
+      final response = await http.put(uri, body: {
+        "asignatura": idAsignatura,
+        "curso": idCurso,
+        "tema": idTema,
+        "nivel": idNivel,
+      });
+      log(response.toString());
+    } catch (ex) {
+      throw Exception('Failed to asign a Nota');
     }
-    //return getJson(uri).then((value) => value);
   }
 
-  Future<List<Curso>> getCursos() async {
+  void crearNota(int nota) async {
     var uri = Uri.http(
       _baseUrl,
-      "curso",
+      "notas",
     );
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body) as List;
-      final cursos = jsonResponse.map((e) => Curso.fromJson(e)).toList();
-      //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-      return cursos;
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load Cursos');
+
+    try {
+      final response = await http.post(uri, body: {"nota": "$nota"});
+      log(response.body);
+    } catch (ex) {
+      throw Exception('Failed to create a Nota');
     }
-    //return getJson(uri).then((value) => value);
   }
+  // if (response.statusCode == 200) {
+  //   final jsonResponse = json.decode(response.body) as List;
+  // //  final notasProv = jsonResponse.map((e) => NotaProv.fromJson(e)).toList();
+  //  // return notasProv;
+  // } else {
+  //   // If the server did not return a 200 OK response,
+  //   // then throw an exception.
+  //   throw Exception('Failed to load Notas');
+  // }
+  //return getJson(uri).then((value) => value);
+
+  // Future<List<Profesor>> getProfesores() async {
+  //   var uri = Uri.http(
+  //     _baseUrl,
+  //     "profesores",
+  //   );
+  //   final response = await http.get(uri);
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = json.decode(response.body) as List;
+  //     final profesores = jsonResponse.map((e) => Profesor.fromJson(e)).toList();
+  //     //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+  //     return profesores;
+  //   } else {
+  //     // If the server did not return a 200 OK response,
+  //     // then throw an exception.
+  //     throw Exception('Failed to load Profesores');
+  //   }
+  //   //return getJson(uri).then((value) => value);
+  // }
+
+  // Future<List<Tema>> getTemas() async {
+  //   var uri = Uri.http(
+  //     _baseUrl,
+  //     "temas",
+  //   );
+  //   final response = await http.get(uri);
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = json.decode(response.body) as List;
+  //     final temas = jsonResponse.map((e) => Tema.fromJson(e)).toList();
+  //     //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+  //     return temas;
+  //   } else {
+  //     // If the server did not return a 200 OK response,
+  //     // then throw an exception.
+  //     throw Exception('Failed to load Temas');
+  //   }
+  //   //return getJson(uri).then((value) => value);
+  // }
+
+  // Future<List<Curso>> getCursos() async {
+  //   var uri = Uri.http(
+  //     _baseUrl,
+  //     "curso",
+  //   );
+  //   final response = await http.get(uri);
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = json.decode(response.body) as List;
+  //     final cursos = jsonResponse.map((e) => Curso.fromJson(e)).toList();
+  //     //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+  //     return cursos;
+  //   } else {
+  //     // If the server did not return a 200 OK response,
+  //     // then throw an exception.
+  //     throw Exception('Failed to load Cursos');
+  //   }
+  //   //return getJson(uri).then((value) => value);
+  // }
 
   // Future<List<Nivel>> getNiveles() async {
   //   var uri = Uri.http(

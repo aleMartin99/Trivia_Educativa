@@ -1,1 +1,1 @@
-enum NivelState { success, loading, error, empty }
+//  enum NivelState { done, notDone }

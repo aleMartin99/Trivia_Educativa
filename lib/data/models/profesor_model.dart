@@ -16,12 +16,12 @@ class Profesor {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['_id'] = this.id;
+    data['_id'] = id;
 
-    data['nombre'] = this.nombre;
-    data['CI'] = this.cI;
+    data['nombre'] = nombre;
+    data['CI'] = cI;
     return data;
   }
 }
@@ -36,8 +36,8 @@ class Id {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$oid'] = this.oid;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$oid'] = oid;
     return data;
   }
 }

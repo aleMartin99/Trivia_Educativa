@@ -1,4 +1,3 @@
-import 'package:educational_quiz_app/data/models/asingatura_model.dart';
 import 'package:educational_quiz_app/data/models/nivel_model.dart';
 import 'package:educational_quiz_app/data/models/pregunta_model.dart';
 import 'package:educational_quiz_app/data/models/tema_model.dart';
@@ -11,7 +10,6 @@ import 'package:educational_quiz_app/presentation/challenge/challenge_page.dart'
 import 'package:educational_quiz_app/presentation/home/home_page.dart';
 import 'package:educational_quiz_app/presentation/login/login_page.dart';
 import 'package:educational_quiz_app/presentation/result/result_page.dart';
-import 'package:educational_quiz_app/data/models/question_model.dart';
 import 'package:educational_quiz_app/data/models/user_model.dart';
 import 'package:educational_quiz_app/presentation/splash/splash_page.dart';
 
@@ -35,8 +33,15 @@ class AppRouter {
         if (args is ChallengePageArgs) {
           return MaterialPageRoute(
             builder: (_) => ChallengePage(
+              rango3: args.rango3,
+              rango4: args.rango4,
+              rango5: args.rango5,
               quizTitle: args.quizTitle,
               preguntas: args.preguntas,
+              idAsignatura: args.idAsignatura,
+              idCurso: args.idCurso,
+              idTema: args.idTema,
+              idNivel: args.idNivel,
             ),
           );
         } else {
@@ -46,7 +51,8 @@ class AppRouter {
         if (args is TemaPageArgs) {
           return MaterialPageRoute(
             builder: (_) => TemaPage(
-              temas: args.temas,
+              temas: args.temas, idAsignatura: args.idAsignatura,
+              idCurso: args.idCurso,
               // questions: args.questions,
             ),
           );
@@ -59,6 +65,9 @@ class AppRouter {
           return MaterialPageRoute(
             builder: (_) => NivelPage(
               niveles: args.niveles,
+              idAsignatura: args.idAsignatura,
+              idCurso: args.idCurso,
+              idTema: args.idTema,
             ),
           );
         } else {
@@ -69,9 +78,17 @@ class AppRouter {
         if (args is ResultPageArgs) {
           return MaterialPageRoute(
             builder: (_) => ResultPage(
+              puntos: args.puntos,
+              rango3: args.rango3,
+              rango4: args.rango4,
+              rango5: args.rango5,
               quizTitle: args.quizTitle,
               result: args.result,
               questionsLenght: args.questionsLenght,
+              idAsignatura: args.idAsignatura,
+              idCurso: args.idCurso,
+              idTema: args.idTema,
+              idNivel: args.idNivel,
             ),
           );
         } else {
@@ -118,14 +135,14 @@ Route<dynamic> _errorRoute() {
 }
 
 class HomePageArgs {
-  final UserModel user;
+  final User user;
   HomePageArgs({
     required this.user,
   });
 }
 
 class SettingsPageArgs {
-  final UserModel user;
+  final User user;
   SettingsPageArgs({
     required this.user,
   });
@@ -134,45 +151,72 @@ class SettingsPageArgs {
 class ChallengePageArgs {
   final List<Pregunta> preguntas;
   final String quizTitle;
+  final int rango3;
+  final int rango4;
+  final int rango5;
+  final String idAsignatura;
+  final String idCurso;
+  final String idTema;
+  final String idNivel;
 
-  ChallengePageArgs({
-    required this.preguntas,
-    required this.quizTitle,
-  });
+  ChallengePageArgs(
+      {required this.preguntas,
+      required this.quizTitle,
+      required this.rango3,
+      required this.rango4,
+      required this.rango5,
+      required this.idTema,
+      required this.idAsignatura,
+      required this.idCurso,
+      required this.idNivel});
 }
 
 class TemaPageArgs {
-  List<Tema> temas;
-
-  TemaPageArgs({required this.temas});
+  final List<Tema> temas;
+  final String idAsignatura;
+  final String idCurso;
+  //TODO fix this after carlos fix the disaster with adding note
+  TemaPageArgs(
+      {required this.temas, required this.idAsignatura, required this.idCurso});
 }
-
-// class TemaPageArgs {
-//   final String temaNombre;
-//   final int temaCantNiveles;
-
-//   TemaPageArgs({
-//     required this.temaNombre,
-//     required this.temaCantNiveles,
-//   });
-// }
 
 class ResultPageArgs {
   final String quizTitle;
   final int questionsLenght;
   final int result;
+  final int rango3;
+  final int rango4;
+  final int rango5;
+  final int puntos;
+  final String idAsignatura;
+  final String idCurso;
+  final String idTema;
+  final String idNivel;
 
-  ResultPageArgs({
-    required this.quizTitle,
-    required this.questionsLenght,
-    required this.result,
-  });
+  ResultPageArgs(
+      {required this.quizTitle,
+      required this.questionsLenght,
+      required this.result,
+      required this.rango3,
+      required this.rango4,
+      required this.rango5,
+      required this.puntos,
+      required this.idTema,
+      required this.idAsignatura,
+      required this.idCurso,
+      required this.idNivel});
 }
 
 class NivelPageArgs {
   final List<Nivel> niveles;
+  final String idTema;
+  final String idAsignatura;
+  final String idCurso;
 
   NivelPageArgs({
     required this.niveles,
+    required this.idTema,
+    required this.idAsignatura,
+    required this.idCurso,
   });
 }

@@ -41,11 +41,12 @@ class Pregunta {
       title: json['respuestaIncorrecta3'],
     ));
     //   nivel = json['nivel'];
+    answers.shuffle();
     puntos = json['puntos'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = id;
     data['descripcion'] = descripcion;
     data['respuestaCorrecta'] = answers[0].title;
@@ -57,30 +58,4 @@ class Pregunta {
 
     return data;
   }
-
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'respuestaCorrecta': respuestaCorrecta,
-  //     'respuestaIncorrecta1': respuestaIncorrecta1,
-  //     'respuestaIncorrecta2': respuestaIncorrecta2,
-  //     'respuestaIncorrecta3': respuestaIncorrecta3,
-  //     'puntos': puntos,
-  //     '_id': id,
-  //     'nivel': nivel,
-  //     'answers': answers.map((x) => x.toMap()).toList(),
-  //   };
-  // }
-
-  // factory Pregunta.fromMap(Map<String, dynamic> map) {
-  //   return Pregunta(
-  //     title: map['title'],
-  //     answers: List<AnswerModel>.from(
-  //         map['answers'].map((x) => AnswerModel.fromMap(x))),
-  //   );
-  // }
-
-  //String toJson() => json.encode(toMap());
-
-  // factory QuestionModel.fromJson(String source) =>
-  //     QuestionModel.fromMap(json.decode(source));
 }

@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:educational_quiz_app/presentation/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-
+import 'package:educational_quiz_app/presentation/home/home_controller.dart';
 import 'package:educational_quiz_app/core/app_images.dart';
 import 'package:educational_quiz_app/core/app_text_styles.dart';
 import 'package:provider/provider.dart';
@@ -11,44 +13,71 @@ class ResultPage extends StatelessWidget {
   final String quizTitle;
   final int questionsLenght;
   final int result;
+  final int rango3;
+  final int rango4;
+  final int rango5;
+  final int puntos;
+  final String idAsignatura;
+  final String idCurso;
+  final String idTema;
+  final String idNivel;
 
-  const ResultPage({
-    Key? key,
-    required this.quizTitle,
-    required this.questionsLenght,
-    required this.result,
-  }) : super(key: key);
+  ResultPage(
+      {Key? key,
+      required this.quizTitle,
+      required this.questionsLenght,
+      required this.result,
+      required this.rango3,
+      required this.rango4,
+      required this.rango5,
+      required this.puntos,
+      required this.idTema,
+      required this.idAsignatura,
+      required this.idCurso,
+      required this.idNivel})
+      : super(key: key);
 
-  double get percentage => result / questionsLenght;
-
-  String get resultImage => percentage < 0.5
+  final controller = HomeController();
+  String get resultImage => puntos < rango3
       ? AppImages.badResult
-      : ((percentage < 1 && percentage > 0.5)
+      : ((puntos >= rango3 && puntos < rango4)
           ? AppImages.mediumResult
-          : AppImages.trophy);
+          : ((puntos >= rango4 && puntos < rango5)
+              ? AppImages.mediumResult
+              : ((puntos >= rango5) ? AppImages.trophy : AppImages.error)));
 
-  String get title => percentage < 0.5
-      ? "Que triste!"
-      : ((percentage < 1 && percentage > 0.5)
-          ? "Continua asi!"
-          : "Felicidades!");
+  String get title => puntos < rango3
+      ? "Tienes 2 puntos. \nQue triste!"
+      : ((puntos >= rango3 && puntos < rango4)
+          ? "Tienes 3 puntos. \nAprobaste!"
+          : ((puntos >= rango4 && puntos < rango5)
+              ? "Tienes 4 puntos. \n Muy Bien!"
+              : ((puntos >= rango5) ? "Tienes 5 puntos. \nFelicidades!" : '')));
 
-  String get subtitle => percentage < 0.5
-      ? "Acertaste $result de $questionsLenght preguntas. Inténtalo de nuevo para hacerlo mejor"
-      : ((percentage < 1 && percentage > 0.5)
-          ? "Acertaste $result de $questionsLenght preguntas. Sigue intentándolo!"
-          : "Acertaste $result de $questionsLenght preguntas! Excelente!!");
+  String get subtitle => puntos < rango3
+      ? "Acertaste $result de $questionsLenght preguntas. Debes esforzarte más!"
+      : ((puntos >= rango3 && puntos < rango5)
+          ? "Acertaste $result de $questionsLenght preguntas. Sigue esforzándote!"
+          : ((puntos >= rango5)
+              ? "Acertaste $result de $questionsLenght preguntas! Excelente!!"
+              : ''));
 
   @override
   Widget build(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
 
+    //*Logs for debuging the code
+    log('puntos ' + puntos.toString());
+    log('rango 3 ' + rango3.toString());
+    log('rango 4 ' + rango4.toString());
+    log('rango 5 ' + rango5.toString());
+
     return Scaffold(
       backgroundColor:
           settingsController.currentAppTheme.scaffoldBackgroundColor,
       body: Container(
-        width: double.maxFinite, //o maximo possivel
+        width: double.maxFinite,
         padding: const EdgeInsets.only(top: 100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -62,6 +91,9 @@ class ResultPage extends StatelessWidget {
               children: [
                 Text(
                   title,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.heading40.copyWith(
                     color: settingsController.currentAppTheme.primaryColor,
                   ),
@@ -72,6 +104,9 @@ class ResultPage extends StatelessWidget {
                   child: Text(
                     subtitle,
                     textAlign: TextAlign.center,
+                    style: AppTextStyles.body.copyWith(
+                      color: settingsController.currentAppTheme.primaryColor,
+                    ),
                   ),
                 ),
               ],
@@ -104,7 +139,13 @@ class ResultPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 68.0),
                         child: NextButtonWidget.transparent(
                           label: "Volver al inicio",
-                          onTap: () {
+                          onTap: () async {
+//TODO hacer navegacion que borre flujo anterior
+                            // Navigator.pushNamed(
+                            //     context,
+                            //     AppRoutes.nivelRoute,
+                            //     arguments: NivelPageArgs(niveles: ),
+                            //   );
                             //podemos usar o pop pq foi substituido do quiz para o resultado
                             Navigator.pop(context);
                           },

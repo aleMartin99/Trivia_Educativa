@@ -7,4 +7,5 @@ class ChallengeController {
   set currentPage(int value) => currentPageNotifier.value = value;
 
   int qtdRightAnswers = 0;
+  int puntos = 0;
 }

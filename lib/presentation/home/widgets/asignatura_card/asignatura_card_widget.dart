@@ -86,7 +86,7 @@ class AsignaturaCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Temas:$cantTemas",
+                    "Temas: $cantTemas",
                     style: AppTextStyles.body11.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),

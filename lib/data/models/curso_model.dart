@@ -34,18 +34,16 @@ class Curso {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
     data['_id'] = id;
 
     data['fecha'] = fecha;
 
-    if (this.estudiantes != null) {
-      data['estudiantes'] = this.estudiantes!.map((v) => v.toJson()).toList();
+    if (estudiantes != null) {
+      data['estudiantes'] = estudiantes!.map((v) => v.toJson()).toList();
     }
-    if (this.temas != null) {
-      data['temas'] = this.temas.map((v) => v.toJson()).toList();
-    }
+    data['temas'] = temas.map((v) => v.toJson()).toList();
 
     return data;
   }

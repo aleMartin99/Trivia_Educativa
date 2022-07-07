@@ -3,15 +3,15 @@
 import 'package:educational_quiz_app/data/models/nivel_model.dart';
 
 class Tema {
+  late String id;
   late String descripcion;
   late List<Nivel> niveles;
   // int iV;
 
-  Tema({
-    required this.descripcion,
-  });
+  Tema({required this.descripcion, required this.id, required this.niveles});
 
   Tema.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
     descripcion = json['descripcion'];
     // niveles = json['niveles'];
     if (json['niveles'] != null) {
@@ -23,10 +23,11 @@ class Tema {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['descripcion'] = this.descripcion;
-    data['niveles'] = this.niveles;
+    data['_id'] = id;
+    data['descripcion'] = descripcion;
+    data['niveles'] = niveles;
 
     return data;
   }

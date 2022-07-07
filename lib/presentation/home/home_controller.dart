@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:educational_quiz_app/data/models/asingatura_model.dart';
-import 'package:educational_quiz_app/data/models/curso_model.dart';
-import 'package:educational_quiz_app/data/models/profesor_model.dart';
-import 'package:educational_quiz_app/data/models/quiz_model.dart';
-import 'package:educational_quiz_app/data/models/tema_model.dart';
+import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
+import 'package:educational_quiz_app/data/models/user_model.dart';
 import 'package:educational_quiz_app/domain/repositories/home_repository.dart';
 import 'package:educational_quiz_app/presentation/home/home_state.dart';
 //import 'package:dev_quiz/view/shared/models/user_model.dart';
@@ -16,9 +12,10 @@ class HomeController {
   set state(HomeState state) => stateNotifier.value = state;
   HomeState get state => stateNotifier.value;
 
-  // UserModel? user;
-  // List<QuizModel>? quizzes;
+  List<User>? users;
   List<Asignatura>? asignaturas;
+  List<NotaProv>? notasProv;
+
   //List<Profesor>? profesores;
   //List<Tema>? temas;
   //List<Curso>? cursos;
@@ -26,24 +23,52 @@ class HomeController {
 
   final repository = HomeRepository();
 
-  // void getUser() async {
+  Future getUser() async {
+    state = HomeState.loading;
+
+    users = (await repository.getUsers()).cast<User>();
+
+    state = HomeState.success;
+    return users;
+  }
+
+  Future getNotasProv() async {
+    state = HomeState.loading;
+
+    notasProv = (await repository.getNotasProv()).cast<NotaProv>();
+
+    state = HomeState.success;
+    return notasProv;
+  }
+
+  Future asignarNota(String idAsignatura, String idCurso, String idTema,
+      String idNivel, String idNotaProv) async {
+    state = HomeState.loading;
+
+    repository.asignarNota(idAsignatura, idCurso, idTema, idNivel, idNotaProv);
+
+    state = HomeState.success;
+    // return nota;
+  }
+
+  void crearNota(int nota) async {
+    state = HomeState.loading;
+
+    repository.crearNota(nota);
+
+    state = HomeState.success;
+    // return nota;
+  }
+
+  // Future getQuizzes() async {
   //   state = HomeState.loading;
 
-  //   user = await repository.getUser();
-
+  //   quizzes = (await repository.getQuizzes()).cast<QuizModel>();
+  //   asignaturas = (await repository.fetchAsignaturas()).cast<Asignatura>();
+  //   log('halo los quizzes');
   //   state = HomeState.success;
   // }
 
-  Future getQuizzes() async {
-    state = HomeState.loading;
-
-    //quizzes = (await repository.getQuizzes()).cast<QuizModel>();
-    //asignaturas = (await repository.fetchAsignaturas()).cast<Asignatura>();
-    log('halo los quizzes');
-    state = HomeState.success;
-  }
-
-//todo fix this controller shit
   Future getAsignaturas() async {
     state = HomeState.loading;
     // final Map<String,dynamic> list_asignaturas= jsonDecode()

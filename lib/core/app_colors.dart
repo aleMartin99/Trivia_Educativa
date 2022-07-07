@@ -36,4 +36,8 @@ class AppColors {
   static const Color levelButtonTextMedio = darkGreen;
   static const Color levelButtonTextDificil = Color(0xFFE8891C);
   static const Color levelButtonTextPerito = darkRed;
+
+  static Color levelStateLight = Colors.yellow.shade700;
+  static Color levelStateDark = Colors.yellow.shade400;
+  // Color.fromARGB(255, 240, 209, 72);
 }

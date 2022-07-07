@@ -14,7 +14,7 @@ import 'package:educational_quiz_app/presentation/settings/widgets/settings_tile
 import 'package:educational_quiz_app/presentation/shared/widgets/gradient_app_bar_widget.dart';
 
 class SettingsPage extends StatefulWidget {
-  final UserModel user;
+  final User user;
 
   const SettingsPage({
     Key? key,

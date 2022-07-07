@@ -1,7 +1,6 @@
 import 'package:educational_quiz_app/core/app_text_styles.dart';
 import 'package:educational_quiz_app/data/models/answer_model.dart';
 import 'package:educational_quiz_app/data/models/pregunta_model.dart';
-import 'package:educational_quiz_app/data/models/question_model.dart';
 import 'package:educational_quiz_app/presentation/challenge/widgets/answer/answer_widget.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
@@ -27,14 +26,44 @@ class _QuizWidgetState extends State<QuizWidget> {
 
   AnswerModel answer(int index) => widget.pregunta.answers[index];
 
+//   List<AnswerWidget> lis() {
+//     List<AnswerWidget> lisa = [];
+//     for (int i = 0; i < 4; i++) {
+//       lisa.add(AnswerWidget(
+//         // answerModel: randomAnswers(),
+//         answerModel: answer(i),
+//         //answerModel: randomAnswers(),
+//         isSelected: indexSelected == i,
+//         isDisabled: indexSelected !=
+//             -1, //se for diferente de -1, ele ja clicou em alguem, logo n pode mais
+//         onTap: (valueIsRight) {
+//           indexSelected = i;
+//           //  log(valueIsRight.toString());
+
+//           Future.delayed(const Duration(seconds: 1))
+//               .then((_) => widget.onAnswerSelected(valueIsRight));
+//         },
+//       ));
+//     }
+
+//     lisa.shuffle();
+//     return lisa;
+//   }
+
+//   List<AnswerWidget> listado = [];
+//   @override
+//   void initState() {
+//     listado = lis();
+//  setState(() {});
+//     super.initState();
+//   }
+
   @override
   Widget build(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
 
-    //* random items es el array que va a teer los indices de la lista desorganizados (shufle respuesta)
-    List<int> randomItems = [0, 1, 2, 3];
-    randomItems.shuffle();
+//       //* random items es el array que va a teer los indices de la lista desorganizados (shufle respuesta)
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -58,19 +87,31 @@ class _QuizWidgetState extends State<QuizWidget> {
           const SizedBox(
             height: 24,
           ),
+
+          //*imprime el listado regado ya
+
+          // Column(
+          //   children: listado,
+          // )
+
           for (int i = 0; i < 4; i++)
             AnswerWidget(
-              answerModel: answer(randomItems[i]),
+              // answerModel: randomAnswers(),
+
+              answerModel: answer(i),
+              // answerModel: listado,
+
+              //answerModel: randomAnswers(),
               isSelected: indexSelected == i,
               isDisabled: indexSelected !=
                   -1, //se for diferente de -1, ele ja clicou em alguem, logo n pode mais
               onTap: (valueIsRight) {
                 indexSelected = i;
                 setState(() {});
-                Future.delayed(const Duration(seconds: 1))
+                Future.delayed(const Duration(milliseconds: 100))
                     .then((_) => widget.onAnswerSelected(valueIsRight));
               },
-            ),
+            )
         ],
       ),
     );

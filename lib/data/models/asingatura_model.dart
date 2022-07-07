@@ -8,7 +8,6 @@ class Asignatura {
   late String descripcion;
   late List<Profesor> profesores;
   late List<Curso> cursos;
-  // int iV;
 
   Asignatura({
     required this.id,
@@ -35,17 +34,12 @@ class Asignatura {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['_id'] = this.id;
-
-    data['descripcion'] = this.descripcion;
-    if (this.profesores != null) {
-      data['profesor'] = this.profesores.map((v) => v.toJson()).toList();
-    }
-    if (this.cursos != null) {
-      data['cursos'] = this.cursos.map((v) => v.toJson()).toList();
-    }
+    data['_id'] = id;
+    data['descripcion'] = descripcion;
+    data['profesor'] = profesores.map((v) => v.toJson()).toList();
+    data['cursos'] = cursos.map((v) => v.toJson()).toList();
 
     return data;
   }

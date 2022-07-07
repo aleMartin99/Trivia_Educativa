@@ -38,26 +38,13 @@ class Nivel {
     data['_id'] = id;
 
     data['descripcion'] = descripcion;
-    if (this.preguntas != null) {
-      data['preguntas'] = this.preguntas.map((v) => v.toJson()).toList();
-    }
+
+    data['preguntas'] = preguntas.map((v) => v.toJson()).toList();
+
     data['nota3'] = rango3;
     data['nota4'] = rango4;
     data['nota5'] = rango5;
 
     return data;
-  }
-
-  int evaluarNivel(puntos, rango3, rango4, rango5) {
-    int nota = 2;
-    if (puntos >= rango3 && puntos < rango4) {
-      nota = 3;
-    } else if (puntos >= rango4 && puntos < rango5) {
-      nota = 4;
-    }
-    if (puntos == rango5) {
-      nota = 5;
-    }
-    return nota;
   }
 }

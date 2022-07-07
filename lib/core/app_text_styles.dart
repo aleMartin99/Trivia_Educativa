@@ -46,7 +46,7 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle bodylightGrey = GoogleFonts.notoSans(
+  static final TextStyle bodylightGreen = GoogleFonts.notoSans(
     color: AppColors.lightGreen,
     fontSize: 13,
     fontWeight: FontWeight.normal,
@@ -56,10 +56,20 @@ class AppTextStyles {
     fontSize: 13,
     fontWeight: FontWeight.w500,
   );
+  static final TextStyle bodyLightYellow = GoogleFonts.aBeeZee(
+    color: AppColors.levelStateLight,
+    fontSize: 14,
+    fontWeight: FontWeight.w300,
+  );
 
+  static final TextStyle bodyDarkYellow = GoogleFonts.aBeeZee(
+    color: AppColors.levelStateDark,
+    fontSize: 14,
+    fontWeight: FontWeight.w300,
+  );
   static final TextStyle bodyDarkRed = GoogleFonts.notoSans(
     color: AppColors.darkRed,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
   );
 

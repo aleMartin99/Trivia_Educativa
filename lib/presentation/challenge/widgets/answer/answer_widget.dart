@@ -1,7 +1,3 @@
-// import 'package:dev_quiz/core/app_theme.dart';
-// import 'package:dev_quiz/core/core.dart';
-// import 'package:dev_quiz/view/settings/settings_controller.dart';
-// import 'package:dev_quiz/view/shared/models/answer_model.dart';
 import 'package:educational_quiz_app/data/models/answer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +6,7 @@ import '../../../../core/app_theme.dart';
 import '../../../../core/core.dart';
 import '../../../settings/settings_controller.dart';
 
-class AnswerWidget extends StatelessWidget {
+class AnswerWidget extends StatefulWidget {
   final AnswerModel answerModel;
   final bool isSelected;
   final bool isDisabled;
@@ -24,24 +20,29 @@ class AnswerWidget extends StatelessWidget {
     this.isDisabled = false,
   }) : super(key: key);
 
+  @override
+  State<AnswerWidget> createState() => _AnswerWidgetState();
+}
+
+class _AnswerWidgetState extends State<AnswerWidget> {
   Color get _selectedColorRight =>
-      answerModel.isRight ? AppColors.darkGreen : AppColors.darkRed;
+      widget.answerModel.isRight ? AppColors.darkGreen : AppColors.darkRed;
 
   Color get _selectedBorderRight =>
-      answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
+      widget.answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
 
   Color get _selectedColorCardRight =>
-      answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
+      widget.answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
 
   Color get _selectedBorderCardRight =>
-      answerModel.isRight ? AppColors.green : AppColors.red;
+      widget.answerModel.isRight ? AppColors.green : AppColors.red;
 
-  TextStyle get _selectedTextStyleRight => answerModel.isRight
+  TextStyle get _selectedTextStyleRight => widget.answerModel.isRight
       ? AppTextStyles.bodyDarkGreen
       : AppTextStyles.bodyDarkRed;
 
   IconData get _selectedIconRight =>
-      answerModel.isRight ? Icons.check : Icons.close;
+      widget.answerModel.isRight ? Icons.check : Icons.close;
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +53,25 @@ class AnswerWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       // ignore pointer vai desativar o recurso de clique em um botao, por exemplo
       child: IgnorePointer(
-        ignoring: isDisabled,
+        ignoring: widget.isDisabled,
         child: GestureDetector(
           onTap: () {
+            // log(widget.answerModel.isRight.toString());
+            widget.onTap(widget.answerModel.isRight);
+
             //devolvendo se a resposta eh certa ou errada
-            onTap(answerModel.isRight);
           },
           child: Container(
             decoration: BoxDecoration(
-              color: isSelected
+              color: widget.isSelected
                   ? _selectedColorCardRight
                   : AppTheme.backgroundColors(
                       settingsController.currentAppTheme.brightness),
               borderRadius: BorderRadius.circular(10),
               border: Border.fromBorderSide(BorderSide(
-                color: isSelected ? _selectedBorderCardRight : AppColors.border,
+                color: widget.isSelected
+                    ? _selectedBorderCardRight
+                    : AppColors.border,
               )),
             ),
             padding: const EdgeInsets.symmetric(
@@ -78,8 +83,8 @@ class AnswerWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    answerModel.title,
-                    style: isSelected
+                    widget.answerModel.title,
+                    style: widget.isSelected
                         ? _selectedTextStyleRight
                         : AppTextStyles.body.copyWith(
                             color:
@@ -92,16 +97,17 @@ class AnswerWidget extends StatelessWidget {
                   height: 24,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: isSelected
+                    color: widget.isSelected
                         ? _selectedColorRight
                         : AppTheme.backgroundColors(
                             settingsController.currentAppTheme.brightness),
                     border: Border.fromBorderSide(BorderSide(
-                      color:
-                          isSelected ? _selectedBorderRight : AppColors.border,
+                      color: widget.isSelected
+                          ? _selectedBorderRight
+                          : AppColors.border,
                     )),
                   ),
-                  child: isSelected
+                  child: widget.isSelected
                       ? Icon(
                           _selectedIconRight,
                           size: 16,

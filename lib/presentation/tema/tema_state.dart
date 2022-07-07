@@ -1,1 +1,1 @@
-enum TemaState { success, loading, error, empty }
+// enum TemaState { success, loading, error, empty }
