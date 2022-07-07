@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NivelCardWidget extends StatelessWidget {
-  bool isDone = false;
+  //bool isDone = false;
   late String nombre;
   // late String subtitle;
   late List<Pregunta> preguntas;
-
+  late bool isDone;
   final VoidCallback onTap;
 
   NivelCardWidget({
     Key? key,
+    required this.isDone,
     required this.nombre,
     required this.onTap,
     required this.preguntas,

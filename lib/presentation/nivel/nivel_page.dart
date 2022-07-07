@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:educational_quiz_app/core/app_routes.dart';
 import 'package:educational_quiz_app/data/models/nivel_model.dart';
 import 'package:educational_quiz_app/core/routers/routers.dart';
+import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
+import 'package:educational_quiz_app/presentation/home/home_controller.dart';
 import 'package:educational_quiz_app/presentation/nivel/widgets/nivel_card/nivel_card_widget.dart';
 import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +30,32 @@ class NivelPage extends StatefulWidget {
 }
 
 class _NivelPageState extends State<NivelPage> {
+  final controller = HomeController();
+  // final cont
+
+  void _loadData() async {
+    await controller.getNotasProv();
+  }
+
   @override
   initState() {
-    setState(() {});
-
+    _loadData();
+    controller.stateNotifier.addListener(() {
+      setState(() {});
+    });
     super.initState();
+  }
+
+  //TODO ver metodo para checkear q este o no hecho el nivel
+  bool doneLevel(String idNivel, List<NotaProv> notasProv) {
+    bool isDone = false;
+    if ((notasProv
+        .where((notaProv) =>
+            notaProv.nivel?.where((nivel) => nivel.id == idNivel).isNotEmpty ??
+            false)
+        .isNotEmpty)) isDone = true;
+
+    return isDone;
   }
 
   @override
@@ -67,13 +90,14 @@ class _NivelPageState extends State<NivelPage> {
                 padding: EdgeInsets.only(bottom: 24),
               ),
               GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: widget.niveles
-                    .map(
-                      (nivel) => NivelCardWidget(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  children: widget.niveles.map((nivel) {
+                    if (doneLevel(nivel.id, controller.notasProv ?? [])) {
+                      return NivelCardWidget(
+                        isDone: true,
                         nombre: nivel.descripcion,
                         preguntas: nivel.preguntas,
                         onTap: () {
@@ -92,10 +116,30 @@ class _NivelPageState extends State<NivelPage> {
                                 idNivel: nivel.id),
                           );
                         },
-                      ),
-                    )
-                    .toList(),
-              ),
+                      );
+                    } else {
+                      return NivelCardWidget(
+                          isDone: false,
+                          nombre: nivel.descripcion,
+                          preguntas: nivel.preguntas,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.challengeRoute,
+                              arguments: ChallengePageArgs(
+                                  preguntas: nivel.preguntas,
+                                  rango3: nivel.rango3,
+                                  rango4: nivel.rango4,
+                                  rango5: nivel.rango5,
+                                  quizTitle: nivel.descripcion,
+                                  idAsignatura: widget.idAsignatura,
+                                  idCurso: widget.idCurso,
+                                  idTema: widget.idTema,
+                                  idNivel: nivel.id),
+                            );
+                          });
+                    }
+                  }).toList()),
             ],
           ),
         ));
