@@ -1,5 +1,5 @@
 class AppRoutes {
-  static String get splashRoute => "/";
+  // static String get splashRoute => "/";
   static String get homeRoute => "/home";
   static String get temaRoute => "/tema";
   static String get nivelRoute => "/nivel";

@@ -1,9 +1,9 @@
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/core/core.dart';
-import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
-import 'package:educational_quiz_app/data/models/user_model.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
-import 'package:educational_quiz_app/presentation/home/widgets/score_card/score_card_widget.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/data/models/nota_prov_model.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/presentation/home/widgets/score_card/score_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends PreferredSize {

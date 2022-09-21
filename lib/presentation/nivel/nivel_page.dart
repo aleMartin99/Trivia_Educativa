@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/data/models/nivel_model.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
-import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
-import 'package:educational_quiz_app/presentation/home/home_controller.dart';
-import 'package:educational_quiz_app/presentation/nivel/widgets/nivel_card/nivel_card_widget.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/data/models/nivel_model.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/data/models/nota_prov_model.dart';
+import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/presentation/nivel/widgets/nivel_card/nivel_card_widget.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

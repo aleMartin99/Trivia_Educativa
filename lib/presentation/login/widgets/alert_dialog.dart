@@ -1,5 +1,5 @@
-import 'package:educational_quiz_app/core/app_text_styles.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/core/app_text_styles.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,10 +22,14 @@ import 'package:provider/provider.dart';
 
 showAlertDialog(BuildContext context) {
   SettingsController settingsController =
-      Provider.of<SettingsController>(context);
+      Provider.of<SettingsController>(context, listen: false);
   // Create button
   Widget okButton = TextButton(
-    child: const Text("OK"),
+    child: Text(
+      "OK",
+      style: AppTextStyles.heading
+          .copyWith(color: settingsController.currentAppTheme.primaryColor),
+    ),
     onPressed: () {
       Navigator.of(context).pop();
     },
@@ -48,7 +52,7 @@ showAlertDialog(BuildContext context) {
       ],
     ),
     content: Text(
-      "Ocurrio un problema accediendo a los datos: \nNo existen o No tiene conexion",
+      "Ocurrió un problema accediendo a los datos: \nRevise su conexión",
       style: AppTextStyles.body.copyWith(
         color: settingsController.currentAppTheme.primaryColor,
       ),

@@ -27,7 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion flutter.compileSdkVersion
-    //ndkVersion flutter.ndkVersion
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.educational_quiz_app"
+        applicationId "com.example.trivia_educativa"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -68,4 +68,16 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+implementation "com.airbnb.android:lottie:4.2.2"
+implementation "com.android.support.constraint:constraint-layout:2.0.4"
+
+implementation "com.airbnb.android:lottie:4.2.2"
+implementation "com.android.support.constraint:constraint-layout:2.0.4"
+
+implementation "com.airbnb.android:lottie:4.2.2"
+implementation "com.android.support.constraint:constraint-layout:2.0.4"
+
+implementation "com.airbnb.android:lottie:4.2.2"
+implementation "com.android.support.constraint:constraint-layout:2.0.4"
 }

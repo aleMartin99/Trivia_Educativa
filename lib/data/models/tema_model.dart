@@ -1,6 +1,6 @@
 //import 'package:educational_quiz_app/view/shared/models/answer_model.dart';
 
-import 'package:educational_quiz_app/data/models/nivel_model.dart';
+import 'package:trivia_educativa/data/models/nivel_model.dart';
 
 class Tema {
   late String id;

@@ -1,11 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.educational_quiz_app">
-   <uses-permission android:name="android.permission.INTERNET"/>
+    package="com.example.trivia_educativa">
    <application
-        android:label="educational_quiz_app"
-        android:usesCleartextTraffic="true">
+        android:label="trivia_educativa"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

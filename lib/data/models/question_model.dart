@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:educational_quiz_app/data/models/answer_model.dart';
+import 'package:trivia_educativa/data/models/answer_model.dart';
 
 class QuestionModel {
   final String title;

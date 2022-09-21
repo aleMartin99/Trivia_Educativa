@@ -1,14 +1,15 @@
 import 'dart:developer';
 
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/data/models/pregunta_model.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
-import 'package:educational_quiz_app/presentation/challenge/challenge_controller.dart';
-import 'package:educational_quiz_app/presentation/challenge/widgets/next_button/next_button_widget.dart';
-import 'package:educational_quiz_app/presentation/challenge/widgets/question_indicator/question_indicator_widget.dart';
-import 'package:educational_quiz_app/presentation/challenge/widgets/quiz/quiz_widget.dart';
-import 'package:educational_quiz_app/presentation/home/home_controller.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/core/app_text_styles.dart';
+import 'package:trivia_educativa/data/models/pregunta_model.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_controller.dart';
+import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
+import 'package:trivia_educativa/presentation/challenge/widgets/question_indicator/question_indicator_widget.dart';
+import 'package:trivia_educativa/presentation/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -89,115 +90,212 @@ class _ChallengePageState extends State<ChallengePage> {
     super.initState();
   }
 
+  showAlertDialog(BuildContext context) {
+    SettingsController settingsController =
+        Provider.of<SettingsController>(context, listen: false);
+
+    // Create button
+    Widget cancelButton = TextButton(
+      child: Text(
+        "CANCELAR",
+        style: AppTextStyles.heading
+            .copyWith(color: settingsController.currentAppTheme.primaryColor),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget okButton = TextButton(
+      child: Text(
+        "OK",
+        style: AppTextStyles.heading
+            .copyWith(color: settingsController.currentAppTheme.primaryColor),
+      ),
+      onPressed: () async {
+        int nota = evaluarNivel(
+            controller.puntos, widget.rango3, widget.rango4, widget.rango5);
+        log(nota.toString());
+        homeController.crearNota(nota);
+        await homeController.getNotasProv();
+
+        //*se asigna la nota
+        //PutAsignar
+
+        await homeController.asignarNota(widget.idAsignatura, widget.idCurso,
+            widget.idTema, widget.idNivel, homeController.notasProv!.last.id);
+        Navigator.pop(context);
+        Navigator.pushReplacementNamed(
+          context,
+          AppRoutes.resultRoute,
+          arguments: ResultPageArgs(
+              quizTitle: widget.quizTitle,
+              questionsLenght: widget.preguntas.length,
+              result: controller.qtdRightAnswers,
+              rango3: widget.rango3,
+              rango4: widget.rango4,
+              rango5: widget.rango5,
+              puntos: controller.puntos,
+              idAsignatura: widget.idAsignatura,
+              idCurso: widget.idCurso,
+              idTema: widget.idTema,
+              idNivel: widget.idNivel),
+        );
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          Text("Está seguro que desea salir?",
+              style: AppTextStyles.heading.copyWith(
+                color: settingsController.currentAppTheme.primaryColor,
+              )),
+        ],
+      ),
+      content: Text(
+        "Si deja el nivel ahora se le evaluará tomando en cuenta solamente las preguntas realizadas",
+        style: AppTextStyles.body.copyWith(
+            color: settingsController.currentAppTheme.primaryColor,
+            fontSize: 15),
+      ),
+      actions: [
+        cancelButton,
+        okButton,
+      ],
+      actionsAlignment: MainAxisAlignment.center,
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
 
-    return Scaffold(
-      backgroundColor:
-          settingsController.currentAppTheme.scaffoldBackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(102),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BackButton(
-                color: settingsController.currentAppTheme.primaryColor,
-              ),
-              // o value listenable vai fazer o rebuild so nesse componente quando houver atualizacoes
-              ValueListenableBuilder<int>(
-                valueListenable: controller.currentPageNotifier,
-                builder: (context, value, _) => QuestionIndicatorWidget(
-                  currentPage: value,
-                  pagesLenght: widget.preguntas.length,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor:
+            settingsController.currentAppTheme.scaffoldBackgroundColor,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(102),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BackButton(
+                  onPressed: () {
+                    showAlertDialog(context);
+                  },
+                  color: settingsController.currentAppTheme.primaryColor,
                 ),
-              ),
-            ],
+                // o value listenable vai fazer o rebuild so nesse componente quando houver atualizacoes
+                ValueListenableBuilder<int>(
+                  valueListenable: controller.currentPageNotifier,
+                  builder: (context, value, _) => QuestionIndicatorWidget(
+                    currentPage: value,
+                    pagesLenght: widget.preguntas.length,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: widget.preguntas
-            .map(
-              (pregunta) => QuizWidget(
-                pregunta: pregunta,
-                onAnswerSelected: (valueIsRight) {
-                  onSelected(valueIsRight, pregunta.puntos);
-                },
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: widget.preguntas
+              .map(
+                (pregunta) => QuizWidget(
+                  pregunta: pregunta,
+                  onAnswerSelected: (valueIsRight) {
+                    onSelected(valueIsRight, pregunta.puntos);
+                  },
+                ),
+              )
+              .toList(),
+        ),
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+            child: ValueListenableBuilder(
+              valueListenable: controller.currentPageNotifier,
+              builder: (context, int value, _) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  if (value < widget.preguntas.length)
+                    Expanded(
+                      child: NextButtonWidget.white(
+                        label: "Saltar pregunta",
+                        onTap: nextPage,
+                      ),
+                    ),
+                  if (value == widget.preguntas.length)
+                    const SizedBox(
+                      width: 7,
+                    ),
+                  if (value == widget.preguntas.length)
+                    Expanded(
+                      child: NextButtonWidget.green(
+                        label: "Terminar",
+                        onTap: () async {
+                          //*se evalua el resultado del test, creando un entero con la nota
+
+                          //*Se crea el Objeto NotaProv al crear la nota
+                          //postCrearNota
+                          int nota = evaluarNivel(controller.puntos,
+                              widget.rango3, widget.rango4, widget.rango5);
+                          log(nota.toString());
+                          homeController.crearNota(nota);
+                          await homeController.getNotasProv();
+
+                          //*se asigna la nota
+                          //PutAsignar
+
+                          await homeController.asignarNota(
+                              widget.idAsignatura,
+                              widget.idCurso,
+                              widget.idTema,
+                              widget.idNivel,
+                              homeController.notasProv!.last.id);
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.resultRoute,
+                            arguments: ResultPageArgs(
+                                quizTitle: widget.quizTitle,
+                                questionsLenght: widget.preguntas.length,
+                                result: controller.qtdRightAnswers,
+                                rango3: widget.rango3,
+                                rango4: widget.rango4,
+                                rango5: widget.rango5,
+                                puntos: controller.puntos,
+                                idAsignatura: widget.idAsignatura,
+                                idCurso: widget.idCurso,
+                                idTema: widget.idTema,
+                                idNivel: widget.idNivel),
+                          );
+                        },
+                      ),
+                    ),
+                ],
               ),
-            )
-            .toList(),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
-          child: ValueListenableBuilder(
-            valueListenable: controller.currentPageNotifier,
-            builder: (context, int value, _) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                if (value < widget.preguntas.length)
-                  Expanded(
-                    child: NextButtonWidget.white(
-                      label: "Saltar pregunta",
-                      onTap: nextPage,
-                    ),
-                  ),
-                if (value == widget.preguntas.length)
-                  const SizedBox(
-                    width: 7,
-                  ),
-                if (value == widget.preguntas.length)
-                  Expanded(
-                    child: NextButtonWidget.green(
-                      label: "Terminar",
-                      onTap: () async {
-                        //*se evalua el resultado del test, creando un entero con la nota
-
-                        //*Se crea el Objeto NotaProv al crear la nota
-                        //postCrearNota
-                        int nota = evaluarNivel(controller.puntos,
-                            widget.rango3, widget.rango4, widget.rango5);
-                        log(nota.toString());
-                        homeController.crearNota(nota);
-                        await homeController.getNotasProv();
-
-                        //*se asigna la nota
-                        //PutAsignar
-
-                        await homeController.asignarNota(
-                            widget.idAsignatura,
-                            widget.idCurso,
-                            widget.idTema,
-                            widget.idNivel,
-                            homeController.notasProv!.last.id);
-                        Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.resultRoute,
-                          arguments: ResultPageArgs(
-                              quizTitle: widget.quizTitle,
-                              questionsLenght: widget.preguntas.length,
-                              result: controller.qtdRightAnswers,
-                              rango3: widget.rango3,
-                              rango4: widget.rango4,
-                              rango5: widget.rango5,
-                              puntos: controller.puntos,
-                              idAsignatura: widget.idAsignatura,
-                              idCurso: widget.idCurso,
-                              idTema: widget.idTema,
-                              idNivel: widget.idNivel),
-                        );
-                      },
-                    ),
-                  ),
-              ],
             ),
           ),
         ),

@@ -1,17 +1,17 @@
 import 'dart:developer';
 
-import 'package:educational_quiz_app/data/models/user_model.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
 // import 'package:educational_quiz_app/presentation/challenge/widgets/next_button/next_button_widget.dart';
 // import 'package:educational_quiz_app/presentation/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/core/app_theme.dart';
-import 'package:educational_quiz_app/core/core.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
-import 'package:educational_quiz_app/presentation/settings/widgets/settings_tile.dart';
-import 'package:educational_quiz_app/presentation/shared/widgets/gradient_app_bar_widget.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/core/app_theme.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/presentation/settings/widgets/settings_tile.dart';
+import 'package:trivia_educativa/presentation/shared/widgets/gradient_app_bar_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   final User user;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:educational_quiz_app/core/core.dart';
+import 'package:trivia_educativa/core/core.dart';
 
 class GradientAppBarWidget extends StatelessWidget {
   final Widget child;

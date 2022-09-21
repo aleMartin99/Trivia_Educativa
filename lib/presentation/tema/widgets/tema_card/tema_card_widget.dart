@@ -1,6 +1,6 @@
-import 'package:educational_quiz_app/core/app_theme.dart';
-import 'package:educational_quiz_app/core/core.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/core/app_theme.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,12 +54,15 @@ class TemaCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      nombre,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.heading15.copyWith(
-                        color: settingsController.currentAppTheme.primaryColor,
+                    Expanded(
+                      child: Text(
+                        nombre,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.heading15.copyWith(
+                          color:
+                              settingsController.currentAppTheme.primaryColor,
+                        ),
                       ),
                     ),
                   ]),

@@ -1,4 +1,4 @@
-import 'package:educational_quiz_app/data/models/answer_model.dart';
+import 'package:trivia_educativa/data/models/answer_model.dart';
 
 class Pregunta {
   late String id;

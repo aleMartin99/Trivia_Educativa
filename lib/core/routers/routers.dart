@@ -1,19 +1,19 @@
-import 'package:educational_quiz_app/data/models/nivel_model.dart';
-import 'package:educational_quiz_app/data/models/pregunta_model.dart';
-import 'package:educational_quiz_app/data/models/tema_model.dart';
-import 'package:educational_quiz_app/presentation/nivel/nivel_page.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_page.dart';
-import 'package:educational_quiz_app/presentation/tema/tema_page.dart';
+import 'package:trivia_educativa/data/models/nivel_model.dart';
+import 'package:trivia_educativa/data/models/pregunta_model.dart';
+import 'package:trivia_educativa/data/models/tema_model.dart';
+import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
+import 'package:trivia_educativa/presentation/settings/settings_page.dart';
+import 'package:trivia_educativa/presentation/tema/tema_page.dart';
 import 'package:flutter/material.dart';
 
-import 'package:educational_quiz_app/presentation/challenge/challenge_page.dart';
-import 'package:educational_quiz_app/presentation/home/home_page.dart';
-import 'package:educational_quiz_app/presentation/login/login_page.dart';
-import 'package:educational_quiz_app/presentation/result/result_page.dart';
-import 'package:educational_quiz_app/data/models/user_model.dart';
-import 'package:educational_quiz_app/presentation/splash/splash_page.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_page.dart';
+import 'package:trivia_educativa/presentation/home/home_page.dart';
+import 'package:trivia_educativa/presentation/login/login_page.dart';
+import 'package:trivia_educativa/presentation/result/result_page.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'package:trivia_educativa/presentation/splash/splash_page.dart';
 
-const String splashRoute = "/";
+// const String splashRoute = "/";
 const String homeRoute = "/home";
 const String temaRoute = "/tema";
 const String nivelRoute = "/nivel";
@@ -27,8 +27,8 @@ class AppRouter {
     final args = settings.arguments; // pegando os argumentos caso haja
 
     switch (settings.name) {
-      case splashRoute:
-        return MaterialPageRoute(builder: (_) => const SplashPage());
+      // case splashRoute:
+      //   return MaterialPageRoute(builder: (_) => const SplashPage());
       case challengeRoute:
         if (args is ChallengePageArgs) {
           return MaterialPageRoute(
@@ -128,7 +128,7 @@ Route<dynamic> _errorRoute() {
         title: const Text('Error'),
       ),
       body: const Center(
-        child: Text('ERROR'),
+        child: Text('Ha ocurrido un error inesperado'),
       ),
     );
   });

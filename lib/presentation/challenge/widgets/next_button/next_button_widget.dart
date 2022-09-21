@@ -1,4 +1,4 @@
-import 'package:educational_quiz_app/core/app_colors.dart';
+import 'package:trivia_educativa/core/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

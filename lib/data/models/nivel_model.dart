@@ -1,5 +1,5 @@
 //import 'package:educational_quiz_app/view/shared/models/answer_model.dart';
-import 'package:educational_quiz_app/data/models/pregunta_model.dart';
+import 'package:trivia_educativa/data/models/pregunta_model.dart';
 
 class Nivel {
   late String id;

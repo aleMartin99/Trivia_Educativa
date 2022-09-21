@@ -1,10 +1,106 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:educational_quiz_app/data/models/asingatura_model.dart';
-import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
-import 'package:educational_quiz_app/data/models/user_model.dart';
+import 'package:trivia_educativa/data/models/asingatura_model.dart';
+import 'package:trivia_educativa/data/models/nota_prov_model.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
+
+// import 'package:fpdart/fpdart.dart';
+// import 'package:recarguita/core/base-classes/remote_datasource_mixins/analize_error.dart';
+// import 'package:recarguita/core/error/exceptions.dart';
+// import 'package:recarguita/core/error/failures.dart';
+// import 'package:recarguita/core/local_data_base/local_data_base.dart';
+// import 'package:recarguita/core/local_data_base/local_data_base_contract.dart';
+// import 'package:recarguita/core/network/network_info/network_info.dart';
+// import 'package:recarguita/src/promo_notification/api/promo_notification_api.dart';
+// import 'package:recarguita/src/promo_notification/models/promo_notification/promo_notification.dart';
+
+// class PromoNotificationRepository with RequestErrorParser {
+//   PromoNotificationRepository(
+//     this._promoNotificationService,
+//     this._networkInfo,
+//     this._localDatabase,
+//   );
+
+//   final PromoNotificationService _promoNotificationService;
+//   final LocalDatabase<PromoNotification> _localDatabase;
+//   final NetworkInfo _networkInfo;
+
+//   Future<Either<Failure, Iterable<PromoNotification>>>
+//       getPromoNotifications() async {
+//     if (await _networkInfo.isConnected) {
+//       try {
+//         final _response = await _promoNotificationService.getPromoCards();
+//         final _body = _response.body;
+//         final _statusCode = _body['code'];
+//         if (_statusCode == 200) {
+//           final _itemsJson = _body['items'] as List;
+//           final _items = [
+//             ...(_itemsJson).map((e) => PromoNotification.fromJson(e))
+//           ]..sort((a, b) => a.priority!.compareTo(b.priority!));
+
+//           log('Got this elements: $_items');
+
+//           // Items that are really new and user hasn't seen before
+//           final _newItems = <PromoNotification>[];
+
+//           for (var element in _items) {
+//             if (!(await _localDatabase.contains(element))) {
+//               log('Local Database doesnt have the element $element');
+//               _newItems.add(element);
+//             }
+//           }
+//           log('Local database addding all elements $_newItems');
+//           _localDatabase.addAll(_newItems);
+
+//           return right(_newItems);
+//         }
+//         throw analyzeResponse(_response);
+//       } on AuthenticationException catch (e) {
+//         return left(
+//           AuthenticationFailure(
+//             message: e.toString(),
+//           ),
+//         );
+//       } on ServerException catch (e) {
+//         return left(
+//           ServerFailure(
+//             message: e.toString(),
+//           ),
+//         );
+//       } catch (e) {
+//         rethrow;
+//         return left(
+//           UnexpectedFailure(
+//             message: e.toString(),
+//           ),
+//         );
+//       }
+//     } else {
+//       return const Left(NoInternetConnectionFailure());
+//     }
+//   }
+// }
+
+// ReviewsRepository(this._networkInfo, this._apiService);
+
+//   Future<Either<Failure, Unit>> sendFeedback(
+//       FeedbackModel commentOrIssue) async {
+//     log('sending feedback in repo');
+//     if (await _networkInfo.isConnected) {
+//       log('Is connected');
+//       try {
+//         final _res = (await _apiService.sendFeedback(commentOrIssue.toMap()));
+//         log('Server response is ${_res.body}');
+//         return _res.body!;
+//       } catch (e) {
+//         return Left(ServerFailure(message: e.toString()));
+//       }
+//     } else {
+//       return const Left(NoInternetConnectionFailure());
+//     }
+//   }
 
 class HomeRepository {
   final String _baseUrl = '10.0.2.2:3000';
@@ -52,6 +148,7 @@ class HomeRepository {
       _baseUrl,
       "usuarios",
     );
+    //TODO make a try catch
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body) as List;

@@ -1,6 +1,6 @@
-# educational_quiz_app
+# trivia_educativa
 
-An Android Educational Quiz app made with Flutter for my personal Thesis.
+Es una trivia educativa para evaluar los contenidos aprendidos en clases.
 
 ## Getting Started
 

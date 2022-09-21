@@ -1,12 +1,12 @@
 import 'dart:developer';
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/core/core.dart';
-import 'package:educational_quiz_app/data/models/user_model.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
-import 'package:educational_quiz_app/presentation/challenge/widgets/next_button/next_button_widget.dart';
-import 'package:educational_quiz_app/presentation/home/home_controller.dart';
-import 'package:educational_quiz_app/presentation/login/widgets/alert_dialog.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
+import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/presentation/login/widgets/alert_dialog.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Bienvenido a \nEducational Quiz app!",
+                      "Bienvenido a \nTrivia Educativa!",
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading40.copyWith(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Text(
-                      "Una aplicacion que mezcla la educación con diversión!",
+                      "Una aplicación que mezcla la educación con diversión!",
                       style: AppTextStyles.body.copyWith(
                         color: settingsController.currentAppTheme.primaryColor,
                       ),

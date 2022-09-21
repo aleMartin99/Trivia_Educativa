@@ -1,8 +1,8 @@
-import 'package:educational_quiz_app/data/models/asingatura_model.dart';
-import 'package:educational_quiz_app/data/models/curso_model.dart';
-import 'package:educational_quiz_app/data/models/estudiante_model.dart';
-import 'package:educational_quiz_app/data/models/nivel_model.dart';
-import 'package:educational_quiz_app/data/models/tema_model.dart';
+import 'package:trivia_educativa/data/models/asingatura_model.dart';
+import 'package:trivia_educativa/data/models/curso_model.dart';
+import 'package:trivia_educativa/data/models/estudiante_model.dart';
+import 'package:trivia_educativa/data/models/nivel_model.dart';
+import 'package:trivia_educativa/data/models/tema_model.dart';
 
 class NotaProv {
   late String id;

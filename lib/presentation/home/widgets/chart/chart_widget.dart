@@ -1,8 +1,8 @@
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 
 //import 'package:dev_quiz/core/app_colors.dart';
-import 'package:educational_quiz_app/core/core.dart';
+import 'package:trivia_educativa/core/core.dart';
 import 'package:provider/provider.dart';
 
 class ChartWidget extends StatefulWidget {

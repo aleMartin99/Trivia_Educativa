@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:educational_quiz_app/presentation/challenge/widgets/next_button/next_button_widget.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:educational_quiz_app/presentation/home/home_controller.dart';
-import 'package:educational_quiz_app/core/app_images.dart';
-import 'package:educational_quiz_app/core/app_text_styles.dart';
+import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/core/app_images.dart';
+import 'package:trivia_educativa/core/app_text_styles.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -38,6 +38,7 @@ class ResultPage extends StatelessWidget {
       : super(key: key);
 
   final controller = HomeController();
+
   String get resultImage => puntos < rango3
       ? AppImages.badResult
       : ((puntos >= rango3 && puntos < rango4)
@@ -140,13 +141,7 @@ class ResultPage extends StatelessWidget {
                         child: NextButtonWidget.transparent(
                           label: "Volver al inicio",
                           onTap: () async {
-//TODO hacer navegacion que borre flujo anterior
-                            // Navigator.pushNamed(
-                            //     context,
-                            //     AppRoutes.nivelRoute,
-                            //     arguments: NivelPageArgs(niveles: ),
-                            //   );
-                            //podemos usar o pop pq foi substituido do quiz para o resultado
+                            Navigator.pop(context);
                             Navigator.pop(context);
                           },
                         ),

@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/data/models/tema_model.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/data/models/tema_model.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
 // import 'package:educational_quiz_app/presentation/home/widgets/level_button/level_button_widget.dart';
-import 'package:educational_quiz_app/presentation/tema/widgets/tema_card/tema_card_widget.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/presentation/tema/widgets/tema_card/tema_card_widget.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';

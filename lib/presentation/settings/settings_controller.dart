@@ -1,4 +1,4 @@
-import 'package:educational_quiz_app/core/app_theme.dart';
+import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

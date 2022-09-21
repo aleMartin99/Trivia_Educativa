@@ -1,5 +1,5 @@
-import 'package:educational_quiz_app/data/models/estudiante_model.dart';
-import 'package:educational_quiz_app/data/models/tema_model.dart';
+import 'package:trivia_educativa/data/models/estudiante_model.dart';
+import 'package:trivia_educativa/data/models/tema_model.dart';
 
 //todo coger el nombre al que pertenece, no el anno
 class Curso {

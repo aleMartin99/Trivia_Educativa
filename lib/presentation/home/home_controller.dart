@@ -1,8 +1,8 @@
-import 'package:educational_quiz_app/data/models/asingatura_model.dart';
-import 'package:educational_quiz_app/data/models/nota_prov_model.dart';
-import 'package:educational_quiz_app/data/models/user_model.dart';
-import 'package:educational_quiz_app/domain/repositories/home_repository.dart';
-import 'package:educational_quiz_app/presentation/home/home_state.dart';
+import 'package:trivia_educativa/data/models/asingatura_model.dart';
+import 'package:trivia_educativa/data/models/nota_prov_model.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'package:trivia_educativa/domain/repositories/home_repository.dart';
+import 'package:trivia_educativa/presentation/home/home_state.dart';
 //import 'package:dev_quiz/view/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 

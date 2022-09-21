@@ -1,19 +1,16 @@
 import 'dart:developer';
 
-import 'package:educational_quiz_app/core/app_routes.dart';
-import 'package:educational_quiz_app/core/core.dart';
-import 'package:educational_quiz_app/core/routers/routers.dart';
-import 'package:educational_quiz_app/data/models/user_model.dart';
-import 'package:educational_quiz_app/presentation/home/home_controller.dart';
-import 'package:educational_quiz_app/presentation/home/home_state.dart';
-import 'package:educational_quiz_app/presentation/home/widgets/appbar/app_bar_widget.dart';
-import 'package:educational_quiz_app/presentation/home/widgets/asignatura_card/asignatura_card_widget.dart';
-// import 'package:educational_quiz_app/presentation/home/widgets/level_button/level_button_widget.dart';
-import 'package:educational_quiz_app/presentation/settings/settings_controller.dart';
+import 'package:trivia_educativa/core/app_routes.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/presentation/home/home_state.dart';
+import 'package:trivia_educativa/presentation/home/widgets/appbar/app_bar_widget.dart';
+import 'package:trivia_educativa/presentation/home/widgets/asignatura_card/asignatura_card_widget.dart';
+import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -68,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 20),
               child: Text(
-                'Ocurrio un problema con los datos correspondientes a las Asignaturas!',
+                'Ocurrió un problema con los datos correspondientes a las Asignaturas!',
                 style: AppTextStyles.heading15,
               ),
             )
