@@ -1,14 +1,17 @@
 import 'dart:developer';
+//import 'package:fpdart/fpdart.dart';
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/presentation/home/home_state.dart';
 import 'package:trivia_educativa/presentation/login/widgets/alert_dialog.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,9 +25,22 @@ class _LoginPageState extends State<LoginPage> {
     await controller.getUser();
   }
 
+//TODO chequear initialization and use of applocalizations and _local
+  // late AppLocalizations _local;
+
+  // @override
+  // void didChangeDependencies() {
+  //   _local = AppLocalizations.of(context)!;
+  //   super.didChangeDependencies();
+  // }
+
   @override
   void initState() {
     _loadData();
+    controller.stateNotifier.addListener(() {
+      setState(() {});
+      if (controller.state == HomeState.error) showAlertDialog(context);
+    });
     super.initState();
   }
 
@@ -67,7 +83,9 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Bienvenido a \nTrivia Educativa!",
+                      "${I10n.of(context).welcome} ${I10n.of(context).to} \n${I10n.of(context).appTitle}",
+                      //${_local.}
+
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading40.copyWith(
@@ -80,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Text(
-                      "Una aplicación que mezcla la educación con diversión!",
+                      "${I10n.of(context).appDescription}",
                       style: AppTextStyles.body.copyWith(
                         color: settingsController.currentAppTheme.primaryColor,
                       ),
@@ -105,20 +123,21 @@ class _LoginPageState extends State<LoginPage> {
                   //             builder: (ctx, loginValue, _) =>
                   Expanded(
                     child: NextButtonWidget.purple(
-                      label: "Login",
+                      label: "${I10n.of(context).login}",
                       onTap: () async {
                         if (controller.users == null) {
+                          //TODO check for better message
                           showAlertDialog(context);
                         } else {
+                          //TODO check for user authentication
                           User user = controller.users!.last;
+                          log("${I10n.of(context).welcome} + ${user.nombreUsuario}.");
                           // user??
                           await Navigator.of(context).pushReplacementNamed(
                             AppRoutes.homeRoute,
                             arguments: HomePageArgs(user: user),
                           );
                         }
-
-                        log("user ok!");
                       },
                     ),
                   ),

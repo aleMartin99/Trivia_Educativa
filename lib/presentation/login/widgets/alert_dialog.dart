@@ -3,6 +3,8 @@ import 'package:trivia_educativa/presentation/settings/settings_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // class MyAlert extends StatelessWidget {
 //   const MyAlert({Key? key}) : super(key: key);
 
@@ -44,7 +46,7 @@ showAlertDialog(BuildContext context) {
           color: Colors.red,
         ),
         Text(
-          " Error!!",
+          " ${I10n.of(context).error}!!",
           style: AppTextStyles.heading.copyWith(
             color: settingsController.currentAppTheme.primaryColor,
           ),
@@ -52,7 +54,7 @@ showAlertDialog(BuildContext context) {
       ],
     ),
     content: Text(
-      "Ocurrió un problema accediendo a los datos: \nRevise su conexión",
+      "${I10n.of(context).problem_data}: \n${I10n.of(context).checkConnection}",
       style: AppTextStyles.body.copyWith(
         color: settingsController.currentAppTheme.primaryColor,
       ),

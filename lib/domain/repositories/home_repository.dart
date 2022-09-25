@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:trivia_educativa/core/error/failures.dart';
 import 'package:trivia_educativa/data/models/asingatura_model.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
+import 'package:trivia_educativa/presentation/login/widgets/alert_dialog.dart';
+import 'package:fpdart/fpdart.dart';
 
 // import 'package:fpdart/fpdart.dart';
 // import 'package:recarguita/core/base-classes/remote_datasource_mixins/analize_error.dart';
@@ -123,45 +127,54 @@ class HomeRepository {
   //   return quizzes;
   // }
 
-  Future<List<Asignatura>> getAsignaturas() async {
+  Future<Either<Failure, List<Asignatura>>> getAsignaturas() async {
+//
     var uri = Uri.http(
       _baseUrl,
       "asignaturas",
     );
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body) as List;
-      final asignaturas =
-          jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-      //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-      return asignaturas;
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load Asingaturas');
+    try {
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body) as List;
+        final asignaturas =
+            jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+        //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+        return right(asignaturas);
+      } else {
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        throw Exception('Failed to load Asingaturas');
+      }
+    } catch (e) {
+      return left(UnexpectedFailure(message: e.toString()));
     }
+
     //return getJson(uri).then((value) => value);
   }
 
-  Future<List<User>> getUsers() async {
+  Future<Either<Failure, List<User>>> getUsers() async {
     var uri = Uri.http(
       _baseUrl,
       "usuarios",
     );
     //TODO make a try catch
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body) as List;
-      final usuarios = jsonResponse.map((e) => User.fromJson(e)).toList();
-      //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+    try {
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body) as List;
+        final usuarios = jsonResponse.map((e) => User.fromJson(e)).toList();
+        //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
 
-      return usuarios;
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load Users');
+        return right(usuarios);
+      } else {
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        throw Exception('Failed to load Users');
+      }
+    } catch (e) {
+      return left(UnexpectedFailure(message: e.toString()));
     }
-
     //return getJson(uri).then((value) => value);
   }
 

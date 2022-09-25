@@ -5,6 +5,8 @@ import 'package:trivia_educativa/presentation/settings/settings_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class NivelCardWidget extends StatelessWidget {
   //bool isDone = false;
   late String nombre;
@@ -78,8 +80,10 @@ class NivelCardWidget extends StatelessWidget {
               height: 15,
             ),
             isDone
-                ? Text('Completado', style: AppTextStyles.bodyDarkGreen)
-                : Text('Pendiente', style: AppTextStyles.bodyLightYellow),
+                ? Text('${I10n.of(context).finished}',
+                    style: AppTextStyles.bodyDarkGreen)
+                : Text('${I10n.of(context).pending}',
+                    style: AppTextStyles.bodyLightYellow),
           ],
         ),
       ),

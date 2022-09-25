@@ -8,6 +8,7 @@ import 'package:trivia_educativa/core/app_images.dart';
 import 'package:trivia_educativa/core/app_text_styles.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResultPage extends StatelessWidget {
   final String quizTitle;
@@ -47,24 +48,26 @@ class ResultPage extends StatelessWidget {
               ? AppImages.mediumResult
               : ((puntos >= rango5) ? AppImages.trophy : AppImages.error)));
 
-  String get title => puntos < rango3
-      ? "Tienes 2 puntos. \nQue triste!"
-      : ((puntos >= rango3 && puntos < rango4)
-          ? "Tienes 3 puntos. \nAprobaste!"
-          : ((puntos >= rango4 && puntos < rango5)
-              ? "Tienes 4 puntos. \n Muy Bien!"
-              : ((puntos >= rango5) ? "Tienes 5 puntos. \nFelicidades!" : '')));
-
-  String get subtitle => puntos < rango3
-      ? "Acertaste $result de $questionsLenght preguntas. Debes esforzarte más!"
-      : ((puntos >= rango3 && puntos < rango5)
-          ? "Acertaste $result de $questionsLenght preguntas. Sigue esforzándote!"
-          : ((puntos >= rango5)
-              ? "Acertaste $result de $questionsLenght preguntas! Excelente!!"
-              : ''));
-
   @override
   Widget build(BuildContext context) {
+    String title = puntos < rango3
+        ? "${I10n.of(context).score_title} 2. \n${I10n.of(context).score_Sad}!"
+        : ((puntos >= rango3 && puntos < rango4)
+            ? "${I10n.of(context).score_title} 3. \n${I10n.of(context).score_Passed}!"
+            : ((puntos >= rango4 && puntos < rango5)
+                ? "${I10n.of(context).score_title} 4. \n${I10n.of(context).score_VeryGood}!"
+                : ((puntos >= rango5)
+                    ? "${I10n.of(context).score_title} 5. \n${I10n.of(context).score_Congrats}!"
+                    : '')));
+
+    String subtitle = puntos < rango3
+        ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_tryHarder}!"
+        : ((puntos >= rango3 && puntos < rango5)
+            ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_keepWorking}!"
+            : ((puntos >= rango5)
+                ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_excellent}!!"
+                : ''));
+
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
 
@@ -120,10 +123,10 @@ class ResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 68.0),
                         child: NextButtonWidget.purple(
-                          label: "Compartir ",
+                          label: "${I10n.of(context).share} ",
                           onTap: () {
                             Share.share(
-                                "Obtuve $result de $questionsLenght en $quizTitle en la aplicacion Educational Quiz app!");
+                                "${I10n.of(context).i_got} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions} ${I10n.of(context).in_} $quizTitle ${I10n.of(context).in_} ${I10n.of(context).the_app} ${I10n.of(context).appTitle}");
                           },
                         ),
                       ),
@@ -139,7 +142,7 @@ class ResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 68.0),
                         child: NextButtonWidget.transparent(
-                          label: "Volver al inicio",
+                          label: I10n.of(context).backTo_Tests,
                           onTap: () async {
                             Navigator.pop(context);
                             Navigator.pop(context);

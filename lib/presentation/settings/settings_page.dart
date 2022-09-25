@@ -12,6 +12,7 @@ import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:trivia_educativa/presentation/settings/widgets/settings_tile.dart';
 import 'package:trivia_educativa/presentation/shared/widgets/gradient_app_bar_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   final User user;
@@ -59,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               Text(
-                "Configuraciones",
+                I10n.of(context).settings,
                 style: AppTextStyles.titleBold.copyWith(
                   color: AppColors.white,
                 ),
@@ -80,14 +81,17 @@ class _SettingsPageState extends State<SettingsPage> {
             ValueListenableBuilder(
               valueListenable: controller.themeNotifier,
               builder: (ctx, value, _) => SettingsTile(
-                title: "Tema oscuro",
+                title: I10n.of(context).darkTheme,
                 switchValue: controller.currentAppTheme == AppTheme.darkTheme,
                 onChanged: (v) {
-                  log("entrou aqui");
+                  log("cambiar tema");
                   controller.changeCurrentAppTheme();
                   setState(() {});
                 },
               ),
+            ),
+            ListTile(
+              title: Text(I10n.of(context).language),
             ),
           ],
         ),

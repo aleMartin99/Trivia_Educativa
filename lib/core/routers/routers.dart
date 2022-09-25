@@ -11,7 +11,6 @@ import 'package:trivia_educativa/presentation/home/home_page.dart';
 import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
-import 'package:trivia_educativa/presentation/splash/splash_page.dart';
 
 // const String splashRoute = "/";
 const String homeRoute = "/home";

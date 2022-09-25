@@ -11,6 +11,7 @@ import 'package:trivia_educativa/presentation/home/widgets/asignatura_card/asign
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   void _loadData() async {
     // await controller.getUser();
     await controller.getNotasProv();
-    await controller.getAsignaturas();
+    // await controller.getAsignaturas();
     //  await controller.getProfesores();
     // await controller.getCursos();
   }
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 20),
               child: Text(
-                'Ocurrió un problema con los datos correspondientes a las Asignaturas!',
+                '${I10n.of(context).problem_Subjects}',
                 style: AppTextStyles.heading15,
               ),
             )

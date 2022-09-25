@@ -12,6 +12,7 @@ import 'package:trivia_educativa/presentation/home/home_controller.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
@@ -97,7 +98,7 @@ class _ChallengePageState extends State<ChallengePage> {
     // Create button
     Widget cancelButton = TextButton(
       child: Text(
-        "CANCELAR",
+        "${I10n.of(context).cancel}",
         style: AppTextStyles.heading
             .copyWith(color: settingsController.currentAppTheme.primaryColor),
       ),
@@ -107,7 +108,7 @@ class _ChallengePageState extends State<ChallengePage> {
     );
     Widget okButton = TextButton(
       child: Text(
-        "OK",
+        "${I10n.of(context).ok}",
         style: AppTextStyles.heading
             .copyWith(color: settingsController.currentAppTheme.primaryColor),
       ),
@@ -153,14 +154,14 @@ class _ChallengePageState extends State<ChallengePage> {
             Icons.error,
             color: Colors.red,
           ),
-          Text("Está seguro que desea salir?",
+          Text("${I10n.of(context).exitDialog}",
               style: AppTextStyles.heading.copyWith(
                 color: settingsController.currentAppTheme.primaryColor,
               )),
         ],
       ),
       content: Text(
-        "Si deja el nivel ahora se le evaluará tomando en cuenta solamente las preguntas realizadas",
+        "${I10n.of(context).exitChallenge}",
         style: AppTextStyles.body.copyWith(
             color: settingsController.currentAppTheme.primaryColor,
             fontSize: 15),
@@ -203,6 +204,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   },
                   color: settingsController.currentAppTheme.primaryColor,
                 ),
+                //TODO traducir texto
                 // o value listenable vai fazer o rebuild so nesse componente quando houver atualizacoes
                 ValueListenableBuilder<int>(
                   valueListenable: controller.currentPageNotifier,
@@ -243,7 +245,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   if (value < widget.preguntas.length)
                     Expanded(
                       child: NextButtonWidget.white(
-                        label: "Saltar pregunta",
+                        label: "${I10n.of(context).skipQuestion}",
                         onTap: nextPage,
                       ),
                     ),
@@ -254,7 +256,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   if (value == widget.preguntas.length)
                     Expanded(
                       child: NextButtonWidget.green(
-                        label: "Terminar",
+                        label: I10n.of(context).finish,
                         onTap: () async {
                           //*se evalua el resultado del test, creando un entero con la nota
 

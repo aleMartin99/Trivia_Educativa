@@ -5,13 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:provider/provider.dart';
 
+//TODO make reactive to api callback for rebuilding the chart
 class ChartWidget extends StatefulWidget {
-  final double percent;
-
-  const ChartWidget({
+  ChartWidget({
     Key? key,
-    required this.percent,
-  }) : super(key: key);
+    required percent,
+  }) : super(
+          key: key,
+        ) {
+    percentNotifier = ValueNotifier<double>(percent);
+  }
+
+  // var percent =
+  // ValueNotifier<double>(1);
+
+  late ValueNotifier<double> percentNotifier; // notificador de pagina atual
+  double get percent => percentNotifier.value;
+  set percent(double value) => percentNotifier.value = value;
 
   @override
   _ChartWidgetState createState() => _ChartWidgetState();
@@ -19,7 +29,6 @@ class ChartWidget extends StatefulWidget {
 
 class _ChartWidgetState extends State<ChartWidget>
     with SingleTickerProviderStateMixin {
-  // tipo late: indicamos que so vamos inicializa-lo depois
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -29,13 +38,12 @@ class _ChartWidgetState extends State<ChartWidget>
       duration: const Duration(seconds: 3),
     );
 
-    // a principio essa Tween eh aquela animacao que vai "crescendo" de um valor inicial a um valor final
     _animation = Tween<double>(
       begin: 0.0,
       end: widget.percent,
     ).animate(_controller);
 
-    _controller.forward(); // para a animacao "ir para a frente"
+    _controller.forward();
   }
 
   @override
@@ -60,12 +68,16 @@ class _ChartWidgetState extends State<ChartWidget>
               child: SizedBox(
                 height: 80,
                 width: 80,
-                child: CircularProgressIndicator(
-                  strokeWidth: 10,
-                  value: _animation.value,
-                  backgroundColor: AppColors.chartSecondary,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                      AppColors.chartPrimary),
+                //*saca la info de percent
+                child: ValueListenableBuilder(
+                  valueListenable: widget.percentNotifier,
+                  builder: (ctx, value, _) => CircularProgressIndicator(
+                    strokeWidth: 10,
+                    value: _animation.value,
+                    backgroundColor: AppColors.chartSecondary,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.chartPrimary),
+                  ),
                 ),
               ),
             ),

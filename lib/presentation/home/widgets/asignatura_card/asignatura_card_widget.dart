@@ -4,6 +4,7 @@ import 'package:trivia_educativa/presentation/settings/settings_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../data/models/curso_model.dart';
 
 class AsignaturaCardWidget extends StatelessWidget {
@@ -67,7 +68,7 @@ class AsignaturaCardWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      //*cambiar este jpoin, me interesa solamente el nombre del curso
+                      //TODO cambiar este jpoin, me interesa solamente el nombre del curso
                       cursos.join(),
                       //textAlign: TextAlign.end,
                       maxLines: 1,
@@ -86,7 +87,7 @@ class AsignaturaCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Temas: $cantTemas",
+                    "${I10n.of(context).topics}: $cantTemas",
                     style: AppTextStyles.body11.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),

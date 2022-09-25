@@ -3,6 +3,8 @@ import 'package:trivia_educativa/presentation/settings/settings_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
+//todo VERIFICAR DIALOGO
 // showAlertDialog(BuildContext context) {
 //   SettingsController settingsController =
 //       Provider.of<SettingsController>(context);

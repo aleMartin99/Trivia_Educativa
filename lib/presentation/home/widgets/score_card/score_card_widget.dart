@@ -2,7 +2,7 @@ import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:trivia_educativa/presentation/home/widgets/chart/chart_widget.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:provider/provider.dart';
 
@@ -57,14 +57,14 @@ class ScoreCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Tus aprobados",
+                        "${I10n.of(context).passedTests}",
                         style: AppTextStyles.heading.copyWith(
                           color:
                               settingsController.currentAppTheme.primaryColor,
                         ),
                       ),
                       Text(
-                        "Complete los desafios para mejorar su puntuacion",
+                        "${I10n.of(context).improveScore}",
                         style: AppTextStyles.body.copyWith(
                           color:
                               settingsController.currentAppTheme.primaryColor,

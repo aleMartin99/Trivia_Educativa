@@ -3,6 +3,7 @@ import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TemaCardWidget extends StatelessWidget {
   final String nombre;
@@ -75,7 +76,7 @@ class TemaCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Niveles: $cantNiveles",
+                    "${I10n.of(context).levels}: $cantNiveles",
                     style: AppTextStyles.body11.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NivelPage extends StatefulWidget {
   const NivelPage({
@@ -76,7 +77,8 @@ class _NivelPageState extends State<NivelPage> {
             0.695
           ], transform: GradientRotation(2.13959913 * pi)),
           // toolbarHeight: kToolbarHeight,
-          title: const Text('Niveles'),
+          //TODO añadir estilo texto
+          title: Text(I10n.of(context).levels),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(

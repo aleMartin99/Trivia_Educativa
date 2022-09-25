@@ -5,6 +5,7 @@ import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/presentation/home/widgets/score_card/score_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppBarWidget extends PreferredSize {
   final User user;
@@ -46,7 +47,7 @@ class AppBarWidget extends PreferredSize {
                       contentPadding: const EdgeInsets.only(top: 60),
                       title: Text.rich(
                         TextSpan(
-                          text: "Hola, ",
+                          text: "${I10n.of(context).hello}, ",
                           style: AppTextStyles.title,
                           children: [
                             TextSpan(

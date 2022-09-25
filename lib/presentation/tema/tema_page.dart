@@ -8,7 +8,7 @@ import 'package:trivia_educativa/presentation/settings/settings_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // import 'package:http/http.dart' as http;
 
 class TemaPage extends StatefulWidget {
@@ -49,7 +49,7 @@ class _TemaPageState extends State<TemaPage> {
           0.0,
           0.695
         ], transform: GradientRotation(2.13959913 * pi)),
-        title: const Text('Temas'),
+        title: Text('${I10n.of(context).topics}'),
       ),
       body: (widget.temas.isNotEmpty)
           ? Padding(
@@ -71,7 +71,7 @@ class _TemaPageState extends State<TemaPage> {
                     mainAxisSpacing: 16,
                     //*info cambie el ! de temas
                     //TODO ver como controlar q no se parta, poner imagenes de que si no hay elementos...
-
+                    //TODO buscar SVG o lottie
                     children: widget.temas
                         .map((tema) => TemaCardWidget(
                             nombre: tema.descripcion,
@@ -93,7 +93,7 @@ class _TemaPageState extends State<TemaPage> {
                 ],
               ),
             )
-          : const Text('No hay Data disponible'),
+          : Text(I10n.of(context).noData),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:trivia_educativa/core/core.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuestionIndicatorWidget extends StatelessWidget {
   final int currentPage;
@@ -30,13 +31,13 @@ class QuestionIndicatorWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Pregunta $currentPage",
+                "${I10n.of(context).question} $currentPage",
                 style: AppTextStyles.body.copyWith(
                   color: settingsController.currentAppTheme.primaryColor,
                 ),
               ),
               Text(
-                "de $pagesLenght",
+                "${I10n.of(context).of_} $pagesLenght",
                 style: AppTextStyles.body.copyWith(
                   color: settingsController.currentAppTheme.primaryColor,
                 ),
