@@ -267,10 +267,8 @@ class _ChallengePageState extends State<ChallengePage> {
                           log(nota.toString());
                           homeController.crearNota(nota);
                           await homeController.getNotasProv();
-
                           //*se asigna la nota
-                          //PutAsignar
-
+                          //*PutAsignar
                           await homeController.asignarNota(
                               widget.idAsignatura,
                               widget.idCurso,

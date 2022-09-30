@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
@@ -142,8 +143,13 @@ class ResultPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 68.0),
                         child: NextButtonWidget.transparent(
-                          label: I10n.of(context).backTo_Tests,
+                          label: I10n.of(context).backTo_Home,
                           onTap: () async {
+                            //TODO check after login
+                            //  Navigator.pushNamedAndRemoveUntil(context,AppRoutes.resultRoute,);
+
+                            //*elimina el stack de vistas 1 a 1 hasta la vista home
+                            Navigator.pop(context);
                             Navigator.pop(context);
                             Navigator.pop(context);
                           },

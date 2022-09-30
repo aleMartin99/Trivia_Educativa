@@ -73,7 +73,7 @@ class _QuizWidgetState extends State<QuizWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 257,
+            // width: 257,
             child: Padding(
               padding: const EdgeInsets.only(top: 50),
               child: Text(

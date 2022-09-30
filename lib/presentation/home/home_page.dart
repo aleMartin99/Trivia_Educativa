@@ -73,59 +73,62 @@ class _HomePageState extends State<HomePage> {
           ],
         ));
       } else {
-        return Scaffold(
-            backgroundColor:
-                settingsController.currentAppTheme.scaffoldBackgroundColor,
-            appBar: AppBarWidget(
-              //*cambie el usuario ya que lo cargo del login y lo paso x paramtros
-              user: widget.user,
-              notasProv: controller.notasProv!,
-              context: context,
-            ),
-            body: (controller.state == HomeState.loading)
-                ? const Center(
-                    child: CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
-                  ))
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
-                    ),
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 24),
-                        ),
-                        GridView.count(
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          children: controller.asignaturas!
-                              .map((asignatura) => AsignaturaCardWidget(
-                                    nombre: asignatura.descripcion,
-                                    cantTemas:
-                                        asignatura.cursos.last.temas.length,
-                                    cursos: asignatura.cursos,
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, AppRoutes.temaRoute,
-                                          arguments: TemaPageArgs(
-                                              idAsignatura: asignatura.id,
-                                              idCurso:
-                                                  asignatura.cursos.last.id,
-                                              temas: asignatura
-                                                  .cursos.last.temas));
-                                    },
-                                  ))
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ));
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+              backgroundColor:
+                  settingsController.currentAppTheme.scaffoldBackgroundColor,
+              appBar: AppBarWidget(
+                //*cambie el usuario ya que lo cargo del login y lo paso x paramtros
+                user: widget.user,
+                notasProv: controller.notasProv!,
+                context: context,
+              ),
+              body: (controller.state == HomeState.loading)
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
+                    ))
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 24),
+                          ),
+                          GridView.count(
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                            children: controller.asignaturas!
+                                .map((asignatura) => AsignaturaCardWidget(
+                                      nombre: asignatura.descripcion,
+                                      cantTemas:
+                                          asignatura.cursos.last.temas.length,
+                                      cursos: asignatura.cursos,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, AppRoutes.temaRoute,
+                                            arguments: TemaPageArgs(
+                                                idAsignatura: asignatura.id,
+                                                idCurso:
+                                                    asignatura.cursos.last.id,
+                                                temas: asignatura
+                                                    .cursos.last.temas));
+                                      },
+                                    ))
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    )),
+        );
       }
     }
     return const Center(
