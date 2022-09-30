@@ -12,6 +12,10 @@ import 'package:provider/provider.dart';
 
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:trivia_educativa/presentation/shared/widgets/gradient_app_bar_widget.dart';
+
+import '../../core/app_gradients.dart';
+import '../../core/app_text_styles.dart';
 
 class NivelPage extends StatefulWidget {
   const NivelPage({
@@ -69,17 +73,41 @@ class _NivelPageState extends State<NivelPage> {
         backgroundColor:
             settingsController.currentAppTheme.scaffoldBackgroundColor,
         appBar: NewGradientAppBar(
-          gradient: const LinearGradient(colors: [
-            Color(0xFF57B6E0),
-            Color(0xFF8257E5),
-          ], stops: [
-            0.0,
-            0.695
-          ], transform: GradientRotation(2.13959913 * pi)),
-          // toolbarHeight: kToolbarHeight,
-          //TODO añadir estilo texto
-          title: Text(I10n.of(context).levels),
+          gradient: AppGradients.linear,
+          //toolbarHeight: kToolbarHeight,
+
+          title: Text(
+            I10n.of(context).levels,
+            style: AppTextStyles.title,
+          ),
         ),
+
+        //  PreferredSize(
+        //   child: GradientAppBarWidget(
+        //     child: SizedBox(
+        //       height: 100,
+        //       child: Container(
+        //         height: 60,
+        //         width: MediaQuery.of(context).size.width,
+        //         padding: const EdgeInsets.symmetric(
+        //           horizontal: 20,
+        //         ),
+        //         decoration: const BoxDecoration(
+        //           gradient: AppGradients.linear,
+        //         ),
+        //         child: Align(
+        //           alignment: Alignment.centerLeft,
+        //           child: Text(
+        //             I10n.of(context).levels,
+        //             style: AppTextStyles.title,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   preferredSize: const Size.fromHeight(250),
+        // ),
+
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,

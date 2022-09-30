@@ -29,9 +29,9 @@ class _HomePageState extends State<HomePage> {
   // final cont
 
   void _loadData() async {
-    // await controller.getUser();
+    await controller.getUser();
     await controller.getNotasProv();
-    // await controller.getAsignaturas();
+    await controller.getAsignaturas();
     //  await controller.getProfesores();
     // await controller.getCursos();
   }

@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../core/app_gradients.dart';
+import '../../core/app_text_styles.dart';
 // import 'package:http/http.dart' as http;
 
 class TemaPage extends StatefulWidget {
@@ -42,14 +45,18 @@ class _TemaPageState extends State<TemaPage> {
       backgroundColor:
           settingsController.currentAppTheme.scaffoldBackgroundColor,
       appBar: NewGradientAppBar(
-        gradient: const LinearGradient(colors: [
-          Color(0xFF57B6E0),
-          Color(0xFF8257E5),
-        ], stops: [
-          0.0,
-          0.695
-        ], transform: GradientRotation(2.13959913 * pi)),
-        title: Text('${I10n.of(context).topics}'),
+        gradient: AppGradients.linear,
+        // gradient: const LinearGradient(colors: [
+        //   Color(0xFF57B6E0),
+        //   Color(0xFF8257E5),
+        // ], stops: [
+        //   0.0,
+        //   0.695
+        // ], transform: GradientRotation(2.13959913 * pi)),
+        title: Text(
+          I10n.of(context).topics,
+          style: AppTextStyles.title,
+        ),
       ),
       body: (widget.temas.isNotEmpty)
           ? Padding(

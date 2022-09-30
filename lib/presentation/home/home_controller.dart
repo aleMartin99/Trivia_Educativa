@@ -7,6 +7,8 @@ import 'package:trivia_educativa/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
+//TODO separate controllers
+
 class HomeController {
   final ValueNotifier<HomeState> stateNotifier =
       ValueNotifier<HomeState>(HomeState.empty);
@@ -29,9 +31,22 @@ class HomeController {
 
     final response = (await repository.getUsers());
     if (response.isRight()) {
-      users = (response as List<User>).cast<User>();
+      users = ((response as Right).value as List<User>).cast<User>();
       state = HomeState.success;
       return users;
+    } else {
+      state = HomeState.error;
+    }
+  }
+
+  Future getAsignaturas() async {
+    state = HomeState.loading;
+    final response = (await repository.getAsignaturas());
+    if (response.isRight()) {
+      asignaturas =
+          ((response as Right).value as List<Asignatura>).cast<Asignatura>();
+      state = HomeState.success;
+      return asignaturas;
     } else {
       state = HomeState.error;
     }
@@ -72,14 +87,6 @@ class HomeController {
   //   asignaturas = (await repository.fetchAsignaturas()).cast<Asignatura>();
   //   log('halo los quizzes');
   //   state = HomeState.success;
-  // }
-
-  // Future getAsignaturas() async {
-  //   state = HomeState.loading;
-  //   // final Map<String,dynamic> list_asignaturas= jsonDecode()
-  //   asignaturas = (await repository.getAsignaturas()).cast<Asignatura>();
-  //   state = HomeState.success;
-  //   return asignaturas;
   // }
 
   // Future getProfesores() async {

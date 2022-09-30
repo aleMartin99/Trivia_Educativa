@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.popAndPushNamed(
+                    Navigator.pushReplacementNamed(
                       context,
                       AppRoutes.homeRoute,
                       arguments: HomePageArgs(user: widget.user),
