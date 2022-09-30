@@ -6,8 +6,6 @@ import 'package:trivia_educativa/data/models/asingatura_model.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/retry.dart';
-import 'package:trivia_educativa/presentation/login/widgets/alert_dialog.dart';
 import 'package:fpdart/fpdart.dart';
 
 // import 'package:fpdart/fpdart.dart';

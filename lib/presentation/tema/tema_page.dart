@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';

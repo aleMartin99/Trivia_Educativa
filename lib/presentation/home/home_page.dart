@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 20),
               child: Text(
-                '${I10n.of(context).problem_Subjects}',
+                I10n.of(context).problem_Subjects,
                 style: AppTextStyles.heading15,
               ),
             )

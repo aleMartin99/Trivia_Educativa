@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
@@ -12,7 +10,6 @@ import 'package:provider/provider.dart';
 
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:trivia_educativa/presentation/shared/widgets/gradient_app_bar_widget.dart';
 
 import '../../core/app_gradients.dart';
 import '../../core/app_text_styles.dart';

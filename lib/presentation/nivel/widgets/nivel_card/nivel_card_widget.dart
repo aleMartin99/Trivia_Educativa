@@ -80,9 +80,9 @@ class NivelCardWidget extends StatelessWidget {
               height: 15,
             ),
             isDone
-                ? Text('${I10n.of(context).finished}',
+                ? Text(I10n.of(context).finished,
                     style: AppTextStyles.bodyDarkGreen)
-                : Text('${I10n.of(context).pending}',
+                : Text(I10n.of(context).pending,
                     style: AppTextStyles.bodyLightYellow),
           ],
         ),

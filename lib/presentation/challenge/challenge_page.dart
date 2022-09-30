@@ -98,7 +98,7 @@ class _ChallengePageState extends State<ChallengePage> {
     // Create button
     Widget cancelButton = TextButton(
       child: Text(
-        "${I10n.of(context).cancel}",
+        I10n.of(context).cancel,
         style: AppTextStyles.heading
             .copyWith(color: settingsController.currentAppTheme.primaryColor),
       ),
@@ -108,7 +108,7 @@ class _ChallengePageState extends State<ChallengePage> {
     );
     Widget okButton = TextButton(
       child: Text(
-        "${I10n.of(context).ok}",
+        I10n.of(context).ok,
         style: AppTextStyles.heading
             .copyWith(color: settingsController.currentAppTheme.primaryColor),
       ),
@@ -154,14 +154,14 @@ class _ChallengePageState extends State<ChallengePage> {
             Icons.error,
             color: Colors.red,
           ),
-          Text("${I10n.of(context).exitDialog}",
+          Text(I10n.of(context).exitDialog,
               style: AppTextStyles.heading.copyWith(
                 color: settingsController.currentAppTheme.primaryColor,
               )),
         ],
       ),
       content: Text(
-        "${I10n.of(context).exitChallenge}",
+        I10n.of(context).exitChallenge,
         style: AppTextStyles.body.copyWith(
             color: settingsController.currentAppTheme.primaryColor,
             fontSize: 15),
@@ -245,7 +245,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   if (value < widget.preguntas.length)
                     Expanded(
                       child: NextButtonWidget.white(
-                        label: "${I10n.of(context).skipQuestion}",
+                        label: I10n.of(context).skipQuestion,
                         onTap: nextPage,
                       ),
                     ),

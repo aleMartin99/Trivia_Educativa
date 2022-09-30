@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   //             builder: (ctx, loginValue, _) =>
                   Expanded(
                     child: NextButtonWidget.purple(
-                      label: "${I10n.of(context).login}",
+                      label: I10n.of(context).login,
                       onTap: () async {
                         if (controller.users == null) {
                           //TODO check for better message
