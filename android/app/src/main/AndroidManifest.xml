@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.trivia_educativa">
    <application
-        android:label="trivia_educativa"
+        android:label="Trivia Educativa"
         android:name="${applicationName}"
+        android:roundIcon="@mipmap/round_launcher"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

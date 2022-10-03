@@ -126,6 +126,7 @@ class ResultPage extends StatelessWidget {
                         child: NextButtonWidget.purple(
                           label: "${I10n.of(context).share} ",
                           onTap: () {
+                            //TODO checkear en telef fisico que funcione sin pedir contactos
                             Share.share(
                                 "${I10n.of(context).i_got} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions} ${I10n.of(context).in_} $quizTitle ${I10n.of(context).in_} ${I10n.of(context).the_app} ${I10n.of(context).appTitle}");
                           },

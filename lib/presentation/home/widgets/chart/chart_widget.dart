@@ -74,7 +74,7 @@ class _ChartWidgetState extends State<ChartWidget>
                   builder: (ctx, value, _) => CircularProgressIndicator(
                     strokeWidth: 10,
                     value: _animation.value,
-                    backgroundColor: AppColors.chartSecondary,
+                    backgroundColor: AppColors.purpleLight,
                     valueColor: const AlwaysStoppedAnimation<Color>(
                         AppColors.chartPrimary),
                   ),

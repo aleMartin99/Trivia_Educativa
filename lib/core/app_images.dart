@@ -1,4 +1,5 @@
 class AppImages {
+  //todo annadir onboarding
   static String get hierarchy => "assets/images/hierarchy.png";
   static String get data => "assets/images/data.png";
   static String get laptop => "assets/images/laptop.png";

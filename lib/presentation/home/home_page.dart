@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
   // final cont
 
   void _loadData() async {
-    await controller.getUser();
     await controller.getNotasProv();
     await controller.getAsignaturas();
     //  await controller.getProfesores();
@@ -59,7 +58,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             Center(
               child: SizedBox(
-                child: Image.asset(AppImages.error),
+                child: Column(
+                  children: [
+                    Image.asset(AppImages.error),
+//TODO I10n
+                    const Text('No existen Asignaturas'),
+                  ],
+                ),
                 //  height: 500,
               ),
             ),
@@ -76,8 +81,9 @@ class _HomePageState extends State<HomePage> {
         return WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
-              backgroundColor:
-                  settingsController.currentAppTheme.scaffoldBackgroundColor,
+              backgroundColor: Color.fromARGB(255, 242, 234, 255),
+              //TODO put the correct color. from theme
+              //  settingsController.currentAppTheme.scaffoldBackgroundColor,
               appBar: AppBarWidget(
                 //*cambie el usuario ya que lo cargo del login y lo paso x paramtros
                 user: widget.user,
@@ -99,16 +105,18 @@ class _HomePageState extends State<HomePage> {
                         shrinkWrap: true,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(bottom: 24),
+                            padding: EdgeInsets.only(bottom: 10),
                           ),
                           GridView.count(
+                            childAspectRatio: 1.2,
                             shrinkWrap: true,
                             crossAxisCount: 2,
-                            crossAxisSpacing: 16,
+                            crossAxisSpacing: 25,
                             mainAxisSpacing: 16,
                             children: controller.asignaturas!
                                 .map((asignatura) => AsignaturaCardWidget(
                                       nombre: asignatura.descripcion,
+                                      //TODO hacer validaciones para cosas vacias
                                       cantTemas:
                                           asignatura.cursos.last.temas.length,
                                       cursos: asignatura.cursos,

@@ -116,6 +116,7 @@ class _NivelPageState extends State<NivelPage> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
               ),
+              //TODO make a list view
               GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 2,

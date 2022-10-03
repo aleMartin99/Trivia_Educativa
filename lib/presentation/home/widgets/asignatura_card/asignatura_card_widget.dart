@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
@@ -30,70 +31,66 @@ class AsignaturaCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        //foregroundDecoration:,
+        clipBehavior: Clip.antiAlias,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
+          // boxShadow: Shadow(),
           border: const Border.fromBorderSide(
             BorderSide(
+              strokeAlign: StrokeAlign.outside,
               color: AppColors.border,
             ),
           ),
-          color: AppTheme.backgroundColors(
-              settingsController.currentAppTheme.brightness),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
+          color: AppColors.white,
+          // AppTheme.backgroundColors(
+          //     settingsController.currentAppTheme.brightness),
+          // borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: Image.asset(
-                AppImages.blocks,
+            //*Icono para la info del modo de juego
+            // SizedBox(
+            //   width: 40,
+            //   height: 40,
+            //   child: Image.asset(
+            //     AppImages.blocks,
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 24,
+            // ),
+
+            //TODO put an ICON from LEO svg books
+            const Icon(
+              Icons.list_alt,
+              size: 36,
+            ),
+            Text(
+              nombre,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.titleBold.copyWith(
+                color: settingsController.currentAppTheme.primaryColor,
+                //fontWeight: FontWeight.w600,
+                //fontSize: 22
               ),
             ),
             const SizedBox(
-              height: 24,
+              height: 10,
             ),
-            Expanded(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      nombre,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.heading15.copyWith(
-                        color: settingsController.currentAppTheme.primaryColor,
-                      ),
-                    ),
-                    Text(
-                      //TODO cambiar este jpoin, me interesa solamente el nombre del curso
-                      cursos.join(),
-                      //textAlign: TextAlign.end,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body11.copyWith(
-                        color: settingsController.currentAppTheme.primaryColor,
-                      ),
-                    ),
-                  ]),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    "${I10n.of(context).topics}: $cantTemas",
-                    style: AppTextStyles.body11.copyWith(
-                      color: settingsController.currentAppTheme.primaryColor,
-                    ),
-                  ),
-                ),
-              ],
+            Text(
+              "${I10n.of(context).topics}: $cantTemas",
+              //textAlign: TextAlign.end,
+              style: AppTextStyles.title.copyWith(
+                color: settingsController.currentAppTheme.primaryColor,
+                fontSize: 16,
+                // fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),

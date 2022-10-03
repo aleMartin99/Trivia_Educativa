@@ -2,6 +2,7 @@ import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/data/models/pregunta_model.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
+import 'package:trivia_educativa/presentation/onboarding/presenter/pages/onboarding_page.dart';
 import 'package:trivia_educativa/presentation/settings/settings_page.dart';
 import 'package:trivia_educativa/presentation/tema/tema_page.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,11 @@ import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 
+import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';
+
 // const String splashRoute = "/";
 const String homeRoute = "/home";
+const String onboardingRoute = "/onboarding";
 const String temaRoute = "/tema";
 const String nivelRoute = "/nivel";
 const String challengeRoute = "/challenge";
@@ -46,6 +50,9 @@ class AppRouter {
         } else {
           return _errorRoute();
         }
+      case onboardingRoute:
+        return MaterialPageRoute(builder: (_) => const Onboarding());
+
       case temaRoute:
         if (args is TemaPageArgs) {
           return MaterialPageRoute(

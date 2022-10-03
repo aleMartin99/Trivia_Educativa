@@ -42,11 +42,14 @@ dependencies:
   #google_sign_in: ^5.0.2
   provider: any
   shared_preferences: any
+  smooth_page_indicator: ^1.0.0+2
   http: ^0.13.4
+  get_it: ^7.2.0
   new_gradient_app_bar: ^0.2.0
   lottie: any 
   fpdart: ^0.2.0
   equatable: ^2.0.3
+  flutter_bloc: ^7.3.0
   
    
   #flutter_native_splash: ^2.2.9
@@ -87,6 +90,7 @@ flutter:
   assets:
     - assets/images/
     - assets/lotties/
+    - assets/onboarding/
   #   - images/a_dot_burr.jpeg  #   - images/a_dot_ham.jpeg
 animated_native_splash:
   jsonFile: assets/lotties/quiz-document-splash-test.json

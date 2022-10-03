@@ -46,44 +46,39 @@ class NivelCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: Image.asset(
-                AppImages.blocks,
-              ),
-            ),
+            //*Icono para la info del modo de juego
+            // SizedBox(
+            //   width: 40,
+            //   height: 40,
+            //   child: Image.asset(
+            //     AppImages.blocks,
+            //   ),
+            // ),
             const SizedBox(
               height: 24,
             ),
             Expanded(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        nombre,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.heading15.copyWith(
-                          color:
-                              settingsController.currentAppTheme.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ]),
+              child: Text(
+                nombre,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.heading15.copyWith(
+                  color: settingsController.currentAppTheme.primaryColor,
+                ),
+              ),
             ),
             const SizedBox(
               height: 15,
             ),
             isDone
-                ? Text(I10n.of(context).finished,
-                    style: AppTextStyles.bodyDarkGreen)
-                : Text(I10n.of(context).pending,
-                    style: AppTextStyles.bodyLightYellow),
+                ? const Icon(
+                    Icons.check_circle,
+                    color: AppColors.chartPrimary,
+                  )
+                : const Text(''),
           ],
         ),
       ),

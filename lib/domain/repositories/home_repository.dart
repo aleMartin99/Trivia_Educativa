@@ -4,9 +4,10 @@ import 'dart:developer';
 import 'package:trivia_educativa/core/error/failures.dart';
 import 'package:trivia_educativa/data/models/asingatura_model.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:fpdart/fpdart.dart';
+
+import '../../core/api_constants.dart';
 
 // import 'package:fpdart/fpdart.dart';
 // import 'package:recarguita/core/base-classes/remote_datasource_mixins/analize_error.dart';
@@ -105,7 +106,7 @@ import 'package:fpdart/fpdart.dart';
 //   }
 
 class HomeRepository {
-  final String _baseUrl = '10.0.2.2:3000';
+  final String _baseUrl = kApiEmulatorBaseUrl;
   // Future<UserModel> getUser() async {
   //   // o rootBundle vai acessar os arquivos
   //   final response = await rootBundle.loadString("lib/data/database/user.json");
@@ -148,31 +149,6 @@ class HomeRepository {
       return left(UnexpectedFailure(message: e.toString()));
     }
 
-    //return getJson(uri).then((value) => value);
-  }
-
-  Future<Either<Failure, List<User>>> getUsers() async {
-    var uri = Uri.http(
-      _baseUrl,
-      "usuarios",
-    );
-    //TODO make a try catch
-    try {
-      final response = await http.get(uri);
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body) as List;
-        final usuarios = jsonResponse.map((e) => User.fromJson(e)).toList();
-        //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-
-        return right(usuarios);
-      } else {
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        throw Exception('Failed to load Users');
-      }
-    } catch (e) {
-      return left(UnexpectedFailure(message: e.toString()));
-    }
     //return getJson(uri).then((value) => value);
   }
 

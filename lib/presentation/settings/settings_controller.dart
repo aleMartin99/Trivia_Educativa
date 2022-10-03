@@ -2,6 +2,7 @@ import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//TODO check the easy theme package recarguita
 class SettingsController {
   ValueNotifier<ThemeData> themeNotifier =
       ValueNotifier<ThemeData>(AppTheme.lightTheme);

@@ -1,4 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
+
+import '../../domain/repositories/login_repository.dart';
+import 'package:trivia_educativa/data/models/user_model.dart';
+import 'login_state.dart';
+
+//TODO separate controllers
+
+class LoginController {
+  final ValueNotifier<LoginState> stateNotifier =
+      ValueNotifier<LoginState>(LoginState.empty);
+  set state(LoginState state) => stateNotifier.value = state;
+  LoginState get state => stateNotifier.value;
+
+  List<User>? users;
+
+  final repository = LoginRepository();
+
+  Future getUser() async {
+    state = LoginState.loading;
+
+    final response = (await repository.getUsers());
+    if (response.isRight()) {
+      users = ((response as Right).value as List<User>).cast<User>();
+      state = LoginState.success;
+      return users;
+    } else {
+      state = LoginState.error;
+    }
+  }
+}
+
+
+
+
+
+
 //TODO make the logic for authentication and move to controller out of presentation 
+
+
 
 // import 'dart:developer';
 

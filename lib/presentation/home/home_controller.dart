@@ -15,29 +15,10 @@ class HomeController {
   set state(HomeState state) => stateNotifier.value = state;
   HomeState get state => stateNotifier.value;
 
-  List<User>? users;
   List<Asignatura>? asignaturas;
   List<NotaProv>? notasProv;
 
-  //List<Profesor>? profesores;
-  //List<Tema>? temas;
-  //List<Curso>? cursos;
-  // List<Nivel>? niveles;
-
   final repository = HomeRepository();
-
-  Future getUser() async {
-    state = HomeState.loading;
-
-    final response = (await repository.getUsers());
-    if (response.isRight()) {
-      users = ((response as Right).value as List<User>).cast<User>();
-      state = HomeState.success;
-      return users;
-    } else {
-      state = HomeState.error;
-    }
-  }
 
   Future getAsignaturas() async {
     state = HomeState.loading;
@@ -61,6 +42,7 @@ class HomeController {
     return notasProv;
   }
 
+//todo move to challenge controller
   Future asignarNota(String idAsignatura, String idCurso, String idTema,
       String idNivel, String idNotaProv) async {
     state = HomeState.loading;

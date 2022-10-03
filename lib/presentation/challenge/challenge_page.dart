@@ -265,6 +265,7 @@ class _ChallengePageState extends State<ChallengePage> {
                           int nota = evaluarNivel(controller.puntos,
                               widget.rango3, widget.rango4, widget.rango5);
                           log(nota.toString());
+                          //TODO sacar crear nota para controller de challenge
                           homeController.crearNota(nota);
                           await homeController.getNotasProv();
                           //*se asigna la nota

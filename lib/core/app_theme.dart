@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static Color backgroundColors(Brightness brightness) =>
+
+      //TODO modify the white color to gray white 12
       brightness == Brightness.light
           ? AppColors.white
           : const Color(0xFF333333);

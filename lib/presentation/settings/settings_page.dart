@@ -31,6 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
 
+    //static String? get defaultLocale => global_state.Intl.withLocale;
     SettingsController controller = Provider.of<SettingsController>(context);
 
     return Scaffold(
@@ -76,7 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
           vertical: deviceSize.height * 0.05,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ValueListenableBuilder(
               valueListenable: controller.themeNotifier,
@@ -90,8 +91,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
             ),
+            //TODO take the app locale language
+            //TODO I10n
             ListTile(
-              title: Text(I10n.of(context).language),
+              leading: Icon(Icons.language),
+              title: Text('Language:'),
+              trailing: I10n.of(context).localeName == 'es'
+                  ? Text('Espannol')
+                  : Text('English'),
+              subtitle: Text(I10n.of(context).localeName),
             ),
           ],
         ),
