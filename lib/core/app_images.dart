@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 class AppImages {
-  //todo annadir onboarding
   static String get hierarchy => "assets/images/hierarchy.png";
   static String get data => "assets/images/data.png";
   static String get laptop => "assets/images/laptop.png";
@@ -13,6 +15,25 @@ class AppImages {
   static String get blackgroundLogo => "assets/images/blackground-logo.png";
   static String get badResult => "assets/images/bad-review.png";
   static String get mediumResult => "assets/images/positive-vote.png";
-  static String get calcifer => "assets/images/calcifer.png";
-  //static String get
+  static String get avatar => "assets/images/profile_1280.png";
+
+  static String get onBoarding_1 =>
+      'assets/onboarding/onboarding-navegacion.svg';
+  static String get onBoarding_2 =>
+      'assets/onboarding/onboarding-enseñanza-trad.svg';
+  static String get onBoarding_3 => 'assets/onboarding/onboarding-notas.svg';
+}
+
+class CustomIconSVG extends StatelessWidget {
+  const CustomIconSVG({Key? key, this.color, this.iconName}) : super(key: key);
+  final Color? color;
+  final String? iconName;
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+      iconName.toString(),
+      color: color,
+    );
+  }
 }

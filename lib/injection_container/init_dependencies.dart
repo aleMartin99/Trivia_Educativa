@@ -7,7 +7,7 @@ import 'init_core.dart';
 
 FutureOr<void> initDependencies(
   GetIt sl, {
-  String apiBaseUrl = kApiEmulatorBaseUrl,
+  String apiBaseUrl = kApiOldServer,
 }
     //String apiBaseUrl = kApiProductionBaseUrl,
     ) async {

@@ -40,13 +40,6 @@ class TemaCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: Image.asset(
-                AppImages.blocks,
-              ),
-            ),
             const SizedBox(
               height: 24,
             ),
@@ -77,7 +70,7 @@ class TemaCardWidget extends StatelessWidget {
                   flex: 1,
                   child: Text(
                     "${I10n.of(context).levels}: $cantNiveles",
-                    style: AppTextStyles.body11.copyWith(
+                    style: AppTextStyles.body14.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
                   ),

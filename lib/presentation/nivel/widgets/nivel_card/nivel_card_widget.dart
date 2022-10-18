@@ -39,6 +39,7 @@ class NivelCardWidget extends StatelessWidget {
               color: AppColors.border,
             ),
           ),
+          //TODO check nivel color done in dark mode
           color: isDone
               ? Colors.black12
               : AppTheme.backgroundColors(

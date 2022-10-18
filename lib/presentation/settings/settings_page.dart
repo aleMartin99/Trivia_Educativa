@@ -32,45 +32,53 @@ class _SettingsPageState extends State<SettingsPage> {
     Size deviceSize = MediaQuery.of(context).size;
 
     //static String? get defaultLocale => global_state.Intl.withLocale;
-    SettingsController controller = Provider.of<SettingsController>(context);
+    SettingsController settingsController =
+        Provider.of<SettingsController>(context);
 
     return Scaffold(
-      backgroundColor: controller.currentAppTheme.scaffoldBackgroundColor,
+      backgroundColor:
+          settingsController.currentAppTheme.scaffoldBackgroundColor,
+      //TODO change app bar like nivel page, icon and text style
       appBar: PreferredSize(
         child: GradientAppBarWidget(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      AppRoutes.homeRoute,
-                      arguments: HomePageArgs(user: widget.user),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.white,
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushReplacementNamed(
+                            AppRoutes.homeRoute,
+                            arguments: HomePageArgs(user: widget.user),
+                          ),
+                      alignment: Alignment.centerLeft,
+                      splashColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      padding: const EdgeInsets.all(0),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 25,
+                        color:
+                            settingsController.currentAppTheme.iconTheme.color,
+                      )),
+                  Text(
+                    I10n.of(context).settings,
+                    style: AppTextStyles.titleBold.copyWith(
+                      color: AppColors.white,
+                    ),
                   ),
-                ),
+                ],
               ),
-              Text(
-                I10n.of(context).settings,
-                style: AppTextStyles.titleBold.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-        preferredSize: const Size.fromHeight(250),
+        preferredSize: const Size.fromHeight(56),
       ),
+
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: deviceSize.width * 0.1,
@@ -80,26 +88,39 @@ class _SettingsPageState extends State<SettingsPage> {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ValueListenableBuilder(
-              valueListenable: controller.themeNotifier,
+              valueListenable: settingsController.themeNotifier,
               builder: (ctx, value, _) => SettingsTile(
                 title: I10n.of(context).darkTheme,
-                switchValue: controller.currentAppTheme == AppTheme.darkTheme,
+                switchValue:
+                    settingsController.currentAppTheme == AppTheme.darkTheme,
                 onChanged: (v) {
                   log("cambiar tema");
-                  controller.changeCurrentAppTheme();
+                  settingsController.changeCurrentAppTheme();
                   setState(() {});
                 },
               ),
             ),
-            //TODO take the app locale language
-            //TODO I10n
+
+            //TODO I10n and change tile tto settings recarguita tile
             ListTile(
-              leading: Icon(Icons.language),
-              title: Text('Language:'),
+              ///leading: Icon(Icons.language),
+              title: Text(
+                'Language:',
+                style: TextStyle(
+                    color: settingsController.currentAppTheme.primaryColor),
+              ),
               trailing: I10n.of(context).localeName == 'es'
-                  ? Text('Espannol')
-                  : Text('English'),
-              subtitle: Text(I10n.of(context).localeName),
+                  ? Text('Espannol',
+                      style: TextStyle(
+                          color:
+                              settingsController.currentAppTheme.primaryColor))
+                  : Text('English',
+                      style: TextStyle(
+                          color:
+                              settingsController.currentAppTheme.primaryColor)),
+              subtitle: Text(I10n.of(context).localeName,
+                  style: TextStyle(
+                      color: settingsController.currentAppTheme.primaryColor)),
             ),
           ],
         ),

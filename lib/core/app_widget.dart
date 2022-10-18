@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
@@ -19,24 +18,32 @@ class AppWidget extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    late final _onboardingAlreadySeen;
     return MultiProvider(providers: [
       BlocProvider(
         create: (context) => sl<OnboardingCubit>(),
       ),
       Provider<SettingsController>(
         //TODO ver recarguita cubit bloc provider onboarding
-        create: (context) => SettingsController(),
+        create: (context) => sl<SettingsController>(),
         builder: (context, _) => MaterialApp(
           localizationsDelegates: I10n.localizationsDelegates,
           supportedLocales: I10n.supportedLocales,
-
-          //title: "Trivia Educativa",
           onGenerateTitle: (context) => I10n.of(context).appTitle,
           debugShowCheckedModeBanner: false,
-          // home: SettingsPage(),
-          initialRoute: '/login',
+          //TODO reverse login-onboarding condition
+          initialRoute: (_onboardingAlreadySeen =
+                  context.read<OnboardingCubit>().alreadySeen)
+              ? '/onboarding'
+              : '/login',
+
           onGenerateRoute: AppRouter.generateRoute,
+
           theme: context.watch<SettingsController>().currentAppTheme,
+
+// theme: themeLight,
+//           darkTheme: themeDark,
+//           themeMode: EasyDynamicTheme.of(context).themeMode,
         ),
       )
     ]);

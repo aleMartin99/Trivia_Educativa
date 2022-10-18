@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'dedicated_button.dart';
+import '../../settings/settings_controller.dart';
 // import 'package:recarguita/core/theme/custom_icons.dart';
 // import 'package:recarguita/core/widgets/dedicated_buttons/dedicated_button.dart';
 
@@ -39,12 +40,15 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+    SettingsController settingsController =
+        Provider.of<SettingsController>(context);
     final bool canPop = parentRoute?.canPop ?? false;
     if (forceAndroid || Theme.of(context).platform == TargetPlatform.android) {
       return AppBar(
         centerTitle: centerTitle,
         automaticallyImplyLeading: false,
-        backgroundColor: backgroundColor ?? Theme.of(context).backgroundColor,
+        backgroundColor:
+            settingsController.currentAppTheme.scaffoldBackgroundColor,
         toolbarHeight: height!,
         elevation: elevation,
         title: title,
@@ -70,21 +74,23 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: CupertinoNavigationBar(
                   automaticallyImplyLeading: false,
-                  padding: EdgeInsetsDirectional.only(start: 8, end: 8),
+                  padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
                   border: border ??
                       (bottom != null
                           ? Border.all(color: Colors.transparent)
                           : Border(
                               bottom: BorderSide(
-                                color: Theme.of(context).brightness ==
+                                color: settingsController
+                                            .currentAppTheme.brightness ==
                                         Brightness.light
-                                    ? Color(0x4D000000)
+                                    ? const Color(0x4D000000)
                                     : CupertinoColors.systemGrey.withAlpha(150),
                                 width: 0,
                               ),
                             )),
-                  backgroundColor: backgroundColor ??
-                      Theme.of(context).backgroundColor.withOpacity(0.90),
+                  backgroundColor: settingsController
+                      .currentAppTheme.scaffoldBackgroundColor
+                      .withOpacity(0.90),
                   leading: leading ??
                       ((title != null && (centerTitle != null && !centerTitle!))
                           ? Align(
@@ -92,12 +98,15 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                               child: title,
                             )
                           : (Navigator.canPop(context)
-                              ? DedicatedIconButton(
+                              //TODO put Login button
+                              ? IconButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
                                   icon: Icon(
                                     Icons.arrow_back_ios_new,
+
+                                    //TODO check theme colors from recarguita
                                     color: Theme.of(context).iconTheme.color,
                                   ),
                                 )
@@ -111,7 +120,7 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
         );
       } else {
         return CupertinoNavigationBar(
-          padding: EdgeInsetsDirectional.only(start: 8, end: 8),
+          padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
           automaticallyImplyLeading: false,
           border: border ??
               (bottom != null
@@ -119,13 +128,14 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : Border(
                       bottom: BorderSide(
                         color: Theme.of(context).brightness == Brightness.light
-                            ? Color(0x4D000000)
+                            ? const Color(0x4D000000)
                             : CupertinoColors.systemGrey.withAlpha(150),
                         width: 0,
                       ),
                     )),
-          backgroundColor: backgroundColor ??
-              Theme.of(context).backgroundColor.withOpacity(0.90),
+          backgroundColor: settingsController
+              .currentAppTheme.scaffoldBackgroundColor
+              .withOpacity(0.90),
           leading: leading ??
               ((title != null && (centerTitle != null && !centerTitle!))
                   ? Align(
@@ -133,7 +143,7 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: title,
                     )
                   : (canPop
-                      ? DedicatedIconButton(
+                      ? IconButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },

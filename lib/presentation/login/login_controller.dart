@@ -7,6 +7,9 @@ import 'login_state.dart';
 
 //TODO separate controllers
 
+//TODO en el auth si es el user que devuelve es Estudiante acceso, si es profesor o administrador ERROR (no esta autorizado)
+//TODO ask carlos keyword roles (por el momento "Estudiante") (Todo con letra inicial mayuscula)
+
 class LoginController {
   final ValueNotifier<LoginState> stateNotifier =
       ValueNotifier<LoginState>(LoginState.empty);
@@ -16,6 +19,10 @@ class LoginController {
   List<User>? users;
 
   final repository = LoginRepository();
+
+//
+
+//TODO Verificar error datos info, check connections apenas carga la app
 
   Future getUser() async {
     state = LoginState.loading;
@@ -31,7 +38,7 @@ class LoginController {
   }
 }
 
-
+//TODO se pide user, con ese user.carnetI(method comparar password para ) 
 
 
 

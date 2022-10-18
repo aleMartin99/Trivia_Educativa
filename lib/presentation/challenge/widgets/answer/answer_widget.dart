@@ -63,6 +63,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
           },
           child: Container(
             decoration: BoxDecoration(
+              //TODO change selected icons and colors
               color: widget.isSelected
                   ? _selectedColorCardRight
                   : AppTheme.backgroundColors(

@@ -1,8 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/data/models/pregunta_model.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
-import 'package:trivia_educativa/presentation/onboarding/presenter/pages/onboarding_page.dart';
 import 'package:trivia_educativa/presentation/settings/settings_page.dart';
 import 'package:trivia_educativa/presentation/tema/tema_page.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 
+import '../../presentation/onboarding/cubit/onboarding_cubit.dart';
 import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';
 
 // const String splashRoute = "/";
@@ -25,7 +26,7 @@ const String resultRoute = "/result";
 const String loginRoute = "/login";
 const String settingsRoute = "/settings";
 
-class AppRouter {
+class AppRouter extends StatelessWidget {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments; // pegando os argumentos caso haja
 
@@ -50,8 +51,6 @@ class AppRouter {
         } else {
           return _errorRoute();
         }
-      case onboardingRoute:
-        return MaterialPageRoute(builder: (_) => const Onboarding());
 
       case temaRoute:
         if (args is TemaPageArgs) {
@@ -113,6 +112,10 @@ class AppRouter {
           return _errorRoute();
         }
 
+//*OnBoarding
+      case onboardingRoute:
+        return MaterialPageRoute(builder: (_) => const Onboarding());
+
       default:
         if (args is HomePageArgs) {
           return MaterialPageRoute(
@@ -124,6 +127,16 @@ class AppRouter {
           return _errorRoute();
         }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
+    if (_onboardingAlreadySeen == true) {
+      return const LoginPage();
+    }
+
+    return Onboarding();
   }
 }
 

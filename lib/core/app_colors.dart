@@ -8,7 +8,7 @@ class AppColors {
   static const Color grey = Color(0xFF6E6680);
   static const Color lightGrey = Color(0xFFA6A1B2);
   static const Color border = Color(0xFFE1E1E6);
-  static const Color lightScaffold = Color(0xFFDCDCE5);
+  //static const Color lightScaffold = Color(0xFFDCDCE5);
   static const Color chartSecondary = Color(0xFFE1E6E3);
   static const Color chartPrimary = darkGreen;
 
@@ -40,5 +40,7 @@ class AppColors {
 
   static Color levelStateLight = Colors.yellow.shade700;
   static Color levelStateDark = Colors.yellow.shade400;
+
+  static const Color lightPurple = Color.fromARGB(255, 242, 234, 255);
   // Color.fromARGB(255, 240, 209, 72);
 }

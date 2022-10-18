@@ -41,5 +41,9 @@
     "noData":"No hay datos disponible",
     "settings":"Configuraciones",
     "darkTheme":"Tema Oscuro",
-    "language":"Lenguaje"
+    "language":"Lenguaje",
+    "onBoarding_1":"Intuitiva y sin complicaciones, fácil de usar.",
+    "onBoarding_2":"Alternativa a los métodos de evaluaciones tradicionales.",
+    "onBoarding_3":"Resultados de los exámenes al instante."
+  
 }

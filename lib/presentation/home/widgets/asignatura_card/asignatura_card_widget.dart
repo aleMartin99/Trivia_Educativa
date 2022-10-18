@@ -43,31 +43,19 @@ class AsignaturaCardWidget extends StatelessWidget {
             ),
           ),
           borderRadius: BorderRadius.circular(15),
-          color: AppColors.white,
-          // AppTheme.backgroundColors(
-          //     settingsController.currentAppTheme.brightness),
-          // borderRadius: BorderRadius.circular(10),
+          color: AppTheme.backgroundColors(
+              settingsController.currentAppTheme.brightness),
         ),
         child: Column(
+          //TODO annadir curso correspondiente
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //*Icono para la info del modo de juego
-            // SizedBox(
-            //   width: 40,
-            //   height: 40,
-            //   child: Image.asset(
-            //     AppImages.blocks,
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 24,
-            // ),
-
             //TODO put an ICON from LEO svg books
-            const Icon(
+            Icon(
               Icons.list_alt,
-              size: 36,
+              size: 36, color: settingsController.currentAppTheme.primaryColor,
+              //color: ,
             ),
             Text(
               nombre,
@@ -86,9 +74,9 @@ class AsignaturaCardWidget extends StatelessWidget {
             Text(
               "${I10n.of(context).topics}: $cantTemas",
               //textAlign: TextAlign.end,
-              style: AppTextStyles.title.copyWith(
+              style: AppTextStyles.body14.copyWith(
                 color: settingsController.currentAppTheme.primaryColor,
-                fontSize: 16,
+                fontSize: 14,
                 // fontWeight: FontWeight.w600,
               ),
             ),

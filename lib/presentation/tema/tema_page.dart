@@ -9,8 +9,10 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../core/app_colors.dart';
 import '../../core/app_gradients.dart';
 import '../../core/app_text_styles.dart';
+import '../shared/widgets/gradient_app_bar_widget.dart';
 // import 'package:http/http.dart' as http;
 
 class TemaPage extends StatefulWidget {
@@ -43,63 +45,81 @@ class _TemaPageState extends State<TemaPage> {
     return Scaffold(
       backgroundColor:
           settingsController.currentAppTheme.scaffoldBackgroundColor,
-      appBar: NewGradientAppBar(
-        gradient: AppGradients.linear,
-        // gradient: const LinearGradient(colors: [
-        //   Color(0xFF57B6E0),
-        //   Color(0xFF8257E5),
-        // ], stops: [
-        //   0.0,
-        //   0.695
-        // ], transform: GradientRotation(2.13959913 * pi)),
-        title: Text(
-          I10n.of(context).topics,
-          style: AppTextStyles.title,
-        ),
-      ),
-      body: (widget.temas.isNotEmpty)
-          ? Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 15,
-              ),
-              child: ListView(
-                shrinkWrap: true,
+      appBar: PreferredSize(
+        child: GradientAppBarWidget(
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 24),
-                    //*info:  botones de dificultad
-                  ),
-                  GridView.count(
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    //*info cambie el ! de temas
-                    //TODO ver como controlar q no se parta, poner imagenes de que si no hay elementos...
-                    //TODO buscar SVG o lottie
-                    children: widget.temas
-                        .map((tema) => TemaCardWidget(
-                            nombre: tema.descripcion,
-                            cantNiveles: tema.niveles.length,
-                            onTap: () {
-                              //  log('id del tema desde tema page ${tema.id}');
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.nivelRoute,
-                                arguments: NivelPageArgs(
-                                    niveles: tema.niveles,
-                                    idAsignatura: widget.idAsignatura,
-                                    idCurso: widget.idCurso,
-                                    idTema: tema.id),
-                              );
-                            }))
-                        .toList(),
+                  IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      alignment: Alignment.centerLeft,
+                      splashColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      padding: const EdgeInsets.all(0),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 25,
+                        color:
+                            settingsController.currentAppTheme.iconTheme.color,
+                      )),
+                  Text(
+                    I10n.of(context).topics,
+                    style: AppTextStyles.titleBold.copyWith(
+                      color: AppColors.white,
+                    ),
                   ),
                 ],
               ),
-            )
-          : Text(I10n.of(context).noData),
+            ),
+          ),
+        ),
+        preferredSize: const Size.fromHeight(56),
+      ),
+      body:
+          //TODO make validation for data to all pages like asignatura(home)
+          (widget.temas.isNotEmpty)
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 15,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: GridView.count(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      //*info cambie el ! de temas
+                      //TODO ver como controlar q no se parta, poner imagenes de que si no hay elementos...
+                      //TODO buscar SVG o lottie
+                      children: widget.temas
+                          .map((tema) => TemaCardWidget(
+                              nombre: tema.descripcion,
+                              cantNiveles: tema.niveles.length,
+                              onTap: () {
+                                //  log('id del tema desde tema page ${tema.id}');
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.nivelRoute,
+                                  arguments: NivelPageArgs(
+                                      niveles: tema.niveles,
+                                      idAsignatura: widget.idAsignatura,
+                                      idCurso: widget.idCurso,
+                                      idTema: tema.id),
+                                );
+                              }))
+                          .toList(),
+                    ),
+                  ),
+                )
+              : Text(I10n.of(context).noData),
     );
   }
 }

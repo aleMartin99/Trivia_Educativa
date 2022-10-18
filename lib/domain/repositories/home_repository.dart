@@ -106,7 +106,8 @@ import '../../core/api_constants.dart';
 //   }
 
 class HomeRepository {
-  final String _baseUrl = kApiEmulatorBaseUrl;
+  //TODO check from recarguita como se inicializa el kApi const
+  final String _baseUrl = kApiOldServer;
   // Future<UserModel> getUser() async {
   //   // o rootBundle vai acessar os arquivos
   //   final response = await rootBundle.loadString("lib/data/database/user.json");

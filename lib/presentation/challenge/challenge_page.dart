@@ -146,22 +146,16 @@ class _ChallengePageState extends State<ChallengePage> {
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Icon(
-            Icons.error,
-            color: Colors.red,
-          ),
-          Text(I10n.of(context).exitDialog,
-              style: AppTextStyles.heading.copyWith(
-                color: settingsController.currentAppTheme.primaryColor,
-              )),
-        ],
-      ),
+      title: Text(I10n.of(context).exitDialog,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          style: AppTextStyles.heading.copyWith(
+            color: settingsController.currentAppTheme.primaryColor,
+          )),
       content: Text(
         I10n.of(context).exitChallenge,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 4,
         style: AppTextStyles.body.copyWith(
             color: settingsController.currentAppTheme.primaryColor,
             fontSize: 15),
@@ -186,14 +180,14 @@ class _ChallengePageState extends State<ChallengePage> {
   Widget build(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
-
+    double deviceHeight = MediaQuery.of(context).size.height / 100;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor:
             settingsController.currentAppTheme.scaffoldBackgroundColor,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(102),
+          preferredSize: Size.fromHeight(deviceHeight * 15),
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,11 +200,13 @@ class _ChallengePageState extends State<ChallengePage> {
                 ),
                 //TODO traducir texto
                 // o value listenable vai fazer o rebuild so nesse componente quando houver atualizacoes
-                ValueListenableBuilder<int>(
-                  valueListenable: controller.currentPageNotifier,
-                  builder: (context, value, _) => QuestionIndicatorWidget(
-                    currentPage: value,
-                    pagesLenght: widget.preguntas.length,
+                Expanded(
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: controller.currentPageNotifier,
+                    builder: (context, value, _) => QuestionIndicatorWidget(
+                      currentPage: value,
+                      pagesLenght: widget.preguntas.length,
+                    ),
                   ),
                 ),
               ],
@@ -218,6 +214,7 @@ class _ChallengePageState extends State<ChallengePage> {
           ),
         ),
         body: PageView(
+          //TODO Check this property in case the question content is to big
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: widget.preguntas

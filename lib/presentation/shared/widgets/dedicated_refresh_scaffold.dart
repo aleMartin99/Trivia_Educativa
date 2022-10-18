@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../settings/settings_controller.dart';
 
 class DedicatedScaffold extends StatelessWidget {
   const DedicatedScaffold({
@@ -29,6 +32,8 @@ class DedicatedScaffold extends StatelessWidget {
   final bool resizeToAvoidBottomInset;
   @override
   Widget build(BuildContext context) {
+    SettingsController settingsController =
+        Provider.of<SettingsController>(context);
     if (Platform.isIOS) {
       return SafeArea(
         top: false,
@@ -42,7 +47,7 @@ class DedicatedScaffold extends StatelessWidget {
             floatingActionButtonLocation: floatingActionButtonLocation,
             floatingActionButton: floatingActionButton,
             backgroundColor:
-                backgroundColor ?? Theme.of(context).backgroundColor,
+                settingsController.currentAppTheme.scaffoldBackgroundColor,
             extendBodyBehindAppBar: true,
             extendBody: true,
             bottomNavigationBar: bottomAppBar,
@@ -83,7 +88,8 @@ class DedicatedScaffold extends StatelessWidget {
           floatingActionButtonLocation: floatingActionButtonLocation,
           floatingActionButton: floatingActionButton,
           extendBody: false,
-          backgroundColor: backgroundColor ?? Theme.of(context).backgroundColor,
+          backgroundColor:
+              settingsController.currentAppTheme.scaffoldBackgroundColor,
           body: body,
         ),
       ),

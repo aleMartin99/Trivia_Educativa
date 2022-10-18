@@ -10,12 +10,19 @@ final sl = GetIt.I;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize all dependencies with the given GetIt service locator as
   await initDependencies(
     sl,
-    apiBaseUrl: kApiEmulatorBaseUrl,
+    apiBaseUrl: kApiOldServer,
     //*Check when authetication carlos
     // apiBaseUrl: kApiProductionBaseUrl,
   );
 
+// runApp(EasyDynamicThemeWidget(
+//     child: const MyApp(),
+//   ));
+
   runApp(const AppWidget());
+
+  //TODO look the log WaitForGcToComplete blocked RunEmptyCheckpoint on ProfileSaver for 12.391ms
 }

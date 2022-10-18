@@ -41,6 +41,12 @@ class ResultPage extends StatelessWidget {
 
   final controller = HomeController();
 
+//TODO change points system to amount of questions
+
+//* 5 => notaParametro(%)
+//*4 => notaParametro - 10%
+//*3 => notaParametro - 20%
+
   String get resultImage => puntos < rango3
       ? AppImages.badResult
       : ((puntos >= rango3 && puntos < rango4)
@@ -78,90 +84,95 @@ class ResultPage extends StatelessWidget {
     log('rango 4 ' + rango4.toString());
     log('rango 5 ' + rango5.toString());
 
-    return Scaffold(
-      backgroundColor:
-          settingsController.currentAppTheme.scaffoldBackgroundColor,
-      body: Container(
-        width: double.maxFinite,
-        padding: const EdgeInsets.only(top: 100),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              resultImage,
-              width: MediaQuery.of(context).size.width * 0.8,
-            ),
-            Column(
-              children: [
-                Text(
-                  title,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.heading40.copyWith(
-                    color: settingsController.currentAppTheme.primaryColor,
-                  ),
-                ),
-                Container(
-                  width: 189,
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                    subtitle,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor:
+            settingsController.currentAppTheme.scaffoldBackgroundColor,
+        body: Container(
+          width: double.maxFinite,
+          padding: const EdgeInsets.only(top: 100),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                resultImage,
+                width: MediaQuery.of(context).size.width * 0.8,
+              ),
+              Column(
+                children: [
+                  Text(
+                    title,
+                    maxLines: 2,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.body.copyWith(
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.heading40.copyWith(
                       color: settingsController.currentAppTheme.primaryColor,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 68.0),
-                        child: NextButtonWidget.purple(
-                          label: "${I10n.of(context).share} ",
-                          onTap: () {
-                            //TODO checkear en telef fisico que funcione sin pedir contactos
-                            Share.share(
-                                "${I10n.of(context).i_got} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions} ${I10n.of(context).in_} $quizTitle ${I10n.of(context).in_} ${I10n.of(context).the_app} ${I10n.of(context).appTitle}");
-                          },
-                        ),
+                  Container(
+                    width: 189,
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      subtitle,
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.body.copyWith(
+                        color: settingsController.currentAppTheme.primaryColor,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 68.0),
-                        child: NextButtonWidget.transparent(
-                          label: I10n.of(context).backTo_Home,
-                          onTap: () async {
-                            //TODO check after login
-                            //  Navigator.pushNamedAndRemoveUntil(context,AppRoutes.resultRoute,);
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 68.0),
+                          child: NextButtonWidget.purple(
+                            //TODO check if share works in physical device
+                            //TODO evaluate if change share button to other thing
+                            label: "${I10n.of(context).share} ",
+                            onTap: () {
+                              //TODO checkear en telef fisico que funcione sin pedir contactos
+                              Share.share(
+                                  "${I10n.of(context).i_got} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions} ${I10n.of(context).in_} $quizTitle ${I10n.of(context).in_} ${I10n.of(context).the_app} ${I10n.of(context).appTitle}");
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 68.0),
+                          child: NextButtonWidget.transparent(
+                            label: I10n.of(context).backTo_Home,
+                            onTap: () async {
+                              //TODO check after login
+                              //  Navigator.pushNamedAndRemoveUntil(context,AppRoutes.resultRoute,);
 
-                            //*elimina el stack de vistas 1 a 1 hasta la vista home
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
+                              //*elimina el stack de vistas 1 a 1 hasta la vista home
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

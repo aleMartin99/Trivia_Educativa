@@ -3,37 +3,66 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //TODO check the easy theme package recarguita
+
+const String _kThemeKey = 'appTheme';
+
 class SettingsController {
+  final SharedPreferences _sharedPreferences;
+  SettingsController(
+    this._sharedPreferences,
+    Object object,
+  )
+  //: super(_sharedPreferences.getString(_kThemeKey)?? false )
+  {
+    // Object object,
+    init();
+  }
+
   ValueNotifier<ThemeData> themeNotifier =
       ValueNotifier<ThemeData>(AppTheme.lightTheme);
   ThemeData get currentAppTheme => themeNotifier.value;
   set currentAppTheme(ThemeData value) => themeNotifier.value = value;
 
-  void changeCurrentAppTheme({String? theme}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  init() {
+    final theme = _sharedPreferences.getString(_kThemeKey);
+    changeCurrentAppTheme(
+      theme: theme,
+    );
+  }
+
+  void changeCurrentAppTheme({
+    String? theme,
+  }) async {
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (theme != null) {
       if (theme.toLowerCase() == "dark") {
-        _setDarkTheme(prefs);
+        _setDarkTheme();
       } else {
-        _setLightTheme(prefs);
+        _setLightTheme();
       }
     } else {
       if (currentAppTheme == AppTheme.lightTheme) {
-        _setDarkTheme(prefs);
+        _setDarkTheme();
       } else if (currentAppTheme == AppTheme.darkTheme) {
-        _setLightTheme(prefs);
+        _setLightTheme();
       }
     }
   }
 
-  void _setDarkTheme(SharedPreferences prefs) {
+  void _setDarkTheme() {
     currentAppTheme = AppTheme.darkTheme;
-    prefs.setString("theme", "dark");
+    _sharedPreferences.setString(_kThemeKey, "dark");
   }
 
-  void _setLightTheme(SharedPreferences prefs) {
+  void _setLightTheme() {
     currentAppTheme = AppTheme.lightTheme;
-    prefs.setString("theme", "light");
+    _sharedPreferences.setString(_kThemeKey, "light");
   }
 }
+
+
+
+// theme: themeLight,
+//           darkTheme: themeDark,
+//           themeMode: EasyDynamicTheme.of(context).themeMode,

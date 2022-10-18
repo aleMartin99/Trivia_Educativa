@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
         Provider.of<SettingsController>(context);
 
     if (controller.state == HomeState.success) {
+      //TODO make validation for data to all pages like asignatura(home)
       if (controller.asignaturas == null) {
         return Scaffold(
             body: Column(
@@ -81,7 +82,8 @@ class _HomePageState extends State<HomePage> {
         return WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
-              backgroundColor: Color.fromARGB(255, 242, 234, 255),
+              backgroundColor:
+                  settingsController.currentAppTheme.scaffoldBackgroundColor,
               //TODO put the correct color. from theme
               //  settingsController.currentAppTheme.scaffoldBackgroundColor,
               appBar: AppBarWidget(
@@ -89,7 +91,9 @@ class _HomePageState extends State<HomePage> {
                 user: widget.user,
                 notasProv: controller.notasProv!,
                 context: context,
+                settingsController: settingsController,
               ),
+              //TODO check loading condition
               body: (controller.state == HomeState.loading)
                   ? const Center(
                       child: CircularProgressIndicator(
@@ -101,39 +105,35 @@ class _HomePageState extends State<HomePage> {
                         horizontal: 20,
                         vertical: 15,
                       ),
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                          ),
-                          GridView.count(
-                            childAspectRatio: 1.2,
-                            shrinkWrap: true,
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 25,
-                            mainAxisSpacing: 16,
-                            children: controller.asignaturas!
-                                .map((asignatura) => AsignaturaCardWidget(
-                                      nombre: asignatura.descripcion,
-                                      //TODO hacer validaciones para cosas vacias
-                                      cantTemas:
-                                          asignatura.cursos.last.temas.length,
-                                      cursos: asignatura.cursos,
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, AppRoutes.temaRoute,
-                                            arguments: TemaPageArgs(
-                                                idAsignatura: asignatura.id,
-                                                idCurso:
-                                                    asignatura.cursos.last.id,
-                                                temas: asignatura
-                                                    .cursos.last.temas));
-                                      },
-                                    ))
-                                .toList(),
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: GridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          childAspectRatio: 1.2,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 25,
+                          mainAxisSpacing: 16,
+                          children: controller.asignaturas!
+                              .map((asignatura) => AsignaturaCardWidget(
+                                    nombre: asignatura.descripcion,
+                                    //TODO hacer validaciones para cosas vacias
+                                    cantTemas:
+                                        asignatura.cursos.last.temas.length,
+                                    cursos: asignatura.cursos,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, AppRoutes.temaRoute,
+                                          arguments: TemaPageArgs(
+                                              idAsignatura: asignatura.id,
+                                              idCurso:
+                                                  asignatura.cursos.last.id,
+                                              temas: asignatura
+                                                  .cursos.last.temas));
+                                    },
+                                  ))
+                              .toList(),
+                        ),
                       ),
                     )),
         );

@@ -41,5 +41,8 @@
     "noData":"No data available",
     "settings":"Settings",
     "darkTheme":"Dark Theme",
-    "language":"Language"
+    "language":"Language",
+    "onBoarding_1":"Intuitive and uncomplicated, easy to use.",
+    "onBoarding_2":"Alternative to traditional evaluation methods.",
+    "onBoarding_3":"Instant exam results."
 }

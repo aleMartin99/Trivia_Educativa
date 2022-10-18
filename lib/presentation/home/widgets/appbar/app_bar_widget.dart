@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
@@ -7,10 +8,14 @@ import 'package:trivia_educativa/presentation/home/widgets/score_card/score_card
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../core/app_theme.dart';
+import '../../../settings/settings_controller.dart';
+
 class AppBarWidget extends PreferredSize {
   final User user;
   final List<NotaProv> notasProv;
   final BuildContext context;
+  final SettingsController settingsController;
 
   static int cantAprobados(List<NotaProv> notasProv) {
     int cantAprobados = 0;
@@ -26,7 +31,8 @@ class AppBarWidget extends PreferredSize {
       {Key? key,
       required this.user,
       required this.notasProv,
-      required this.context})
+      required this.context,
+      required this.settingsController})
       : super(
           key: key,
           preferredSize: const Size.fromHeight(250),
@@ -68,17 +74,30 @@ class AppBarWidget extends PreferredSize {
                         },
                         child: Container(
                           clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: settingsController
+                                          .currentAppTheme.brightness ==
+                                      Brightness.dark
+                                  ? AppTheme.backgroundColors(Brightness.dark)
+                                  : AppColors.lightPurple
+                              //AppColors.lightPurple
+
+                              ),
                           // color: Colors.blue,
                           width: 75,
                           height: 75,
-
-                          //*Carga Bien la imagen de BD, se modifico manualmente el nombre de la imagen en
-                          //* la direccion(local host por la direccion del emulador) por problemas
-                          child: Image.network(
-                            user.imagen!,
+                          padding: const EdgeInsets.all(5),
+                          child: FittedBox(
+                            child: Icon(
+                              Icons.person,
+                              color: settingsController
+                                          .currentAppTheme.brightness ==
+                                      Brightness.dark
+                                  ? AppColors.lightPurple
+                                  : AppColors.grey,
+                              //size: 30,
+                            ),
                           ),
                         ),
                       ),

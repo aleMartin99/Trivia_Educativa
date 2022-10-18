@@ -11,8 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../core/app_colors.dart';
 import '../../core/app_gradients.dart';
 import '../../core/app_text_styles.dart';
+import '../shared/widgets/gradient_app_bar_widget.dart';
 
 class NivelPage extends StatefulWidget {
   const NivelPage({
@@ -69,15 +71,51 @@ class _NivelPageState extends State<NivelPage> {
     return Scaffold(
         backgroundColor:
             settingsController.currentAppTheme.scaffoldBackgroundColor,
-        appBar: NewGradientAppBar(
-          gradient: AppGradients.linear,
-          //toolbarHeight: kToolbarHeight,
-
-          title: Text(
-            I10n.of(context).levels,
-            style: AppTextStyles.title,
+        appBar: PreferredSize(
+          child: GradientAppBarWidget(
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Row(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        alignment: Alignment.centerLeft,
+                        splashColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        padding: const EdgeInsets.all(0),
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 25,
+                          color: settingsController
+                              .currentAppTheme.iconTheme.color,
+                        )),
+                    Text(
+                      I10n.of(context).levels,
+                      style: AppTextStyles.titleBold.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
+          preferredSize: const Size.fromHeight(56),
         ),
+
+        //  NewGradientAppBar(
+        //   gradient: AppGradients.linear,
+        //   //toolbarHeight: kToolbarHeight,
+
+        //   title: Text(
+        //     I10n.of(context).levels,
+        //     style: AppTextStyles.title,
+        //   ),
+        // ),
 
         //  PreferredSize(
         //   child: GradientAppBarWidget(
@@ -104,28 +142,49 @@ class _NivelPageState extends State<NivelPage> {
         //   ),
         //   preferredSize: const Size.fromHeight(250),
         // ),
-
+//TODO make validation for data to all pages like asignatura(home)
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 15,
           ),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 24),
-              ),
+          child:
+
               //TODO make a list view
-              GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  children: widget.niveles.map((nivel) {
-                    if (doneLevel(nivel.id, controller.notasProv ?? [])) {
-                      return NivelCardWidget(
-                        isDone: true,
+              Padding(
+            padding: const EdgeInsets.only(top: 24.0),
+            child: GridView.count(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: widget.niveles.map((nivel) {
+                  if (doneLevel(nivel.id, controller.notasProv ?? [])) {
+                    return NivelCardWidget(
+                      isDone: true,
+                      nombre: nivel.descripcion,
+                      preguntas: nivel.preguntas,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.challengeRoute,
+                          arguments: ChallengePageArgs(
+                              preguntas: nivel.preguntas,
+                              rango3: nivel.rango3,
+                              rango4: nivel.rango4,
+                              rango5: nivel.rango5,
+                              quizTitle: nivel.descripcion,
+                              idAsignatura: widget.idAsignatura,
+                              idCurso: widget.idCurso,
+                              idTema: widget.idTema,
+                              idNivel: nivel.id),
+                        );
+                      },
+                    );
+                  } else {
+                    return NivelCardWidget(
+                        isDone: false,
                         nombre: nivel.descripcion,
                         preguntas: nivel.preguntas,
                         onTap: () {
@@ -143,32 +202,9 @@ class _NivelPageState extends State<NivelPage> {
                                 idTema: widget.idTema,
                                 idNivel: nivel.id),
                           );
-                        },
-                      );
-                    } else {
-                      return NivelCardWidget(
-                          isDone: false,
-                          nombre: nivel.descripcion,
-                          preguntas: nivel.preguntas,
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.challengeRoute,
-                              arguments: ChallengePageArgs(
-                                  preguntas: nivel.preguntas,
-                                  rango3: nivel.rango3,
-                                  rango4: nivel.rango4,
-                                  rango5: nivel.rango5,
-                                  quizTitle: nivel.descripcion,
-                                  idAsignatura: widget.idAsignatura,
-                                  idCurso: widget.idCurso,
-                                  idTema: widget.idTema,
-                                  idNivel: nivel.id),
-                            );
-                          });
-                    }
-                  }).toList()),
-            ],
+                        });
+                  }
+                }).toList()),
           ),
         ));
   }

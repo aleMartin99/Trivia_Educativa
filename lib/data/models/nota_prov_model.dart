@@ -4,6 +4,8 @@ import 'package:trivia_educativa/data/models/estudiante_model.dart';
 import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 
+//TODO fix after carlos fix the backend
+//TODO modify
 class NotaProv {
   late String id;
   List<Asignatura>? asignatura;

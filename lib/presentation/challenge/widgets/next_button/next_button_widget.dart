@@ -20,45 +20,37 @@ class NextButtonWidget extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  // Criando construtores nomeados para diferentes situacoes
+  // Creando constructores con nombre para diferentes situaciones
   const NextButtonWidget.green(
-      {Key? key, required String label, required VoidCallback onTap})
+      {Key? key, required this.label, required this.onTap})
       : backgroundColor = AppColors.darkGreen,
         fontColor = AppColors.white,
         borderColor = AppColors.darkGreen,
         overlayColor = AppColors.lightGreen,
-        onTap = onTap,
-        label = label,
         super(key: key);
 
   const NextButtonWidget.white(
-      {Key? key, required String label, required VoidCallback onTap})
+      {Key? key, required this.label, required this.onTap})
       : backgroundColor = AppColors.white,
         fontColor = AppColors.grey,
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
-        onTap = onTap,
-        label = label,
         super(key: key);
 
   const NextButtonWidget.purple(
-      {Key? key, required String label, required VoidCallback onTap})
+      {Key? key, required this.label, required this.onTap})
       : backgroundColor = AppColors.purple,
         fontColor = AppColors.white,
         borderColor = AppColors.purple,
         overlayColor = AppColors.purple,
-        onTap = onTap,
-        label = label,
         super(key: key);
 
   const NextButtonWidget.transparent(
-      {Key? key, required String label, required VoidCallback onTap})
+      {Key? key, required this.label, required this.onTap})
       : backgroundColor = Colors.transparent,
         fontColor = AppColors.grey,
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
-        onTap = onTap,
-        label = label,
         super(key: key);
 
   @override
@@ -84,6 +76,7 @@ class NextButtonWidget extends StatelessWidget {
         onPressed: onTap,
         child: Text(
           label,
+          //TODO check font family and remove notoSans
           style: GoogleFonts.notoSans(
             fontWeight: FontWeight.w600,
             fontSize: 15,
