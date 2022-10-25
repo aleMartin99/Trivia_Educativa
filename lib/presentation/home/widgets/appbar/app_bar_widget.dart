@@ -1,4 +1,3 @@
-import 'package:provider/provider.dart';
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
@@ -13,7 +12,7 @@ import '../../../settings/settings_controller.dart';
 
 class AppBarWidget extends PreferredSize {
   final User user;
-  final List<NotaProv> notasProv;
+  final List<NotaProv>? notasProv;
   final BuildContext context;
   final SettingsController settingsController;
 
@@ -105,7 +104,7 @@ class AppBarWidget extends PreferredSize {
                 Align(
                   alignment: const Alignment(0.0, 1.0),
                   child: ScoreCardWidget(
-                    scorePercentage: (notasProv.isNotEmpty)
+                    scorePercentage: (notasProv != null && notasProv.isNotEmpty)
                         ? (cantAprobados(notasProv) / notasProv.length)
                             .toDouble()
                         : 0,

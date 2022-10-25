@@ -23,6 +23,4 @@ void main() async {
 //   ));
 
   runApp(const AppWidget());
-
-  //TODO look the log WaitForGcToComplete blocked RunEmptyCheckpoint on ProfileSaver for 12.391ms
 }

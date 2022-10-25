@@ -7,13 +7,10 @@ import 'package:trivia_educativa/presentation/nivel/widgets/nivel_card/nivel_car
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../core/app_colors.dart';
-import '../../core/app_gradients.dart';
 import '../../core/app_text_styles.dart';
+import '../challenge/challenge_controller.dart';
 import '../shared/widgets/gradient_app_bar_widget.dart';
 
 class NivelPage extends StatefulWidget {
@@ -35,10 +32,11 @@ class NivelPage extends StatefulWidget {
 
 class _NivelPageState extends State<NivelPage> {
   final controller = HomeController();
+  final challengeController = ChallengeController();
   // final cont
 
   void _loadData() async {
-    await controller.getNotasProv();
+    await challengeController.getNotasProv();
   }
 
   @override
@@ -51,6 +49,7 @@ class _NivelPageState extends State<NivelPage> {
   }
 
   //TODO ver metodo para checkear q este o no hecho el nivel
+  //todo arreglar color card (dark mode check) cuando esta hecho
   bool doneLevel(String idNivel, List<NotaProv> notasProv) {
     bool isDone = false;
     if ((notasProv
@@ -148,10 +147,7 @@ class _NivelPageState extends State<NivelPage> {
             horizontal: 20,
             vertical: 15,
           ),
-          child:
-
-              //TODO make a list view
-              Padding(
+          child: Padding(
             padding: const EdgeInsets.only(top: 24.0),
             child: GridView.count(
                 physics: const BouncingScrollPhysics(),
@@ -160,7 +156,8 @@ class _NivelPageState extends State<NivelPage> {
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 children: widget.niveles.map((nivel) {
-                  if (doneLevel(nivel.id, controller.notasProv ?? [])) {
+                  if (doneLevel(
+                      nivel.id, challengeController.notasProv ?? [])) {
                     return NivelCardWidget(
                       isDone: true,
                       nombre: nivel.descripcion,

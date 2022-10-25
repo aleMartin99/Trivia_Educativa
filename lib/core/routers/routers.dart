@@ -27,6 +27,8 @@ const String loginRoute = "/login";
 const String settingsRoute = "/settings";
 
 class AppRouter extends StatelessWidget {
+  const AppRouter({super.key});
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments; // pegando os argumentos caso haja
 
@@ -136,7 +138,7 @@ class AppRouter extends StatelessWidget {
       return const LoginPage();
     }
 
-    return Onboarding();
+    return const Onboarding();
   }
 }
 
@@ -194,7 +196,7 @@ class TemaPageArgs {
   final List<Tema> temas;
   final String idAsignatura;
   final String idCurso;
-  //TODO fix this after carlos fix the disaster with adding note
+  //TODO add id estudiante when adding note
   TemaPageArgs(
       {required this.temas, required this.idAsignatura, required this.idCurso});
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +11,6 @@ import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next
 
 import '../../../../core/app_routes.dart';
 
-import '../../../../core/app_theme.dart';
 import '../../../../data/models/onboarding_item.dart';
 
 import '../../../login/login_controller.dart';
@@ -38,15 +35,10 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
-  // late final PageController _pageController;
-  // late double _currentPage;
   final controller = LoginController();
   final onBoardingController = OnBoardingController();
   final pageController = PageController();
 
-  // void _loadData() async {
-  //   await controller.getUser();
-  // }
   void nextPage() {
     //* 3 is the length of the onBoarding items
     if (onBoardingController.currentPage < 3) {
@@ -59,12 +51,6 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   void initState() {
-    // _loadData();
-    // controller.stateNotifier.addListener(() {
-    //   // setState(() {});
-    //   if (controller.state == LoginState.error) showAlertDialog(context);
-    // });
-//     super.initState();
 // //TODO CHECK why onboarding continuar button sigue a 4ta pagina q no existe
 
     pageController.addListener(
@@ -74,10 +60,6 @@ class _OnboardingState extends State<Onboarding> {
     );
 
     super.initState();
-
-//     _currentPage = 0;
-//     _pageController = PageController()
-//       ..addListener(() => _currentPage = _pageController.page ?? 0);
   }
 
   @override
@@ -103,8 +85,6 @@ class _OnboardingState extends State<Onboarding> {
       child: DedicatedScaffold(
         backgroundColor: Colors.white,
         appBar: DedicatedAppBar(
-            //TODO fix color
-            // backgroundColor: Colors.red,
             trailing: TextButton(
           onPressed: () {
             context.read<OnboardingCubit>().markAsViewed();
@@ -114,6 +94,7 @@ class _OnboardingState extends State<Onboarding> {
             );
             // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
           },
+          //TODO I10n
           child: Text(
             'Saltar',
             style: Theme.of(context).textTheme.headline5?.copyWith(
@@ -161,7 +142,6 @@ class _OnboardingState extends State<Onboarding> {
               children: [
                 ...items.map(
                   (e) => SafeArea(
-                    //TODO check page wigets Promo Notifications - recarguita
                     //TODO CHeck dark mode with background color
                     bottom: false,
                     child: Builder(builder: (context) {

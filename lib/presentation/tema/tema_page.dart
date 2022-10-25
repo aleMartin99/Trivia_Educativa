@@ -1,16 +1,12 @@
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
-// import 'package:educational_quiz_app/presentation/home/widgets/level_button/level_button_widget.dart';
 import 'package:trivia_educativa/presentation/tema/widgets/tema_card/tema_card_widget.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../core/app_colors.dart';
-import '../../core/app_gradients.dart';
 import '../../core/app_text_styles.dart';
 import '../shared/widgets/gradient_app_bar_widget.dart';
 // import 'package:http/http.dart' as http;
@@ -81,6 +77,7 @@ class _TemaPageState extends State<TemaPage> {
         preferredSize: const Size.fromHeight(56),
       ),
       body:
+
           //TODO make validation for data to all pages like asignatura(home)
           (widget.temas.isNotEmpty)
               ? Padding(
@@ -90,6 +87,7 @@ class _TemaPageState extends State<TemaPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 24.0),
+                    //TODO make a list view
                     child: GridView.count(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
@@ -98,7 +96,7 @@ class _TemaPageState extends State<TemaPage> {
                       mainAxisSpacing: 16,
                       //*info cambie el ! de temas
                       //TODO ver como controlar q no se parta, poner imagenes de que si no hay elementos...
-                      //TODO buscar SVG o lottie
+                      //TODO Check if next page items is 0 then dialog no items
                       children: widget.temas
                           .map((tema) => TemaCardWidget(
                               nombre: tema.descripcion,

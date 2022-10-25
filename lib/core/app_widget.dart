@@ -12,7 +12,7 @@ import '../presentation/onboarding/cubit/onboarding_cubit.dart';
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
 
-//ToDO bloqear orientacion
+//ToDO fix the imports
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

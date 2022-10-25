@@ -116,14 +116,14 @@ class _ChallengePageState extends State<ChallengePage> {
         int nota = evaluarNivel(
             controller.puntos, widget.rango3, widget.rango4, widget.rango5);
         log(nota.toString());
-        homeController.crearNota(nota);
-        await homeController.getNotasProv();
+        controller.crearNota(nota);
+        await controller.getNotasProv();
 
         //*se asigna la nota
         //PutAsignar
 
-        await homeController.asignarNota(widget.idAsignatura, widget.idCurso,
-            widget.idTema, widget.idNivel, homeController.notasProv!.last.id);
+        await controller.asignarNota(widget.idAsignatura, widget.idCurso,
+            widget.idTema, widget.idNivel, controller.notasProv!.last.id);
         Navigator.pop(context);
         Navigator.pushReplacementNamed(
           context,
@@ -198,8 +198,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   },
                   color: settingsController.currentAppTheme.primaryColor,
                 ),
-                //TODO traducir texto
-                // o value listenable vai fazer o rebuild so nesse componente quando houver atualizacoes
+                //the ValueListenableBuilder will only rebuild this component when there are updates
                 Expanded(
                   child: ValueListenableBuilder<int>(
                     valueListenable: controller.currentPageNotifier,
@@ -214,7 +213,7 @@ class _ChallengePageState extends State<ChallengePage> {
           ),
         ),
         body: PageView(
-          //TODO Check this property in case the question content is to big
+          //TODO Check this property in case the question content is to big and there is need to scroll
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: widget.preguntas
@@ -261,18 +260,19 @@ class _ChallengePageState extends State<ChallengePage> {
                           //postCrearNota
                           int nota = evaluarNivel(controller.puntos,
                               widget.rango3, widget.rango4, widget.rango5);
+
                           log(nota.toString());
                           //TODO sacar crear nota para controller de challenge
-                          homeController.crearNota(nota);
-                          await homeController.getNotasProv();
+                          controller.crearNota(nota);
+                          await controller.getNotasProv();
                           //*se asigna la nota
                           //*PutAsignar
-                          await homeController.asignarNota(
+                          await controller.asignarNota(
                               widget.idAsignatura,
                               widget.idCurso,
                               widget.idTema,
                               widget.idNivel,
-                              homeController.notasProv!.last.id);
+                              controller.notasProv!.last.id);
                           Navigator.pushReplacementNamed(
                             context,
                             AppRoutes.resultRoute,

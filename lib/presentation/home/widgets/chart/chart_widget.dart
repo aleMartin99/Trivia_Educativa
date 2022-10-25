@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:provider/provider.dart';
 
-//TODO make reactive to api callback for rebuilding the chart
 class ChartWidget extends StatefulWidget {
   ChartWidget({
     Key? key,

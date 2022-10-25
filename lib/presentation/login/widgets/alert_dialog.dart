@@ -22,12 +22,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //   }
 // }
 
+//TODO migrate to error messages and remove file
 showAlertDialog(BuildContext context) {
   SettingsController settingsController =
       Provider.of<SettingsController>(context, listen: false);
   // Create button
   Widget okButton = TextButton(
     child: Text(
+      //TODO I10n
       "OK",
       style: AppTextStyles.heading
           .copyWith(color: settingsController.currentAppTheme.primaryColor),

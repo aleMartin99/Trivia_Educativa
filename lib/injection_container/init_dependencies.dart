@@ -12,6 +12,7 @@ FutureOr<void> initDependencies(
     //String apiBaseUrl = kApiProductionBaseUrl,
     ) async {
   await initCore(sl);
+  // await initAuth(sl, apiBaseUrl: apiBaseUrl, appVersion: appVersion);
 
   //  //Ensures to have a valid authentication state before the app runs.
   // await sl<AuthCubit>().refreshUserState();

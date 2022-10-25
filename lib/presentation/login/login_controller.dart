@@ -5,8 +5,6 @@ import '../../domain/repositories/login_repository.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 import 'login_state.dart';
 
-//TODO separate controllers
-
 //TODO en el auth si es el user que devuelve es Estudiante acceso, si es profesor o administrador ERROR (no esta autorizado)
 //TODO ask carlos keyword roles (por el momento "Estudiante") (Todo con letra inicial mayuscula)
 
@@ -40,10 +38,6 @@ class LoginController {
 
 //TODO se pide user, con ese user.carnetI(method comparar password para ) 
 
-
-
-
-//TODO make the logic for authentication and move to controller out of presentation 
 
 
 

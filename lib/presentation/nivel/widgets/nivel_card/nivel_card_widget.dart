@@ -5,17 +5,15 @@ import 'package:trivia_educativa/presentation/settings/settings_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 class NivelCardWidget extends StatelessWidget {
   //bool isDone = false;
-  late String nombre;
+  final String nombre;
   // late String subtitle;
-  late List<Pregunta> preguntas;
-  late bool isDone;
+  final List<Pregunta> preguntas;
+  final bool isDone;
   final VoidCallback onTap;
 
-  NivelCardWidget({
+  const NivelCardWidget({
     Key? key,
     required this.isDone,
     required this.nombre,

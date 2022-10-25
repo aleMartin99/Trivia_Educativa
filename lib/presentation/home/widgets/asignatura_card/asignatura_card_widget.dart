@@ -1,4 +1,3 @@
-import 'package:lottie/lottie.dart';
 import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
@@ -48,6 +47,7 @@ class AsignaturaCardWidget extends StatelessWidget {
         ),
         child: Column(
           //TODO annadir curso correspondiente
+          //TODO annadir cantidad items next page (temas)
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
