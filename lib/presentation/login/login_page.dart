@@ -28,16 +28,22 @@ class _LoginPageState extends State<LoginPage> {
   void _loadData() async {
     //TODO validar para que llame cuando ponga los campos
     await controller.getUser();
+    log(controller.users!.last.nombreUsuario.toString());
   }
 
+  late final _onboardingAlreadySeen;
   @override
   void initState() {
     _loadData();
+    _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
+    log('on boarding visto? ' + _onboardingAlreadySeen.toString());
+
     controller.stateNotifier.addListener(() {
       //  setState(() {});
 
       if (controller.state == LoginState.error) {
         //TODO remove the on tap error message and leave this when login sirva
+        //TODO improv message
         Dialoger.showErrorDialog(
           context: context,
           title: I10n.of(context).error,
@@ -57,14 +63,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
 
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        // backgroundColor:
-        //     settingsController.currentAppTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: deviceSize.width * 0.1,
@@ -93,9 +95,10 @@ class _LoginPageState extends State<LoginPage> {
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.heading40.copyWith(
-                          color:
-                              settingsController.currentAppTheme.primaryColor,
-                        ),
+                            color: Theme.of(context).primaryIconTheme.color
+
+                            //  settingsController.currentAppTheme.primaryColor,
+                            ),
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints(
@@ -104,10 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Text(
                         I10n.of(context).appDescription,
-                        style: AppTextStyles.body.copyWith(
-                          color:
-                              settingsController.currentAppTheme.primaryColor,
-                        ),
+                        style: TextStyle(
+                            fontFamily: 'PNRegular',
+                            fontSize: 14,
+                            color: Theme.of(context).primaryIconTheme.color
+                            // fontWeight: FontWeight.w100,
+                            ),
                       ),
                     ],
                   ),
@@ -131,11 +136,12 @@ class _LoginPageState extends State<LoginPage> {
                               _loadData();
                               //TODO remove  message when login sirva and validation in repository tiza
                               //     //TODO check for better message
+                              //TODO In10
                               Dialoger.showErrorDialog(
                                   context: context,
                                   title: 'Error',
                                   description:
-                                      'No existen usuarios en el sistema');
+                                      'No se ha podido acceder a los usuarios');
                             }
                             // final _onboardingAlreadySeen =
                             //     context.read<OnboardingCubit>().alreadySeen;

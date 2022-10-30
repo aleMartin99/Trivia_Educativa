@@ -32,8 +32,6 @@ class DedicatedScaffold extends StatelessWidget {
   final bool resizeToAvoidBottomInset;
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
     if (Platform.isIOS) {
       return SafeArea(
         top: false,
@@ -46,8 +44,9 @@ class DedicatedScaffold extends StatelessWidget {
             key: scaffoldKey,
             floatingActionButtonLocation: floatingActionButtonLocation,
             floatingActionButton: floatingActionButton,
-            backgroundColor:
-                settingsController.currentAppTheme.scaffoldBackgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            // backgroundColor:
+            //     settingsController.currentAppTheme.scaffoldBackgroundColor,
             extendBodyBehindAppBar: true,
             extendBody: true,
             bottomNavigationBar: bottomAppBar,
@@ -88,8 +87,7 @@ class DedicatedScaffold extends StatelessWidget {
           floatingActionButtonLocation: floatingActionButtonLocation,
           floatingActionButton: floatingActionButton,
           extendBody: false,
-          backgroundColor:
-              settingsController.currentAppTheme.scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: body,
         ),
       ),

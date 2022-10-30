@@ -37,18 +37,18 @@ class _AnswerWidgetState extends State<AnswerWidget> {
   Color get _selectedBorderCardRight =>
       widget.answerModel.isRight ? AppColors.green : AppColors.red;
 
-  TextStyle get _selectedTextStyleRight => widget.answerModel.isRight
-      ? AppTextStyles.bodyDarkGreen
-      : AppTextStyles.bodyDarkRed;
+  TextStyle get _selectedTextStyleRight => TextStyle(
+      fontFamily: 'PNRegular',
+      fontSize: 14,
+      color: Theme.of(context).primaryIconTheme.color
+      // fontWeight: FontWeight.w100,
+      );
 
   IconData get _selectedIconRight =>
-      widget.answerModel.isRight ? Icons.check : Icons.close;
+      widget.answerModel.isRight ? Icons.circle_sharp : Icons.circle_sharp;
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       // ignore pointer vai desativar o recurso de clique em um botao, por exemplo
@@ -65,13 +65,12 @@ class _AnswerWidgetState extends State<AnswerWidget> {
             decoration: BoxDecoration(
               //TODO change selected icons and colors
               color: widget.isSelected
-                  ? _selectedColorCardRight
-                  : AppTheme.backgroundColors(
-                      settingsController.currentAppTheme.brightness),
+                  ? AppColors.selectedColorCardRight
+                  : AppTheme.backgroundColors(Theme.of(context).brightness),
               borderRadius: BorderRadius.circular(10),
               border: Border.fromBorderSide(BorderSide(
                 color: widget.isSelected
-                    ? _selectedBorderCardRight
+                    ? Theme.of(context).primaryColor
                     : AppColors.border,
               )),
             ),
@@ -86,10 +85,10 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                   child: Text(
                     widget.answerModel.title,
                     style: widget.isSelected
-                        ? _selectedTextStyleRight
+                        ? _selectedTextStyleRight.copyWith(
+                            color: AppColors.black)
                         : AppTextStyles.body.copyWith(
-                            color:
-                                settingsController.currentAppTheme.primaryColor,
+                            color: Theme.of(context).primaryIconTheme.color,
                           ),
                   ),
                 ),
@@ -99,9 +98,9 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     color: widget.isSelected
-                        ? _selectedColorRight
+                        ? Theme.of(context).primaryColor
                         : AppTheme.backgroundColors(
-                            settingsController.currentAppTheme.brightness),
+                            Theme.of(context).brightness),
                     border: Border.fromBorderSide(BorderSide(
                       color: widget.isSelected
                           ? _selectedBorderRight
@@ -112,7 +111,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                       ? Icon(
                           _selectedIconRight,
                           size: 16,
-                          color: AppColors.white,
+                          color: Theme.of(context).primaryColor,
                         )
                       : null,
                 ),

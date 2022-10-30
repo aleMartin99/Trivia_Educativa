@@ -39,8 +39,7 @@ class _TemaPageState extends State<TemaPage> {
         Provider.of<SettingsController>(context);
 
     return Scaffold(
-      backgroundColor:
-          settingsController.currentAppTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: PreferredSize(
         child: GradientAppBarWidget(
           child: Align(

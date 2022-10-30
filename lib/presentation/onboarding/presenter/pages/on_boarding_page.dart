@@ -11,6 +11,7 @@ import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next
 
 import '../../../../core/app_routes.dart';
 
+import '../../../../core/core.dart';
 import '../../../../data/models/onboarding_item.dart';
 
 import '../../../login/login_controller.dart';
@@ -75,15 +76,15 @@ class _OnboardingState extends State<Onboarding> {
       OnboardingItem(AppImages.onBoarding_2, I10n.of(context).onBoarding_2),
       OnboardingItem(AppImages.onBoarding_3, I10n.of(context).onBoarding_3),
     ];
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
     List<OnboardingItem> items = Theme.of(context).brightness == Brightness.dark
         ? kOnboardingDarkItems
         : kOnboardingLightItems;
     return WillPopScope(
       onWillPop: () async => false,
       child: DedicatedScaffold(
-        backgroundColor: Colors.white,
+        // backgroundColor: (Theme.of(context).brightness == Brightness.dark)
+        //     ? AppColors.lightPurple
+        //     : Theme.of(context).scaffoldBackgroundColor,
         appBar: DedicatedAppBar(
             trailing: TextButton(
           onPressed: () {
@@ -98,7 +99,7 @@ class _OnboardingState extends State<Onboarding> {
           child: Text(
             'Saltar',
             style: Theme.of(context).textTheme.headline5?.copyWith(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).iconTheme.color,
                   fontSize: 16,
                 ),
           ),
@@ -186,7 +187,11 @@ class _OnboardingState extends State<Onboarding> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2
-                                      ?.copyWith(fontSize: 20),
+                                      ?.copyWith(
+                                          fontSize: 21,
+                                          color: Theme.of(context)
+                                              .primaryIconTheme
+                                              .color),
                                 ),
                               ),
                             ),
@@ -217,8 +222,7 @@ class _OnboardingState extends State<Onboarding> {
                     dotHeight: 4.0,
                     strokeWidth: 1.5,
                     dotColor: CupertinoColors.systemGrey,
-                    activeDotColor:
-                        settingsController.currentAppTheme.primaryColor,
+                    activeDotColor: Theme.of(context).primaryIconTheme.color!,
                   ),
                 )),
               ),

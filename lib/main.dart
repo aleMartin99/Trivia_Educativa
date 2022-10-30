@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_educativa/core/app_widget.dart';
 import 'package:get_it/get_it.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 
 import 'core/api_constants.dart';
 import 'injection_container/init_dependencies.dart';
@@ -18,9 +19,9 @@ void main() async {
     // apiBaseUrl: kApiProductionBaseUrl,
   );
 
-// runApp(EasyDynamicThemeWidget(
-//     child: const MyApp(),
-//   ));
+  runApp(EasyDynamicThemeWidget(
+    child: const AppWidget(),
+  ));
 
-  runApp(const AppWidget());
+  //runApp(const AppWidget());
 }

@@ -40,15 +40,13 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
+
     final bool canPop = parentRoute?.canPop ?? false;
     if (forceAndroid || Theme.of(context).platform == TargetPlatform.android) {
       return AppBar(
         centerTitle: centerTitle,
         automaticallyImplyLeading: false,
-        backgroundColor:
-            settingsController.currentAppTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         toolbarHeight: height!,
         elevation: elevation,
         title: title,
@@ -80,16 +78,15 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ? Border.all(color: Colors.transparent)
                           : Border(
                               bottom: BorderSide(
-                                color: settingsController
-                                            .currentAppTheme.brightness ==
+                                color: Theme.of(context).brightness ==
                                         Brightness.light
                                     ? const Color(0x4D000000)
                                     : CupertinoColors.systemGrey.withAlpha(150),
                                 width: 0,
                               ),
                             )),
-                  backgroundColor: settingsController
-                      .currentAppTheme.scaffoldBackgroundColor
+                  backgroundColor: Theme.of(context)
+                      .scaffoldBackgroundColor
                       .withOpacity(0.90),
                   leading: leading ??
                       ((title != null && (centerTitle != null && !centerTitle!))
@@ -133,9 +130,8 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                         width: 0,
                       ),
                     )),
-          backgroundColor: settingsController
-              .currentAppTheme.scaffoldBackgroundColor
-              .withOpacity(0.90),
+          backgroundColor:
+              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.90),
           leading: leading ??
               ((title != null && (centerTitle != null && !centerTitle!))
                   ? Align(

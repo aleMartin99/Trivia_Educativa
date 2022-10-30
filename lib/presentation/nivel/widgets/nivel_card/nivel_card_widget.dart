@@ -1,9 +1,9 @@
 import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/pregunta_model.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NivelCardWidget extends StatelessWidget {
   //bool isDone = false;
@@ -23,14 +23,13 @@ class NivelCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     return GestureDetector(
       onTap: isDone ? () {} : onTap,
       child: Container(
+        height: 150,
+        margin: const EdgeInsets.only(bottom: 20),
         //color: Colors.amber,
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           border: const Border.fromBorderSide(
             BorderSide(
@@ -39,45 +38,67 @@ class NivelCardWidget extends StatelessWidget {
           ),
           //TODO check nivel color done in dark mode
           color: isDone
-              ? Colors.black12
-              : AppTheme.backgroundColors(
-                  settingsController.currentAppTheme.brightness),
+              ? (Theme.of(context).brightness == Brightness.light)
+                  ? Colors.black12
+                  : AppColors.selectedColorCardRight
+              : AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //*Icono para la info del modo de juego
-            // SizedBox(
-            //   width: 40,
-            //   height: 40,
-            //   child: Image.asset(
-            //     AppImages.blocks,
-            //   ),
-            // ),
-            const SizedBox(
-              height: 24,
-            ),
-            Expanded(
-              child: Text(
-                nombre,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.heading15.copyWith(
-                  color: settingsController.currentAppTheme.primaryColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  nombre,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                        fontSize: 21,
+                        color: isDone
+                            ? AppColors.black
+                            : Theme.of(context).primaryIconTheme.color,
+                        //color: settingsController.currentAppTheme.primaryColor,
+                      ),
                 ),
-              ),
+                isDone
+                    ? const Icon(
+                        Icons.check_box,
+                        color: AppColors.chartPrimary,
+                      )
+                    : Icon(
+                        Icons.check_box_outline_blank,
+                        color:
+                            (Theme.of(context).brightness == Brightness.light)
+                                ? AppColors.lightPurple
+                                : Colors.grey[600],
+                      )
+              ],
             ),
             const SizedBox(
-              height: 15,
+              height: 5,
             ),
-            isDone
-                ? const Icon(
-                    Icons.check_circle,
-                    color: AppColors.chartPrimary,
-                  )
-                : const Text(''),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  //Todo I10n
+                  child: Text(
+                    "Cant. de preguntas: ${preguntas.length}",
+                    style: TextStyle(
+                      fontFamily: 'PNRegular',
+                      fontSize: 14,
+                      color: isDone
+                          ? AppColors.black
+                          : Theme.of(context).primaryIconTheme.color,
+                      // fontWeight: FontWeight.w100,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

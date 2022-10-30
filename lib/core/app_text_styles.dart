@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
+//TODO change font family to PN
 class AppTextStyles {
   static final TextStyle title = GoogleFonts.notoSans(
     color: AppColors.white,
@@ -36,7 +37,7 @@ class AppTextStyles {
 
   static final TextStyle body = GoogleFonts.notoSans(
     color: AppColors.grey,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: FontWeight.normal,
   );
 
@@ -94,4 +95,19 @@ class AppTextStyles {
     fontSize: 14,
     fontWeight: FontWeight.normal,
   );
+  //TODO check color with both modes
+  static final TextStyle caption = GoogleFonts.notoSans(
+    color: AppColors.grey,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+  static const TextStyle c = TextStyle(
+    fontFamily: 'PNRegular',
+    color: AppColors.black,
+    fontSize: 25,
+    // fontWeight: FontWeight.w400,
+  );
+
+  //              SIZE  WEIGHT  SPACING
+  // caption      12.0  regular  0.4     "regular" is `FontWeight.w400`
 }

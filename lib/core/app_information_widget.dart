@@ -2,6 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:trivia_educativa/core/app_text_styles.dart';
+
+import 'app_colors.dart';
+import 'app_theme.dart';
 
 class AppInformationWidget extends StatelessWidget {
   const AppInformationWidget({
@@ -19,11 +24,55 @@ class AppInformationWidget extends StatelessWidget {
           // final packageName = _data?.packageName;
           final version = _data?.version;
           final buildNumber = _data?.buildNumber;
-          return Text(
-            //TODO I10n
-            '$appName ${Platform.isAndroid ? "Android" : "iOS"} v$version ($buildNumber) \nEspannol',
-            style: Theme.of(context).textTheme.caption,
-            textAlign: TextAlign.center,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                '$appName ${Platform.isAndroid ? "Android" : "iOS"} v$version ($buildNumber)',
+                style: TextStyle(
+                  fontFamily: 'PNRegular',
+                  fontSize: 14,
+                  color: Theme.of(context).primaryIconTheme.color,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              (I10n.of(context).localeName == 'es')
+                  ? Text(
+                      'Español',
+                      style: TextStyle(
+                        fontFamily: 'PNRegular',
+                        fontSize: 14,
+
+                        color: Theme.of(context).primaryIconTheme.color,
+                        fontWeight: FontWeight.w400,
+                        // fontWeight: FontWeight.w100,
+                      ),
+                      textAlign: TextAlign.center,
+                    )
+                  : (I10n.of(context).localeName == 'en')
+                      ? Text(
+                          'English',
+                          style: TextStyle(
+                            fontFamily: 'PNRegular',
+                            fontSize: 14,
+                            color: Theme.of(context).primaryIconTheme.color,
+                            fontWeight: FontWeight.w400,
+                            // fontWeight: FontWeight.w100,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      : Text(
+                          'Other Language',
+                          style: TextStyle(
+                            fontFamily: 'PNRegular',
+                            fontSize: 14,
+                            color: Theme.of(context).primaryIconTheme.color,
+                            fontWeight: FontWeight.w400,
+                            // fontWeight: FontWeight.w100,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+            ],
           );
         } else {
           return const SizedBox.shrink();

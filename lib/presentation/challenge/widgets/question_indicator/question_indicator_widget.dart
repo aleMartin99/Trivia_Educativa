@@ -18,8 +18,6 @@ class QuestionIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -32,15 +30,21 @@ class QuestionIndicatorWidget extends StatelessWidget {
             children: [
               Text(
                 "${I10n.of(context).question} $currentPage",
-                style: AppTextStyles.body.copyWith(
-                  color: settingsController.currentAppTheme.primaryColor,
-                ),
+                style: TextStyle(
+                    fontFamily: 'PNRegular',
+                    fontSize: 14,
+                    color: Theme.of(context).primaryIconTheme.color
+                    // fontWeight: FontWeight.w100,
+                    ),
               ),
               Text(
                 "${I10n.of(context).of_} $pagesLenght",
-                style: AppTextStyles.body.copyWith(
-                  color: settingsController.currentAppTheme.primaryColor,
-                ),
+                style: TextStyle(
+                    fontFamily: 'PNRegular',
+                    fontSize: 14,
+                    color: Theme.of(context).primaryIconTheme.color
+                    // fontWeight: FontWeight.w100,
+                    ),
               ),
             ],
           ),

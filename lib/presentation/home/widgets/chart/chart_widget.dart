@@ -1,35 +1,35 @@
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
+import '../../../../core/app_theme.dart';
+import '../../../../data/models/nota_prov_model.dart';
+import '../../../challenge/challenge_controller.dart';
+import '../../../challenge/challenge_state.dart';
 import 'package:flutter/material.dart';
-
-//import 'package:dev_quiz/core/app_colors.dart';
 import 'package:trivia_educativa/core/core.dart';
-import 'package:provider/provider.dart';
 
 class ChartWidget extends StatefulWidget {
-  ChartWidget({
+  const ChartWidget({
     Key? key,
-    required percent,
+    // required this.percent,
   }) : super(
           key: key,
-        ) {
-    percentNotifier = ValueNotifier<double>(percent);
-  }
+        );
 
+  // final double percent ;
+//TODO se parte cuando pongo dark mode y cierro sesion, error de los ticker provider
   // var percent =
   // ValueNotifier<double>(1);
 
-  late ValueNotifier<double> percentNotifier; // notificador de pagina atual
-  double get percent => percentNotifier.value;
-  set percent(double value) => percentNotifier.value = value;
+  // notificador de pagina atual
+  /// final percentNotifier;
 
   @override
   _ChartWidgetState createState() => _ChartWidgetState();
 }
 
 class _ChartWidgetState extends State<ChartWidget>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  final challengeController = ChallengeController();
 
   void _initAnimation() {
     _controller = AnimationController(
@@ -39,44 +39,99 @@ class _ChartWidgetState extends State<ChartWidget>
 
     _animation = Tween<double>(
       begin: 0.0,
-      end: widget.percent,
+      end: getScorePercentage(),
     ).animate(_controller);
 
     _controller.forward();
   }
 
+  static int cantAprobados(List<NotaProv>? notasProv) {
+    int cantAprobados = 0;
+    for (int i = 0; i < notasProv!.length; i++) {
+      if (notasProv[i].nota > 2) cantAprobados++;
+    }
+    // log((cantAprobados / notasProv.length).toDouble().toString());
+    return cantAprobados;
+  }
+
+  void _loadData() async {
+    await challengeController.getNotasProv();
+    //log(challengeController.notasProv!.last.nota.toString());
+  }
+
   @override
   void initState() {
+    _loadData();
     _initAnimation();
+    //_initAnimation();
+    // Future.delayed(const Duration(seconds: 3));
+    //_initAnimation();
+    //_controller.dispose();
+    challengeController.stateNotifier.addListener(() {
+      if (challengeController.state == ChallengeState.notasLoaded) {
+        setState(() {});
+        _controller.reset();
+        _initAnimation();
+        //_controller.clearListeners();
+        //   _controller.dispose();
+
+        // Future.delayed(const Duration(seconds: 1));
+        // _initAnimation();
+        // Dialoger.showErrorDialog(
+        //   context: context,
+        //   title: 'ChallengeState Listenter',
+        //   description: 'ChallengeState.notasLoaded',
+        // );
+      }
+    });
     super.initState();
+  }
+
+  double getScorePercentage() {
+    double scorePercentage;
+    if (challengeController.notasProv != null &&
+        challengeController.notasProv!.isNotEmpty) {
+      scorePercentage = (cantAprobados(challengeController.notasProv) /
+              challengeController.notasProv!.length)
+          .toDouble();
+    } else {
+      scorePercentage = 0;
+    }
+
+    return scorePercentage;
+  }
+
+  //double scorePercentage =
+
+//TODO CHeck when loging out se parte
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+    //_animation.dispose(); // you need this
   }
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     return SizedBox(
       height: 80,
       width: 80,
       child: AnimatedBuilder(
+        //? here is the problem with the late variable not initialized
         animation: _animation,
+
         builder: (context, _) => Stack(
           children: [
             Center(
               child: SizedBox(
                 height: 80,
                 width: 80,
-                //*saca la info de percent
-                child: ValueListenableBuilder(
-                  valueListenable: widget.percentNotifier,
-                  builder: (ctx, value, _) => CircularProgressIndicator(
-                    strokeWidth: 10,
-                    value: _animation.value,
-                    backgroundColor: AppColors.purpleLight,
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                        AppColors.chartPrimary),
-                  ),
+                child: CircularProgressIndicator(
+                  strokeWidth: 10,
+                  value: _animation.value,
+                  backgroundColor: AppColors.purpleLight,
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                      AppColors.chartPrimary),
                 ),
               ),
             ),
@@ -84,7 +139,7 @@ class _ChartWidgetState extends State<ChartWidget>
               child: Text(
                 "${(_animation.value * 100).toStringAsFixed(0)}%",
                 style: AppTextStyles.heading.copyWith(
-                  color: settingsController.currentAppTheme.primaryColor,
+                  color: Theme.of(context).primaryIconTheme.color,
                 ),
               ),
             ),

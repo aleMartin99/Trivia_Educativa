@@ -1,8 +1,6 @@
 import 'package:trivia_educativa/core/core.dart';
 import 'package:flutter/material.dart';
 
-//TODO * Check modo oscuro y colores luego del reset se queda mareado
-
 class AppTheme {
   static Color backgroundColors(Brightness brightness) =>
       brightness == Brightness.light

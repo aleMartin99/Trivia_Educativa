@@ -75,9 +75,6 @@ class ResultPage extends StatelessWidget {
                 ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_excellent}!!"
                 : ''));
 
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     //*Logs for debuging the code
     log('puntos ' + puntos.toString());
     log('rango 3 ' + rango3.toString());
@@ -87,8 +84,7 @@ class ResultPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor:
-            settingsController.currentAppTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Container(
           width: double.maxFinite,
           padding: const EdgeInsets.only(top: 100),
@@ -102,24 +98,21 @@ class ResultPage extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text(
-                    title,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.heading40.copyWith(
-                      color: settingsController.currentAppTheme.primaryColor,
-                    ),
-                  ),
+                  Text(title,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline4
+                      //  color: settingsController.currentAppTheme.primaryColor,
+
+                      ),
                   Container(
                     width: 189,
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
                       subtitle,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.body.copyWith(
-                        color: settingsController.currentAppTheme.primaryColor,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
                 ],

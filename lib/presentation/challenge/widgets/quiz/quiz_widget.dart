@@ -26,45 +26,8 @@ class _QuizWidgetState extends State<QuizWidget> {
 
   AnswerModel answer(int index) => widget.pregunta.answers[index];
 
-//   List<AnswerWidget> lis() {
-//     List<AnswerWidget> lisa = [];
-//     for (int i = 0; i < 4; i++) {
-//       lisa.add(AnswerWidget(
-//         // answerModel: randomAnswers(),
-//         answerModel: answer(i),
-//         //answerModel: randomAnswers(),
-//         isSelected: indexSelected == i,
-//         isDisabled: indexSelected !=
-//             -1, //se for diferente de -1, ele ja clicou em alguem, logo n pode mais
-//         onTap: (valueIsRight) {
-//           indexSelected = i;
-//           //  log(valueIsRight.toString());
-
-//           Future.delayed(const Duration(seconds: 1))
-//               .then((_) => widget.onAnswerSelected(valueIsRight));
-//         },
-//       ));
-//     }
-
-//     lisa.shuffle();
-//     return lisa;
-//   }
-
-//   List<AnswerWidget> listado = [];
-//   @override
-//   void initState() {
-//     listado = lis();
-//  setState(() {});
-//     super.initState();
-//   }
-
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
-//       //* random items es el array que va a teer los indices de la lista desorganizados (shufle respuesta)
-
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -76,32 +39,19 @@ class _QuizWidgetState extends State<QuizWidget> {
             // width: 257,
             child: Padding(
               padding: const EdgeInsets.only(top: 50),
-              child: Text(
-                widget.pregunta.descripcion,
-                style: AppTextStyles.heading.copyWith(
-                  color: settingsController.currentAppTheme.primaryColor,
-                ),
-              ),
+              child: Text(widget.pregunta.descripcion,
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                      fontSize:
+                          21, //color: settingsController.currentAppTheme.primaryColor,
+                      color: Theme.of(context).primaryIconTheme.color)),
             ),
           ),
           const SizedBox(
             height: 24,
           ),
-
-          //*imprime el listado regado ya
-
-          // Column(
-          //   children: listado,
-          // )
-
           for (int i = 0; i < 4; i++)
             AnswerWidget(
-              // answerModel: randomAnswers(),
-
               answerModel: answer(i),
-              // answerModel: listado,
-
-              //answerModel: randomAnswers(),
               isSelected: indexSelected == i,
               isDisabled: indexSelected !=
                   -1, //se for diferente de -1, ele ja clicou em alguem, logo n pode mais

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:trivia_educativa/core/dialogs.dart';
 import 'package:trivia_educativa/data/models/user_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
@@ -10,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/main.dart';
+import 'package:trivia_educativa/presentation/login/login_controller.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:trivia_educativa/presentation/settings/widgets/settings_tile.dart';
 import 'package:trivia_educativa/presentation/shared/widgets/dedicated_list_tile.dart';
@@ -34,14 +37,17 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
-
+    // final controller = LoginController();
     //static String? get defaultLocale => global_state.Intl.withLocale;
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
+    // void dispose() {
+    //   controller.reset();
+    //   super.dispose();
+    // }
 
     return Scaffold(
-      backgroundColor:
-          settingsController.currentAppTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       //TODO change app bar like nivel page, icon and text style
       appBar: PreferredSize(
         child: GradientAppBarWidget(
@@ -66,8 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       icon: Icon(
                         Icons.arrow_back,
                         size: 25,
-                        color:
-                            settingsController.currentAppTheme.iconTheme.color,
+                        color: Theme.of(context).iconTheme.color,
                       )),
                   Text(
                     I10n.of(context).settings,
@@ -100,104 +105,80 @@ class _SettingsPageState extends State<SettingsPage> {
                 ValueListenableBuilder(
                   valueListenable: settingsController.themeNotifier,
                   builder: (ctx, value, _) => DedicatedListTile(
-                    title: Text(
-                      I10n.of(context).darkTheme,
-                      style: Theme.of(context).textTheme.headline4?.copyWith(
-                          fontSize: 18,
-                          color:
-                              settingsController.currentAppTheme.primaryColor),
-                    ),
-                    leading: Icon(
-                      Icons.dark_mode,
-                      color: settingsController.currentAppTheme.primaryColor,
-                    ),
-                    trailing: Switch.adaptive(
-                      activeColor: Color(0xFF57B6E0),
-                      value: settingsController.currentAppTheme ==
-                          AppTheme.darkTheme,
-                      onChanged: (v) {
-                        log("cambiar tema");
-                        settingsController.changeCurrentAppTheme();
-                        setState(() {});
-                      },
-                    ),
-                  ),
+                      title: Text(
+                        I10n.of(context).darkTheme,
+                        style: Theme.of(context).textTheme.headline4?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).primaryIconTheme.color
+                            // color: settingsController
+                            //     .currentAppTheme.primaryColor
+                            ),
+                      ),
+                      leading: Icon(
+                        Icons.dark_mode,
+                        color: Theme.of(context).primaryIconTheme.color,
+                        //  color: settingsController.currentAppTheme.primaryColor,
+                      ),
+                      //TODO fix themes things in settings page
+                      trailing: Switch.adaptive(
+                          activeColor: const Color(0xFF57B6E0),
+                          value: EasyDynamicTheme.of(context).themeMode ==
+                              ThemeMode.dark,
+                          onChanged: (v) {
+                            if (v) {
+                              EasyDynamicTheme.of(context).changeTheme(
+                                dark: true,
+                                dynamic: false,
+                              );
+                            } else {
+                              EasyDynamicTheme.of(context).changeTheme(
+                                dynamic: true,
+                                dark: false,
+                              );
+                            }
+                          })),
                 ),
                 DedicatedListTile(
+                  //TODO I10n
                   onPressed: () async {
                     const _acceptText = 'Aceptar';
                     const _declineText = 'Cancelar';
                     final _result = await Dialoger.showTwoChoicesDialog(
+                      //backgroundColor: Colors.red,
                       acceptText: _acceptText,
                       declineText: _declineText,
                       context: context,
                       title: '¿Estás seguro?',
                       description:
-                          'Se perderán todos tus datos del carrito y notificaciones',
+                          'Tendrá que volver a autenticarse para acceder al sistema',
                     );
 
                     if (_result == _acceptText) {
-                      Navigator.popUntil(context, (route) => route.isFirst);
+                      //dispose();
+                      //TODO implement log out
+                      // Navigator.of(context)
+                      //     .popUntil(ModalRoute.withName(AppRoutes.loginRoute));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/login', (Route<dynamic> route) => false);
+                      // Navigator.pushNamedAndRemoveUntil(
+                      //     context, '/login', (route) => false);
+
+                      //context.read<AuthCubit>().logOut();
                     }
                   },
-                  leading: Icon(
-                    Icons.logout,
-                    color: settingsController.currentAppTheme.primaryColor,
-                  ),
-                  title: Text(
-                    'Cerrar sesión',
-                    style: Theme.of(context).textTheme.headline4?.copyWith(
+                  leading: Icon(Icons.logout,
+                      color: Theme.of(context).primaryIconTheme.color
+                      //color: settingsController.currentAppTheme.primaryColor,
+                      ),
+                  title: Text('Cerrar sesión',
+                      style: Theme.of(context).textTheme.headline4?.copyWith(
                           fontSize: 18,
-                        ),
-                  ),
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).primaryIconTheme.color
+                          //color: Theme.of(context).primaryColor,
+                          )),
                 ),
-
-                //
-                DedicatedListTile(
-                  title: Text(
-                    'Lenguaje: ' '${I10n.of(context).localeName}',
-                    style: Theme.of(context).textTheme.headline4?.copyWith(
-                        fontSize: 18,
-                        color: settingsController.currentAppTheme.primaryColor),
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: settingsController.currentAppTheme.primaryColor,
-                  ),
-                  trailing: IconButton(
-                      onPressed: (() {
-                        Dialoger.showErrorDialog(
-                            context: context,
-                            title: 'Info',
-                            description:
-                                'El lenguaje se establece por el del sistema del dispositivo');
-                      }),
-                      icon: Icon(Icons.info,
-                          color:
-                              settingsController.currentAppTheme.primaryColor)),
-                ),
-
-                //TODO I10n and change tile tto settings recarguita tile
-                // ListTile(
-                //   ///leading: Icon(Icons.language),
-                //   title: Text(
-                //     'Language: ',
-                //     style: TextStyle(
-                //         color: settingsController.currentAppTheme.primaryColor),
-                //   ),
-                //   trailing: I10n.of(context).localeName == 'es'
-                //       ? Text('Espannol',
-                //           style: TextStyle(
-                //               color:
-                //                   settingsController.currentAppTheme.primaryColor))
-                //       : Text('English',
-                //           style: TextStyle(
-                //               color:
-                //                   settingsController.currentAppTheme.primaryColor)),
-                //   subtitle: Text(I10n.of(context).localeName,
-                //       style: TextStyle(
-                //           color: settingsController.currentAppTheme.primaryColor)),
-                // ),
               ],
             ),
             const AppInformationWidget(),

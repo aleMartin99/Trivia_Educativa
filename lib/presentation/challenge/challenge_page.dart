@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../core/dialogs.dart';
+
 class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
   final String quizTitle;
@@ -44,6 +46,7 @@ class ChallengePage extends StatefulWidget {
 
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
+
   final pageController = PageController();
   final homeController = HomeController();
 
@@ -178,14 +181,11 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
     double deviceHeight = MediaQuery.of(context).size.height / 100;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor:
-            settingsController.currentAppTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(deviceHeight * 15),
           child: SafeArea(
@@ -193,10 +193,54 @@ class _ChallengePageState extends State<ChallengePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BackButton(
-                  onPressed: () {
-                    showAlertDialog(context);
+                  onPressed: () async {
+                    //TODO dialoger two choices
+                    const _acceptText = 'Aceptar';
+                    const _declineText = 'Cancelar';
+
+                    final _result = await Dialoger.showTwoChoicesDialog(
+                      acceptText: _acceptText,
+                      declineText: _declineText,
+                      context: context,
+                      title: I10n.of(context).exitDialog,
+                      description: I10n.of(context).exitChallenge,
+                    );
+                    if (_result == _acceptText) {
+                      int nota = evaluarNivel(controller.puntos, widget.rango3,
+                          widget.rango4, widget.rango5);
+
+                      log(nota.toString());
+                      //TODO ver porq no se asigna la nota
+                      controller.crearNota(nota);
+                      await controller.getNotasProv();
+                      //*se asigna la nota
+                      //*PutAsignar
+                      await controller.asignarNota(
+                          widget.idAsignatura,
+                          widget.idCurso,
+                          widget.idTema,
+                          widget.idNivel,
+                          controller.notasProv!.last.id);
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.resultRoute,
+                        arguments: ResultPageArgs(
+                            quizTitle: widget.quizTitle,
+                            questionsLenght: widget.preguntas.length,
+                            result: controller.qtdRightAnswers,
+                            rango3: widget.rango3,
+                            rango4: widget.rango4,
+                            rango5: widget.rango5,
+                            puntos: controller.puntos,
+                            idAsignatura: widget.idAsignatura,
+                            idCurso: widget.idCurso,
+                            idTema: widget.idTema,
+                            idNivel: widget.idNivel),
+                      );
+                    }
+                    // showAlertDialog(context);
                   },
-                  color: settingsController.currentAppTheme.primaryColor,
+                  color: Theme.of(context).primaryIconTheme.color,
                 ),
                 //the ValueListenableBuilder will only rebuild this component when there are updates
                 Expanded(
@@ -262,7 +306,7 @@ class _ChallengePageState extends State<ChallengePage> {
                               widget.rango3, widget.rango4, widget.rango5);
 
                           log(nota.toString());
-                          //TODO sacar crear nota para controller de challenge
+                          //TODO ver porq no se asigna la nota
                           controller.crearNota(nota);
                           await controller.getNotasProv();
                           //*se asigna la nota

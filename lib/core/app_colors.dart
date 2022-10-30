@@ -42,5 +42,9 @@ class AppColors {
   static Color levelStateDark = Colors.yellow.shade400;
 
   static const Color lightPurple = Color.fromARGB(255, 242, 234, 255);
+
+  static const Color selectedColorCardRight =
+      Color.fromARGB(255, 207, 233, 245);
+
   // Color.fromARGB(255, 240, 209, 72);
 }

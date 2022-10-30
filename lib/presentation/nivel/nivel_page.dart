@@ -2,7 +2,7 @@ import 'package:trivia_educativa/core/app_routes.dart';
 import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
-import 'package:trivia_educativa/presentation/home/home_controller.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_state.dart';
 import 'package:trivia_educativa/presentation/nivel/widgets/nivel_card/nivel_card_widget.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class NivelPage extends StatefulWidget {
 }
 
 class _NivelPageState extends State<NivelPage> {
-  final controller = HomeController();
+  // final controller = HomeController();
   final challengeController = ChallengeController();
   // final cont
 
@@ -42,8 +42,20 @@ class _NivelPageState extends State<NivelPage> {
   @override
   initState() {
     _loadData();
-    controller.stateNotifier.addListener(() {
-      setState(() {});
+    // controller.stateNotifier.addListener((){
+    //   setState(() {});
+    // });
+    challengeController.stateNotifier.addListener(() {
+      if (challengeController.state == ChallengeState.notasLoaded) {
+        setState(() {});
+        // Future.delayed(const Duration(seconds: 1));
+        // _initAnimation();
+        // Dialoger.showErrorDialog(
+        //   context: context,
+        //   title: 'ChallengeState Listenter',
+        //   description: 'ChallengeState.notasLoaded',
+        // );
+      }
     });
     super.initState();
   }
@@ -68,8 +80,7 @@ class _NivelPageState extends State<NivelPage> {
         Provider.of<SettingsController>(context);
 
     return Scaffold(
-        backgroundColor:
-            settingsController.currentAppTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: PreferredSize(
           child: GradientAppBarWidget(
             child: Align(
@@ -105,42 +116,6 @@ class _NivelPageState extends State<NivelPage> {
           ),
           preferredSize: const Size.fromHeight(56),
         ),
-
-        //  NewGradientAppBar(
-        //   gradient: AppGradients.linear,
-        //   //toolbarHeight: kToolbarHeight,
-
-        //   title: Text(
-        //     I10n.of(context).levels,
-        //     style: AppTextStyles.title,
-        //   ),
-        // ),
-
-        //  PreferredSize(
-        //   child: GradientAppBarWidget(
-        //     child: SizedBox(
-        //       height: 100,
-        //       child: Container(
-        //         height: 60,
-        //         width: MediaQuery.of(context).size.width,
-        //         padding: const EdgeInsets.symmetric(
-        //           horizontal: 20,
-        //         ),
-        //         decoration: const BoxDecoration(
-        //           gradient: AppGradients.linear,
-        //         ),
-        //         child: Align(
-        //           alignment: Alignment.centerLeft,
-        //           child: Text(
-        //             I10n.of(context).levels,
-        //             style: AppTextStyles.title,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        //   preferredSize: const Size.fromHeight(250),
-        // ),
 //TODO make validation for data to all pages like asignatura(home)
         body: Padding(
           padding: const EdgeInsets.symmetric(
@@ -149,12 +124,17 @@ class _NivelPageState extends State<NivelPage> {
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: 24.0),
-            child: GridView.count(
+            //TODO change to list view
+            child: ListView(
+                // padding: EdgeInsets.only(bottom: 15),
+                clipBehavior: Clip.antiAlias,
+                // useMagnifier: true,
+                itemExtent: 120,
                 physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+                // shrinkWrap: true,
+                // crossAxisCount: 2,
+                // crossAxisSpacing: 16,
+                // mainAxisSpacing: 16,
                 children: widget.niveles.map((nivel) {
                   if (doneLevel(
                       nivel.id, challengeController.notasProv ?? [])) {

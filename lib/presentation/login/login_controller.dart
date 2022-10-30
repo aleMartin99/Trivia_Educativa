@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -17,8 +19,10 @@ class LoginController {
   List<User>? users;
 
   final repository = LoginRepository();
-
-//
+  // Future<void> reset() async {
+  //   //repository.reset();
+  //   state = LoginState.empty;
+  // }
 
 //TODO Verificar error datos info, check connections apenas carga la app
 

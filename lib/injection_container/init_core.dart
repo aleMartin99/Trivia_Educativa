@@ -16,6 +16,7 @@ FutureOr<void> initCore(GetIt sl) async {
     )
     ..registerLazySingleton<SettingsController>(
         () => SettingsController(_sharedPreferences, sl))
+
     // ..registerLazySingleton<AppTourCubit>(
     //   () => AppTourCubit(_sharedPreferences, sl()),
     // )

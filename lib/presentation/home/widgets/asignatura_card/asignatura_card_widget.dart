@@ -24,9 +24,6 @@ class AsignaturaCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -35,50 +32,54 @@ class AsignaturaCardWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           // boxShadow: Shadow(),
-          border: const Border.fromBorderSide(
-            BorderSide(
-              strokeAlign: StrokeAlign.outside,
-              color: AppColors.border,
-            ),
-          ),
+          // border: const Border.fromBorderSide(
+          //   BorderSide(
+          //     strokeAlign: StrokeAlign.outside,
+          //     color: AppColors.border,
+          //   ),
+          // ),
           borderRadius: BorderRadius.circular(15),
-          color: AppTheme.backgroundColors(
-              settingsController.currentAppTheme.brightness),
+          color: AppTheme.backgroundColors(Theme.of(context).brightness),
         ),
         child: Column(
           //TODO annadir curso correspondiente
           //TODO annadir cantidad items next page (temas)
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+                height: 50,
+                child: CustomIconSVG(
+                  iconName: AppImages.icon_1,
+                )),
             //TODO put an ICON from LEO svg books
-            Icon(
-              Icons.list_alt,
-              size: 36, color: settingsController.currentAppTheme.primaryColor,
-              //color: ,
-            ),
-            Text(
-              nombre,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.titleBold.copyWith(
-                color: settingsController.currentAppTheme.primaryColor,
-                //fontWeight: FontWeight.w600,
-                //fontSize: 22
-              ),
-            ),
+            // Icon(
+            //   Icons.list_alt,
+            //   size: 36, color: settingsController.currentAppTheme.primaryColor,
+            //   //color: ,
+            // ),
             const SizedBox(
-              height: 10,
+              height: 8,
+            ),
+            Text(nombre,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline2!.copyWith(
+                    fontSize: 21,
+                    color: Theme.of(context).primaryIconTheme.color)),
+            const SizedBox(
+              height: 6,
             ),
             Text(
               "${I10n.of(context).topics}: $cantTemas",
               //textAlign: TextAlign.end,
-              style: AppTextStyles.body14.copyWith(
-                color: settingsController.currentAppTheme.primaryColor,
-                fontSize: 14,
-                // fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(
+                  fontFamily: 'PNRegular',
+                  fontSize: 14,
+                  color: Theme.of(context).primaryIconTheme.color
+                  // fontWeight: FontWeight.w100,
+                  ),
             ),
           ],
         ),

@@ -20,9 +20,6 @@ class TemaCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context);
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -33,36 +30,33 @@ class TemaCardWidget extends StatelessWidget {
               color: AppColors.border,
             ),
           ),
-          color: AppTheme.backgroundColors(
-              settingsController.currentAppTheme.brightness),
+          color: AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+                height: 50,
+                child: CustomIconSVG(
+                  iconName: AppImages.icon_2,
+                )),
             const SizedBox(
-              height: 24,
+              height: 15,
             ),
             Expanded(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        nombre,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.heading15.copyWith(
-                          color:
-                              settingsController.currentAppTheme.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ]),
+              child: Text(
+                nombre,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline2!.copyWith(
+                    fontSize:
+                        21, //color: settingsController.currentAppTheme.primaryColor,
+                    color: Theme.of(context).primaryIconTheme.color),
+              ),
             ),
             const SizedBox(
-              height: 24,
+              height: 5,
             ),
             Row(
               children: [
@@ -70,8 +64,10 @@ class TemaCardWidget extends StatelessWidget {
                   flex: 1,
                   child: Text(
                     "${I10n.of(context).levels}: $cantNiveles",
-                    style: AppTextStyles.body14.copyWith(
-                      color: settingsController.currentAppTheme.primaryColor,
+                    style: const TextStyle(
+                      fontFamily: 'PNRegular',
+                      fontSize: 14,
+                      // fontWeight: FontWeight.w100,
                     ),
                   ),
                 ),

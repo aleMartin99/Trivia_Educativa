@@ -10,8 +10,6 @@ import '../../core/api_constants.dart';
 class LoginRepository {
   String apiBaseUrl = kApiOldServer;
 
-//TODO annadir token variable global
-
   //TODO fix el por que se esta llamando apenas abre la app sin hacer nada y da error
   Future<Either<Failure, List<User>>> getUsers() async {
     var uri = Uri.http(

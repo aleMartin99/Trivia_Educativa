@@ -14,7 +14,7 @@ class SettingsController {
   )
   //: super(_sharedPreferences.getString(_kThemeKey)?? false )
   {
-    // Object object,
+    Object object;
     init();
   }
 
@@ -59,6 +59,12 @@ class SettingsController {
     currentAppTheme = AppTheme.lightTheme;
     _sharedPreferences.setString(_kThemeKey, "light");
   }
+
+//  Future<void> reset() async {
+//     _repository.reset();
+//     emit(const NotificationsState.initial([], []));
+//   }
+
 }
 
 

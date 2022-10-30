@@ -22,6 +22,11 @@ class ChallengeController {
   int qtdRightAnswers = 0;
   List<NotaProv>? notasProv;
 
+  // final notasProvNotifier =
+  //     ValueNotifier<List<NotaProv>>([]); // notificador de pagina actual
+  // List<NotaProv> get notasProv => notasProvNotifier.value;
+  // set notasProv(List<NotaProv> value) => notasProvNotifier.value = value;
+
   //TODO remove points with new server
   int puntos = 0;
 
@@ -30,11 +35,11 @@ class ChallengeController {
 
     notasProv = (await repository.getNotasProv()).cast<NotaProv>();
 
-    state = ChallengeState.success;
+    state = ChallengeState.notasLoaded;
     return notasProv;
   }
 
-//todo move to challenge controller
+//TODO ver xq no se asigna la nota
 //TODO annadir estudiante
   Future asignarNota(String idAsignatura, String idCurso, String idTema,
       String idNivel, String idNotaProv) async {

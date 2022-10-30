@@ -1,1 +1,1 @@
-enum ChallengeState { success, loading, error, empty }
+enum ChallengeState { success, loading, error, empty, notasLoaded }

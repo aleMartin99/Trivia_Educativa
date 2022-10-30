@@ -22,6 +22,10 @@ class AppImages {
   static String get onBoarding_2 =>
       'assets/onboarding/onboarding-enseñanza-trad.svg';
   static String get onBoarding_3 => 'assets/onboarding/onboarding-notas.svg';
+
+  static String get icon_1 => 'assets/icons/Artboard-26.svg';
+  static String get icon_2 => 'assets/icons/Artboard-1.svg';
+  static String get icon_3 => 'assets/icons/Artboard-6.svg';
 }
 
 class CustomIconSVG extends StatelessWidget {

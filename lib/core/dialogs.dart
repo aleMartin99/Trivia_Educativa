@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//TODO ver tamannos letras y colores, no se actualiza el color del dialogo luego de cambiar el tema
+
 class Dialoger {
   static Future<T?> showTwoChoicesDialog<T>({
     required BuildContext context,
