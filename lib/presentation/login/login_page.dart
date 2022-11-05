@@ -89,12 +89,12 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${I10n.of(context).welcome} ${I10n.of(context).to} \n${I10n.of(context).appTitle}",
+                        "${I10n.of(context).welcome} \n${I10n.of(context).to} \n${I10n.of(context).appTitle}",
                         //${_local.}
 
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.heading40.copyWith(
+                        style: AppTextStyles.heading42.copyWith(
                             color: Theme.of(context).primaryIconTheme.color
 
                             //  settingsController.currentAppTheme.primaryColor,

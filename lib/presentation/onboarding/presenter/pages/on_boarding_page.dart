@@ -99,7 +99,7 @@ class _OnboardingState extends State<Onboarding> {
           child: Text(
             'Saltar',
             style: Theme.of(context).textTheme.headline5?.copyWith(
-                  color: Theme.of(context).iconTheme.color,
+                  color: Theme.of(context).primaryIconTheme.color,
                   fontSize: 16,
                 ),
           ),
