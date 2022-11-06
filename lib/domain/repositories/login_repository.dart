@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:trivia_educativa/core/error/failures.dart';
-
-import 'package:trivia_educativa/data/models/user_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:fpdart/fpdart.dart';
 
-import '../../core/api_constants.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import '../../core/core.dart';
+
+import 'package:http/http.dart' as http;
 
 class LoginRepository {
   String apiBaseUrl = kApiOldServer;

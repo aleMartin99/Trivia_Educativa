@@ -1,10 +1,7 @@
-import 'package:trivia_educativa/data/models/answer_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../core/app_theme.dart';
-import '../../../../core/core.dart';
-import '../../../settings/settings_controller.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import '/../core/core.dart';
 
 class AnswerWidget extends StatefulWidget {
   final AnswerModel answerModel;
@@ -25,17 +22,8 @@ class AnswerWidget extends StatefulWidget {
 }
 
 class _AnswerWidgetState extends State<AnswerWidget> {
-  Color get _selectedColorRight =>
-      widget.answerModel.isRight ? AppColors.darkGreen : AppColors.darkRed;
-
   Color get _selectedBorderRight =>
       widget.answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
-
-  Color get _selectedColorCardRight =>
-      widget.answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
-
-  Color get _selectedBorderCardRight =>
-      widget.answerModel.isRight ? AppColors.green : AppColors.red;
 
   TextStyle get _selectedTextStyleRight => TextStyle(
       fontFamily: 'PNRegular',
@@ -51,19 +39,14 @@ class _AnswerWidgetState extends State<AnswerWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      // ignore pointer vai desativar o recurso de clique em um botao, por exemplo
       child: IgnorePointer(
         ignoring: widget.isDisabled,
         child: GestureDetector(
           onTap: () {
-            // log(widget.answerModel.isRight.toString());
             widget.onTap(widget.answerModel.isRight);
-
-            //devolvendo se a resposta eh certa ou errada
           },
           child: Container(
             decoration: BoxDecoration(
-              //TODO change selected icons and colors
               color: widget.isSelected
                   ? AppColors.selectedColorCardRight
                   : AppTheme.backgroundColors(Theme.of(context).brightness),

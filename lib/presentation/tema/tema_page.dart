@@ -1,26 +1,24 @@
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/data/models/tema_model.dart';
-import 'package:trivia_educativa/core/routers/routers.dart';
-import 'package:trivia_educativa/presentation/tema/widgets/tema_card/tema_card_widget.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import 'tema_imports.dart';
+import '../shared/shared_imports.dart';
+import '/../core/core.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/app_colors.dart';
-import '../../core/app_text_styles.dart';
-import '../shared/widgets/gradient_app_bar_widget.dart';
-// import 'package:http/http.dart' as http;
 
 class TemaPage extends StatefulWidget {
   const TemaPage({
     Key? key,
     required this.temas,
     required this.idAsignatura,
-    required this.idCurso,
   }) : super(key: key);
   final List<Tema> temas;
   final String idAsignatura;
-  final String idCurso;
+
   @override
   _TemaPageState createState() => _TemaPageState();
 }
@@ -39,6 +37,7 @@ class _TemaPageState extends State<TemaPage> {
         Provider.of<SettingsController>(context);
 
     return Scaffold(
+      //TODO change app bar to sliver
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: PreferredSize(
         child: GradientAppBarWidget(
@@ -86,7 +85,6 @@ class _TemaPageState extends State<TemaPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 24.0),
-                    //TODO make a list view
                     child: GridView.count(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
@@ -94,6 +92,7 @@ class _TemaPageState extends State<TemaPage> {
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
                       //*info cambie el ! de temas
+                      //TODO validaciones like home
                       //TODO ver como controlar q no se parta, poner imagenes de que si no hay elementos...
                       //TODO Check if next page items is 0 then dialog no items
                       children: widget.temas
@@ -108,7 +107,6 @@ class _TemaPageState extends State<TemaPage> {
                                   arguments: NivelPageArgs(
                                       niveles: tema.niveles,
                                       idAsignatura: widget.idAsignatura,
-                                      idCurso: widget.idCurso,
                                       idTema: tema.id),
                                 );
                               }))

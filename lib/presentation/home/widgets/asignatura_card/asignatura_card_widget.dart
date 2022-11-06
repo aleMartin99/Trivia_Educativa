@@ -1,14 +1,12 @@
-import 'package:trivia_educativa/core/app_theme.dart';
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AsignaturaCardWidget extends StatelessWidget {
   final String nombre;
-  //final List<Curso> cursos;
+
   final int cantTemas;
 
   final VoidCallback onTap;
@@ -16,7 +14,6 @@ class AsignaturaCardWidget extends StatelessWidget {
   const AsignaturaCardWidget({
     Key? key,
     required this.nombre,
-    //required this.cursos,
     required this.cantTemas,
     required this.onTap,
   }) : super(key: key);
@@ -41,7 +38,6 @@ class AsignaturaCardWidget extends StatelessWidget {
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
         ),
         child: Column(
-          //TODO annadir curso correspondiente
           //TODO annadir cantidad items next page (temas)
           crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -51,12 +47,6 @@ class AsignaturaCardWidget extends StatelessWidget {
                 child: CustomIconSVG(
                   iconName: AppImages.icon_1,
                 )),
-            //TODO put an ICON from LEO svg books
-            // Icon(
-            //   Icons.list_alt,
-            //   size: 36, color: settingsController.currentAppTheme.primaryColor,
-            //   //color: ,
-            // ),
             const SizedBox(
               height: 8,
             ),

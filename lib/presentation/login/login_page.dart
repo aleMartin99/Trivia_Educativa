@@ -1,19 +1,16 @@
-import 'dart:developer';
-//import 'package:fpdart/fpdart.dart';
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
-import 'package:trivia_educativa/core/routers/routers.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
-import 'package:trivia_educativa/presentation/login/login_controller.dart';
-
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
+
 import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/core/core.dart';
+import '../onboarding/onboarding_imports.dart';
+import 'login_imports.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/dialogs.dart';
-import '../onboarding/cubit/onboarding_cubit.dart';
-import 'login_state.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -39,8 +36,6 @@ class _LoginPageState extends State<LoginPage> {
     log('on boarding visto? ' + _onboardingAlreadySeen.toString());
 
     controller.stateNotifier.addListener(() {
-      //  setState(() {});
-
       if (controller.state == LoginState.error) {
         //TODO remove the on tap error message and leave this when login sirva
         //TODO improv message

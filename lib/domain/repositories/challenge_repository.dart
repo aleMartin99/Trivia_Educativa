@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:trivia_educativa/data/models/nota_prov_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:trivia_educativa/data/models/models.dart';
+import '../../core/core.dart';
 
-import '../../core/api_constants.dart';
+import 'package:http/http.dart' as http;
 
 class ChallengeRepository {
   String apiBaseUrl = kApiOldServer;
@@ -27,32 +27,8 @@ class ChallengeRepository {
     //return getJson(uri).then((value) => value);
   }
 
-//  Future<Either<Failure, List<Asignatura>>> getAsignaturas() async {
-//     var uri = Uri.http(
-//       apiBaseUrl,
-//       "asignaturas",
-//     );
-//     try {
-//       final response = await http.get(uri);
-//       if (response.statusCode == 200) {
-//         final jsonResponse = json.decode(response.body) as List;
-//         final asignaturas =
-//             jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-//         //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-//         return right(asignaturas);
-//       } else {
-//         // If the server did not return a 200 OK response,
-//         // then throw an exception.
-//         //TODO I10n
-//         throw Exception('Failed to load Asingaturas');
-//       }
-//     } catch (e) {
-//       return left(UnexpectedFailure(message: e.toString()));
-//     }
-//   }
-
-  Future asignarNota(String idAsignatura, String idCurso, String idTema,
-      String idNivel, String idNotaProv) async {
+  Future asignarNota(String idAsignatura, String idTema, String idNivel,
+      String idNotaProv) async {
     var uri = Uri.http(
       apiBaseUrl,
       "notas" "/$idNotaProv",
@@ -62,7 +38,6 @@ class ChallengeRepository {
       final response = await http.put(uri, body: {
         //TODO add id estudiante
         "asignatura": idAsignatura,
-        "curso": idCurso,
         "tema": idTema,
         "nivel": idNivel,
       });

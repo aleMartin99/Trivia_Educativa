@@ -1,8 +1,9 @@
-import 'package:trivia_educativa/data/models/asingatura_model.dart';
-import 'package:trivia_educativa/domain/repositories/home_repository.dart';
-import 'package:trivia_educativa/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+
+import 'package:trivia_educativa/data/models/models.dart';
+import '../../domain/repositories/repositories.dart';
+import '../home/home_imports.dart';
 
 class HomeController {
   final ValueNotifier<HomeState> stateNotifier =

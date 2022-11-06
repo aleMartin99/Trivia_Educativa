@@ -1,9 +1,9 @@
-import '../../../../core/app_theme.dart';
-import '../../../../data/models/nota_prov_model.dart';
-import '../../../challenge/challenge_controller.dart';
-import '../../../challenge/challenge_state.dart';
 import 'package:flutter/material.dart';
+
 import 'package:trivia_educativa/core/core.dart';
+
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
 class ChartWidget extends StatefulWidget {
   const ChartWidget({
@@ -12,14 +12,6 @@ class ChartWidget extends StatefulWidget {
   }) : super(
           key: key,
         );
-
-  // final double percent ;
-//TODO se parte cuando pongo dark mode y cierro sesion, error de los ticker provider
-  // var percent =
-  // ValueNotifier<double>(1);
-
-  // notificador de pagina atual
-  /// final percentNotifier;
 
   @override
   _ChartWidgetState createState() => _ChartWidgetState();
@@ -50,38 +42,22 @@ class _ChartWidgetState extends State<ChartWidget>
     for (int i = 0; i < notasProv!.length; i++) {
       if (notasProv[i].nota > 2) cantAprobados++;
     }
-    // log((cantAprobados / notasProv.length).toDouble().toString());
     return cantAprobados;
   }
 
   void _loadData() async {
     await challengeController.getNotasProv();
-    //log(challengeController.notasProv!.last.nota.toString());
   }
 
   @override
   void initState() {
     _loadData();
     _initAnimation();
-    //_initAnimation();
-    // Future.delayed(const Duration(seconds: 3));
-    //_initAnimation();
-    //_controller.dispose();
     challengeController.stateNotifier.addListener(() {
       if (challengeController.state == ChallengeState.notasLoaded) {
         setState(() {});
         _controller.reset();
         _initAnimation();
-        //_controller.clearListeners();
-        //   _controller.dispose();
-
-        // Future.delayed(const Duration(seconds: 1));
-        // _initAnimation();
-        // Dialoger.showErrorDialog(
-        //   context: context,
-        //   title: 'ChallengeState Listenter',
-        //   description: 'ChallengeState.notasLoaded',
-        // );
       }
     });
     super.initState();
@@ -101,14 +77,10 @@ class _ChartWidgetState extends State<ChartWidget>
     return scorePercentage;
   }
 
-  //double scorePercentage =
-
-//TODO CHeck when loging out se parte
   @override
   dispose() {
     _controller.dispose();
     super.dispose();
-    //_animation.dispose(); // you need this
   }
 
   @override
@@ -117,9 +89,7 @@ class _ChartWidgetState extends State<ChartWidget>
       height: 80,
       width: 80,
       child: AnimatedBuilder(
-        //? here is the problem with the late variable not initialized
         animation: _animation,
-
         builder: (context, _) => Stack(
           children: [
             Center(

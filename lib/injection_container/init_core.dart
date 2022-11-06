@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
-
-import '../presentation/onboarding/cubit/onboarding_cubit.dart';
+import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import '../presentation/onboarding/onboarding_imports.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';

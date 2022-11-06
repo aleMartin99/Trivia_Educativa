@@ -1,10 +1,7 @@
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
-import 'package:trivia_educativa/presentation/shared/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'package:trivia_educativa/core/core.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:trivia_educativa/presentation/shared/shared_imports.dart';
 
 class QuestionIndicatorWidget extends StatelessWidget {
   final int currentPage;

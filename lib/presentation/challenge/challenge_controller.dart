@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:trivia_educativa/presentation/challenge/challenge_state.dart';
 
-import '../../data/models/nota_prov_model.dart';
-import '../../domain/repositories/challenge_repository.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import '../../domain/repositories/repositories.dart';
 
 //TODO change points system to amount of questions (porciento de correctas)
 // 5 es 80 por ciento correcta
@@ -25,11 +25,6 @@ class ChallengeController {
   int cantRightAnswers = 0;
   List<NotaProv>? notasProv;
 
-  // final notasProvNotifier =
-  //     ValueNotifier<List<NotaProv>>([]); // notificador de pagina actual
-  // List<NotaProv> get notasProv => notasProvNotifier.value;
-  // set notasProv(List<NotaProv> value) => notasProvNotifier.value = value;
-
   //TODO remove points with new server
   int puntos = 0;
 
@@ -43,13 +38,13 @@ class ChallengeController {
   }
 
 //TODO annadir id estudiante (ver orden)
-  Future asignarNota(String idAsignatura, String idCurso, String idTema,
-      String idNivel, String idNotaProv) async {
+  Future asignarNota(String idAsignatura, String idTema, String idNivel,
+      String idNotaProv) async {
     state = ChallengeState.loading;
+//TODO annadir id estudiante (ver orden)
+    repository.asignarNota(idAsignatura, idTema, idNivel, idNotaProv);
 
-    repository.asignarNota(idAsignatura, idCurso, idTema, idNivel, idNotaProv);
-
-    state = ChallengeState.success;
+    state = ChallengeState.notasAsignadas;
     // return nota;
   }
 

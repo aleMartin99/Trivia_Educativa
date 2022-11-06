@@ -1,25 +1,15 @@
-import 'dart:developer';
+import 'package:flutter/material.dart';
 
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:trivia_educativa/core/dialogs.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
-import 'package:trivia_educativa/core/routers/routers.dart';
-// import 'package:educational_quiz_app/presentation/challenge/widgets/next_button/next_button_widget.dart';
-// import 'package:educational_quiz_app/presentation/login/login_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/core/app_theme.dart';
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/main.dart';
-import 'package:trivia_educativa/presentation/login/login_controller.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
-import 'package:trivia_educativa/presentation/settings/widgets/settings_tile.dart';
-import 'package:trivia_educativa/presentation/shared/widgets/dedicated_list_tile.dart';
-import 'package:trivia_educativa/presentation/shared/widgets/gradient_app_bar_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../core/app_information_widget.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import '../shared/shared_imports.dart';
+import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   final User user;
@@ -37,18 +27,10 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
-    // final controller = LoginController();
-    //static String? get defaultLocale => global_state.Intl.withLocale;
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
-    // void dispose() {
-    //   controller.reset();
-    //   super.dispose();
-    // }
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //TODO change app bar like nivel page, icon and text style
       appBar: PreferredSize(
         child: GradientAppBarWidget(
           child: Align(
@@ -87,7 +69,6 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         preferredSize: const Size.fromHeight(56),
       ),
-
       body: Padding(
         padding: EdgeInsets.only(
           left: deviceSize.width * 0.1,
@@ -100,7 +81,6 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ValueListenableBuilder(
                   valueListenable: settingsController.themeNotifier,
@@ -110,17 +90,12 @@ class _SettingsPageState extends State<SettingsPage> {
                         style: Theme.of(context).textTheme.headline4?.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).primaryIconTheme.color
-                            // color: settingsController
-                            //     .currentAppTheme.primaryColor
-                            ),
+                            color: Theme.of(context).primaryIconTheme.color),
                       ),
                       leading: Icon(
                         Icons.dark_mode,
                         color: Theme.of(context).primaryIconTheme.color,
-                        //  color: settingsController.currentAppTheme.primaryColor,
                       ),
-                      //TODO fix themes things in settings page
                       trailing: Switch.adaptive(
                           activeColor: const Color(0xFF57B6E0),
                           value: EasyDynamicTheme.of(context).themeMode ==
@@ -155,22 +130,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     );
 
                     if (_result == _acceptText) {
-                      //dispose();
-                      //TODO implement log out
-                      // Navigator.of(context)
-                      //     .popUntil(ModalRoute.withName(AppRoutes.loginRoute));
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/login', (Route<dynamic> route) => false);
-                      // Navigator.pushNamedAndRemoveUntil(
-                      //     context, '/login', (route) => false);
-
-                      //context.read<AuthCubit>().logOut();
                     }
                   },
                   leading: Icon(Icons.logout,
-                      color: Theme.of(context).primaryIconTheme.color
-                      //color: settingsController.currentAppTheme.primaryColor,
-                      ),
+                      color: Theme.of(context).primaryIconTheme.color),
                   title: Text('Cerrar sesión',
                       style: Theme.of(context).textTheme.headline4?.copyWith(
                           fontSize: 18,
@@ -190,25 +155,6 @@ class _SettingsPageState extends State<SettingsPage> {
           horizontal: deviceSize.width * 0.1,
           vertical: deviceSize.height * 0.05,
         ),
-        // child: Row(
-        //   children: [
-        //     Expanded(
-        //       child: NextButtonWidget.purple(
-        //         label: "Sair",
-        //         onTap: () async {
-        //           LoginController loginController = LoginController();
-        //           bool signedOut =
-        //               await loginController.signOut(context: context);
-
-        //           if (signedOut) {
-        //             Navigator.pushReplacementNamed(
-        //                 context, AppRoutes.loginRoute);
-        //           }
-        //         },
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }

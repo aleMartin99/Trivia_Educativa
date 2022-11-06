@@ -1,5 +1,6 @@
-import 'package:trivia_educativa/core/core.dart';
 import 'package:flutter/material.dart';
+
+import 'package:trivia_educativa/core/core.dart';
 
 class ProgressIndicatorWidget extends StatelessWidget {
   final double value;

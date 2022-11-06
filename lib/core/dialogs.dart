@@ -127,7 +127,6 @@ class Dialoger {
                 Navigator.pop(context, action.name);
               },
               child: Padding(
-                //TODO Change if you dont want this paddding
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Center(
                   child: Text(

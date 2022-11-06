@@ -1,21 +1,10 @@
+import 'package:flutter/material.dart';
 import 'dart:developer';
 
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
-import 'package:trivia_educativa/presentation/challenge/challenge_controller.dart';
-import 'package:trivia_educativa/presentation/home/home_controller.dart';
-import 'package:trivia_educativa/presentation/home/home_state.dart';
-import 'package:trivia_educativa/presentation/home/widgets/appbar/app_bar_widget.dart';
-import 'package:trivia_educativa/presentation/home/widgets/asignatura_card/asignatura_card_widget.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/dialogs.dart';
-import '../challenge/challenge_state.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import '../home/home_imports.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -30,26 +19,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
-  //final challengeController = ChallengeController();
-  // final cont
-
-// Widget build(BuildContext context) {
-//   return RaisedButton(
-//     onPressed: () {
-//       // as performant as the previous solution, but resilient to refactoring
-//       context.read<Counter>().increment(),
-//     },
-//   );
-// }
 
   void _loadData() async {
-    //await controller.getNotasProv();
     await controller.getAsignaturas();
-    // await challengeController.getNotasProv();
-
-    //log(challengeController.notasProv!.last.nota.toString());
-    //  await controller.getProfesores();
-    // await controller.getCursos();
   }
 
   @override
@@ -113,6 +85,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                     ))
                   //TODO make validation for data to all pages like asignatura(home) (asi)
+                  //TODO add subtitulo que diga asignaturas
                   : Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
@@ -131,18 +104,14 @@ class _HomePageState extends State<HomePage> {
                               .map((asignatura) => AsignaturaCardWidget(
                                     nombre: asignatura.descripcion,
                                     //TODO hacer validaciones para cosas vacias
-                                    cantTemas:
-                                        asignatura.cursos.last.temas.length,
-                                    cursos: asignatura.cursos,
+                                    cantTemas: asignatura.temas.length,
+
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, AppRoutes.temaRoute,
                                           arguments: TemaPageArgs(
                                               idAsignatura: asignatura.id,
-                                              idCurso:
-                                                  asignatura.cursos.last.id,
-                                              temas: asignatura
-                                                  .cursos.last.temas));
+                                              temas: asignatura.temas));
                                     },
                                   ))
                               .toList(),

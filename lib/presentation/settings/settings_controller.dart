@@ -2,8 +2,6 @@ import 'package:trivia_educativa/core/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO check the easy theme package recarguita
-
 const String _kThemeKey = 'appTheme';
 
 class SettingsController {
@@ -12,9 +10,10 @@ class SettingsController {
     this._sharedPreferences,
     Object object,
   )
+  //TODO check here storaged theme
   //: super(_sharedPreferences.getString(_kThemeKey)?? false )
   {
-    Object object;
+    //Object object;
     init();
   }
 
@@ -33,8 +32,6 @@ class SettingsController {
   void changeCurrentAppTheme({
     String? theme,
   }) async {
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
-
     if (theme != null) {
       if (theme.toLowerCase() == "dark") {
         _setDarkTheme();
@@ -59,16 +56,4 @@ class SettingsController {
     currentAppTheme = AppTheme.lightTheme;
     _sharedPreferences.setString(_kThemeKey, "light");
   }
-
-//  Future<void> reset() async {
-//     _repository.reset();
-//     emit(const NotificationsState.initial([], []));
-//   }
-
 }
-
-
-
-// theme: themeLight,
-//           darkTheme: themeDark,
-//           themeMode: EasyDynamicTheme.of(context).themeMode,

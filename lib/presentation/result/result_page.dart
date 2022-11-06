@@ -1,13 +1,9 @@
-import 'dart:developer';
-
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:trivia_educativa/presentation/home/home_controller.dart';
-import 'package:trivia_educativa/core/app_images.dart';
-import 'package:trivia_educativa/core/app_text_styles.dart';
-import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import '../home/home_imports.dart';
+import '/../core/core.dart';
+
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,25 +15,17 @@ class ResultPage extends StatelessWidget {
   final int rango4;
   final int rango5;
   final int puntos;
-  final String idAsignatura;
-  final String idCurso;
-  final String idTema;
-  final String idNivel;
 
-  ResultPage(
-      {Key? key,
-      required this.quizTitle,
-      required this.questionsLenght,
-      required this.result,
-      required this.rango3,
-      required this.rango4,
-      required this.rango5,
-      required this.puntos,
-      required this.idTema,
-      required this.idAsignatura,
-      required this.idCurso,
-      required this.idNivel})
-      : super(key: key);
+  ResultPage({
+    Key? key,
+    required this.quizTitle,
+    required this.questionsLenght,
+    required this.result,
+    required this.rango3,
+    required this.rango4,
+    required this.rango5,
+    required this.puntos,
+  }) : super(key: key);
 
   final controller = HomeController();
 
@@ -47,6 +35,7 @@ class ResultPage extends StatelessWidget {
 //*4 => notaParametro - 10%
 //*3 => notaParametro - 20%
 
+//TODO change points system to amount of questions
   String get resultImage => puntos < rango3
       ? AppImages.badResult
       : ((puntos >= rango3 && puntos < rango4)
@@ -55,6 +44,7 @@ class ResultPage extends StatelessWidget {
               ? AppImages.mediumResult
               : ((puntos >= rango5) ? AppImages.trophy : AppImages.error)));
 
+//TODO change points system to amount of questions
   @override
   Widget build(BuildContext context) {
     String title = puntos < rango3
@@ -66,7 +56,7 @@ class ResultPage extends StatelessWidget {
                 : ((puntos >= rango5)
                     ? "${I10n.of(context).score_title} 5. \n${I10n.of(context).score_Congrats}!"
                     : '')));
-
+//TODO change points system to amount of questions
     String subtitle = puntos < rango3
         ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_tryHarder}!"
         : ((puntos >= rango3 && puntos < rango5)
@@ -75,11 +65,11 @@ class ResultPage extends StatelessWidget {
                 ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_excellent}!!"
                 : ''));
 
-    //*Logs for debuging the code
-    log('puntos ' + puntos.toString());
-    log('rango 3 ' + rango3.toString());
-    log('rango 4 ' + rango4.toString());
-    log('rango 5 ' + rango5.toString());
+    // //*Logs for debuging the code
+    // log('puntos ' + puntos.toString());
+    // log('rango 3 ' + rango3.toString());
+    // log('rango 4 ' + rango4.toString());
+    //log('nota 5 ' + nota5.toString());
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -126,7 +116,6 @@ class ResultPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 68.0),
                           child: NextButtonWidget.purple(
                             //TODO check if share works in physical device
-                            //TODO evaluate if change share button to other thing
                             label: "${I10n.of(context).share} ",
                             onTap: () {
                               //TODO checkear en telef fisico que funcione sin pedir contactos
@@ -149,9 +138,6 @@ class ResultPage extends StatelessWidget {
                           child: NextButtonWidget.transparent(
                             label: I10n.of(context).backTo_Home,
                             onTap: () async {
-                              //TODO check after login
-                              //  Navigator.pushNamedAndRemoveUntil(context,AppRoutes.resultRoute,);
-
                               //*elimina el stack de vistas 1 a 1 hasta la vista home
                               Navigator.pop(context);
                               Navigator.pop(context);

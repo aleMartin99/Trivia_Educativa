@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:trivia_educativa/core/app_text_styles.dart';
-
-import 'app_colors.dart';
-import 'app_theme.dart';
 
 class AppInformationWidget extends StatelessWidget {
   const AppInformationWidget({

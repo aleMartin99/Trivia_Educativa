@@ -1,17 +1,16 @@
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/data/models/nivel_model.dart';
-import 'package:trivia_educativa/core/routers/routers.dart';
-import 'package:trivia_educativa/data/models/nota_prov_model.dart';
-import 'package:trivia_educativa/presentation/challenge/challenge_state.dart';
-import 'package:trivia_educativa/presentation/nivel/widgets/nivel_card/nivel_card_widget.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import '../shared/shared_imports.dart';
+import '/../core/core.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/app_colors.dart';
-import '../../core/app_text_styles.dart';
-import '../challenge/challenge_controller.dart';
-import '../shared/widgets/gradient_app_bar_widget.dart';
+
+import 'nivel_imports.dart';
 
 class NivelPage extends StatefulWidget {
   const NivelPage({
@@ -19,21 +18,17 @@ class NivelPage extends StatefulWidget {
     required this.niveles,
     required this.idTema,
     required this.idAsignatura,
-    required this.idCurso,
   }) : super(key: key);
   final List<Nivel> niveles;
   final String idTema;
   final String idAsignatura;
-  final String idCurso;
 
   @override
   _NivelPageState createState() => _NivelPageState();
 }
 
 class _NivelPageState extends State<NivelPage> {
-  // final controller = HomeController();
   final challengeController = ChallengeController();
-  // final cont
 
   void _loadData() async {
     await challengeController.getNotasProv();
@@ -42,26 +37,15 @@ class _NivelPageState extends State<NivelPage> {
   @override
   initState() {
     _loadData();
-    // controller.stateNotifier.addListener((){
-    //   setState(() {});
-    // });
+
     challengeController.stateNotifier.addListener(() {
       if (challengeController.state == ChallengeState.notasLoaded) {
         setState(() {});
-        // Future.delayed(const Duration(seconds: 1));
-        // _initAnimation();
-        // Dialoger.showErrorDialog(
-        //   context: context,
-        //   title: 'ChallengeState Listenter',
-        //   description: 'ChallengeState.notasLoaded',
-        // );
       }
     });
     super.initState();
   }
 
-  //TODO ver metodo para checkear q este o no hecho el nivel
-  //todo arreglar color card (dark mode check) cuando esta hecho
   bool doneLevel(String idNivel, List<NotaProv> notasProv) {
     bool isDone = false;
     if ((notasProv
@@ -117,6 +101,7 @@ class _NivelPageState extends State<NivelPage> {
           preferredSize: const Size.fromHeight(56),
         ),
 //TODO make validation for data to all pages like asignatura(home)
+//TODO change app bar to sliver
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -124,7 +109,6 @@ class _NivelPageState extends State<NivelPage> {
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: 24.0),
-            //TODO change to list view
             child: ListView(
                 // padding: EdgeInsets.only(bottom: 15),
                 clipBehavior: Clip.antiAlias,
@@ -153,7 +137,6 @@ class _NivelPageState extends State<NivelPage> {
                               rango5: nivel.rango5,
                               quizTitle: nivel.descripcion,
                               idAsignatura: widget.idAsignatura,
-                              idCurso: widget.idCurso,
                               idTema: widget.idTema,
                               idNivel: nivel.id),
                         );
@@ -175,7 +158,6 @@ class _NivelPageState extends State<NivelPage> {
                                 rango5: nivel.rango5,
                                 quizTitle: nivel.descripcion,
                                 idAsignatura: widget.idAsignatura,
-                                idCurso: widget.idCurso,
                                 idTema: widget.idTema,
                                 idNivel: nivel.id),
                           );

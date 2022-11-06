@@ -1,9 +1,9 @@
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 
-//import 'package:dev_quiz/core/app_text_styles.dart';
 import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/core/core.dart';
+import '../../settings_imports.dart';
 
 class SettingsTile extends StatelessWidget {
   final String title;

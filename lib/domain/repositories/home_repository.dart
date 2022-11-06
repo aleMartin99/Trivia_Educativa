@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'package:trivia_educativa/core/error/failures.dart';
-import 'package:trivia_educativa/core/error/analize_error.dart';
-import 'package:trivia_educativa/core/error/exceptions.dart';
-import 'package:trivia_educativa/data/models/asingatura_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:fpdart/fpdart.dart';
 
-import '../../core/api_constants.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import '../../core/core.dart';
+
+import 'package:http/http.dart' as http;
 
 // class PromoNotificationRepository with RequestErrorParser {
 //   PromoNotificationRepository(

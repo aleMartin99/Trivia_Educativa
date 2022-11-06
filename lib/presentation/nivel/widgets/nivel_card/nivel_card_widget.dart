@@ -1,9 +1,7 @@
-import 'package:trivia_educativa/core/app_theme.dart';
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/data/models/pregunta_model.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/data/models/models.dart';
 
 class NivelCardWidget extends StatelessWidget {
   //bool isDone = false;
@@ -36,7 +34,6 @@ class NivelCardWidget extends StatelessWidget {
               color: AppColors.border,
             ),
           ),
-          //TODO check nivel color done in dark mode
           color: isDone
               ? (Theme.of(context).brightness == Brightness.light)
                   ? Colors.black12

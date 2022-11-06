@@ -1,8 +1,7 @@
-import 'package:trivia_educativa/core/app_theme.dart';
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/core/core.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TemaCardWidget extends StatelessWidget {

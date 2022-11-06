@@ -1,29 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:trivia_educativa/core/app_gradients.dart';
 
-import 'package:trivia_educativa/core/app_images.dart';
-
+import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
-
-import '../../../../core/app_routes.dart';
 
 import '../../../../core/core.dart';
-import '../../../../data/models/onboarding_item.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import '../../../login/login_imports.dart';
+import '../../../shared/shared_imports.dart';
+import '../../onboarding_imports.dart';
 
-import '../../../login/login_controller.dart';
-
-import '../../../settings/settings_controller.dart';
-import '../../../shared/widgets/dedicated_app_bar.dart';
-
-import '../../../shared/widgets/dedicated_refresh_scaffold.dart';
-
-import '../../cubit/onboarding_cubit.dart';
-import 'package:trivia_educativa/presentation/onboarding/presenter/pages/on_boarding_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 //I10n.of(context).topics
 
 //TODO change text style and make I10n
@@ -52,8 +42,6 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   void initState() {
-// //TODO CHECK why onboarding continuar button sigue a 4ta pagina q no existe
-
     pageController.addListener(
       () {
         onBoardingController.currentPage = pageController.page!.toInt() + 1;
@@ -70,7 +58,6 @@ class _OnboardingState extends State<Onboarding> {
       OnboardingItem(AppImages.onBoarding_2, I10n.of(context).onBoarding_2),
       OnboardingItem(AppImages.onBoarding_3, I10n.of(context).onBoarding_3),
     ];
-//TODO check dark mode for dark images
     final kOnboardingDarkItems = [
       OnboardingItem(AppImages.onBoarding_1, I10n.of(context).onBoarding_1),
       OnboardingItem(AppImages.onBoarding_2, I10n.of(context).onBoarding_2),
@@ -143,7 +130,6 @@ class _OnboardingState extends State<Onboarding> {
               children: [
                 ...items.map(
                   (e) => SafeArea(
-                    //TODO CHeck dark mode with background color
                     bottom: false,
                     child: Builder(builder: (context) {
                       final _totalHeight = MediaQuery.of(context).size.height -

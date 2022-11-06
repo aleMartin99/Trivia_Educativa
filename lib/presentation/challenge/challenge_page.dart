@@ -1,20 +1,16 @@
+import 'package:flutter/material.dart';
 import 'dart:developer';
 
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/core/app_text_styles.dart';
-import 'package:trivia_educativa/data/models/pregunta_model.dart';
-import 'package:trivia_educativa/core/routers/routers.dart';
-import 'package:trivia_educativa/presentation/challenge/challenge_controller.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/next_button/next_button_widget.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/question_indicator/question_indicator_widget.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/quiz/quiz_widget.dart';
-import 'package:trivia_educativa/presentation/home/home_controller.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../core/dialogs.dart';
+import 'package:trivia_educativa/core/routers/routers.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import '../home/home_imports.dart';
+import '/../core/core.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
@@ -23,7 +19,7 @@ class ChallengePage extends StatefulWidget {
   final int rango4;
   final int rango5;
   final String idAsignatura;
-  final String idCurso;
+
   final String idTema;
   final String idNivel;
 
@@ -36,7 +32,6 @@ class ChallengePage extends StatefulWidget {
       required this.rango5,
       required this.idTema,
       required this.idAsignatura,
-      required this.idCurso,
       required this.idNivel})
       : super(key: key);
 
@@ -75,34 +70,34 @@ class _ChallengePageState extends State<ChallengePage> {
 
 //TODO make nota3 y nota4 automatic from nota5 (substracting 10)
 
-  int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
-    int nota = 2;
-    int nota3 = nota5 - 20;
-    int nota4 = nota5 - 10;
-    double percent = cantRightAnswers * 100 / cantPreguntas;
-
-    if (percent >= 3 && puntos < rango4) {
-      nota = 3;
-    } else if (puntos >= rango4 && puntos < rango5) {
-      nota = 4;
-    }
-    if (percent >= nota5) {
-      nota = 5;
-    }
-    return nota;
-  }
-  //  int evaluarNivel(int puntos, int rango3, int rango4, int rango5) {
+  // int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
   //   int nota = 2;
-  //   if (puntos >= rango3 && puntos < rango4) {
+  //   int nota3 = nota5 - 20;
+  //   int nota4 = nota5 - 10;
+  //   double percent = cantRightAnswers * 100 / cantPreguntas;
+
+  //   if (percent >= nota3 && percent < nota4) {
   //     nota = 3;
-  //   } else if (puntos >= rango4 && puntos < rango5) {
+  //   } else if (percent >= nota4 && percent < nota5) {
   //     nota = 4;
   //   }
-  //   if (puntos >= rango5) {
+  //   if (percent >= nota5) {
   //     nota = 5;
   //   }
   //   return nota;
   // }
+  int evaluarNivel(int puntos, int rango3, int rango4, int rango5) {
+    int nota = 2;
+    if (puntos >= rango3 && puntos < rango4) {
+      nota = 3;
+    } else if (puntos >= rango4 && puntos < rango5) {
+      nota = 4;
+    }
+    if (puntos >= rango5) {
+      nota = 5;
+    }
+    return nota;
+  }
 
   @override
   void initState() {
@@ -137,6 +132,7 @@ class _ChallengePageState extends State<ChallengePage> {
             .copyWith(color: settingsController.currentAppTheme.primaryColor),
       ),
       onPressed: () async {
+        //TODO change to new evaluarnivel
         int nota = evaluarNivel(
             controller.puntos, widget.rango3, widget.rango4, widget.rango5);
         log(nota.toString());
@@ -145,25 +141,23 @@ class _ChallengePageState extends State<ChallengePage> {
 
         //*se asigna la nota
         //PutAsignar
-
-        await controller.asignarNota(widget.idAsignatura, widget.idCurso,
-            widget.idTema, widget.idNivel, controller.notasProv!.last.id);
+//TODO Add idEstudiante
+        await controller.asignarNota(widget.idAsignatura, widget.idTema,
+            widget.idNivel, controller.notasProv!.last.id);
         Navigator.pop(context);
         Navigator.pushReplacementNamed(
           context,
           AppRoutes.resultRoute,
           arguments: ResultPageArgs(
-              quizTitle: widget.quizTitle,
-              questionsLenght: widget.preguntas.length,
-              result: controller.qtdRightAnswers,
-              rango3: widget.rango3,
-              rango4: widget.rango4,
-              rango5: widget.rango5,
-              puntos: controller.puntos,
-              idAsignatura: widget.idAsignatura,
-              idCurso: widget.idCurso,
-              idTema: widget.idTema,
-              idNivel: widget.idNivel),
+            quizTitle: widget.quizTitle,
+            questionsLenght: widget.preguntas.length,
+            result: controller.cantRightAnswers,
+            //TODO remove rangos-puntos and add nota5
+            rango3: widget.rango3,
+            rango4: widget.rango4,
+            rango5: widget.rango5,
+            puntos: controller.puntos,
+          ),
         );
       },
     );
@@ -215,10 +209,8 @@ class _ChallengePageState extends State<ChallengePage> {
               children: [
                 BackButton(
                   onPressed: () async {
-                    //TODO dialoger two choices
                     const _acceptText = 'Aceptar';
                     const _declineText = 'Cancelar';
-
                     final _result = await Dialoger.showTwoChoicesDialog(
                       acceptText: _acceptText,
                       declineText: _declineText,
@@ -229,16 +221,13 @@ class _ChallengePageState extends State<ChallengePage> {
                     if (_result == _acceptText) {
                       int nota = evaluarNivel(controller.puntos, widget.rango3,
                           widget.rango4, widget.rango5);
-
                       log(nota.toString());
-                      //TODO ver porq no se asigna la nota
                       controller.crearNota(nota);
                       await controller.getNotasProv();
                       //*se asigna la nota
                       //*PutAsignar
                       await controller.asignarNota(
                           widget.idAsignatura,
-                          widget.idCurso,
                           widget.idTema,
                           widget.idNivel,
                           controller.notasProv!.last.id);
@@ -246,17 +235,14 @@ class _ChallengePageState extends State<ChallengePage> {
                         context,
                         AppRoutes.resultRoute,
                         arguments: ResultPageArgs(
-                            quizTitle: widget.quizTitle,
-                            questionsLenght: widget.preguntas.length,
-                            result: controller.qtdRightAnswers,
-                            rango3: widget.rango3,
-                            rango4: widget.rango4,
-                            rango5: widget.rango5,
-                            puntos: controller.puntos,
-                            idAsignatura: widget.idAsignatura,
-                            idCurso: widget.idCurso,
-                            idTema: widget.idTema,
-                            idNivel: widget.idNivel),
+                          quizTitle: widget.quizTitle,
+                          questionsLenght: widget.preguntas.length,
+                          result: controller.cantRightAnswers,
+                          rango3: widget.rango3,
+                          rango4: widget.rango4,
+                          rango5: widget.rango5,
+                          puntos: controller.puntos,
+                        ),
                       );
                     }
                     // showAlertDialog(context);
@@ -327,7 +313,6 @@ class _ChallengePageState extends State<ChallengePage> {
                               widget.rango3, widget.rango4, widget.rango5);
 
                           log(nota.toString());
-                          //TODO ver porq no se asigna la nota
                           controller.crearNota(nota);
                           await controller.getNotasProv();
                           //*se asigna la nota
@@ -335,8 +320,6 @@ class _ChallengePageState extends State<ChallengePage> {
                           await controller.asignarNota(
                               //TODO add idEstudiante
                               widget.idAsignatura,
-                              //TODO remove curso
-                              widget.idCurso,
                               widget.idTema,
                               widget.idNivel,
                               controller.notasProv!.last.id);
@@ -344,17 +327,14 @@ class _ChallengePageState extends State<ChallengePage> {
                             context,
                             AppRoutes.resultRoute,
                             arguments: ResultPageArgs(
-                                quizTitle: widget.quizTitle,
-                                questionsLenght: widget.preguntas.length,
-                                result: controller.qtdRightAnswers,
-                                rango3: widget.rango3,
-                                rango4: widget.rango4,
-                                rango5: widget.rango5,
-                                puntos: controller.puntos,
-                                idAsignatura: widget.idAsignatura,
-                                idCurso: widget.idCurso,
-                                idTema: widget.idTema,
-                                idNivel: widget.idNivel),
+                              quizTitle: widget.quizTitle,
+                              questionsLenght: widget.preguntas.length,
+                              result: controller.cantRightAnswers,
+                              rango3: widget.rango3,
+                              rango4: widget.rango4,
+                              rango5: widget.rango5,
+                              puntos: controller.puntos,
+                            ),
                           );
                         },
                       ),

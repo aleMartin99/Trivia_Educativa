@@ -1,16 +1,11 @@
-import 'dart:developer';
-
-import 'package:trivia_educativa/core/app_routes.dart';
-import 'package:trivia_educativa/core/core.dart';
-import 'package:trivia_educativa/data/models/nota_prov_model.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
-import 'package:trivia_educativa/core/routers/routers.dart';
-import 'package:trivia_educativa/presentation/home/widgets/score_card/score_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../core/app_theme.dart';
-import '../../../settings/settings_controller.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import '../../../../core/routers/routers.dart';
+import '../../home_imports.dart';
+import '/../core/core.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({Key? key, required this.user}) : super(key: key);
@@ -59,7 +54,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          //TODO check avatar color
                           color: Theme.of(context).brightness == Brightness.dark
                               ? AppTheme.backgroundColors(Brightness.dark)
                               : AppColors.lightPurple

@@ -1,5 +1,7 @@
-import 'package:trivia_educativa/core/app_colors.dart';
 import 'package:flutter/material.dart';
+
+import '/../core/core.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class NextButtonWidget extends StatelessWidget {
@@ -74,6 +76,7 @@ class NextButtonWidget extends StatelessWidget {
           overlayColor: MaterialStateProperty.all(overlayColor),
         ),
         onPressed: onTap,
+        //TODO change textStyle
         child: Text(
           label,
           //TODO check font family and remove notoSans

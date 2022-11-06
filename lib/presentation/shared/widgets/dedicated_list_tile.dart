@@ -37,9 +37,6 @@ class DedicatedListTile extends StatelessWidget {
           pressedOpacity: 0.6,
           padding: EdgeInsets.zero,
           child: ListTile(
-            // onLongPress: Platform.isIOS ? onLongPressed : null,
-            // onTap: Platform.isIOS ? onPressed : null,
-            // isThreeLine: true,
             trailing: trailing,
             leading: SizedBox(
               width: size,

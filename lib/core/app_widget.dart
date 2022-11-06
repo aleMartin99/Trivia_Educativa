@@ -41,7 +41,6 @@ class AppWidget extends StatelessWidget {
                   context.read<OnboardingCubit>().alreadySeen)
               ? '/login'
               : '/onboarding',
-          //TODO ver xq desde el emulador sin correr vscode no sale onboarding
           onGenerateRoute: AppRouter.generateRoute,
           theme: themeLight,
           darkTheme: themeDark,

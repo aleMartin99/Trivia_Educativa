@@ -1,5 +1,5 @@
 //TODO IMPLEMENT ERROR MESSAGES
-
+//TODO I10n
 import 'package:equatable/equatable.dart';
 
 const String _kUnexpectedError = 'Sucedió algo inesperado';

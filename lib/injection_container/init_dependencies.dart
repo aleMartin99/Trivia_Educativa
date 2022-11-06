@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 
-import '../core/api_constants.dart';
+import '../../core/core.dart';
 import 'init_core.dart';
 
 FutureOr<void> initDependencies(

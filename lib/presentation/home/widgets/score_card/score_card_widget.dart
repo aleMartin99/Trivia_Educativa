@@ -1,10 +1,9 @@
-import 'package:trivia_educativa/core/app_theme.dart';
-import 'package:trivia_educativa/presentation/home/widgets/chart/chart_widget.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:trivia_educativa/core/core.dart';
-import 'package:provider/provider.dart';
+import '../../home_imports.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScoreCardWidget extends StatelessWidget {
   const ScoreCardWidget({

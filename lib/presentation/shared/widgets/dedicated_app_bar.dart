@@ -1,10 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../settings/settings_controller.dart';
-// import 'package:recarguita/core/theme/custom_icons.dart';
-// import 'package:recarguita/core/widgets/dedicated_buttons/dedicated_button.dart';
 
 class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DedicatedAppBar({
@@ -95,15 +90,12 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                               child: title,
                             )
                           : (Navigator.canPop(context)
-                              //TODO put Login button
                               ? IconButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
                                   icon: Icon(
                                     Icons.arrow_back_ios_new,
-
-                                    //TODO check theme colors from recarguita
                                     color: Theme.of(context).iconTheme.color,
                                   ),
                                 )

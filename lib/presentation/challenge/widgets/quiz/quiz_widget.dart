@@ -1,10 +1,7 @@
-import 'package:trivia_educativa/core/app_text_styles.dart';
-import 'package:trivia_educativa/data/models/answer_model.dart';
-import 'package:trivia_educativa/data/models/pregunta_model.dart';
-import 'package:trivia_educativa/presentation/challenge/widgets/answer/answer_widget.dart';
-import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
 class QuizWidget extends StatefulWidget {
   final Pregunta pregunta;

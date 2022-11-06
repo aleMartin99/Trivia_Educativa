@@ -1,14 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../domain/repositories/login_repository.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
-import 'login_state.dart';
+import '../../domain/repositories/repositories.dart';
+import 'package:trivia_educativa/data/models/models.dart';
+import 'login_imports.dart';
 
 //TODO en el auth si es el user que devuelve es Estudiante acceso, si es profesor o administrador ERROR (no esta autorizado)
-//TODO ask carlos keyword roles (por el momento "Estudiante") (Todo con letra inicial mayuscula)
 
 class LoginController {
   final ValueNotifier<LoginState> stateNotifier =
@@ -19,10 +16,6 @@ class LoginController {
   List<User>? users;
 
   final repository = LoginRepository();
-  // Future<void> reset() async {
-  //   //repository.reset();
-  //   state = LoginState.empty;
-  // }
 
 //TODO Verificar error datos info, check connections apenas carga la app
 

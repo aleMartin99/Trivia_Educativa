@@ -1,9 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../settings/settings_controller.dart';
 
 class DedicatedScaffold extends StatelessWidget {
   const DedicatedScaffold({
