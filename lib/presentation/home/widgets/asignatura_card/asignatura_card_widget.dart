@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../data/models/curso_model.dart';
 
 class AsignaturaCardWidget extends StatelessWidget {
   final String nombre;
-  final List<Curso> cursos;
+  //final List<Curso> cursos;
   final int cantTemas;
 
   final VoidCallback onTap;
@@ -17,7 +16,7 @@ class AsignaturaCardWidget extends StatelessWidget {
   const AsignaturaCardWidget({
     Key? key,
     required this.nombre,
-    required this.cursos,
+    //required this.cursos,
     required this.cantTemas,
     required this.onTap,
   }) : super(key: key);

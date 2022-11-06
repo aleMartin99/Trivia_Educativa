@@ -1,1 +1,1 @@
-enum LoginState { success, loading, error, empty }
+enum LoginState { login, loading, error, empty, unauthorized, success }

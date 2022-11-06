@@ -45,7 +45,6 @@ class AppRouter extends StatelessWidget {
               quizTitle: args.quizTitle,
               preguntas: args.preguntas,
               idAsignatura: args.idAsignatura,
-              idCurso: args.idCurso,
               idTema: args.idTema,
               idNivel: args.idNivel,
             ),
@@ -59,7 +58,7 @@ class AppRouter extends StatelessWidget {
           return MaterialPageRoute(
             builder: (_) => TemaPage(
               temas: args.temas, idAsignatura: args.idAsignatura,
-              idCurso: args.idCurso,
+
               // questions: args.questions,
             ),
           );
@@ -73,7 +72,6 @@ class AppRouter extends StatelessWidget {
             builder: (_) => NivelPage(
               niveles: args.niveles,
               idAsignatura: args.idAsignatura,
-              idCurso: args.idCurso,
               idTema: args.idTema,
             ),
           );
@@ -84,6 +82,7 @@ class AppRouter extends StatelessWidget {
       case resultRoute:
         if (args is ResultPageArgs) {
           return MaterialPageRoute(
+            //TODO remove puntos and rangos, add nota5
             builder: (_) => ResultPage(
               puntos: args.puntos,
               rango3: args.rango3,
@@ -92,10 +91,6 @@ class AppRouter extends StatelessWidget {
               quizTitle: args.quizTitle,
               result: args.result,
               questionsLenght: args.questionsLenght,
-              idAsignatura: args.idAsignatura,
-              idCurso: args.idCurso,
-              idTema: args.idTema,
-              idNivel: args.idNivel,
             ),
           );
         } else {
@@ -149,6 +144,7 @@ Route<dynamic> _errorRoute() {
         title: const Text('Error'),
       ),
       body: const Center(
+        //TODO I10n
         child: Text('Ha ocurrido un error inesperado'),
       ),
     );
@@ -176,7 +172,6 @@ class ChallengePageArgs {
   final int rango4;
   final int rango5;
   final String idAsignatura;
-  final String idCurso;
   final String idTema;
   final String idNivel;
 
@@ -188,20 +183,22 @@ class ChallengePageArgs {
       required this.rango5,
       required this.idTema,
       required this.idAsignatura,
-      required this.idCurso,
       required this.idNivel});
 }
 
 class TemaPageArgs {
   final List<Tema> temas;
   final String idAsignatura;
-  final String idCurso;
+
   //TODO add id estudiante when adding note
-  TemaPageArgs(
-      {required this.temas, required this.idAsignatura, required this.idCurso});
+  TemaPageArgs({
+    required this.temas,
+    required this.idAsignatura,
+  });
 }
 
 class ResultPageArgs {
+  //TODO remove puntos and rangos, add nota5
   final String quizTitle;
   final int questionsLenght;
   final int result;
@@ -209,35 +206,27 @@ class ResultPageArgs {
   final int rango4;
   final int rango5;
   final int puntos;
-  final String idAsignatura;
-  final String idCurso;
-  final String idTema;
-  final String idNivel;
 
-  ResultPageArgs(
-      {required this.quizTitle,
-      required this.questionsLenght,
-      required this.result,
-      required this.rango3,
-      required this.rango4,
-      required this.rango5,
-      required this.puntos,
-      required this.idTema,
-      required this.idAsignatura,
-      required this.idCurso,
-      required this.idNivel});
+//TODO remove puntos and rangos, add nota5
+  ResultPageArgs({
+    required this.quizTitle,
+    required this.questionsLenght,
+    required this.result,
+    required this.rango3,
+    required this.rango4,
+    required this.rango5,
+    required this.puntos,
+  });
 }
 
 class NivelPageArgs {
   final List<Nivel> niveles;
   final String idTema;
   final String idAsignatura;
-  final String idCurso;
 
   NivelPageArgs({
     required this.niveles,
     required this.idTema,
     required this.idAsignatura,
-    required this.idCurso,
   });
 }

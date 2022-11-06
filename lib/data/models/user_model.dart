@@ -1,36 +1,46 @@
 class User {
   String? id;
-  String? nombreUsuario;
-  String? contrasena;
+  String? name;
+  String? username;
+  String? password;
   String? email;
   String? rol;
-  String? imagen;
+  String? ci;
 
-  User(
-      {this.id,
-      this.nombreUsuario,
-      this.contrasena,
-      this.email,
-      this.rol,
-      this.imagen});
+  //String imagen;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+    required this.rol,
+    required this.ci,
+    // this.imagen
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nombreUsuario = json['nombreUsuario'];
-    contrasena = json['contrasena'];
+    name = json['name'];
+    username = json['username'];
     email = json['email'];
+    password = json['password'];
     rol = json['rol'];
-    imagen = json['imagen'];
+    ci = json['CI'];
+    // imagen = json['imagen'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['nombreUsuario'] = nombreUsuario;
-    data['contrasena'] = contrasena;
+    data['name'] = name;
+    data['username'] = username;
     data['email'] = email;
+    data['password'] = password;
     data['rol'] = rol;
-    data['imagen'] = imagen;
+    data['CI'] = ci;
+    //data['imagen'] = imagen;
     return data;
   }
 }

@@ -24,6 +24,9 @@ class AppWidget extends StatelessWidget {
     // ignore: unused_local_variable
     bool _onboardingAlreadySeen;
     return MultiProvider(providers: [
+      //  BlocProvider(
+      //       create: (context) => sl<AuthCubit>(),
+      //     ),
       BlocProvider(
         create: (context) => sl<OnboardingCubit>(),
       ),
@@ -45,6 +48,9 @@ class AppWidget extends StatelessWidget {
           themeMode: EasyDynamicTheme.of(context).themeMode,
         ),
       ),
+      // BlocProvider(
+      //       create: (context) => sl<AppTourCubit>(),
+      //     ),
     ]);
   }
 }

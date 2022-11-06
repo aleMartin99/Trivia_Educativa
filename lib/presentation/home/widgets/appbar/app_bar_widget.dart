@@ -40,7 +40,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                       style: AppTextStyles.title,
                       children: [
                         TextSpan(
-                          text: user.nombreUsuario,
+                          text: user.username,
                           style: AppTextStyles.titleBold,
                         ),
                       ],

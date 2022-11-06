@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   void _loadData() async {
     //TODO validar para que llame cuando ponga los campos
     await controller.getUser();
-    log(controller.users!.last.nombreUsuario.toString());
+    log(controller.users!.last.username.toString());
   }
 
   late final _onboardingAlreadySeen;
@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
 
+//TOdo check login view
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -84,18 +85,19 @@ class _LoginPageState extends State<LoginPage> {
                   child: Image.asset(AppImages.colorfulLogo),
                 ),
                 SizedBox(
-                  width: deviceSize.width * 0.6,
+                  //width: deviceSize.width * 0.6,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "${I10n.of(context).welcome} \n${I10n.of(context).to} \n${I10n.of(context).appTitle}",
+                        "${I10n.of(context).welcome} ${I10n.of(context).to} \n${I10n.of(context).appTitle}",
                         //${_local.}
 
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.heading42.copyWith(
-                            color: Theme.of(context).primaryIconTheme.color
+                        style: AppTextStyles.heading40.copyWith(
+                            color: Theme.of(context).primaryIconTheme.color,
+                            fontSize: 45
 
                             //  settingsController.currentAppTheme.primaryColor,
                             ),
@@ -164,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (controller.users!.isNotEmpty) {
                               //   //TODO navigate to credentials screen
                               User user = controller.users!.last;
-                              log("${I10n.of(context).welcome}  ${user.nombreUsuario}.");
+                              log("${I10n.of(context).welcome}  ${user.username}.");
                               //  user ??
                               await Navigator.of(context).pushReplacementNamed(
                                 AppRoutes.homeRoute,

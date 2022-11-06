@@ -61,27 +61,48 @@ class _ChallengePageState extends State<ChallengePage> {
 
   void onSelected(bool isRight, int puntaje) {
     if (isRight) {
-      controller.qtdRightAnswers++;
+      controller.cantRightAnswers++;
       log('contador de cantidad de preguntas correctas ' +
-          controller.qtdRightAnswers.toString());
+          controller.cantRightAnswers.toString());
+      //TODO quitar puntos
       controller.puntos += puntaje;
       log('contador de cantidad de puntos ' + controller.puntos.toString());
     }
     nextPage();
   }
 
-  int evaluarNivel(int puntos, int rango3, int rango4, int rango5) {
+//TODO change evaluar to por ciento
+
+//TODO make nota3 y nota4 automatic from nota5 (substracting 10)
+
+  int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
     int nota = 2;
-    if (puntos >= rango3 && puntos < rango4) {
+    int nota3 = nota5 - 20;
+    int nota4 = nota5 - 10;
+    double percent = cantRightAnswers * 100 / cantPreguntas;
+
+    if (percent >= 3 && puntos < rango4) {
       nota = 3;
     } else if (puntos >= rango4 && puntos < rango5) {
       nota = 4;
     }
-    if (puntos >= rango5) {
+    if (percent >= nota5) {
       nota = 5;
     }
     return nota;
   }
+  //  int evaluarNivel(int puntos, int rango3, int rango4, int rango5) {
+  //   int nota = 2;
+  //   if (puntos >= rango3 && puntos < rango4) {
+  //     nota = 3;
+  //   } else if (puntos >= rango4 && puntos < rango5) {
+  //     nota = 4;
+  //   }
+  //   if (puntos >= rango5) {
+  //     nota = 5;
+  //   }
+  //   return nota;
+  // }
 
   @override
   void initState() {
@@ -312,7 +333,9 @@ class _ChallengePageState extends State<ChallengePage> {
                           //*se asigna la nota
                           //*PutAsignar
                           await controller.asignarNota(
+                              //TODO add idEstudiante
                               widget.idAsignatura,
+                              //TODO remove curso
                               widget.idCurso,
                               widget.idTema,
                               widget.idNivel,

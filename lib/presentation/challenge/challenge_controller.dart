@@ -4,7 +4,10 @@ import 'package:trivia_educativa/presentation/challenge/challenge_state.dart';
 import '../../data/models/nota_prov_model.dart';
 import '../../domain/repositories/challenge_repository.dart';
 
-//TODO change points system to amount of questions
+//TODO change points system to amount of questions (porciento de correctas)
+// 5 es 80 por ciento correcta
+// 4 70
+// 3 60
 
 class ChallengeController {
   final repository = ChallengeRepository();
@@ -19,7 +22,7 @@ class ChallengeController {
   int get currentPage => currentPageNotifier.value;
   set currentPage(int value) => currentPageNotifier.value = value;
 
-  int qtdRightAnswers = 0;
+  int cantRightAnswers = 0;
   List<NotaProv>? notasProv;
 
   // final notasProvNotifier =
@@ -39,8 +42,7 @@ class ChallengeController {
     return notasProv;
   }
 
-//TODO ver xq no se asigna la nota
-//TODO annadir estudiante
+//TODO annadir id estudiante (ver orden)
   Future asignarNota(String idAsignatura, String idCurso, String idTema,
       String idNivel, String idNotaProv) async {
     state = ChallengeState.loading;
