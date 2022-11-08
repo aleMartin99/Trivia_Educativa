@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/presentation/login/flutter_custom_modal_popup.dart';
 import '../onboarding/onboarding_imports.dart';
 import 'login_imports.dart';
 import 'package:trivia_educativa/data/models/models.dart';
@@ -22,16 +23,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final controller = LoginController();
 
-  void _loadData() async {
-    //TODO validar para que llame cuando ponga los campos
-    await controller.getUser();
-    log(controller.users!.last.username.toString());
-  }
+  // void _loadData() async {
+  //   //TODO validar para que llame cuando ponga los campos
+  //   await controller.getUser();
+  //   log(controller.users!.last.username.toString());
+  // }
 
   late final _onboardingAlreadySeen;
   @override
   void initState() {
-    _loadData();
+    //_loadData();
     _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
     log('on boarding visto? ' + _onboardingAlreadySeen.toString());
 
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   //width: deviceSize.width * 0.6,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
@@ -116,105 +118,18 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Row(
                   children: [
-                    //* check for login
-                    // ValueListenableBuilder<bool>(
-                    //   valueListenable: controller.loadingNotifier,
-                    //   builder: (ctx, loadingValue, _) => Expanded(
-                    //     child: controller.isLoading
-                    //         ? const Center(child: CircularProgressIndicator())
-                    //         : ValueListenableBuilder<bool>(
-                    //             valueListenable: controller.loginNotifier,
-                    //             builder: (ctx, loginValue, _) =>
                     Expanded(
-                      child: NextButtonWidget.purple(
-                          label: I10n.of(context).login,
-                          onTap: () async {
-                            if (controller.users == null) {
-                              _loadData();
-                              //TODO remove  message when login sirva and validation in repository tiza
-                              //     //TODO check for better message
-                              //TODO In10
-                              Dialoger.showErrorDialog(
-                                  context: context,
-                                  title: 'Error',
-                                  description:
-                                      'No se ha podido acceder a los usuarios');
-                            }
-                            // final _onboardingAlreadySeen =
-                            //     context.read<OnboardingCubit>().alreadySeen;
-                            // if (_onboardingAlreadySeen) {
-
-                            //   if (controller.users == null) {
-
-                            //     Dialoger.showErrorDialog(
-                            //       context: context,
-                            //       title: I10n.of(context).error,
-                            //       description:
-                            //           "${I10n.of(context).problem_data}: \n${I10n.of(context).checkConnection}",
-
-                            //       //actions: [],
-                            //     );
-                            //     // showAlertDialog(context);
-                            //   }
-                            //    else {
-                            // TODO check for user authentication
-                            if (controller.users!.isNotEmpty) {
-                              //   //TODO navigate to credentials screen
-                              User user = controller.users!.last;
-                              log("${I10n.of(context).welcome}  ${user.username}.");
-                              //  user ??
-                              await Navigator.of(context).pushReplacementNamed(
-                                AppRoutes.homeRoute,
-                                arguments: HomePageArgs(user: user),
+                        child: NextButtonWidget.purple(
+                            label: I10n.of(context).login,
+                            onTap: () async {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      const CustomMenuModalPopupWidget(),
+                                ),
+                                //  arguments: HomePageArgs(user: user),
                               );
-                            }
-
-                            // _loadData();
-
-                            // }
-
-//           return BlocListener<VersionControlCubit, VersionControlState>(
-//             listener: (context, state) {
-//               log('Version Controller in state: $state');
-//               if (state is InvalidVersion) {
-//                 showVersionErrorModal(context, state.version);
-//               }
-//             },
-//             child: BlocBuilder<AuthCubit, AuthState>(
-//               builder: (context, state) {
-//                 Jiffy.locale(AppLocalizations.of(context)!.localeName);
-// //*check Auth cubit, access token
-//                 // if (state is Initial) {
-//                 //   context.read<AuthCubit>().getAccessToken();
-//                 //   return Container();
-//                 // }
-//                 // if (state is LoggedIn) {
-//                 //   return RootComponent(
-//                 //     initialIndex: widget.initialIndex,
-//                 //   );
-//                 // } else {
-//                 //   return BlocProvider(
-//                 //     create: (context) => sl<LandingCubit>(),
-//                 //     child: const OnLandingPage(),
-//                 //   );
-//                 // }
-//               },
-//             ),
-//           );
-                          }
-                          // else {
-                          //   await Navigator.of(context).pushReplacementNamed(
-                          //     AppRoutes.onboardingRoute,
-                          //     // arguments: HomePageArgs(user: user),
-                          //   );
-                          // }
-                          //},
-                          ),
-                    ),
-
-                    //           ),
-                    //   ),
-                    // ),
+                            }))
                   ],
                 ),
               ],

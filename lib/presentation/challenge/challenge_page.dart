@@ -230,6 +230,7 @@ class _ChallengePageState extends State<ChallengePage> {
                           widget.idAsignatura,
                           widget.idTema,
                           widget.idNivel,
+                          //coger el id del crear nota y pasarselo aqui luego de almacenarlo
                           controller.notasProv!.last.id);
                       Navigator.pushReplacementNamed(
                         context,

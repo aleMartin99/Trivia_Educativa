@@ -6,6 +6,7 @@ class User {
   String? email;
   String? rol;
   String? ci;
+  //s String? token;
 
   //String imagen;
 
@@ -19,9 +20,19 @@ class User {
     required this.ci,
     // this.imagen
   });
+  // User fromJson(Map json) => User(
+  //       id: json['_id'] as String?,
+  //       name: json['name'] as String?,
+  //       username: json['username'] as String,
+  //       email: json['email'] as String?,
+  //       password: json['password'] as String,
+  //       rol: json['rol'] as String,
+  //       ci: json['CI'] as String,
+  //     );
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    // token = ['access_token'];
+    id = json['_id'];
     name = json['name'];
     username = json['username'];
     email = json['email'];
@@ -33,7 +44,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['_id'] = id;
     data['name'] = name;
     data['username'] = username;
     data['email'] = email;

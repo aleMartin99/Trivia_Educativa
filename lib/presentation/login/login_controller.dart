@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:trivia_educativa/data/models/auth_model.dart';
 
 import '../../domain/repositories/repositories.dart';
 import 'package:trivia_educativa/data/models/models.dart';
@@ -13,25 +16,44 @@ class LoginController {
   set state(LoginState state) => stateNotifier.value = state;
   LoginState get state => stateNotifier.value;
 
+  // final ValueNotifier<bool> loadingNotifier = ValueNotifier<bool>(false);
+  // bool get isLoading => loadingNotifier.value;
+  // set isLoading(bool value) => loadingNotifier.value = value;
+
+  final ValueNotifier<bool> loginNotifier = ValueNotifier<bool>(false);
+  bool get isLoggedIn => loginNotifier.value;
+  set isLoggedIn(bool value) => loginNotifier.value = value;
+
   List<User>? users;
+  User? user;
+  Auth? auth;
 
   final repository = LoginRepository();
 
-//TODO Verificar error datos info, check connections apenas carga la app
+//TODO check connections when llamada api
 
-  Future getUser() async {
+  Future signIn(String username, String password) async {
     state = LoginState.loading;
-
-    final response = (await repository.getUsers());
+    final response = (await repository.signIn(username, password));
     if (response.isRight()) {
-      users = ((response as Right).value as List<User>).cast<User>();
-      state = LoginState.success;
-      return users;
-    } else {
+      // resp = ((response as Right).value);
+      auth = ((response as Right).value as Auth);
+      user = auth!.user;
+      state = LoginState.login;
+      log('$user');
+      return user;
+    }
+// implementar credenciales invalidas
+    // else if (d){}
+
+    else {
       state = LoginState.error;
     }
   }
 }
+
+
+ 
 
 //TODO se pide user, con ese user.carnetI(method comparar password para ) 
 

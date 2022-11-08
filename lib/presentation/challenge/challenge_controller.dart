@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:fpdart/fpdart.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
@@ -28,20 +29,43 @@ class ChallengeController {
   //TODO remove points with new server
   int puntos = 0;
 
+//crear guarda en una variable
+//  Future getAsignaturas() async {
+//     state = HomeState.loading;
+//     final response = (await repository.getAsignaturas());
+//     if (response.isRight()) {
+//       asignaturas =
+//           ((response as Right).value as List<Asignatura>).cast<Asignatura>();
+//       state = HomeState.success;
+//       return asignaturas;
+//     } else {
+//       state = HomeState.error;
+//     }
+//   }
+
+//TODO Quitar esto
+//todo Check this method for contorller with right and left
   Future getNotasProv() async {
     state = ChallengeState.loading;
-
-    notasProv = (await repository.getNotasProv()).cast<NotaProv>();
-
-    state = ChallengeState.notasLoaded;
-    return notasProv;
+    final response = (await repository.getNotasProv());
+    if (response.isRight()) {
+      notasProv =
+          ((response as Right).value as List<NotaProv>).cast<NotaProv>();
+      state = ChallengeState.notasLoaded;
+      return notasProv;
+    } else {
+      state = ChallengeState.error;
+    }
   }
 
 //TODO annadir id estudiante (ver orden)
+
   Future asignarNota(String idAsignatura, String idTema, String idNivel,
       String idNotaProv) async {
     state = ChallengeState.loading;
+
 //TODO annadir id estudiante (ver orden)
+
     repository.asignarNota(idAsignatura, idTema, idNivel, idNotaProv);
 
     state = ChallengeState.notasAsignadas;
@@ -52,7 +76,7 @@ class ChallengeController {
     state = ChallengeState.loading;
 
     repository.crearNota(nota);
-
+//response para guardar el id y luego pasarselo
     state = ChallengeState.success;
     // return nota;
   }

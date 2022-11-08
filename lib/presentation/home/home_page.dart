@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
                   //TODO I10n
                   Center(
                       child: Text(
+                      //TODO change color, no se ve nada
                       'No hay asignaturas disponibles',
                       style: AppTextStyles.titleBold.copyWith(
                           //color: settingsController.currentAppTheme.primaryColor,

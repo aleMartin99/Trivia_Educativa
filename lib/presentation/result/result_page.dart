@@ -139,6 +139,7 @@ class ResultPage extends StatelessWidget {
                             label: I10n.of(context).backTo_Home,
                             onTap: () async {
                               //*elimina el stack de vistas 1 a 1 hasta la vista home
+                              //TODO change to remove until home
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pop(context);
