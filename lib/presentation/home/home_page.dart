@@ -26,10 +26,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   initState() {
+    Future.delayed(const Duration(microseconds: 1), () {
+      //TODO Make only once like on board
+      showWelcomeBox();
+    });
     _loadData();
     controller.stateNotifier.addListener(() {
       setState(() {});
       if (controller.state == HomeState.error) {
+        //TODO check dialogo
         Dialoger.showErrorDialog(
           context: context,
           title: 'Sucedió un error',
@@ -41,6 +46,80 @@ class _HomePageState extends State<HomePage> {
     //   setState(() {});
     // });
     super.initState();
+  }
+
+  showWelcomeBox() {
+    showWelcomeBox() {
+      return Container(
+        height: 350,
+        width: 500,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: AppGradients.linear,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.close, color: Colors.white)),
+                  ],
+                ),
+                const Text(
+                  "Bienvenido!",
+                  style: TextStyle(color: AppColors.white, fontSize: 30),
+                  //  style: boldText(fSize: 40)
+                ),
+                const SizedBox(height: 30),
+                const Text(
+                  "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales.Mediante esta app los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas mediante niveles.\nEsperamos que se divierta y aprenda. ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: AppColors.white),
+                  //  style: regulerText
+                ),
+                const SizedBox(height: 30),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      width: 150,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: AppColors.purple,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: const Center(
+                          child: Text(
+                        "OK 🧠🚀",
+                        style: TextStyle(color: AppColors.white),
+                        //   style: boldText(fSize: 12)
+                      ))),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            contentPadding: EdgeInsets.zero,
+            content: showWelcomeBox(),
+          );
+        });
   }
 
   @override
@@ -80,10 +159,10 @@ class _HomePageState extends State<HomePage> {
                       //TODO change color, no se ve nada
                       'No hay asignaturas disponibles',
                       style: AppTextStyles.titleBold.copyWith(
-                          //color: settingsController.currentAppTheme.primaryColor,
-                          //fontWeight: FontWeight.w600,
-                          //fontSize: 22
-                          ),
+                        color: Theme.of(context).primaryIconTheme.color,
+                        //fontWeight: FontWeight.w600,
+                        //fontSize: 22
+                      ),
                     ))
                   //TODO make validation for data to all pages like asignatura(home) (asi)
                   //TODO add subtitulo que diga asignaturas

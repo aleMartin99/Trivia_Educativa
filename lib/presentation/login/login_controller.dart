@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/auth_model.dart';
 
 import '../../domain/repositories/repositories.dart';
 import 'package:trivia_educativa/data/models/models.dart';
+import '../../main.dart';
 import 'login_imports.dart';
 
 //TODO en el auth si es el user que devuelve es Estudiante acceso, si es profesor o administrador ERROR (no esta autorizado)
@@ -27,10 +29,10 @@ class LoginController {
   List<User>? users;
   User? user;
   Auth? auth;
+  var resp;
+  final repository = LoginRepository(sl());
 
-  final repository = LoginRepository();
-
-//TODO check connections when llamada api
+//TODO check connection when llamada api
 
   Future signIn(String username, String password) async {
     state = LoginState.loading;
@@ -39,15 +41,22 @@ class LoginController {
       // resp = ((response as Right).value);
       auth = ((response as Right).value as Auth);
       user = auth!.user;
-      state = LoginState.login;
+      state = LoginState.loggedIn;
       log('$user');
       return user;
     }
 // implementar credenciales invalidas
     // else if (d){}
-
-    else {
-      state = LoginState.error;
+    if (response.isLeft()) {
+      resp = (response as Left).value;
+      if (resp == NoInternetConnectionFailure) {
+        state = LoginState.notConnected;
+        //TODO ver x que no cae aqui
+      } else if (resp == InvalidCredentialsFailure) {
+        state = LoginState.unauthorized;
+      } else {
+        state = LoginState.error;
+      }
     }
   }
 }

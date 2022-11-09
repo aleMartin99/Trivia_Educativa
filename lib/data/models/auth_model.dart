@@ -4,8 +4,7 @@ class Auth {
   late User user;
   late String token;
 
-  //String imagen;
-
+//TODO make token global with shared preferences
   Auth({
     required this.token,
     required this.user,

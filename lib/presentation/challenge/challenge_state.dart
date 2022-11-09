@@ -4,5 +4,6 @@ enum ChallengeState {
   error,
   empty,
   notasLoaded,
-  notasAsignadas
+  notasAsignadas,
+  notConnected
 }

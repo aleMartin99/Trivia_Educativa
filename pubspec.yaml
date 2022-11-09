@@ -44,6 +44,7 @@ dependencies:
   provider: any
   shared_preferences: any
   smooth_page_indicator: ^1.0.0+2
+  quickalert: ^1.0.0
   package_info_plus: ^2.0.0 
   http: ^0.13.4
   get_it: ^7.2.0
@@ -52,6 +53,7 @@ dependencies:
   equatable: ^2.0.3
   flutter_bloc: ^7.3.0
   easy_dynamic_theme: ^2.2.0
+  internet_connection_checker: ^0.0.1+2
    
   #flutter_native_splash: ^2.2.9
  # firebase_database: ^6.1.2

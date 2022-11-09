@@ -81,8 +81,8 @@ class NextButtonWidget extends StatelessWidget {
           label,
           //TODO check font family and remove notoSans
           style: GoogleFonts.notoSans(
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
+            fontWeight: FontWeight.w800,
+            fontSize: 18,
             color: fontColor,
           ),
         ),
