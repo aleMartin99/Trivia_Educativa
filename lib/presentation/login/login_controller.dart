@@ -32,8 +32,6 @@ class LoginController {
   var resp;
   final repository = LoginRepository(sl());
 
-//TODO check connection when llamada api
-
   Future signIn(String username, String password) async {
     state = LoginState.loading;
     final response = (await repository.signIn(username, password));
@@ -45,13 +43,11 @@ class LoginController {
       log('$user');
       return user;
     }
-// implementar credenciales invalidas
-    // else if (d){}
+
     if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
         state = LoginState.notConnected;
-        //TODO ver x que no cae aqui
       } else if (resp == InvalidCredentialsFailure) {
         state = LoginState.unauthorized;
       } else {

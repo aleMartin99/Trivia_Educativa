@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:fpdart/fpdart.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
@@ -6,98 +7,76 @@ import '../../core/core.dart';
 
 import 'package:http/http.dart' as http;
 
-// class PromoNotificationRepository with RequestErrorParser {
-//   PromoNotificationRepository(
-//     this._promoNotificationService,
-//     this._networkInfo,
-//     this._localDatabase,
-//   );
-
-//   final PromoNotificationService _promoNotificationService;
-//   final LocalDatabase<PromoNotification> _localDatabase;
-//   final NetworkInfo _networkInfo;
-
-//   Future<Either<Failure, Iterable<PromoNotification>>>
-//       getPromoNotifications() async {
-//     if (await _networkInfo.isConnected) {
-//       try {
-//         final _response = await _promoNotificationService.getPromoCards();
-//         final _body = _response.body;
-//         final _statusCode = _body['code'];
-//         if (_statusCode == 200) {
-//           final _itemsJson = _body['items'] as List;
-//           final _items = [
-//             ...(_itemsJson).map((e) => PromoNotification.fromJson(e))
-//           ]..sort((a, b) => a.priority!.compareTo(b.priority!));
-
-//           log('Got this elements: $_items');
-
-//           // Items that are really new and user hasn't seen before
-//           final _newItems = <PromoNotification>[];
-
-//           for (var element in _items) {
-//             if (!(await _localDatabase.contains(element))) {
-//               log('Local Database doesnt have the element $element');
-//               _newItems.add(element);
-//             }
-//           }
-//           log('Local database addding all elements $_newItems');
-//           _localDatabase.addAll(_newItems);
-
-//           return right(_newItems);
-//         }
-//         throw analyzeResponse(_response);
-//       } on AuthenticationException catch (e) {
-//         return left(
-//           AuthenticationFailure(
-//             message: e.toString(),
-//           ),
-//         );
-//       } on ServerException catch (e) {
-//         return left(
-//           ServerFailure(
-//             message: e.toString(),
-//           ),
-//         );
-//       } catch (e) {
-//         rethrow;
-//         return left(
-//           UnexpectedFailure(
-//             message: e.toString(),
-//           ),
-//         );
-//       }
-//     } else {
-//       return const Left(NoInternetConnectionFailure());
-//     }
-//   }
-// }
+import '../../core/network_info/network_info.dart';
 
 class HomeRepository with RequestErrorParser {
+  HomeRepository(
+    this._networkInfo,
+  );
   String apiBaseUrl = kApiOldServer;
+  final NetworkInfo _networkInfo;
+  Future findEstudianteByCI(String cI) async {
+    var uri = Uri.http(
+      '10.0.2.2:3000',
+      "api/v2/estudiante/byCI/" "$cI",
+    );
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await http.get(
+          uri,
+        );
+        log('status code from estudiante');
+        log(response.statusCode.toString());
+        if (response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body);
+          log(' ${jsonResponse.toString()}');
+          final estudiante = Estudiante.fromJson(jsonResponse);
+          return right(estudiante);
+        } else if (response.statusCode == 401) {
+          return left(InvalidCredentialsFailure);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          //TODO I10n
+          throw Exception('Failed to find Estudiante by CI');
+        }
+      } catch (e) {
+        return left(UnexpectedFailure(message: e.toString()));
+      }
+    } else {
+      return left(NoInternetConnectionFailure);
+    }
+  }
 
-  Future<Either<Failure, List<Asignatura>>> getAsignaturas() async {
+  Future findByAnno(int annoCurso) async {
 //
     var uri = Uri.http(
-      apiBaseUrl,
-      "asignaturas",
+      '10.0.2.2:3000',
+      "api/v2/asignatura/obtener/" "$annoCurso",
     );
-    try {
-      final response = await http.get(uri);
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body) as List;
-        final asignaturas =
-            jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-        //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-        return right(asignaturas);
-      } else {
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        //TODO I10n
-        throw Exception('Failed to load Asingaturas');
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await http.get(uri);
+        log(' ${response.toString()}');
+        if (response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body) as List;
+          log(' ${jsonResponse.toString()}');
+          final asignaturas =
+              jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
+          return right(asignaturas);
+        } else if (response.statusCode == 401) {
+          return left(InvalidCredentialsFailure);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          //TODO I10n
+          throw Exception('Failed to load Asingaturas');
+        }
+      } catch (e) {
+        return left(UnexpectedFailure(message: e.toString()));
       }
-    } catch (e) {
-      return left(UnexpectedFailure(message: e.toString()));
+    } else {
+      return left(NoInternetConnectionFailure);
     }
 
     //return getJson(uri).then((value) => value);

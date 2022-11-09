@@ -5,7 +5,7 @@ import 'package:trivia_educativa/data/models/tema_model.dart';
 class Asignatura {
   late String id;
   late String descripcion;
-  late List<Profesor> profesores;
+  late int anno;
   late List<Tema> temas;
   //late String image;
   //late String icon;
@@ -14,7 +14,7 @@ class Asignatura {
   Asignatura({
     required this.id,
     required this.descripcion,
-    required this.profesores,
+    required this.anno,
     required this.temas,
     // required this.image,
     // required this.icon,
@@ -25,12 +25,7 @@ class Asignatura {
     // icon = json['icon'];
     // image = json['image'];
     descripcion = json['descripcion'];
-    if (json['profesor'] != null) {
-      profesores = <Profesor>[];
-      json['profesor'].forEach((v) {
-        profesores.add(Profesor.fromJson(v));
-      });
-    }
+    anno = json['anno'];
     if (json['temas'] != null) {
       temas = <Tema>[];
       json['temas'].forEach((v) {
@@ -46,7 +41,8 @@ class Asignatura {
     // data['icon'] = icon;
     // data['image'] = image;
     data['descripcion'] = descripcion;
-    data['profesor'] = profesores.map((v) => v.toJson()).toList();
+    data['anno'] = anno;
+    //  data['profesor'] = profesores.map((v) => v.toJson()).toList();
     data['temas'] = temas.map((v) => v.toJson()).toList();
 
     return data;

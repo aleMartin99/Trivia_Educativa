@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'dart:developer';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
@@ -18,28 +19,84 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = HomeController();
+  final homeController = HomeController();
 
   void _loadData() async {
-    await controller.getAsignaturas();
+    //User? user = _loginController.user;
+    await homeController.getEstudiante(widget.user.ci!);
+    Estudiante estudiante = homeController.estudiante!;
+    await homeController.getAsignaturas(estudiante.annoCurso);
   }
 
   @override
   initState() {
     Future.delayed(const Duration(microseconds: 1), () {
-      //TODO Make only once like on board
+      //TODO Make only once like onboarding
       showWelcomeBox();
     });
     _loadData();
-    controller.stateNotifier.addListener(() {
+    homeController.stateNotifier.addListener(() {
       setState(() {});
-      if (controller.state == HomeState.error) {
-        //TODO check dialogo
-        Dialoger.showErrorDialog(
+      if (homeController.state == HomeState.error) {
+        QuickAlert.show(
           context: context,
-          title: 'Sucedió un error',
-          description: 'Error cargando asignaturas en dialoger from recarguita',
+          type: QuickAlertType.error,
+          title: 'Ha ocurrido un error',
+          text: 'Ha ocurrido un error inesperado',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+          confirmBtnText: 'Ok',
+          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
+      }
+      // else if (homeController.state == HomeState.unauthorized) {
+      //   //TODO make Quick alert theme proof
+      //   QuickAlert.show(
+      //     context: context,
+      //     type: QuickAlertType.error,
+      //     title: 'Credenciales Inválidas',
+      //     text: 'Revise el usuario o la contraseña ',
+      //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      //     textColor: Theme.of(context).primaryIconTheme.color!,
+      //     titleColor: Theme.of(context).primaryIconTheme.color!,
+      //     confirmBtnColor: AppColors.purple,
+      //     confirmBtnText: 'Ok',
+      //     //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
+      //   );
+      //   homeController.state = HomeState.empty;
+      // }
+      else if (homeController.state == HomeState.notConnected) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'No hay conexión a Internet',
+          confirmBtnText: 'Ok',
+          text:
+              'Al parecer no tiene conexión a internet. Revise en los ajustes del teléfono',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+        );
+
+        homeController.state = HomeState.empty;
+        //TODO remove alert dialog
+      } else if (homeController.state == HomeState.estudError) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Error con el estudiante',
+          confirmBtnText: 'Ok',
+          text: 'Al parecer esta x nicaragua',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+        );
+
+        homeController.state = HomeState.empty;
       }
     });
     // challengeController.stateNotifier.addListener(() {
@@ -80,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 30),
                 const Text(
-                  "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales.Mediante esta app los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas mediante niveles.\nEsperamos que se divierta y aprenda. ",
+                  "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales. Haciendo uso de esta app los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas.\nDiviértete y aprende!.",
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppColors.white),
                   //  style: regulerText
@@ -124,9 +181,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    log(controller.toString());
-    // SettingsController settingsController =
-    //     Provider.of<SettingsController>(context);
 //TODO pull to refresh implement from recarguita
 
     //TODO make validation for data to all pages like asignatura(home)
@@ -135,23 +189,19 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async => false,
       child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          //     settingsController.currentAppTheme.scaffoldBackgroundColor,
           appBar: AppBarWidget(
-            //*cambie el usuario ya que lo cargo del login y lo paso x paramtros
             user: widget.user,
           ),
-
           //TODO check loading condition
           //! cuando carga el usuario pero se tumba el server se queda pegado el cargando, revisar y lanzar timeout y cartel
-
-          body: (controller.state == HomeState.loading)
+          body: (homeController.state == HomeState.loading)
               ? const Center(
                   child: CircularProgressIndicator(
                   valueColor:
                       AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
                 ))
-              : (controller.asignaturas == null ||
-                      controller.asignaturas!.isEmpty)
+              : (homeController.asignaturas == null ||
+                      homeController.asignaturas!.isEmpty)
                   ?
                   //TODO I10n
                   Center(
@@ -160,8 +210,6 @@ class _HomePageState extends State<HomePage> {
                       'No hay asignaturas disponibles',
                       style: AppTextStyles.titleBold.copyWith(
                         color: Theme.of(context).primaryIconTheme.color,
-                        //fontWeight: FontWeight.w600,
-                        //fontSize: 22
                       ),
                     ))
                   //TODO make validation for data to all pages like asignatura(home) (asi)
@@ -175,17 +223,16 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(top: 10.0),
                         child: GridView.count(
                           physics: const BouncingScrollPhysics(),
-                          childAspectRatio: 1.2,
+                          childAspectRatio: 1.11,
                           shrinkWrap: true,
                           crossAxisCount: 2,
                           crossAxisSpacing: 25,
                           mainAxisSpacing: 16,
-                          children: controller.asignaturas!
+                          children: homeController.asignaturas!
                               .map((asignatura) => AsignaturaCardWidget(
                                     nombre: asignatura.descripcion,
                                     //TODO hacer validaciones para cosas vacias
                                     cantTemas: asignatura.temas.length,
-
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, AppRoutes.temaRoute,

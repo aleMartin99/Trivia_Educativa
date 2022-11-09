@@ -23,42 +23,41 @@ class AsignaturaCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        //foregroundDecoration:,
         clipBehavior: Clip.antiAlias,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          // boxShadow: Shadow(),
-          // border: const Border.fromBorderSide(
-          //   BorderSide(
-          //     strokeAlign: StrokeAlign.outside,
-          //     color: AppColors.border,
-          //   ),
-          // ),
           borderRadius: BorderRadius.circular(15),
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
         ),
         child: Column(
           //TODO annadir cantidad items next page (temas)
           crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-                height: 50,
+                height: 40,
                 child: CustomIconSVG(
                   iconName: AppImages.icon_1,
                 )),
             const SizedBox(
               height: 8,
             ),
-            Text(nombre,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline2!.copyWith(
-                    fontSize: 21,
-                    color: Theme.of(context).primaryIconTheme.color)),
+            Flex(
+              direction: Axis.vertical,
+              children: [
+                Text(nombre,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                        fontSize: 21,
+                        color: Theme.of(context).primaryIconTheme.color)),
+              ],
+            ),
+            //fit: BoxFit.fitWidth,
+
             const SizedBox(
-              height: 6,
+              height: 10,
             ),
             Text(
               "${I10n.of(context).topics}: $cantTemas",

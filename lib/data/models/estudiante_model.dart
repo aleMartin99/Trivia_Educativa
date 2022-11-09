@@ -1,35 +1,30 @@
 class Estudiante {
-  String? id;
-  String? name;
-  String? ci;
+  late String id;
+  late String name;
+  late String ci;
   //TODO chech with carlos annoCurso tipo de dato(carlos string pero yo digo q int (revisar caso de universidad o casos x default en string ))
-  int? annoCurso;
-  //String? fechaNacimiento;
+  late int annoCurso;
 
   Estudiante({
-    this.id,
-    this.name,
-    this.ci,
-    this.annoCurso,
-    // this.fechaNacimiento,
+    required this.id,
+    required this.name,
+    required this.ci,
+    required this.annoCurso,
   });
 
   Estudiante.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
-    name = json['nombre'];
+    name = json['name'];
     ci = json['CI'];
-    annoCurso = json['ano'];
-    //fechaNacimiento = json['fechaNacimiento'];
+    annoCurso = json['annoCurso'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = id;
-    data['nombre'] = name;
+    data['name'] = name;
     data['CI'] = ci;
-    data['ano'] = annoCurso;
-    //data['fechaNacimiento'] = fechaNacimiento;
-
+    data['annoCurso'] = annoCurso;
     return data;
   }
 }

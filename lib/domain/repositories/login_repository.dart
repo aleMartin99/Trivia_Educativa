@@ -16,35 +16,6 @@ class LoginRepository with RequestErrorParser {
   final NetworkInfo _networkInfo;
   String apiBaseUrl = kApiProductionBaseUrl;
 
-//   Future<Either<Failure, List<Asignatura>>> getAsignaturas() async {
-// //
-//     var uri = Uri.http(
-//       apiBaseUrl,
-//       "asignaturas",
-//     );
-//     if (await _networkInfo.isConnected) {
-//       try {
-//         final response = await http.get(uri);
-//         if (response.statusCode == 200) {
-//           final jsonResponse = json.decode(response.body) as List;
-//           final asignaturas =
-//               jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-//           //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-//           return right(asignaturas);
-//         } else {
-//           // If the server did not return a 200 OK response,
-//           // then throw an exception.
-//           //TODO I10n
-//           throw Exception('Failed to load Asingaturas');
-//         }
-//       } catch (e) {
-//         return left(UnexpectedFailure(message: e.toString()));
-//       }
-//     } else {
-//       return const Left(NoInternetConnectionFailure());
-//     }
-//   }
-
   Future signIn(String username, String password) async {
     var uri = Uri.http(
       '10.0.2.2:3000',
