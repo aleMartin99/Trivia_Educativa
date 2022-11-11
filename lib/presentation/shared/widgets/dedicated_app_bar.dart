@@ -136,7 +136,7 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Navigator.pop(context);
                           },
                           icon: Icon(
-                            Icons.arrow_back_ios_new_outlined,
+                            Icons.arrow_back,
                             color: Theme.of(context).iconTheme.color,
                           ),
                         )

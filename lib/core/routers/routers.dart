@@ -16,8 +16,10 @@ import 'package:trivia_educativa/data/models/user_model.dart';
 import '../../presentation/onboarding/cubit/onboarding_cubit.dart';
 import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';
 
+//TODO check routes and APP routes
 // const String splashRoute = "/";
 const String homeRoute = "/home";
+const String homeScreen = "/homeScreen";
 const String onboardingRoute = "/onboarding";
 const String temaRoute = "/tema";
 const String nivelRoute = "/nivel";
@@ -39,14 +41,13 @@ class AppRouter extends StatelessWidget {
         if (args is ChallengePageArgs) {
           return MaterialPageRoute(
             builder: (_) => ChallengePage(
-              rango3: args.rango3,
-              rango4: args.rango4,
-              rango5: args.rango5,
+              nota5: args.nota5,
               quizTitle: args.quizTitle,
               preguntas: args.preguntas,
               idAsignatura: args.idAsignatura,
               idTema: args.idTema,
               idNivel: args.idNivel,
+              idEstudiante: args.idEstudiante,
             ),
           );
         } else {
@@ -58,6 +59,7 @@ class AppRouter extends StatelessWidget {
           return MaterialPageRoute(
             builder: (_) => TemaPage(
               temas: args.temas, idAsignatura: args.idAsignatura,
+              idEstudiante: args.idEstudiante,
 
               // questions: args.questions,
             ),
@@ -73,6 +75,7 @@ class AppRouter extends StatelessWidget {
               niveles: args.niveles,
               idAsignatura: args.idAsignatura,
               idTema: args.idTema,
+              idEstudiante: args.idEstudiante,
             ),
           );
         } else {
@@ -84,10 +87,7 @@ class AppRouter extends StatelessWidget {
           return MaterialPageRoute(
             //TODO remove puntos and rangos, add nota5
             builder: (_) => ResultPage(
-              puntos: args.puntos,
-              rango3: args.rango3,
-              rango4: args.rango4,
-              rango5: args.rango5,
+              nota5: args.nota5,
               quizTitle: args.quizTitle,
               result: args.result,
               questionsLenght: args.questionsLenght,
@@ -98,20 +98,30 @@ class AppRouter extends StatelessWidget {
         }
       case loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginPage());
-      case settingsRoute:
-        if (args is SettingsPageArgs) {
+      // case settingsRoute:
+      //   if (args is SettingsPageArgs) {
+      //     return MaterialPageRoute(
+      //       builder: (_) => const SettingsPage(),
+      //     );
+      //   } else {
+      //     return _errorRoute();
+      //   }
+
+//TODO check this onboarding stuff with already seen
+//*OnBoarding
+      case onboardingRoute:
+        return MaterialPageRoute(builder: (_) => const Onboarding());
+
+      case homeScreen:
+        if (args is HomeScreenArgs) {
           return MaterialPageRoute(
-            builder: (_) => SettingsPage(
+            builder: (_) => HomeScreen(
               user: args.user,
             ),
           );
         } else {
           return _errorRoute();
         }
-
-//*OnBoarding
-      case onboardingRoute:
-        return MaterialPageRoute(builder: (_) => const Onboarding());
 
       default:
         if (args is HomePageArgs) {
@@ -126,6 +136,7 @@ class AppRouter extends StatelessWidget {
     }
   }
 
+//TODO check this onboarding stuff with already seen
   @override
   Widget build(BuildContext context) {
     final _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
@@ -158,64 +169,59 @@ class HomePageArgs {
   });
 }
 
-class SettingsPageArgs {
+class HomeScreenArgs {
   final User user;
-  SettingsPageArgs({
+  HomeScreenArgs({
     required this.user,
   });
 }
 
+// class SettingsPageArgs {
+//   SettingsPageArgs();
+// }
+
 class ChallengePageArgs {
   final List<Pregunta> preguntas;
   final String quizTitle;
-  final int rango3;
-  final int rango4;
-  final int rango5;
+  final int nota5;
   final String idAsignatura;
   final String idTema;
   final String idNivel;
+  final String idEstudiante;
 
   ChallengePageArgs(
       {required this.preguntas,
       required this.quizTitle,
-      required this.rango3,
-      required this.rango4,
-      required this.rango5,
+      required this.nota5,
       required this.idTema,
       required this.idAsignatura,
-      required this.idNivel});
+      required this.idNivel,
+      required this.idEstudiante});
 }
 
 class TemaPageArgs {
   final List<Tema> temas;
   final String idAsignatura;
+  final String idEstudiante;
 
-  //TODO add id estudiante when adding note
   TemaPageArgs({
     required this.temas,
     required this.idAsignatura,
+    required this.idEstudiante,
   });
 }
 
 class ResultPageArgs {
-  //TODO remove puntos and rangos, add nota5
   final String quizTitle;
   final int questionsLenght;
   final int result;
-  final int rango3;
-  final int rango4;
-  final int rango5;
-  final int puntos;
+  final int nota5;
 
-//TODO remove puntos and rangos, add nota5
   ResultPageArgs({
     required this.quizTitle,
     required this.questionsLenght,
     required this.result,
-    required this.rango3,
-    required this.rango4,
-    required this.rango5,
-    required this.puntos,
+    required this.nota5,
   });
 }
 
@@ -223,10 +229,11 @@ class NivelPageArgs {
   final List<Nivel> niveles;
   final String idTema;
   final String idAsignatura;
+  final String idEstudiante;
 
-  NivelPageArgs({
-    required this.niveles,
-    required this.idTema,
-    required this.idAsignatura,
-  });
+  NivelPageArgs(
+      {required this.niveles,
+      required this.idTema,
+      required this.idAsignatura,
+      required this.idEstudiante});
 }

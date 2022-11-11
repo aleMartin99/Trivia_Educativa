@@ -7,28 +7,29 @@ import '../../core/core.dart';
 
 import 'package:http/http.dart' as http;
 
-class ChallengeRepository with RequestErrorParser {
-  String apiBaseUrl = kApiOldServer;
+import '../../core/network_info/network_info.dart';
 
-//  Future<Either<Failure, List<Asignatura>>> getAsignaturas() async {
-// //
+class ChallengeRepository with RequestErrorParser {
+  ChallengeRepository(this._networkInfo);
+  String apiBaseUrl = kApiEmulatorBaseUrl;
+  final NetworkInfo _networkInfo;
+// //TODO keep implementing right left get asignaturas method
+//   Future<Either<Failure, List<NotaProv>>> getNotasProv() async {
 //     var uri = Uri.http(
 //       apiBaseUrl,
-//       "asignaturas",
+//       "notas",
 //     );
 //     try {
 //       final response = await http.get(uri);
 //       if (response.statusCode == 200) {
 //         final jsonResponse = json.decode(response.body) as List;
-//         final asignaturas =
-//             jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-//         //return jsonResponse.map((e) => Asignatura.fromJson(e)).toList();
-//         return right(asignaturas);
+//         final notasProv =
+//             jsonResponse.map((e) => NotaProv.fromJson(e)).toList();
+//         return right(notasProv);
 //       } else {
 //         // If the server did not return a 200 OK response,
 //         // then throw an exception.
-//         //TODO I10n
-//         throw Exception('Failed to load Asingaturas');
+//         throw Exception('Failed to load Notas');
 //       }
 //     } catch (e) {
 //       return left(UnexpectedFailure(message: e.toString()));
@@ -37,62 +38,71 @@ class ChallengeRepository with RequestErrorParser {
 //     //return getJson(uri).then((value) => value);
 //   }
 
-//TODO keep implementing right left get asignaturas method
-  Future<Either<Failure, List<NotaProv>>> getNotasProv() async {
+//TODO implement from estudinate byCI con left and right
+  Future addDatos(String idNotaProv, String idAsignatura, String idTema,
+      String idNivel, String idEstudiante) async {
     var uri = Uri.http(
-      apiBaseUrl,
-      "notas",
+      // apiBaseUrl,
+      '10.0.2.2:3000',
+      //TODO change
+      "notas/$idNotaProv/asignatura/$idAsignatura/tema/$idTema/nivel/$idNivel/estudiante/$idEstudiante",
     );
-    try {
-      final response = await http.get(uri);
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body) as List;
-        final notasProv =
-            jsonResponse.map((e) => NotaProv.fromJson(e)).toList();
-        return right(notasProv);
-      } else {
-        // If the server did not return a 200 OK response,
-        // then throw an exception.
-        throw Exception('Failed to load Notas');
+
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await http.post(uri);
+        log('status code from asignarNota');
+        log(response.statusCode.toString());
+        log('asignar nota ');
+        // if (response.statusCode == 200) {
+        //         final jsonResponse = json.decode(response.body);
+        //         log(' ${jsonResponse.toString()}');
+        //         final estudiante = Estudiante.fromJson(jsonResponse);
+        //         return right(estudiante);
+        //       }
+        if (response.statusCode == 401) {
+          return left(InvalidCredentialsFailure);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          //TODO I10n
+          throw Exception('Failed to asign to a Nota');
+        }
+      } catch (e) {
+        return left(UnexpectedFailure(message: e.toString()));
       }
-    } catch (e) {
-      return left(UnexpectedFailure(message: e.toString()));
-    }
-
-    //return getJson(uri).then((value) => value);
-  }
-
-  Future asignarNota(String idAsignatura, String idTema, String idNivel,
-      String idNotaProv) async {
-    var uri = Uri.http(
-      apiBaseUrl,
-      "notas" "/$idNotaProv",
-    );
-
-    try {
-      final response = await http.put(uri, body: {
-        //TODO add id estudiante
-        "asignatura": idAsignatura,
-        "tema": idTema,
-        "nivel": idNivel,
-      });
-      log('asignar nota ');
-    } catch (ex) {
-      throw Exception('Failed to asign a Nota');
+    } else {
+      return left(NoInternetConnectionFailure);
     }
   }
 
-  void crearNota(int nota) async {
+//TODO implement from estudinate byCI o user con left and right
+  Future crearNota(int nota) async {
     var uri = Uri.http(
-      apiBaseUrl,
+      //apiBaseUrl,
+      '10.0.2.2:3000',
       "notas",
     );
 
-    try {
-      final response = await http.post(uri, body: {"nota": "$nota"});
-      log(response.body);
-    } catch (ex) {
-      throw Exception('Failed to create a Nota');
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await http.post(uri, body: {"nota": "$nota"});
+        log(' ${response.toString()}');
+        if (response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body);
+          log(' ${jsonResponse.toString()}');
+          final notaProv = NotaProv.fromJson(jsonResponse);
+          return right(notaProv);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          throw Exception('Failed to create a Nota');
+        }
+      } catch (e) {
+        return left(UnexpectedFailure(message: e.toString()));
+      }
+    } else {
+      return left(NoInternetConnectionFailure);
     }
   }
 }

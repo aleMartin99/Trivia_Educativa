@@ -19,6 +19,9 @@ class Asignatura {
     // required this.image,
     // required this.icon,
   });
+
+//TOdo Annadir fromjson para imagen e icono,
+
 //TODO si esta vacio o null en imagen e icon pongo valor por defecto
   Asignatura.fromJson(Map<String, dynamic> json) {
     id = json['_id'];

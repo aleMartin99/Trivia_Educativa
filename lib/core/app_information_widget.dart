@@ -28,7 +28,7 @@ class AppInformationWidget extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'PNRegular',
                   fontSize: 14,
-                  color: Theme.of(context).primaryIconTheme.color,
+                  color: Theme.of(context).iconTheme.color,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -39,7 +39,7 @@ class AppInformationWidget extends StatelessWidget {
                         fontFamily: 'PNRegular',
                         fontSize: 14,
 
-                        color: Theme.of(context).primaryIconTheme.color,
+                        color: Theme.of(context).iconTheme.color,
                         fontWeight: FontWeight.w400,
                         // fontWeight: FontWeight.w100,
                       ),
@@ -51,7 +51,7 @@ class AppInformationWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                             fontWeight: FontWeight.w400,
                             // fontWeight: FontWeight.w100,
                           ),
@@ -62,7 +62,7 @@ class AppInformationWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,
-                            color: Theme.of(context).primaryIconTheme.color,
+                            color: Theme.of(context).iconTheme.color,
                             fontWeight: FontWeight.w400,
                             // fontWeight: FontWeight.w100,
                           ),

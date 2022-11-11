@@ -6,6 +6,7 @@ class Tema {
   late String id;
   late String descripcion;
   late List<Nivel> niveles;
+  //imagen
   // int iV;
 
   Tema({required this.descripcion, required this.id, required this.niveles});

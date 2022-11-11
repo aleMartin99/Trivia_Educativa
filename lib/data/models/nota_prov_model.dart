@@ -6,8 +6,9 @@ import 'package:trivia_educativa/data/models/tema_model.dart';
 //TODO modify after microservices backend
 class NotaProv {
   late String id;
+  //TODO change to id
   List<Asignatura>? asignatura;
-
+  //id nota
   List<Tema>? tema;
   List<Nivel>? nivel;
   //TODO pass only de estudiante ID

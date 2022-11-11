@@ -13,13 +13,16 @@ class HomeRepository with RequestErrorParser {
   HomeRepository(
     this._networkInfo,
   );
-  String apiBaseUrl = kApiOldServer;
+  String apiBaseUrl = kApiEmulatorBaseUrl;
   final NetworkInfo _networkInfo;
   Future findEstudianteByCI(String cI) async {
     var uri = Uri.http(
+      //apiBaseUrl,
       '10.0.2.2:3000',
-      "api/v2/estudiante/byCI/" "$cI",
+      "api/v2/estudiante/byCI/"
+          "$cI",
     );
+
     if (await _networkInfo.isConnected) {
       try {
         final response = await http.get(
@@ -51,8 +54,10 @@ class HomeRepository with RequestErrorParser {
   Future findByAnno(int annoCurso) async {
 //
     var uri = Uri.http(
+      //apiBaseUrl,
       '10.0.2.2:3000',
-      "api/v2/asignatura/obtener/" "$annoCurso",
+      "api/v2/asignatura/obtener/"
+          "$annoCurso",
     );
     if (await _networkInfo.isConnected) {
       try {
@@ -69,7 +74,7 @@ class HomeRepository with RequestErrorParser {
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.
-          //TODO I10n
+
           throw Exception('Failed to load Asingaturas');
         }
       } catch (e) {

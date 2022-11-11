@@ -54,6 +54,7 @@ dependencies:
   flutter_bloc: ^7.3.0
   easy_dynamic_theme: ^2.2.0
   internet_connection_checker: ^0.0.1+2
+  awesome_drawer_bar: ^1.0.0
    
   #flutter_native_splash: ^2.2.9
  # firebase_database: ^6.1.2

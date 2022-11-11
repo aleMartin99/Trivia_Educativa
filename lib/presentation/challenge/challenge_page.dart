@@ -15,11 +15,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
   final String quizTitle;
-  final int rango3;
-  final int rango4;
-  final int rango5;
-  final String idAsignatura;
 
+  final int nota5;
+  final String idAsignatura;
+  final String idEstudiante;
   final String idTema;
   final String idNivel;
 
@@ -27,11 +26,10 @@ class ChallengePage extends StatefulWidget {
       {Key? key,
       required this.preguntas,
       required this.quizTitle,
-      required this.rango3,
-      required this.rango4,
-      required this.rango5,
+      required this.nota5,
       required this.idTema,
       required this.idAsignatura,
+      required this.idEstudiante,
       required this.idNivel})
       : super(key: key);
 
@@ -59,9 +57,6 @@ class _ChallengePageState extends State<ChallengePage> {
       controller.cantRightAnswers++;
       log('contador de cantidad de preguntas correctas ' +
           controller.cantRightAnswers.toString());
-      //TODO quitar puntos
-      controller.puntos += puntaje;
-      log('contador de cantidad de puntos ' + controller.puntos.toString());
     }
     nextPage();
   }
@@ -70,30 +65,18 @@ class _ChallengePageState extends State<ChallengePage> {
 
 //TODO make nota3 y nota4 automatic from nota5 (substracting 10)
 
-  // int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
-  //   int nota = 2;
-  //   int nota3 = nota5 - 20;
-  //   int nota4 = nota5 - 10;
-  //   double percent = cantRightAnswers * 100 / cantPreguntas;
-
-  //   if (percent >= nota3 && percent < nota4) {
-  //     nota = 3;
-  //   } else if (percent >= nota4 && percent < nota5) {
-  //     nota = 4;
-  //   }
-  //   if (percent >= nota5) {
-  //     nota = 5;
-  //   }
-  //   return nota;
-  // }
-  int evaluarNivel(int puntos, int rango3, int rango4, int rango5) {
+  int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
     int nota = 2;
-    if (puntos >= rango3 && puntos < rango4) {
+    int nota3 = nota5 - 20;
+    int nota4 = nota5 - 10;
+    double percent = cantRightAnswers * 100 / cantPreguntas;
+
+    if (percent >= nota3 && percent < nota4) {
       nota = 3;
-    } else if (puntos >= rango4 && puntos < rango5) {
+    } else if (percent >= nota4 && percent < nota5) {
       nota = 4;
     }
-    if (puntos >= rango5) {
+    if (percent >= nota5) {
       nota = 5;
     }
     return nota;
@@ -101,6 +84,8 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
+    //TODO add challengecontroller listener
+    //Todo implement quick dialog
     pageController.addListener(
       () {
         controller.currentPage = pageController.page!.toInt() + 1;
@@ -110,11 +95,11 @@ class _ChallengePageState extends State<ChallengePage> {
     super.initState();
   }
 
+//TODO change showAlertDialog with quizck alert dialog
   showAlertDialog(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context, listen: false);
 
-    // Create button
     Widget cancelButton = TextButton(
       child: Text(
         I10n.of(context).cancel,
@@ -132,18 +117,19 @@ class _ChallengePageState extends State<ChallengePage> {
             .copyWith(color: settingsController.currentAppTheme.primaryColor),
       ),
       onPressed: () async {
-        //TODO change to new evaluarnivel
         int nota = evaluarNivel(
-            controller.puntos, widget.rango3, widget.rango4, widget.rango5);
-        log(nota.toString());
-        controller.crearNota(nota);
-        await controller.getNotasProv();
+            widget.preguntas.length, controller.cantRightAnswers, widget.nota5);
+        log('la nota evaluada es' + nota.toString());
+        // await controller.crearNota(nota);
 
-        //*se asigna la nota
-        //PutAsignar
-//TODO Add idEstudiante
-        await controller.asignarNota(widget.idAsignatura, widget.idTema,
-            widget.idNivel, controller.notasProv!.last.id);
+        //*se crea la nota y asigna la nota con el id de la nota creada
+//TODO check que funcione idCrear nota
+        controller.asignarNota(
+            await controller.crearNota(nota),
+            widget.idAsignatura,
+            widget.idTema,
+            widget.idNivel,
+            widget.idEstudiante);
         Navigator.pop(context);
         Navigator.pushReplacementNamed(
           context,
@@ -152,11 +138,7 @@ class _ChallengePageState extends State<ChallengePage> {
             quizTitle: widget.quizTitle,
             questionsLenght: widget.preguntas.length,
             result: controller.cantRightAnswers,
-            //TODO remove rangos-puntos and add nota5
-            rango3: widget.rango3,
-            rango4: widget.rango4,
-            rango5: widget.rango5,
-            puntos: controller.puntos,
+            nota5: widget.nota5,
           ),
         );
       },
@@ -219,19 +201,20 @@ class _ChallengePageState extends State<ChallengePage> {
                       description: I10n.of(context).exitChallenge,
                     );
                     if (_result == _acceptText) {
-                      int nota = evaluarNivel(controller.puntos, widget.rango3,
-                          widget.rango4, widget.rango5);
-                      log(nota.toString());
-                      controller.crearNota(nota);
-                      await controller.getNotasProv();
-                      //*se asigna la nota
-                      //*PutAsignar
-                      await controller.asignarNota(
+                      int nota = evaluarNivel(widget.preguntas.length,
+                          controller.cantRightAnswers, widget.nota5);
+                      log('la nota evaluada es' + nota.toString());
+
+                      // await controller.crearNota(nota);
+
+                      //*se crea la nota y asigna la nota con el id de la nota creada
+//TODO check que funcione idCrear nota
+                      controller.asignarNota(
+                          await controller.crearNota(nota),
                           widget.idAsignatura,
                           widget.idTema,
                           widget.idNivel,
-                          //coger el id del crear nota y pasarselo aqui luego de almacenarlo
-                          controller.notasProv!.last.id);
+                          widget.idEstudiante);
                       Navigator.pushReplacementNamed(
                         context,
                         AppRoutes.resultRoute,
@@ -239,10 +222,7 @@ class _ChallengePageState extends State<ChallengePage> {
                           quizTitle: widget.quizTitle,
                           questionsLenght: widget.preguntas.length,
                           result: controller.cantRightAnswers,
-                          rango3: widget.rango3,
-                          rango4: widget.rango4,
-                          rango5: widget.rango5,
-                          puntos: controller.puntos,
+                          nota5: widget.nota5,
                         ),
                       );
                     }
@@ -307,23 +287,20 @@ class _ChallengePageState extends State<ChallengePage> {
                         label: I10n.of(context).finish,
                         onTap: () async {
                           //*se evalua el resultado del test, creando un entero con la nota
+                          int nota = evaluarNivel(widget.preguntas.length,
+                              controller.cantRightAnswers, widget.nota5);
 
-                          //*Se crea el Objeto NotaProv al crear la nota
-                          //postCrearNota
-                          int nota = evaluarNivel(controller.puntos,
-                              widget.rango3, widget.rango4, widget.rango5);
+                          log('la nota evaluada es' + nota.toString());
+                          // await controller.crearNota(nota);
 
-                          log(nota.toString());
-                          controller.crearNota(nota);
-                          await controller.getNotasProv();
-                          //*se asigna la nota
-                          //*PutAsignar
-                          await controller.asignarNota(
-                              //TODO add idEstudiante
+                          //*se crea la nota y asigna la nota con el id de la nota creada
+                          //TODO check que funcione idCrear nota
+                          controller.asignarNota(
+                              await controller.crearNota(nota),
                               widget.idAsignatura,
                               widget.idTema,
                               widget.idNivel,
-                              controller.notasProv!.last.id);
+                              widget.idEstudiante);
                           Navigator.pushReplacementNamed(
                             context,
                             AppRoutes.resultRoute,
@@ -331,10 +308,7 @@ class _ChallengePageState extends State<ChallengePage> {
                               quizTitle: widget.quizTitle,
                               questionsLenght: widget.preguntas.length,
                               result: controller.cantRightAnswers,
-                              rango3: widget.rango3,
-                              rango4: widget.rango4,
-                              rango5: widget.rango5,
-                              puntos: controller.puntos,
+                              nota5: widget.nota5,
                             ),
                           );
                         },

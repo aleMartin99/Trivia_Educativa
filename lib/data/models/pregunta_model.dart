@@ -3,6 +3,13 @@ import 'package:trivia_educativa/data/models/answer_model.dart';
 class Pregunta {
   late String id;
   late String descripcion;
+  //TODO add tipo pregunta
+  //V o F, 4 x 1, imagen
+
+//vof => resp correcta e incorrecta
+// 4 x 1 => como ahora
+//image => change imagen x descripcion y resto como ahora
+
   // late String respuestaIncorrecta1;
   // late String respuestaCorrecta;
   // late String respuestaIncorrecta2;

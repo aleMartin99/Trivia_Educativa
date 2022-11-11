@@ -11,20 +11,15 @@ class ResultPage extends StatelessWidget {
   final String quizTitle;
   final int questionsLenght;
   final int result;
-  final int rango3;
-  final int rango4;
-  final int rango5;
-  final int puntos;
+
+  final int nota5;
 
   ResultPage({
     Key? key,
     required this.quizTitle,
     required this.questionsLenght,
     required this.result,
-    required this.rango3,
-    required this.rango4,
-    required this.rango5,
-    required this.puntos,
+    required this.nota5,
   }) : super(key: key);
 
   final controller = HomeController();
@@ -35,42 +30,45 @@ class ResultPage extends StatelessWidget {
 //*4 => notaParametro - 10%
 //*3 => notaParametro - 20%
 
-//TODO change points system to amount of questions
-  String get resultImage => puntos < rango3
-      ? AppImages.badResult
-      : ((puntos >= rango3 && puntos < rango4)
-          ? AppImages.mediumResult
-          : ((puntos >= rango4 && puntos < rango5)
-              ? AppImages.mediumResult
-              : ((puntos >= rango5) ? AppImages.trophy : AppImages.error)));
+// //TODO change points system to amount of questions
+//   String get resultImage => puntos < rango3
+//       ? AppImages.badResult
+//       : ((puntos >= rango3 && puntos < rango4)
+//           ? AppImages.mediumResult
+//           : ((puntos >= rango4 && puntos < rango5)
+//               ? AppImages.mediumResult
+//               : ((puntos >= rango5) ? AppImages.trophy : AppImages.error)));
 
-//TODO change points system to amount of questions
+// //TODO change points system to amount of questions
+//   @override
+//   Widget build(BuildContext context) {
+//     String title = puntos < rango3
+//         ? "${I10n.of(context).score_title} 2. \n${I10n.of(context).score_Sad}!"
+//         : ((puntos >= rango3 && puntos < rango4)
+//             ? "${I10n.of(context).score_title} 3. \n${I10n.of(context).score_Passed}!"
+//             : ((puntos >= rango4 && puntos < rango5)
+//                 ? "${I10n.of(context).score_title} 4. \n${I10n.of(context).score_VeryGood}!"
+//                 : ((puntos >= rango5)
+//                     ? "${I10n.of(context).score_title} 5. \n${I10n.of(context).score_Congrats}!"
+//                     : '')));
+// //TODO change points system to amount of questions
+//     String subtitle = puntos < rango3
+//         ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_tryHarder}!"
+//         : ((puntos >= rango3 && puntos < rango5)
+//             ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_keepWorking}!"
+//             : ((puntos >= rango5)
+//                 ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_excellent}!!"
+//                 : ''));
+
+  // //*Logs for debuging the code
+  // log('puntos ' + puntos.toString());
+  // log('rango 3 ' + rango3.toString());
+  // log('rango 4 ' + rango4.toString());
+  //log('nota 5 ' + nota5.toString());
+
+  //TODO REmove this override and widget build ya q es el de arriba
   @override
   Widget build(BuildContext context) {
-    String title = puntos < rango3
-        ? "${I10n.of(context).score_title} 2. \n${I10n.of(context).score_Sad}!"
-        : ((puntos >= rango3 && puntos < rango4)
-            ? "${I10n.of(context).score_title} 3. \n${I10n.of(context).score_Passed}!"
-            : ((puntos >= rango4 && puntos < rango5)
-                ? "${I10n.of(context).score_title} 4. \n${I10n.of(context).score_VeryGood}!"
-                : ((puntos >= rango5)
-                    ? "${I10n.of(context).score_title} 5. \n${I10n.of(context).score_Congrats}!"
-                    : '')));
-//TODO change points system to amount of questions
-    String subtitle = puntos < rango3
-        ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_tryHarder}!"
-        : ((puntos >= rango3 && puntos < rango5)
-            ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_keepWorking}!"
-            : ((puntos >= rango5)
-                ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. ${I10n.of(context).score_tip_excellent}!!"
-                : ''));
-
-    // //*Logs for debuging the code
-    // log('puntos ' + puntos.toString());
-    // log('rango 3 ' + rango3.toString());
-    // log('rango 4 ' + rango4.toString());
-    //log('nota 5 ' + nota5.toString());
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -82,13 +80,15 @@ class ResultPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                resultImage,
-                width: MediaQuery.of(context).size.width * 0.8,
-              ),
+              //TODO descoment image asset
+              // Image.asset(
+              //   resultImage,
+              //   width: MediaQuery.of(context).size.width * 0.8,
+              // ),
               Column(
                 children: [
-                  Text(title,
+                  //TODO quitar '' title
+                  Text('title',
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
@@ -100,7 +100,8 @@ class ResultPage extends StatelessWidget {
                     width: 189,
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
-                      subtitle,
+                      //TODO quitar '' subtitle
+                      'subtitle',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),

@@ -55,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
               User? user = _loginController.user;
               if (user != null) {
                 await Navigator.of(context).pushReplacementNamed(
-                  AppRoutes.homeRoute,
-                  arguments: HomePageArgs(user: user),
+                  AppRoutes.homeScreen,
+                  arguments: HomeScreenArgs(user: user),
                 );
               }
             });
@@ -209,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                               await _loginController.signIn(
                                   usernameController.text,
                                   passwordController.text);
-
+//TODO check en signin que rol estudiante
                               //  showPopup(isLogin: false);
                             },
                             child: Container(

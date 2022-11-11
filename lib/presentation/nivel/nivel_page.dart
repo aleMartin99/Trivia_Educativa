@@ -18,10 +18,12 @@ class NivelPage extends StatefulWidget {
     required this.niveles,
     required this.idTema,
     required this.idAsignatura,
+    required this.idEstudiante,
   }) : super(key: key);
   final List<Nivel> niveles;
   final String idTema;
   final String idAsignatura;
+  final String idEstudiante;
 
   @override
   _NivelPageState createState() => _NivelPageState();
@@ -31,12 +33,13 @@ class _NivelPageState extends State<NivelPage> {
   final challengeController = ChallengeController();
 
   void _loadData() async {
-    await challengeController.getNotasProv();
+    //await challengeController.getNotasProv();
   }
 
   @override
   initState() {
-    _loadData();
+    //TODO check notaProv
+    //  _loadData();
 
     challengeController.stateNotifier.addListener(() {
       if (challengeController.state == ChallengeState.notasLoaded) {
@@ -46,6 +49,7 @@ class _NivelPageState extends State<NivelPage> {
     super.initState();
   }
 
+//TODO fix method doneLevel
   bool doneLevel(String idNivel, List<NotaProv> notasProv) {
     bool isDone = false;
     if ((notasProv
@@ -120,49 +124,50 @@ class _NivelPageState extends State<NivelPage> {
                 // crossAxisSpacing: 16,
                 // mainAxisSpacing: 16,
                 children: widget.niveles.map((nivel) {
-                  if (doneLevel(
-                      nivel.id, challengeController.notasProv ?? [])) {
-                    return NivelCardWidget(
-                      isDone: true,
+                  //TODO check with nuevas notasProv
+                  //TODO check is done level with notasProv, llamar methodo en init state cargar notasProv
+                  // if (doneLevel(
+                  //     nivel.id, challengeController.notasProv ?? [])) {
+                  //   return NivelCardWidget(
+                  //     isDone: true,
+                  //     nombre: nivel.descripcion,
+                  //     preguntas: nivel.preguntas,
+                  //     onTap: () {
+                  //       Navigator.pushNamed(
+                  //         context,
+                  //         AppRoutes.challengeRoute,
+                  //         arguments: ChallengePageArgs(
+                  //             preguntas: nivel.preguntas,
+                  //             idEstudiante: widget.idEstudiante,
+                  //             nota5: nivel.nota5,
+                  //             quizTitle: nivel.descripcion,
+                  //             idAsignatura: widget.idAsignatura,
+                  //             idTema: widget.idTema,
+                  //             idNivel: nivel.id),
+                  //       );
+                  //     },
+                  //   );
+                  // } else {
+                  return NivelCardWidget(
+                      isDone: false,
                       nombre: nivel.descripcion,
                       preguntas: nivel.preguntas,
                       onTap: () {
+                        //TODO CHECK SI CONEXION A INTERNET, EN CASO DE Q NO QUICK ALERT Y PAL LOGIN
                         Navigator.pushNamed(
                           context,
                           AppRoutes.challengeRoute,
                           arguments: ChallengePageArgs(
                               preguntas: nivel.preguntas,
-                              rango3: nivel.rango3,
-                              rango4: nivel.rango4,
-                              rango5: nivel.rango5,
+                              idEstudiante: widget.idEstudiante,
+                              nota5: nivel.nota5,
                               quizTitle: nivel.descripcion,
                               idAsignatura: widget.idAsignatura,
                               idTema: widget.idTema,
                               idNivel: nivel.id),
                         );
-                      },
-                    );
-                  } else {
-                    return NivelCardWidget(
-                        isDone: false,
-                        nombre: nivel.descripcion,
-                        preguntas: nivel.preguntas,
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.challengeRoute,
-                            arguments: ChallengePageArgs(
-                                preguntas: nivel.preguntas,
-                                rango3: nivel.rango3,
-                                rango4: nivel.rango4,
-                                rango5: nivel.rango5,
-                                quizTitle: nivel.descripcion,
-                                idAsignatura: widget.idAsignatura,
-                                idTema: widget.idTema,
-                                idNivel: nivel.id),
-                          );
-                        });
-                  }
+                      });
+                  //}
                 }).toList()),
           ),
         ));

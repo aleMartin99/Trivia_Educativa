@@ -46,12 +46,13 @@ class _ChartWidgetState extends State<ChartWidget>
   }
 
   void _loadData() async {
-    await challengeController.getNotasProv();
+    // await challengeController.getNotasProv();
   }
 
   @override
   void initState() {
-    _loadData();
+    //TODO check this getNOtaProv
+    // _loadData();
     _initAnimation();
     challengeController.stateNotifier.addListener(() {
       if (challengeController.state == ChallengeState.notasLoaded) {
@@ -64,15 +65,19 @@ class _ChartWidgetState extends State<ChartWidget>
   }
 
   double getScorePercentage() {
-    double scorePercentage;
-    if (challengeController.notasProv != null &&
-        challengeController.notasProv!.isNotEmpty) {
-      scorePercentage = (cantAprobados(challengeController.notasProv) /
-              challengeController.notasProv!.length)
-          .toDouble();
-    } else {
-      scorePercentage = 0;
-    }
+    //*change score percentaje to uninitialized
+    // double scorePercentage;
+
+    double scorePercentage = 0.6;
+    //TODO fix notas para chart widget
+    // if (challengeController.notasProv != null &&
+    //     challengeController.notasProv!.isNotEmpty) {
+    //   scorePercentage = (cantAprobados(challengeController.notasProv) /
+    //           challengeController.notasProv!.length)
+    //       .toDouble();
+    // } else {
+    //   scorePercentage = 0;
+    // }
 
     return scorePercentage;
   }
@@ -100,8 +105,8 @@ class _ChartWidgetState extends State<ChartWidget>
                   strokeWidth: 10,
                   value: _animation.value,
                   backgroundColor: AppColors.purpleLight,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                      AppColors.chartPrimary),
+                  valueColor:
+                      const AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
                 ),
               ),
             ),

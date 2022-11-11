@@ -14,7 +14,7 @@ class LoginRepository with RequestErrorParser {
     this._networkInfo,
   );
   final NetworkInfo _networkInfo;
-  String apiBaseUrl = kApiProductionBaseUrl;
+  String apiBaseUrl = kApiEmulatorBaseUrl;
 
   Future signIn(String username, String password) async {
     var uri = Uri.http(
@@ -39,7 +39,9 @@ class LoginRepository with RequestErrorParser {
           // final user = jsonResponse.map((e) => User.fromJson(e));
           log('guardando el usuario ${auth.user.toString()}');
           return right(auth);
-        } else if (response.statusCode == 401) {
+        }
+        //TODO hacer estado timeout
+        else if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);
         } else {
           // If the server did not return a 200 OK response,

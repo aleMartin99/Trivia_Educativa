@@ -17,9 +17,11 @@ class TemaPage extends StatefulWidget {
     Key? key,
     required this.temas,
     required this.idAsignatura,
+    required this.idEstudiante,
   }) : super(key: key);
   final List<Tema> temas;
   final String idAsignatura;
+  final String idEstudiante;
 
   @override
   _TemaPageState createState() => _TemaPageState();
@@ -118,44 +120,6 @@ class _TemaPageState extends State<TemaPage> {
                 ),
               ),
             ),
-            // bottom: PreferredSize(
-            //   preferredSize: const Size(double.infinity, 65),
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //     child: Align(
-            //       alignment: Alignment.bottomLeft,
-            //       child: Padding(
-            //         padding: const EdgeInsets.only(bottom: 6),
-            //         child: Row(
-            //           //crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             IconButton(
-            //                 onPressed: () => Navigator.of(context).pop(),
-            //                 alignment: Alignment.centerLeft,
-            //                 splashColor: Colors.transparent,
-            //                 hoverColor: Colors.transparent,
-            //                 highlightColor: Colors.transparent,
-            //                 padding: const EdgeInsets.all(0),
-            //                 icon: Icon(
-            //                   Icons.arrow_back,
-            //                   size: 25,
-            //                   color: settingsController
-            //                       .currentAppTheme.iconTheme.color,
-            //                 )),
-            //             Text(
-            //               I10n.of(context).topics,
-            //               style: AppTextStyles.titleBold.copyWith(
-            //                 color: AppColors.white,
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            //surfaceTintColor: Colors.red,
-
             pinned: _pinned,
             // snap: _snap,
             floating: _floating,
@@ -167,12 +131,12 @@ class _TemaPageState extends State<TemaPage> {
                 gradient: LinearGradient(colors: [
                   Theme.of(context).brightness == Brightness.light
                       ? AppColors.purple
-                      : Color.fromARGB(153, 81, 6, 255),
+                      : const Color.fromARGB(153, 81, 6, 255),
                   const Color(0xFF57B6E0),
                 ], stops: const [
                   0.0,
                   1.0
-                ], transform: GradientRotation(2.13959913 * pi)),
+                ], transform: const GradientRotation(2.13959913 * pi)),
               ),
               child: FlexibleSpaceBar(
                 //title: Text('lalalla'),
@@ -200,7 +164,7 @@ class _TemaPageState extends State<TemaPage> {
           ),
         ],
       ),
-
+//TODO body for temacardwidget
       // //TODO make validation for data to all pages like asignatura(home)
       // (widget.temas.isNotEmpty)
       //     ? Padding(
@@ -232,6 +196,7 @@ class _TemaPageState extends State<TemaPage> {
       //                         arguments: NivelPageArgs(
       //                             niveles: tema.niveles,
       //                             idAsignatura: widget.idAsignatura,
+      //idEstudiante:widget.idEstudiante,
       //                             idTema: tema.id),
       //                       );
       //                     }))
