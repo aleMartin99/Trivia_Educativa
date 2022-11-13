@@ -1,11 +1,11 @@
 class User {
-  String? id;
-  String? name;
-  String? username;
-  String? password;
-  String? email;
-  String? rol;
-  String? ci;
+  late String id;
+  late String name;
+  late String username;
+  late String password;
+  late String email;
+  late String rol;
+  late String ci;
   //s String? token;
 
   //String imagen;
@@ -55,37 +55,3 @@ class User {
     return data;
   }
 }
-// class UserModel {
-//   final String name;
-//   final String photoUrl;
-//   final int score;
-
-//   UserModel({
-//     this.name = 'Ale',
-//     this.photoUrl = "assets/images/calcifer.png",
-//     this.score = 50,
-//   });
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'name': name,
-//       'photoUrl': photoUrl,
-//       'score': score,
-//     };
-//   }
-
-//   factory UserModel.fromMap(Map<String, dynamic> map) {
-//     return UserModel(
-//       name: map['name'],
-//       photoUrl: map['photoUrl'],
-//       score: map['score'],
-//     );
-//   }
-
-//   String toJson() => json.encode(toMap());
-
-//   factory UserModel.fromJson(String source) =>
-//       UserModel.fromMap(json.decode(source));
-// }
-
-

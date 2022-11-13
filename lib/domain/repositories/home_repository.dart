@@ -18,7 +18,7 @@ class HomeRepository with RequestErrorParser {
   Future findEstudianteByCI(String cI) async {
     var uri = Uri.http(
       //apiBaseUrl,
-      '10.0.2.2:3000',
+      '192.168.1.100:3000',
       "api/v2/estudiante/byCI/"
           "$cI",
     );
@@ -55,7 +55,7 @@ class HomeRepository with RequestErrorParser {
 //
     var uri = Uri.http(
       //apiBaseUrl,
-      '10.0.2.2:3000',
+      '192.168.1.100:3000',
       "api/v2/asignatura/obtener/"
           "$annoCurso",
     );

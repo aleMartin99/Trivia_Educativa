@@ -8,13 +8,14 @@ import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/home/widgets/appbar/menu_page.dart';
 import 'dart:math' show pi;
+import '../../main.dart';
 import '../home/home_imports.dart';
 
+var user = sl<User>();
+
 class HomePage extends StatefulWidget {
-  final User user;
   const HomePage({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
   @override
@@ -25,17 +26,18 @@ class _HomePageState extends State<HomePage> {
   final homeController = HomeController();
 
   void _loadData() async {
-    //User? user = _loginController.user;
-    //TODO check si no hay estudiante que pasa
-    await homeController.getEstudiante(widget.user.ci!);
+    //TODO implement subir nota local del offline
+    await homeController.getEstudiante(user.ci);
     //TODO check si pasar el estudiante completo hasta challenge
+
+    //TODO Checkear q no sea nulo desp de model modificar
     Estudiante estudiante = homeController.estudiante!;
     await homeController.getAsignaturas(estudiante.annoCurso);
   }
 
   @override
   initState() {
-    Future.delayed(const Duration(microseconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       //TODO Make only once like onboarding
       showWelcomeBox();
     });
@@ -45,6 +47,7 @@ class _HomePageState extends State<HomePage> {
       if (homeController.state == HomeState.error) {
         QuickAlert.show(
           context: context,
+
           type: QuickAlertType.error,
           title: 'Ha ocurrido un error',
           text: 'Ha ocurrido un error inesperado',
@@ -112,56 +115,61 @@ class _HomePageState extends State<HomePage> {
   showWelcomeBox() {
     showWelcomeBox() {
       return Container(
-        height: 350,
+        alignment: Alignment.topLeft,
+        height: 440,
         width: 500,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: AppGradients.linear,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 20.0, right: 20, top: 15),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.close, color: Colors.white)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Bienvenido!",
+                        style: TextStyle(color: AppColors.white, fontSize: 24),
+                        //  style: boldText(fSize: 40)
+                      ),
+                    ],
+                  ),
                 ),
-                const Text(
-                  "Bienvenido!",
-                  style: TextStyle(color: AppColors.white, fontSize: 30),
-                  //  style: boldText(fSize: 40)
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 2.0),
+                  child: Text(
+                    "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales.\n\nAsí, los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas.\n\nDiviértete y aprende!",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: AppColors.white, fontSize: 18),
+                    //  style: regulerText
+                  ),
                 ),
-                const SizedBox(height: 30),
-                const Text(
-                  "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales. Haciendo uso de esta app los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas.\nDiviértete y aprende!.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: AppColors.white),
-                  //  style: regulerText
-                ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 40),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     Navigator.pop(context);
                   },
                   child: Container(
-                      width: 150,
-                      height: 40,
+                      width: 400,
+                      height: 48,
                       decoration: BoxDecoration(
                           color: AppColors.purple,
                           borderRadius: BorderRadius.circular(10)),
                       child: const Center(
                           child: Text(
-                        "OK 🧠🚀",
-                        style: TextStyle(color: AppColors.white),
-                        //   style: boldText(fSize: 12)
+                        'OK 🧠🚀', // style: boldText(fSize: 12)
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                       ))),
                 ),
               ],
@@ -189,12 +197,14 @@ class _HomePageState extends State<HomePage> {
 
     //TODO make validation for data to all pages like asignatura(home)
 
+    //TODO validacion ara vacio como en niveles(revisar modelos con ?) o que no deje entrar
+    //TODO add subtitulo que diga asignaturas
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBarWidget(
-            user: widget.user,
+            user: user,
           ),
           //TODO check loading condition
           //! cuando carga el usuario pero se tumba el server se queda pegado el cargando, revisar y lanzar timeout y cartel
@@ -215,8 +225,6 @@ class _HomePageState extends State<HomePage> {
                         color: Theme.of(context).primaryIconTheme.color,
                       ),
                     ))
-                  //TODO make validation for data to all pages like asignatura(home) (asi)
-                  //TODO add subtitulo que diga asignaturas
                   : Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
@@ -229,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                           childAspectRatio: 1.11,
                           shrinkWrap: true,
                           crossAxisCount: 2,
-                          crossAxisSpacing: 25,
+                          crossAxisSpacing: 20,
                           mainAxisSpacing: 16,
                           children: homeController.asignaturas!
                               .map((asignatura) => AsignaturaCardWidget(
@@ -237,13 +245,33 @@ class _HomePageState extends State<HomePage> {
                                     //TODO hacer validaciones para cosas vacias
                                     cantTemas: asignatura.temas.length,
                                     onTap: () {
-                                      Navigator.pushNamed(
-                                          context, AppRoutes.temaRoute,
-                                          arguments: TemaPageArgs(
-                                              idEstudiante:
-                                                  homeController.estudiante!.id,
-                                              idAsignatura: asignatura.id,
-                                              temas: asignatura.temas));
+                                      (asignatura.temas.isEmpty ||
+                                              asignatura.temas == null)
+                                          ? QuickAlert.show(
+                                              // barrierColor: Colors.red,
+                                              context: context,
+                                              type: QuickAlertType.warning,
+                                              title: 'No existen temas',
+                                              confirmBtnText: 'Ok',
+                                              text:
+                                                  'No hay temas disponibles por el momento',
+                                              backgroundColor: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              textColor: Theme.of(context)
+                                                  .primaryIconTheme
+                                                  .color!,
+                                              titleColor: Theme.of(context)
+                                                  .primaryIconTheme
+                                                  .color!,
+                                              confirmBtnColor: AppColors.purple,
+                                            )
+                                          : Navigator.pushNamed(
+                                              context, AppRoutes.temaRoute,
+                                              arguments: TemaPageArgs(
+                                                  idEstudiante: homeController
+                                                      .estudiante!.id,
+                                                  idAsignatura: asignatura.id,
+                                                  temas: asignatura.temas));
                                     },
                                   ))
                               .toList(),
@@ -256,14 +284,16 @@ class _HomePageState extends State<HomePage> {
 
 class HomeScreen extends StatefulWidget {
   //const HomeScreen({required this.user});
-  final User user;
+
   //TODO move to another place the List<MyMenuItem>
   static List<MyMenuItem> mainMenu = [
     MyMenuItem("Inicio", Icons.home_filled, 0),
     MyMenuItem("Tabla de Posiciones", Icons.emoji_events, 1),
   ];
 
-  const HomeScreen({Key? key, required this.user}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -285,9 +315,9 @@ class _HomeScreenState extends State<HomeScreen> {
         callback: _updatePage,
         current: _currentPage,
         key: UniqueKey(),
-        user: widget.user,
+        user: user,
       ),
-      mainScreen: MainScreen(user: widget.user),
+      mainScreen: MainScreen(user: user),
       borderRadius: 24.0,
       showShadow: false,
       angle: 0.0,
@@ -350,9 +380,9 @@ class _MainScreenState extends State<MainScreen> {
                       (provider) => provider.currentPage) ==
                   0)
               ? HomePage(
-                  user: widget.user,
+
                   // key: UniqueKey(),
-                )
+                  )
               //TODO implement escalafon page
               : WillPopScope(
                   onWillPop: () async => false,
@@ -368,7 +398,7 @@ class _MainScreenState extends State<MainScreen> {
                         leading: Transform.rotate(
                           angle: 180 * pi / 180,
                           child: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.menu,
                             ),
                             onPressed: () {

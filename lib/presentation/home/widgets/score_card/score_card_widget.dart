@@ -53,8 +53,9 @@ class ScoreCardWidget extends StatelessWidget {
                       Text(
                         I10n.of(context).passedTests,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
-                            fontSize:
-                                21, //color: settingsController.currentAppTheme.primaryColor,
+                            fontSize: 21,
+                            fontWeight: FontWeight
+                                .bold, //color: settingsController.currentAppTheme.primaryColor,
                             color: Theme.of(context).primaryIconTheme.color),
                       ),
                       Text(

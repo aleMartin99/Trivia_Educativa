@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'dart:developer';
 
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/main.dart';
 import '../onboarding/onboarding_imports.dart';
 import 'login_imports.dart';
 import 'package:trivia_educativa/data/models/models.dart';
@@ -23,6 +25,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final controller = LoginController();
 
+  Color _textFieldColor = AppColors.purple;
+
   late final _onboardingAlreadySeen;
 
   final TextEditingController usernameController = TextEditingController();
@@ -32,6 +36,19 @@ class _LoginPageState extends State<LoginPage> {
 
 //TODO I10n
 //TODO text style (text from botones)
+//getIt<AppModel>()
+
+  void goHome() async {
+    User user = _loginController.user;
+    sl.registerSingleton<User>(user);
+    if (user != null) {
+      //TODO Make only once like onboarding
+      await Navigator.of(context).pushReplacementNamed(
+        AppRoutes.homeScreen,
+        arguments: HomeScreenArgs(),
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -41,26 +58,11 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {});
 
       if (_loginController.state == LoginState.loggedIn) {
-        QuickAlert.show(
-            context: context,
-            type: QuickAlertType.success,
-            title: 'Autenticación Exitosa',
-            text: 'Bienvenido, ${_loginController.user!.name}',
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            textColor: Theme.of(context).primaryIconTheme.color!,
-            titleColor: Theme.of(context).primaryIconTheme.color!,
-            confirmBtnColor: AppColors.purple,
-            confirmBtnText: 'Ok',
-            onConfirmBtnTap: () async {
-              User? user = _loginController.user;
-              if (user != null) {
-                await Navigator.of(context).pushReplacementNamed(
-                  AppRoutes.homeScreen,
-                  arguments: HomeScreenArgs(user: user),
-                );
-              }
-            });
-      } else if (_loginController.state == LoginState.error) {
+        goHome();
+      }
+
+      if (_loginController.state == LoginState.error) {
+        Navigator.pop(context);
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
@@ -73,22 +75,8 @@ class _LoginPageState extends State<LoginPage> {
           confirmBtnText: 'Ok',
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
-      } else if (_loginController.state == LoginState.unauthorized) {
-        //TODO make Quick alert theme proof
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.error,
-          title: 'Credenciales Inválidas',
-          text: 'Revise el usuario o la contraseña ',
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          textColor: Theme.of(context).primaryIconTheme.color!,
-          titleColor: Theme.of(context).primaryIconTheme.color!,
-          confirmBtnColor: AppColors.purple,
-          confirmBtnText: 'Ok',
-          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
-        );
-        _loginController.state = LoginState.empty;
       } else if (_loginController.state == LoginState.notConnected) {
+        Navigator.pop(context);
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
@@ -109,10 +97,11 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  // showPopup({required bool isLogin}) {
   showLoginForm() {
     showLoginForm() {
       return Container(
+        alignment: Alignment.center,
+        //margin: EdgeInsets.all(0),
         height: 400,
         width: 500,
         decoration: BoxDecoration(
@@ -120,84 +109,163 @@ class _LoginPageState extends State<LoginPage> {
           gradient: AppGradients.linear,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              //  mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //const SizedBox(height: 0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Iniciar sesión",
+                        style: TextStyle(color: AppColors.white, fontSize: 24),
+                        //textAlign: TextAlign.end,
+                        // style: boldText(fSize: 30)
+                      ),
+                    ],
+                  ),
+                ),
+                ValueListenableBuilder<LoginState>(
+                    valueListenable: _loginController.stateNotifier,
+                    builder: (ctx, state, _) => Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: state == LoginState.unauthorized
+                            ? const Text("* Credenciales inválidas",
+                                //selectionColor: Colors.red,
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 16,
+                                )
+                                // regulerText
+                                )
+                            : (state == LoginState.noPermits)
+                                ? const Text("* Usuario sin permisos",
+                                    //selectionColor: Colors.red,
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 16,
+                                    ))
+                                : const Text(
+                                    '',
+                                    style: TextStyle(height: 0),
+                                  ))),
                 const SizedBox(height: 20),
-                const Text(
-                  "Inicie sesión para continuar",
-                  style: TextStyle(color: AppColors.white, fontSize: 30),
-                  textAlign: TextAlign.center,
-                  // style: boldText(fSize: 30)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: SizedBox(
+                    width: 400,
+                    height: 65,
+                    child: TextField(
+                        controller: usernameController,
+                        style: TextStyle(
+                            color: Theme.of(context).primaryIconTheme.color,
+                            fontSize: 16),
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            // border: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  width: 3,
+                                  color: _textFieldColor,
+                                )),
+                            hintText: "Nombre de usuario",
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    style: BorderStyle.solid)),
+                            fillColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            filled: true)),
+                  ),
                 ),
-                // Text("This will ensure user data is saved to us",
-                //     //   style: regulerText
-                //     style: TextStyle(color: AppColors.white, fontSize: 20)),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: 400,
-                  height: 50,
-                  child: TextField(
-                      controller: usernameController,
-                      style: const TextStyle(color: AppColors.white),
-                      // style: regulerText,
-                      decoration: const InputDecoration(
-                        hintText: "Nombre de usuario",
-                        //hintStyle:
-                        // regulerText
-                      )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: SizedBox(
+                    width: 400,
+                    height: 65,
+                    child: TextField(
+                        // onChanged: (value) => button = 'Success',
+
+                        controller: passwordController,
+                        style: TextStyle(
+                            color: Theme.of(context).primaryIconTheme.color,
+                            fontSize: 16),
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            // border: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  width: 3,
+                                  color: _textFieldColor,
+                                )),
+                            hintText: "Contraseña",
+                            // errorText: 'Carepito',
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    style: BorderStyle.solid)),
+                            fillColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            filled: true)),
+                  ),
                 ),
-                SizedBox(
-                  width: 400,
-                  height: 50,
-                  child: TextField(
-                      controller: passwordController,
-                      style: const TextStyle(color: AppColors.white),
-                      //  style: regulerText,
-                      decoration: const InputDecoration(
-                        hintText: "Contraseña",
-                        // hintStyle: regulerText
-                      )),
-                ),
-                const SizedBox(height: 10),
+
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                          onPressed: () {
-                            QuickAlert.show(
-                              context: context,
-                              type: QuickAlertType.info,
-                              title: 'Ha olvidado su contraseña?',
-                              text:
-                                  'Contacte con el administrador designado para que le restablezca la contraseñna',
-                              confirmBtnText: 'Ok',
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              textColor:
-                                  Theme.of(context).primaryIconTheme.color!,
-                              titleColor:
-                                  Theme.of(context).primaryIconTheme.color!,
-                              confirmBtnColor: AppColors.purple,
-                            );
-                          },
-                          child: const Text("Olvidó su contraseña?",
-                              style: TextStyle(color: AppColors.white)
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.info,
+                            title: 'Ha olvidado su contraseña?',
+                            text:
+                                'Contacte con el administrador designado para que le restablezca la contraseñna',
+                            confirmBtnText: 'Ok',
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            textColor:
+                                Theme.of(context).primaryIconTheme.color!,
+                            titleColor:
+                                Theme.of(context).primaryIconTheme.color!,
+                            confirmBtnColor: AppColors.purple,
+                          );
+                          // showLoginForm();
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 12.0),
+                          child: Text("Olvidó su contraseña?",
+                              //selectionColor: Colors.red,
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                              )
                               // regulerText
-                              )),
-                    ),
+                              ),
+                        )),
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 ValueListenableBuilder<LoginState>(
                   valueListenable: _loginController.stateNotifier,
-                  builder: (ctx, loadingValue, _) => Container(
-                    child: _loginController.state == LoginState.loading
+                  builder: (ctx, loadingValue, _) => SizedBox(
+                    height: 48,
+                    child: loadingValue == LoginState.loading
                         ? const Center(
                             child: CircularProgressIndicator(
                             color: Colors.green,
@@ -212,24 +280,27 @@ class _LoginPageState extends State<LoginPage> {
 //TODO check en signin que rol estudiante
                               //  showPopup(isLogin: false);
                             },
-                            child: Container(
-                                width: 150,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: AppColors.purple,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: const Center(
-                                    child: Text(
-                                  "Continuar", // style: boldText(fSize: 12)
-                                  style: TextStyle(
-                                      color: AppColors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ))),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Container(
+                                  width: 400,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.purple,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: const Center(
+                                      child: Text(
+                                    'Continuar', // style: boldText(fSize: 12)
+                                    style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ))),
+                            ),
                           ),
                   ),
                 ),
-                const SizedBox(height: 15),
               ],
             ),
           ),
@@ -259,36 +330,41 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: deviceSize.width * 0.1,
+            padding: EdgeInsets.only(
+              left: deviceSize.width * 0.1,
+              right: deviceSize.width * 0.1,
+              // top: deviceSize.width * 0.1,
               // vertical: deviceSize.height * 0.1,
             ),
             child: ConstrainedBox(
               constraints: BoxConstraints(maxHeight: deviceSize.height / 1),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 185,
-                    width: 115,
-                    child: Image.asset(AppImages.colorfulLogo),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: SizedBox(
+                      height: 185,
+                      width: 115,
+                      child: Image.asset(AppImages.colorfulLogo),
+                    ),
                   ),
                   SizedBox(
                     //width: deviceSize.width * 0.6,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "${I10n.of(context).welcome} ${I10n.of(context).to} \n${I10n.of(context).appTitle}",
+                          "${I10n.of(context).welcome} ${I10n.of(context).to} ${I10n.of(context).appTitle}",
                           //${_local.}
-
+                          textAlign: TextAlign.center,
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.heading40.copyWith(
                               color: Theme.of(context).primaryIconTheme.color,
-                              fontSize: 45
+                              fontSize: 38
 
                               //  settingsController.currentAppTheme.primaryColor,
                               ),
@@ -298,11 +374,15 @@ class _LoginPageState extends State<LoginPage> {
                             maxHeight: deviceSize.height * 0.04,
                           ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           I10n.of(context).appDescription,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: 'PNRegular',
-                              fontSize: 14,
+                              fontSize: 18,
                               color: Theme.of(context).primaryIconTheme.color
                               // fontWeight: FontWeight.w100,
                               ),
@@ -310,16 +390,14 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: NextButtonWidget.purple(
-                              label: "Iniciar sesión",
-                              onTap: () {
-                                showLoginForm();
-                              }))
-                    ],
-                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: NextButtonWidget.purple(
+                        label: "Iniciar sesión",
+                        onTap: () {
+                          showLoginForm();
+                        }),
+                  )
                 ],
               ),
             ),

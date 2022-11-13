@@ -22,9 +22,9 @@ class LoginController {
   // bool get isLoggedIn => loginNotifier.value;
   // set isLoggedIn(bool value) => loginNotifier.value = value;
 
-  List<User>? users;
-  User? user;
-  Auth? auth;
+  //late List<User> users;
+  late User user;
+  late Auth auth;
   var resp;
   final repository = LoginRepository(sl());
 
@@ -35,8 +35,13 @@ class LoginController {
       //TODO rol estudiante check and state, specific dialog
       // resp = ((response as Right).value);
       auth = ((response as Right).value as Auth);
-      user = auth!.user;
-      state = LoginState.loggedIn;
+      user = auth.user;
+      if (user.rol != 'Estudiante') {
+        state = LoginState.noPermits;
+      } else {
+        state = LoginState.loggedIn;
+      }
+
       log('$user');
       return user;
     }

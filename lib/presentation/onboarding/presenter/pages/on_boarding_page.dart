@@ -93,32 +93,37 @@ class _OnboardingState extends State<Onboarding> {
         )),
         bottomAppBar: SafeArea(
           child: Padding(
+            //TODO check button size
             padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),
             child: ValueListenableBuilder(
               valueListenable: onBoardingController.currentPageNotifier,
-              builder: (context, int value, _) => (NextButtonWidget.purple(
-                //inactiveColor: Colors.grey,
+              builder: (context, int value, _) => Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
+                child: (NextButtonWidget.purple(
+                  //inactiveColor: Colors.grey,
 
-                label: value == kOnboardingLightItems.length
-                    ? 'Continuar'
-                    : 'Next',
+                  label: value == kOnboardingLightItems.length
+                      ? 'Continuar'
+                      : 'Next',
 
-                // isActive: true,
-                onTap: () {
-                  if (value != kOnboardingLightItems.length) {
-                    nextPage();
-                  } else {
-                    context.read<OnboardingCubit>().markAsViewed();
-                    // sl<AnalyticsBloc>().add(const AnalyticsEvent.tutorialFinished());
+                  // isActive: true,
+                  onTap: () {
+                    if (value != kOnboardingLightItems.length) {
+                      nextPage();
+                    } else {
+                      context.read<OnboardingCubit>().markAsViewed();
+                      // sl<AnalyticsBloc>().add(const AnalyticsEvent.tutorialFinished());
 
-                    Navigator.of(context).pushReplacementNamed(
-                      AppRoutes.loginRoute,
-                    );
-                    // Navigator.pushNamedAndRemoveUntil(
-                    //     context, '/home', (route) => false);
-                  }
-                },
-              )),
+                      Navigator.of(context).pushReplacementNamed(
+                        AppRoutes.loginRoute,
+                      );
+                      // Navigator.pushNamedAndRemoveUntil(
+                      //     context, '/home', (route) => false);
+                    }
+                  },
+                )),
+              ),
             ),
           ),
         ),

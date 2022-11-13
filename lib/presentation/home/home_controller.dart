@@ -29,6 +29,7 @@ class HomeController {
       //user = auth!.user;
       state = HomeState.estudLoaded;
       log('loaded estudiante byCI ${estudiante!.name}');
+      log(state.name);
       return estudiante;
     } else if (response.isLeft()) {
       resp = (response as Left).value;

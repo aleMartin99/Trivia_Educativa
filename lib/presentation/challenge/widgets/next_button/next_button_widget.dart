@@ -59,6 +59,7 @@ class NextButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 48,
+      width: 400,
       decoration: const BoxDecoration(),
       child: TextButton(
         style: ButtonStyle(

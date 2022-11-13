@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
 
-import 'package:provider/provider.dart';
-
+import 'package:quickalert/quickalert.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
-import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
-import '../home/home_imports.dart';
+
 import '/../core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,9 +37,10 @@ class ChallengePage extends StatefulWidget {
 
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
-
   final pageController = PageController();
-  final homeController = HomeController();
+  // final homeController = HomeController();
+
+  bool isPlaying = false;
 
   void nextPage() {
     if (controller.currentPage < widget.preguntas.length) {
@@ -52,7 +51,9 @@ class _ChallengePageState extends State<ChallengePage> {
     }
   }
 
-  void onSelected(bool isRight, int puntaje) {
+  void onSelected(
+    bool isRight,
+  ) {
     if (isRight) {
       controller.cantRightAnswers++;
       log('contador de cantidad de preguntas correctas ' +
@@ -60,8 +61,6 @@ class _ChallengePageState extends State<ChallengePage> {
     }
     nextPage();
   }
-
-//TODO change evaluar to por ciento
 
 //TODO make nota3 y nota4 automatic from nota5 (substracting 10)
 
@@ -95,87 +94,6 @@ class _ChallengePageState extends State<ChallengePage> {
     super.initState();
   }
 
-//TODO change showAlertDialog with quizck alert dialog
-  showAlertDialog(BuildContext context) {
-    SettingsController settingsController =
-        Provider.of<SettingsController>(context, listen: false);
-
-    Widget cancelButton = TextButton(
-      child: Text(
-        I10n.of(context).cancel,
-        style: AppTextStyles.heading
-            .copyWith(color: settingsController.currentAppTheme.primaryColor),
-      ),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-    Widget okButton = TextButton(
-      child: Text(
-        I10n.of(context).ok,
-        style: AppTextStyles.heading
-            .copyWith(color: settingsController.currentAppTheme.primaryColor),
-      ),
-      onPressed: () async {
-        int nota = evaluarNivel(
-            widget.preguntas.length, controller.cantRightAnswers, widget.nota5);
-        log('la nota evaluada es' + nota.toString());
-        // await controller.crearNota(nota);
-
-        //*se crea la nota y asigna la nota con el id de la nota creada
-//TODO check que funcione idCrear nota
-        controller.asignarNota(
-            await controller.crearNota(nota),
-            widget.idAsignatura,
-            widget.idTema,
-            widget.idNivel,
-            widget.idEstudiante);
-        Navigator.pop(context);
-        Navigator.pushReplacementNamed(
-          context,
-          AppRoutes.resultRoute,
-          arguments: ResultPageArgs(
-            quizTitle: widget.quizTitle,
-            questionsLenght: widget.preguntas.length,
-            result: controller.cantRightAnswers,
-            nota5: widget.nota5,
-          ),
-        );
-      },
-    );
-
-    // Create AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(I10n.of(context).exitDialog,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-          style: AppTextStyles.heading.copyWith(
-            color: settingsController.currentAppTheme.primaryColor,
-          )),
-      content: Text(
-        I10n.of(context).exitChallenge,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 4,
-        style: AppTextStyles.body.copyWith(
-            color: settingsController.currentAppTheme.primaryColor,
-            fontSize: 15),
-      ),
-      actions: [
-        cancelButton,
-        okButton,
-      ],
-      actionsAlignment: MainAxisAlignment.center,
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height / 100;
@@ -189,46 +107,75 @@ class _ChallengePageState extends State<ChallengePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BackButton(
-                  onPressed: () async {
-                    const _acceptText = 'Aceptar';
-                    const _declineText = 'Cancelar';
-                    final _result = await Dialoger.showTwoChoicesDialog(
-                      acceptText: _acceptText,
-                      declineText: _declineText,
-                      context: context,
-                      title: I10n.of(context).exitDialog,
-                      description: I10n.of(context).exitChallenge,
-                    );
-                    if (_result == _acceptText) {
-                      int nota = evaluarNivel(widget.preguntas.length,
-                          controller.cantRightAnswers, widget.nota5);
-                      log('la nota evaluada es' + nota.toString());
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BackButton(
+                        onPressed: () async {
+                          QuickAlert.show(
+                            onConfirmBtnTap: () async {
+                              int nota = evaluarNivel(widget.preguntas.length,
+                                  controller.cantRightAnswers, widget.nota5);
+                              log('la nota evaluada es' + nota.toString());
 
-                      // await controller.crearNota(nota);
-
-                      //*se crea la nota y asigna la nota con el id de la nota creada
-//TODO check que funcione idCrear nota
-                      controller.asignarNota(
-                          await controller.crearNota(nota),
-                          widget.idAsignatura,
-                          widget.idTema,
-                          widget.idNivel,
-                          widget.idEstudiante);
-                      Navigator.pushReplacementNamed(
-                        context,
-                        AppRoutes.resultRoute,
-                        arguments: ResultPageArgs(
-                          quizTitle: widget.quizTitle,
-                          questionsLenght: widget.preguntas.length,
-                          result: controller.cantRightAnswers,
-                          nota5: widget.nota5,
-                        ),
-                      );
-                    }
-                    // showAlertDialog(context);
-                  },
-                  color: Theme.of(context).primaryIconTheme.color,
+                              //*crearNota devuelve el id de la nota creada
+                              //*asignarNota asigna esa nota a bd
+                              controller.asignarNota(
+                                  await controller.crearNota(nota),
+                                  widget.idAsignatura,
+                                  widget.idTema,
+                                  widget.idNivel,
+                                  widget.idEstudiante);
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.resultRoute,
+                                arguments: ResultPageArgs(
+                                  quizTitle: widget.quizTitle,
+                                  questionsLenght: widget.preguntas.length,
+                                  result: controller.cantRightAnswers,
+                                  nota5: widget.nota5,
+                                ),
+                              );
+                            },
+                            context: context,
+                            type: QuickAlertType.warning,
+                            title: I10n.of(context).exitDialog,
+                            text: I10n.of(context).exitChallenge,
+                            confirmBtnText: 'Aceptar',
+                            cancelBtnText: 'Cancelar',
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            textColor:
+                                Theme.of(context).primaryIconTheme.color!,
+                            titleColor:
+                                Theme.of(context).primaryIconTheme.color!,
+                            confirmBtnColor: AppColors.purple,
+                            showCancelBtn: true,
+                          );
+                        },
+                        color: Theme.of(context).primaryIconTheme.color,
+                      ),
+                      IconButton(
+                          isSelected: isPlaying,
+                          onPressed: () {
+                            isPlaying = !isPlaying;
+                            setState(() {});
+                          },
+                          icon: isPlaying
+                              ? Icon(
+                                  Icons.volume_off,
+                                  color:
+                                      Theme.of(context).primaryIconTheme.color,
+                                )
+                              : Icon(
+                                  Icons.volume_up,
+                                  color:
+                                      Theme.of(context).primaryIconTheme.color,
+                                ))
+                    ],
+                  ),
                 ),
                 //the ValueListenableBuilder will only rebuild this component when there are updates
                 Expanded(
@@ -253,7 +200,9 @@ class _ChallengePageState extends State<ChallengePage> {
                 (pregunta) => QuizWidget(
                   pregunta: pregunta,
                   onAnswerSelected: (valueIsRight) {
-                    onSelected(valueIsRight, pregunta.puntos);
+                    onSelected(
+                      valueIsRight,
+                    );
                   },
                 ),
               )
@@ -262,60 +211,48 @@ class _ChallengePageState extends State<ChallengePage> {
         bottomNavigationBar: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 10,
+              horizontal: 40,
+              vertical: 20,
             ),
             child: ValueListenableBuilder(
               valueListenable: controller.currentPageNotifier,
-              builder: (context, int value, _) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  if (value < widget.preguntas.length)
-                    Expanded(
-                      child: NextButtonWidget.white(
-                        label: I10n.of(context).skipQuestion,
-                        onTap: nextPage,
-                      ),
-                    ),
-                  if (value == widget.preguntas.length)
-                    const SizedBox(
-                      width: 7,
-                    ),
-                  if (value == widget.preguntas.length)
-                    Expanded(
-                      child: NextButtonWidget.green(
-                        label: I10n.of(context).finish,
-                        onTap: () async {
-                          //*se evalua el resultado del test, creando un entero con la nota
-                          int nota = evaluarNivel(widget.preguntas.length,
-                              controller.cantRightAnswers, widget.nota5);
+              builder: (context, int value, _) => Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
+                  child: (value == widget.preguntas.length)
+                      ? NextButtonWidget.green(
+                          label: I10n.of(context).finish,
+                          onTap: () async {
+                            int nota = evaluarNivel(widget.preguntas.length,
+                                controller.cantRightAnswers, widget.nota5);
+                            log('la nota evaluada es' + nota.toString());
 
-                          log('la nota evaluada es' + nota.toString());
-                          // await controller.crearNota(nota);
-
-                          //*se crea la nota y asigna la nota con el id de la nota creada
-                          //TODO check que funcione idCrear nota
-                          controller.asignarNota(
-                              await controller.crearNota(nota),
-                              widget.idAsignatura,
-                              widget.idTema,
-                              widget.idNivel,
-                              widget.idEstudiante);
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.resultRoute,
-                            arguments: ResultPageArgs(
-                              quizTitle: widget.quizTitle,
-                              questionsLenght: widget.preguntas.length,
-                              result: controller.cantRightAnswers,
-                              nota5: widget.nota5,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                ],
-              ),
+                            //*crearNota devuelve el id de la nota creada
+                            //*asignarNota asigna esa nota a bd
+                            controller.asignarNota(
+                                await controller.crearNota(nota),
+                                widget.idAsignatura,
+                                widget.idTema,
+                                widget.idNivel,
+                                widget.idEstudiante);
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.resultRoute,
+                              arguments: ResultPageArgs(
+                                quizTitle: widget.quizTitle,
+                                questionsLenght: widget.preguntas.length,
+                                result: controller.cantRightAnswers,
+                                nota5: widget.nota5,
+                              ),
+                            );
+                          },
+                        )
+                      : (value < widget.preguntas.length)
+                          ? NextButtonWidget.transparent(
+                              label: I10n.of(context).skipQuestion,
+                              onTap: nextPage,
+                            )
+                          : const Text('')),
             ),
           ),
         ),

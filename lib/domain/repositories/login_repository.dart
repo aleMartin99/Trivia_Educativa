@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:fpdart/fpdart.dart';
 import 'package:trivia_educativa/data/models/auth_model.dart';
-import 'package:trivia_educativa/data/models/models.dart';
 import '../../core/core.dart';
 
 import 'package:http/http.dart' as http;
@@ -18,7 +17,7 @@ class LoginRepository with RequestErrorParser {
 
   Future signIn(String username, String password) async {
     var uri = Uri.http(
-      '10.0.2.2:3000',
+      '192.168.1.100:3000',
       "api/v2/auth/" "signin",
     );
     if (await _networkInfo.isConnected) {

@@ -3,35 +3,27 @@ import 'package:trivia_educativa/data/models/answer_model.dart';
 class Pregunta {
   late String id;
   late String descripcion;
+  late String tiposDePregunta;
+  late String imagen;
+
   //TODO add tipo pregunta
   //V o F, 4 x 1, imagen
 
 //vof => resp correcta e incorrecta
 // 4 x 1 => como ahora
 //image => change imagen x descripcion y resto como ahora
-
-  // late String respuestaIncorrecta1;
-  // late String respuestaCorrecta;
-  // late String respuestaIncorrecta2;
-  // late String respuestaIncorrecta3;
-  // late int nivel;
-  late int puntos;
   late List<AnswerModel> answers;
 
   Pregunta({
     required this.id,
     required this.descripcion,
-    // required this.respuestaCorrecta,
-    // required this.respuestaIncorrecta1,
-    // required this.respuestaIncorrecta2,
-    // required this.respuestaIncorrecta3,
-    //   required this.nivel,
-    required this.puntos,
+    required this.tiposDePregunta,
+    required this.imagen,
     required this.answers,
   }) : assert(
           answers.length == 4,
         );
-
+//TODO lenght == 4 revisar answers
   Pregunta.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     descripcion = json['descripcion'];
@@ -39,17 +31,17 @@ class Pregunta {
 
     answers.add(AnswerModel(title: json['respuestaCorrecta'], isRight: true));
     answers.add(AnswerModel(
+      title: json['respuestaIncorrecta'],
+    ));
+    answers.add(AnswerModel(
       title: json['respuestaIncorrecta1'],
     ));
     answers.add(AnswerModel(
       title: json['respuestaIncorrecta2'],
     ));
-    answers.add(AnswerModel(
-      title: json['respuestaIncorrecta3'],
-    ));
-    //   nivel = json['nivel'];
+    imagen = json['imagen'];
+    tiposDePregunta = json['tiposDePregunta'];
     answers.shuffle();
-    puntos = json['puntos'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,9 +52,6 @@ class Pregunta {
     data['respuestaIncorrecta1'] = answers[1].title;
     data['respuestaIncorrecta2'] = answers[2].title;
     data['respuestaIncorrecta3'] = answers[3].title;
-    // data['nivel'] = nivel;
-    data['puntos'] = puntos;
-
     return data;
   }
 }

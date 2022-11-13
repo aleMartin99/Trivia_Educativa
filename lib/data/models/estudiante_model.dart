@@ -2,7 +2,6 @@ class Estudiante {
   late String id;
   late String name;
   late String ci;
-  //TODO chech with carlos annoCurso tipo de dato(carlos string pero yo digo q int (revisar caso de universidad o casos x default en string ))
   late int annoCurso;
 
   Estudiante({

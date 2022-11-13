@@ -7,11 +7,6 @@ import '../../core/error/failures.dart';
 import '../../domain/repositories/repositories.dart';
 import '../../main.dart';
 
-//TODO change points system to amount of questions (porciento de correctas)
-// 5 es 80 por ciento correcta
-// 4 70
-// 3 60
-
 class ChallengeController {
   final ValueNotifier<ChallengeState> stateNotifier =
       ValueNotifier<ChallengeState>(ChallengeState.empty);
@@ -25,13 +20,14 @@ class ChallengeController {
 
   int cantRightAnswers = 0;
 
+  List<NotaProv>? notas;
   NotaProv? notaProv;
+  // ignore: prefer_typing_uninitialized_variables
   var resp;
 
   final repository = ChallengeRepository(sl());
 
-//TODO annadir id estudiante (ver orden)
-
+//TODO implement Quick dialogs system
   void asignarNota(String idNotaProv, String idAsignatura, String idTema,
       String idNivel, String idEstudiante) async {
     state = ChallengeState.loading;
@@ -51,13 +47,14 @@ class ChallengeController {
     // return nota;
   }
 
+//TODO make algun tipo de validacion para subir nota luego de offline
   Future crearNota(int nota) async {
     state = ChallengeState.loading;
     final response = (await repository.crearNota(nota));
     if (response.isRight()) {
       notaProv = ((response as Right).value as NotaProv);
       state = ChallengeState.success;
-      return notaProv;
+      return notaProv!.id;
     } else if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
@@ -66,6 +63,22 @@ class ChallengeController {
     } else {
       state = ChallengeState.error;
     }
-//TODO annadir response decode to return nota y take el id
+  }
+
+  Future getNotasProv() async {
+    state = ChallengeState.loading;
+    final response = (await repository.getNotasProv());
+    if (response.isRight()) {
+      notas = ((response as Right).value as List<NotaProv>).cast<NotaProv>();
+      state = ChallengeState.notasLoaded;
+      return notas;
+    } else if (response.isLeft()) {
+      resp = (response as Left).value;
+      if (resp == NoInternetConnectionFailure) {
+        state = ChallengeState.notConnected;
+      }
+    } else {
+      state = ChallengeState.error;
+    }
   }
 }

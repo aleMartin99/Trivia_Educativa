@@ -31,14 +31,16 @@ class AsignaturaCardWidget extends StatelessWidget {
         ),
         child: Column(
           //TODO annadir cantidad items next page (temas)
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-                height: 40,
-                child: CustomIconSVG(
-                  iconName: AppImages.icon_1,
-                )),
+            Center(
+              child: SizedBox(
+                  height: 80,
+                  child: CustomIconSVG(
+                    iconName: AppImages.icon_1,
+                  )),
+            ),
             const SizedBox(
               height: 8,
             ),
@@ -46,19 +48,20 @@ class AsignaturaCardWidget extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Text(nombre,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
-                        fontSize: 21,
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryIconTheme.color)),
               ],
             ),
             //fit: BoxFit.fitWidth,
 
-            const SizedBox(
-              height: 10,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             Text(
               "${I10n.of(context).topics}: $cantTemas",
               //textAlign: TextAlign.end,

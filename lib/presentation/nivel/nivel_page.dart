@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import '../../core/network_info/network_info.dart';
+import '../../main.dart';
 import '../shared/shared_imports.dart';
 import '/../core/core.dart';
 
@@ -54,8 +58,7 @@ class _NivelPageState extends State<NivelPage> {
     bool isDone = false;
     if ((notasProv
         .where((notaProv) =>
-            notaProv.nivel?.where((nivel) => nivel.id == idNivel).isNotEmpty ??
-            false)
+            notaProv.nivel.where((nivel) => nivel.id == idNivel).isNotEmpty)
         .isNotEmpty)) isDone = true;
 
     return isDone;
@@ -63,7 +66,6 @@ class _NivelPageState extends State<NivelPage> {
 
   @override
   Widget build(BuildContext context) {
-    // log(controller.toString());
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
 
@@ -119,10 +121,6 @@ class _NivelPageState extends State<NivelPage> {
                 // useMagnifier: true,
                 itemExtent: 120,
                 physics: const BouncingScrollPhysics(),
-                // shrinkWrap: true,
-                // crossAxisCount: 2,
-                // crossAxisSpacing: 16,
-                // mainAxisSpacing: 16,
                 children: widget.niveles.map((nivel) {
                   //TODO check with nuevas notasProv
                   //TODO check is done level with notasProv, llamar methodo en init state cargar notasProv
@@ -152,20 +150,61 @@ class _NivelPageState extends State<NivelPage> {
                       isDone: false,
                       nombre: nivel.descripcion,
                       preguntas: nivel.preguntas,
-                      onTap: () {
-                        //TODO CHECK SI CONEXION A INTERNET, EN CASO DE Q NO QUICK ALERT Y PAL LOGIN
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.challengeRoute,
-                          arguments: ChallengePageArgs(
-                              preguntas: nivel.preguntas,
-                              idEstudiante: widget.idEstudiante,
-                              nota5: nivel.nota5,
-                              quizTitle: nivel.descripcion,
-                              idAsignatura: widget.idAsignatura,
-                              idTema: widget.idTema,
-                              idNivel: nivel.id),
-                        );
+                      onTap: () async {
+                        final NetworkInfo _networkInfo = sl();
+                        (await _networkInfo.isConnected)
+                            ? (nivel.preguntas.isEmpty)
+                                ? QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.warning,
+                                    title: 'No existen preguntas',
+                                    confirmBtnText: 'Ok',
+                                    text:
+                                        'No hay preguntas disponibles por el momento',
+                                    backgroundColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    textColor: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color!,
+                                    titleColor: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color!,
+                                    confirmBtnColor: AppColors.purple,
+                                  )
+                                :
+                                //TODO  (llamar a methodo cartel y deslogearse)
+                                Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.challengeRoute,
+                                    arguments: ChallengePageArgs(
+                                        preguntas: nivel.preguntas,
+                                        idEstudiante: widget.idEstudiante,
+                                        nota5: nivel.nota5,
+                                        quizTitle: nivel.descripcion,
+                                        idAsignatura: widget.idAsignatura,
+                                        idTema: widget.idTema,
+                                        idNivel: nivel.id),
+                                  )
+                            :
+                            // homeController.state = HomeState.empty;:
+
+                            //TODO CHECK SI CONEXION A INTERNET, EN CASO DE Q NO QUICK ALERT Y PAL LOGIN
+
+                            QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.warning,
+                                title: 'No hay conexión a Internet',
+                                confirmBtnText: 'Ok',
+                                text:
+                                    'Al parecer no tiene conexión a internet. Revise en los ajustes del teléfono',
+                                backgroundColor:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                textColor:
+                                    Theme.of(context).primaryIconTheme.color!,
+                                titleColor:
+                                    Theme.of(context).primaryIconTheme.color!,
+                                confirmBtnColor: AppColors.purple,
+                              );
                       });
                   //}
                 }).toList()),

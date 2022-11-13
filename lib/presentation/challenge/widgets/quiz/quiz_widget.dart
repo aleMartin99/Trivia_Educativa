@@ -5,8 +5,6 @@ import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
 class QuizWidget extends StatefulWidget {
   final Pregunta pregunta;
-  //se foi selecionado uma resposta certa/errada
-  // ValueChanged eh um tipo de funcao que devolve o valor atualizado da mudanca
   final ValueChanged<bool> onAnswerSelected;
   const QuizWidget({
     Key? key,
@@ -35,11 +33,11 @@ class _QuizWidgetState extends State<QuizWidget> {
           SizedBox(
             // width: 257,
             child: Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.only(top: 50, left: 4),
               child: Text(widget.pregunta.descripcion,
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                       fontSize:
-                          21, //color: settingsController.currentAppTheme.primaryColor,
+                          24, //color: settingsController.currentAppTheme.primaryColor,
                       color: Theme.of(context).primaryIconTheme.color)),
             ),
           ),

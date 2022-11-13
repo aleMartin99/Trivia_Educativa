@@ -6,14 +6,14 @@ class Nivel {
   late List<Pregunta> preguntas;
   //TODO change rangos 3,4,5 y poner nota5
   //todo check nota ewn porciento
-  late int rango5;
-  //late String audio;
+
   late int nota5;
-  //late int duration;
-  //imagen igual q en
-  // TODO annadir duracion en minutos
+  late int duracion;
+
   //TODO annadir sonido
-  //TODO validacion en casode null o vacio poner x defecto
+  //late String audio;
+
+  //TODO validacion en casode null o vacio poner x defecto para audio
 
   Nivel({
     required this.id,
@@ -21,7 +21,7 @@ class Nivel {
     required this.preguntas,
     required this.nota5,
     //required this.audio,
-    // required this.duration, de tipo int
+    required this.duracion,
   });
 
 //TOdo Annadir fromjson para audio,
@@ -39,7 +39,7 @@ class Nivel {
     nota5 = json['nota5'];
 
     // audio= json['audio'];
-    // duration = json['duracion'];
+    duracion = json['tiempoDuracion'];
   }
 
   Map<String, dynamic> toJson() {

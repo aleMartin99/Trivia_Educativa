@@ -3,7 +3,6 @@ import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/data/models/pregunta_model.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
-import 'package:trivia_educativa/presentation/settings/settings_page.dart';
 import 'package:trivia_educativa/presentation/tema/tema_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +10,12 @@ import 'package:trivia_educativa/presentation/challenge/challenge_page.dart';
 import 'package:trivia_educativa/presentation/home/home_page.dart';
 import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
-import 'package:trivia_educativa/data/models/user_model.dart';
 
 import '../../presentation/onboarding/cubit/onboarding_cubit.dart';
 import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';
 
 //TODO check routes and APP routes
-// const String splashRoute = "/";
+
 const String homeRoute = "/home";
 const String homeScreen = "/homeScreen";
 const String onboardingRoute = "/onboarding";
@@ -85,7 +83,6 @@ class AppRouter extends StatelessWidget {
       case resultRoute:
         if (args is ResultPageArgs) {
           return MaterialPageRoute(
-            //TODO remove puntos and rangos, add nota5
             builder: (_) => ResultPage(
               nota5: args.nota5,
               quizTitle: args.quizTitle,
@@ -107,7 +104,6 @@ class AppRouter extends StatelessWidget {
       //     return _errorRoute();
       //   }
 
-//TODO check this onboarding stuff with already seen
 //*OnBoarding
       case onboardingRoute:
         return MaterialPageRoute(builder: (_) => const Onboarding());
@@ -115,20 +111,16 @@ class AppRouter extends StatelessWidget {
       case homeScreen:
         if (args is HomeScreenArgs) {
           return MaterialPageRoute(
-            builder: (_) => HomeScreen(
-              user: args.user,
-            ),
+            builder: (_) => const HomeScreen(),
           );
         } else {
           return _errorRoute();
         }
 
       default:
-        if (args is HomePageArgs) {
+        if (args is HomeScreenArgs) {
           return MaterialPageRoute(
-            builder: (_) => HomePage(
-              user: args.user,
-            ),
+            builder: (_) => const HomeScreen(),
           );
         } else {
           return _errorRoute();
@@ -136,7 +128,6 @@ class AppRouter extends StatelessWidget {
     }
   }
 
-//TODO check this onboarding stuff with already seen
   @override
   Widget build(BuildContext context) {
     final _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
@@ -162,19 +153,9 @@ Route<dynamic> _errorRoute() {
   });
 }
 
-class HomePageArgs {
-  final User user;
-  HomePageArgs({
-    required this.user,
-  });
-}
+class HomePageArgs {}
 
-class HomeScreenArgs {
-  final User user;
-  HomeScreenArgs({
-    required this.user,
-  });
-}
+class HomeScreenArgs {}
 
 // class SettingsPageArgs {
 //   SettingsPageArgs();

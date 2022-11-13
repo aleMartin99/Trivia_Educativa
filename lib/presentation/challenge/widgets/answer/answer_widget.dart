@@ -27,7 +27,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
 
   TextStyle get _selectedTextStyleRight => TextStyle(
       fontFamily: 'PNRegular',
-      fontSize: 14,
+      fontSize: 16,
       color: Theme.of(context).primaryIconTheme.color
       // fontWeight: FontWeight.w100,
       );
@@ -71,6 +71,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                         ? _selectedTextStyleRight.copyWith(
                             color: AppColors.black)
                         : AppTextStyles.body.copyWith(
+                            fontSize: 16,
                             color: Theme.of(context).primaryIconTheme.color,
                           ),
                   ),
