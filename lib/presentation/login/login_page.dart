@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'dart:developer';
-
-import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
-import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/main.dart';
-import '../onboarding/onboarding_imports.dart';
+import 'package:trivia_educativa/presentation/login/widgets/password_widget.dart';
 import 'login_imports.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
@@ -23,37 +18,29 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final controller = LoginController();
-
-  Color _textFieldColor = AppColors.purple;
-
-  late final _onboardingAlreadySeen;
+  // final controller = LoginController();
 
   final TextEditingController usernameController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
-  final LoginController _loginController = LoginController();
+  final _loginController = LoginController();
 
 //TODO I10n
-//TODO text style (text from botones)
-//getIt<AppModel>()
 
   void goHome() async {
+    sl.pushNewScope();
     User user = _loginController.user;
     sl.registerSingleton<User>(user);
-    if (user != null) {
-      //TODO Make only once like onboarding
-      await Navigator.of(context).pushReplacementNamed(
-        AppRoutes.homeScreen,
-        arguments: HomeScreenArgs(),
-      );
-    }
+
+    await Navigator.of(context).pushReplacementNamed(
+      AppRoutes.homeScreen,
+    );
   }
 
   @override
   void initState() {
-    _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
-    log('on boarding visto? ' + _onboardingAlreadySeen.toString());
+    //   _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
+    // log('on boarding visto? ' + _onboardingAlreadySeen.toString());
     _loginController.stateNotifier.addListener(() {
       setState(() {});
 
@@ -140,12 +127,9 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                   color: AppColors.white,
                                   fontSize: 16,
-                                )
-                                // regulerText
-                                )
+                                ))
                             : (state == LoginState.noPermits)
                                 ? const Text("* Usuario sin permisos",
-                                    //selectionColor: Colors.red,
                                     style: TextStyle(
                                       color: AppColors.white,
                                       fontSize: 16,
@@ -170,9 +154,9 @@ class _LoginPageState extends State<LoginPage> {
                             // border: InputBorder.none,
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   width: 3,
-                                  color: _textFieldColor,
+                                  color: AppColors.purple,
                                 )),
                             hintText: "Nombre de usuario",
                             enabledBorder: OutlineInputBorder(
@@ -192,34 +176,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     height: 65,
-                    child: TextField(
-                        // onChanged: (value) => button = 'Success',
-
-                        controller: passwordController,
-                        style: TextStyle(
-                            color: Theme.of(context).primaryIconTheme.color,
-                            fontSize: 16),
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(15),
-                            // border: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  width: 3,
-                                  color: _textFieldColor,
-                                )),
-                            hintText: "Contraseña",
-                            // errorText: 'Carepito',
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    style: BorderStyle.solid)),
-                            fillColor:
-                                Theme.of(context).scaffoldBackgroundColor,
-                            filled: true)),
+                    child:
+                        PasswordWidget(passwordController: passwordController),
                   ),
                 ),
 
@@ -244,12 +202,10 @@ class _LoginPageState extends State<LoginPage> {
                                 Theme.of(context).primaryIconTheme.color!,
                             confirmBtnColor: AppColors.purple,
                           );
-                          // showLoginForm();
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(left: 12.0),
                           child: Text("Olvidó su contraseña?",
-                              //selectionColor: Colors.red,
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 16,
@@ -270,15 +226,12 @@ class _LoginPageState extends State<LoginPage> {
                             child: CircularProgressIndicator(
                             color: Colors.green,
                             backgroundColor: Colors.black12,
-                            //  valueColor: Colors.yellow,
                           ))
                         : GestureDetector(
                             onTap: () async {
                               await _loginController.signIn(
                                   usernameController.text,
                                   passwordController.text);
-//TODO check en signin que rol estudiante
-                              //  showPopup(isLogin: false);
                             },
                             child: Padding(
                               padding:

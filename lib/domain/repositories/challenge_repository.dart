@@ -47,8 +47,8 @@ class ChallengeRepository with RequestErrorParser {
       String idNivel, String idEstudiante) async {
     var uri = Uri.http(
       // apiBaseUrl,
-      '10.0.2.2:3000',
-      "api/v2/"
+      apiBaseUrl,
+      kApiPath +
           "notas/$idNotaProv/asignatura/$idAsignatura/tema/$idTema/nivel/$idNivel/estudiante/$idEstudiante",
     );
 
@@ -84,9 +84,8 @@ class ChallengeRepository with RequestErrorParser {
   Future crearNota(int nota) async {
     var uri = Uri.http(
       //apiBaseUrl,
-      '10.0.2.2:3000',
-      "api/v2/"
-          "notas",
+      apiBaseUrl,
+      kApiPath + "notas",
     );
 
     if (await _networkInfo.isConnected) {

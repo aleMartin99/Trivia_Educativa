@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:glassmorphism/glassmorphism.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +8,6 @@ import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
 import 'tema_imports.dart';
-import '../shared/shared_imports.dart';
 import '/../core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

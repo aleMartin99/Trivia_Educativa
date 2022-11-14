@@ -17,8 +17,8 @@ class LoginRepository with RequestErrorParser {
 
   Future signIn(String username, String password) async {
     var uri = Uri.http(
-      '192.168.1.100:3000',
-      "api/v2/auth/" "signin",
+      apiBaseUrl,
+      kApiPath + 'auth/signin',
     );
     if (await _networkInfo.isConnected) {
       try {
@@ -27,6 +27,7 @@ class LoginRepository with RequestErrorParser {
           body: {"username": username, "password": password},
         );
         log('pasar credenciales');
+        //TODO validacion para timeout, si internet no server
         if (response.statusCode == 201) {
           //  final jsonResponse = json.decode(response.body) as List;
           //       final asignaturas =
@@ -39,7 +40,7 @@ class LoginRepository with RequestErrorParser {
           log('guardando el usuario ${auth.user.toString()}');
           return right(auth);
         }
-        //TODO hacer estado timeout
+        //TODO hacer estado timeout sin server per o con internet
         else if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);
         } else {

@@ -4,7 +4,9 @@
         android:label="Trivia Educativa"
         android:name="${applicationName}"
         android:roundIcon="@mipmap/round_launcher"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+    
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true"

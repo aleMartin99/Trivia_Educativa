@@ -7,6 +7,7 @@ import 'package:trivia_educativa/presentation/home/home_imports.dart';
 
 import '../../../../core/core.dart';
 import '../../../../data/models/models.dart';
+import '../../../../main.dart';
 import '../../../settings/settings_imports.dart';
 import '../../../shared/shared_imports.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,21 +17,22 @@ class MenuScreen extends StatefulWidget {
   final List<MyMenuItem> mainMenu;
   final Function(int) callback;
   final int current;
-  final User user;
 
-  const MenuScreen(this.mainMenu,
-      {super.key,
-      // super.key,
-      //  required Key key,
-      required this.callback,
-      required this.current,
-      required this.user});
+  const MenuScreen(
+    this.mainMenu, {
+    super.key,
+    // super.key,
+    //  required Key key,
+    required this.callback,
+    required this.current,
+  });
 
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  var user = sl<User>();
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
@@ -95,7 +97,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           padding: const EdgeInsets.only(
                               bottom: 36.0, left: 24.0, right: 24.0),
                           child: Text(
-                            widget.user.name,
+                            user.name,
                             style: TextStyle(
                               fontSize: 22,
                               color: Theme.of(context).iconTheme.color,
@@ -162,12 +164,15 @@ class _MenuScreenState extends State<MenuScreen> {
                         // const Spacer(),
                         DedicatedListTile(
                           //TODO I10n
-                          //TODO change dialog to quick alert
                           onPressed: () async {
                             QuickAlert.show(
-                              onConfirmBtnTap: () => Navigator.of(context)
-                                  .pushNamedAndRemoveUntil('/login',
-                                      (Route<dynamic> route) => false),
+                              onConfirmBtnTap: () async {
+                                // await sl.resetScope(dispose: false);
+                                await sl.popScope();
+                                // await sl.unregister<User>();
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/login', (Route<dynamic> route) => false);
+                              },
                               context: context,
                               type: QuickAlertType.warning,
                               title: '¿Desea cerrar la sesión?',

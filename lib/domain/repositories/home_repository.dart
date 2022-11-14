@@ -17,10 +17,8 @@ class HomeRepository with RequestErrorParser {
   final NetworkInfo _networkInfo;
   Future findEstudianteByCI(String cI) async {
     var uri = Uri.http(
-      //apiBaseUrl,
-      '192.168.1.100:3000',
-      "api/v2/estudiante/byCI/"
-          "$cI",
+      apiBaseUrl,
+      kApiPath + "estudiante/byCI/" "$cI",
     );
 
     if (await _networkInfo.isConnected) {
@@ -28,8 +26,6 @@ class HomeRepository with RequestErrorParser {
         final response = await http.get(
           uri,
         );
-        log('status code from estudiante');
-        log(response.statusCode.toString());
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body);
           log(' ${jsonResponse.toString()}');
@@ -54,10 +50,8 @@ class HomeRepository with RequestErrorParser {
   Future findByAnno(int annoCurso) async {
 //
     var uri = Uri.http(
-      //apiBaseUrl,
-      '192.168.1.100:3000',
-      "api/v2/asignatura/obtener/"
-          "$annoCurso",
+      apiBaseUrl,
+      kApiPath + "asignatura/obtener/" "$annoCurso",
     );
     if (await _networkInfo.isConnected) {
       try {

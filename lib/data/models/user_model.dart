@@ -20,6 +20,7 @@ class User {
     required this.ci,
     // this.imagen
   });
+
   // User fromJson(Map json) => User(
   //       id: json['_id'] as String?,
   //       name: json['name'] as String?,

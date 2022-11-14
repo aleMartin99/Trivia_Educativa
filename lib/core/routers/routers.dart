@@ -109,22 +109,26 @@ class AppRouter extends StatelessWidget {
         return MaterialPageRoute(builder: (_) => const Onboarding());
 
       case homeScreen:
-        if (args is HomeScreenArgs) {
-          return MaterialPageRoute(
-            builder: (_) => const HomeScreen(),
-          );
-        } else {
-          return _errorRoute();
-        }
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+
+      // case homeScreen:
+      //   if (args is HomeScreenArgs) {
+      //     return MaterialPageRoute(
+      //       builder: (_) => const HomeScreen(),
+      //     );
+      //   } else {
+      //     return _errorRoute();
+      //   }
 
       default:
-        if (args is HomeScreenArgs) {
-          return MaterialPageRoute(
-            builder: (_) => const HomeScreen(),
-          );
-        } else {
-          return _errorRoute();
-        }
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      // if (args is HomeScreenArgs) {
+      //   return MaterialPageRoute(
+      //     builder: (_) => const HomeScreen(),
+      //   );
+      // } else {
+      //   return _errorRoute();
+      // }
     }
   }
 

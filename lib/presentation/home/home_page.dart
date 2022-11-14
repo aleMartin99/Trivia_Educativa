@@ -11,7 +11,8 @@ import 'dart:math' show pi;
 import '../../main.dart';
 import '../home/home_imports.dart';
 
-var user = sl<User>();
+//TODO check instancias user con getit
+//var user = sl<User>();
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -24,7 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homeController = HomeController();
-
+  var user = sl<User>();
   void _loadData() async {
     //TODO implement subir nota local del offline
     await homeController.getEstudiante(user.ci);
@@ -165,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: const Center(
                           child: Text(
-                        'OK 🧠🚀', // style: boldText(fSize: 12)
+                        'OK', // style: boldText(fSize: 12)
                         style: TextStyle(
                             color: AppColors.white,
                             fontSize: 18,
@@ -315,9 +316,8 @@ class _HomeScreenState extends State<HomeScreen> {
         callback: _updatePage,
         current: _currentPage,
         key: UniqueKey(),
-        user: user,
       ),
-      mainScreen: MainScreen(user: user),
+      mainScreen: MainScreen(),
       borderRadius: 24.0,
       showShadow: false,
       angle: 0.0,
@@ -351,10 +351,8 @@ class MenuProvider extends ChangeNotifier {
 
 //TODO move
 class MainScreen extends StatefulWidget {
-  final User user;
   const MainScreen({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
   @override
@@ -379,7 +377,7 @@ class _MainScreenState extends State<MainScreen> {
           child: (context.select<MenuProvider, int>(
                       (provider) => provider.currentPage) ==
                   0)
-              ? HomePage(
+              ? const HomePage(
 
                   // key: UniqueKey(),
                   )

@@ -57,7 +57,7 @@ class ResultPage extends StatelessWidget {
                 : ((result >= nota5)
                     ? "${I10n.of(context).score_title} 5. \n${I10n.of(context).score_Congrats}!"
                     : '')));
-//TODO change points system to amount of questions
+
     String subtitle = result < nota3
         ? "${I10n.of(context).youGot} $result ${I10n.of(context).of_} $questionsLenght ${I10n.of(context).questions}. \n${I10n.of(context).score_tip_tryHarder}!"
         : ((result >= nota3 && result < nota5)
@@ -94,9 +94,6 @@ class ResultPage extends StatelessWidget {
                         fontSize: 38),
                   ),
                   Container(
-                    //alignment: Alignment.center,
-                    //color: Colors.red,
-                    // width: 189,
                     padding: const EdgeInsets.only(top: 10),
                     child: Text(
                       subtitle,

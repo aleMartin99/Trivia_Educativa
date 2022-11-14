@@ -1,4 +1,6 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+
 import 'dart:developer';
 
 import 'package:quickalert/quickalert.dart';
@@ -38,9 +40,20 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
   final pageController = PageController();
-  // final homeController = HomeController();
 
   bool isPlaying = false;
+
+  AudioPlayer player = AudioPlayer();
+  Future loadMusic() async {
+    //TODO change to url if doesn't work
+    await player.play(
+      (AssetSource('audios/soundtrack_1.mp3')),
+    );
+
+    player.setReleaseMode(ReleaseMode.loop);
+    // advancedPlayer = await AudioCache().loop("music/song3.mp3");
+    await AudioPlayer.global.changeLogLevel(LogLevel.info);
+  }
 
   void nextPage() {
     if (controller.currentPage < widget.preguntas.length) {
@@ -66,8 +79,19 @@ class _ChallengePageState extends State<ChallengePage> {
 
   int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
     int nota = 2;
-    int nota3 = nota5 - 20;
-    int nota4 = nota5 - 10;
+    int nota3;
+    int nota4;
+    if (nota5 >= 20) {
+      nota3 = nota5 - 20;
+    } else {
+      nota3 = 0;
+    }
+    if (nota5 >= 10) {
+      nota4 = nota5 - 10;
+    } else {
+      nota4 = 10;
+    }
+
     double percent = cantRightAnswers * 100 / cantPreguntas;
 
     if (percent >= nota3 && percent < nota4) {
@@ -78,6 +102,7 @@ class _ChallengePageState extends State<ChallengePage> {
     if (percent >= nota5) {
       nota = 5;
     }
+    log(nota.toString());
     return nota;
   }
 
@@ -90,6 +115,7 @@ class _ChallengePageState extends State<ChallengePage> {
         controller.currentPage = pageController.page!.toInt() + 1;
       },
     );
+    loadMusic();
     widget.preguntas.shuffle();
     super.initState();
   }
@@ -114,8 +140,10 @@ class _ChallengePageState extends State<ChallengePage> {
                     children: [
                       BackButton(
                         onPressed: () async {
+                          //TODO make a loader for go to result page
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
+                              await player.release();
                               int nota = evaluarNivel(widget.preguntas.length,
                                   controller.cantRightAnswers, widget.nota5);
                               log('la nota evaluada es' + nota.toString());
@@ -159,7 +187,10 @@ class _ChallengePageState extends State<ChallengePage> {
                       ),
                       IconButton(
                           isSelected: isPlaying,
-                          onPressed: () {
+                          onPressed: () async {
+                            isPlaying
+                                ? await player.resume()
+                                : await player.pause();
                             isPlaying = !isPlaying;
                             setState(() {});
                           },
@@ -214,6 +245,7 @@ class _ChallengePageState extends State<ChallengePage> {
               horizontal: 40,
               vertical: 20,
             ),
+            //TODO make a loader for go to result page
             child: ValueListenableBuilder(
               valueListenable: controller.currentPageNotifier,
               builder: (context, int value, _) => Padding(
@@ -223,6 +255,7 @@ class _ChallengePageState extends State<ChallengePage> {
                       ? NextButtonWidget.green(
                           label: I10n.of(context).finish,
                           onTap: () async {
+                            await player.release();
                             int nota = evaluarNivel(widget.preguntas.length,
                                 controller.cantRightAnswers, widget.nota5);
                             log('la nota evaluada es' + nota.toString());
