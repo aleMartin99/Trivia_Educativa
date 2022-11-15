@@ -40,11 +40,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    //   _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
-    // log('on boarding visto? ' + _onboardingAlreadySeen.toString());
     _loginController.stateNotifier.addListener(() {
-      // setState(() {});
-
       if (_loginController.state == LoginState.loggedIn) {
         goHome();
       }

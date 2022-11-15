@@ -48,8 +48,7 @@ class _QuizWidgetState extends State<QuizWidget> {
             AnswerWidget(
               answerModel: answer(i),
               isSelected: indexSelected == i,
-              isDisabled: indexSelected !=
-                  -1, //se for diferente de -1, ele ja clicou em alguem, logo n pode mais
+              isDisabled: indexSelected != -1,
               onTap: (valueIsRight) {
                 indexSelected = i;
                 setState(() {});

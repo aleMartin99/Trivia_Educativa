@@ -69,18 +69,13 @@ class _OnboardingState extends State<Onboarding> {
     return WillPopScope(
       onWillPop: () async => false,
       child: DedicatedScaffold(
-        // backgroundColor: (Theme.of(context).brightness == Brightness.dark)
-        //     ? AppColors.lightPurple
-        //     : Theme.of(context).scaffoldBackgroundColor,
         appBar: DedicatedAppBar(
             trailing: TextButton(
           onPressed: () {
             context.read<OnboardingCubit>().markAsViewed();
             Navigator.of(context).pushReplacementNamed(
               AppRoutes.loginRoute,
-              // arguments: HomePageArgs(user: user),
             );
-            // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
           },
           //TODO I10n
           child: Text(
@@ -105,21 +100,16 @@ class _OnboardingState extends State<Onboarding> {
 
                   label: value == kOnboardingLightItems.length
                       ? 'Continuar'
-                      : 'Next',
-
-                  // isActive: true,
+                      : 'Siguiente',
                   onTap: () {
                     if (value != kOnboardingLightItems.length) {
                       nextPage();
                     } else {
                       context.read<OnboardingCubit>().markAsViewed();
-                      // sl<AnalyticsBloc>().add(const AnalyticsEvent.tutorialFinished());
 
                       Navigator.of(context).pushReplacementNamed(
                         AppRoutes.loginRoute,
                       );
-                      // Navigator.pushNamedAndRemoveUntil(
-                      //     context, '/home', (route) => false);
                     }
                   },
                 )),
@@ -150,8 +140,6 @@ class _OnboardingState extends State<Onboarding> {
                               child: Stack(
                                 children: [
                                   Container(
-                                    // padding: EdgeInsets.all(8),
-                                    //color: Colors.red,
                                     clipBehavior: Clip.antiAlias,
                                     decoration: const BoxDecoration(
                                       gradient: AppGradients.linear,

@@ -24,11 +24,11 @@ class TemaCardWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          border: const Border.fromBorderSide(
-            BorderSide(
-              color: AppColors.border,
-            ),
-          ),
+          // border: const Border.fromBorderSide(
+          //   BorderSide(
+          //     color: AppColors.border,
+          //   ),
+          // ),
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),

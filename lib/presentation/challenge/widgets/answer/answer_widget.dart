@@ -22,8 +22,8 @@ class AnswerWidget extends StatefulWidget {
 }
 
 class _AnswerWidgetState extends State<AnswerWidget> {
-  Color get _selectedBorderRight =>
-      widget.answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
+  // Color get _selectedBorderRight =>
+  //     widget.answerModel.isRight ? AppColors.lightGreen : AppColors.lightRed;
 
   TextStyle get _selectedTextStyleRight => TextStyle(
       fontFamily: 'PNRegular',
@@ -33,7 +33,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
       );
 
   IconData get _selectedIconRight =>
-      widget.answerModel.isRight ? Icons.circle_sharp : Icons.circle_sharp;
+      widget.answerModel.isRight ? Icons.close : Icons.close;
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +48,16 @@ class _AnswerWidgetState extends State<AnswerWidget> {
           child: Container(
             decoration: BoxDecoration(
               color: widget.isSelected
-                  ? AppColors.selectedColorCardRight
+                  ? AppColors.purple
                   : AppTheme.backgroundColors(Theme.of(context).brightness),
               borderRadius: BorderRadius.circular(10),
-              border: Border.fromBorderSide(BorderSide(
-                color: widget.isSelected
-                    ? Theme.of(context).primaryColor
-                    : AppColors.border,
-              )),
+              // border: Border.fromBorderSide(BorderSide(
+              //     color: widget.isSelected
+              //         ? (Theme.of(context).brightness == Brightness.light)
+              //             ? AppColors.border
+              //             : AppColors.black
+              //         : AppColors.border // : AppColors.border,
+              //     )),
             ),
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -69,7 +71,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                     widget.answerModel.title,
                     style: widget.isSelected
                         ? _selectedTextStyleRight.copyWith(
-                            color: AppColors.black)
+                            color: AppColors.white)
                         : AppTextStyles.body.copyWith(
                             fontSize: 16,
                             color: Theme.of(context).primaryIconTheme.color,
@@ -82,12 +84,15 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     color: widget.isSelected
-                        ? Theme.of(context).primaryColor
+                        ? (Theme.of(context).brightness == Brightness.light)
+                            ? AppTheme.backgroundColors(
+                                Theme.of(context).brightness)
+                            : AppColors.lightPurple
                         : AppTheme.backgroundColors(
                             Theme.of(context).brightness),
                     border: Border.fromBorderSide(BorderSide(
                       color: widget.isSelected
-                          ? _selectedBorderRight
+                          ? AppColors.purple
                           : AppColors.border,
                     )),
                   ),
@@ -95,7 +100,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                       ? Icon(
                           _selectedIconRight,
                           size: 16,
-                          color: Theme.of(context).primaryColor,
+                          color: AppColors.purple,
                         )
                       : null,
                 ),

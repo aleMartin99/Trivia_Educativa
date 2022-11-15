@@ -12,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main.dart';
 import '../presentation/home/widgets/menu/menu_provider.dart';
+import '../presentation/home/widgets/welcome_message/cubit/welcome_message_cubit.dart';
 import '../presentation/onboarding/cubit/onboarding_cubit.dart';
 
 class AppWidget extends StatelessWidget {
@@ -31,8 +32,9 @@ class AppWidget extends StatelessWidget {
       ChangeNotifierProvider(
         create: (_) => MenuProvider(),
       ),
-      // ChangeNotifierProvider(create: (context) => TimerHelper()),
-
+      BlocProvider(
+        create: (context) => sl<WelcomeMessageCubit>(),
+      ),
       Provider<SettingsController>(
         create: (context) => sl<SettingsController>(),
         builder: (context, _) => MaterialApp(
@@ -47,9 +49,6 @@ class AppWidget extends StatelessWidget {
           themeMode: EasyDynamicTheme.of(context).themeMode,
         ),
       ),
-      // BlocProvider(
-      //       create: (context) => sl<AppTourCubit>(),
-      //     ),
     ]);
   }
 }

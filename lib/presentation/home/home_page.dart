@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
@@ -7,6 +8,7 @@ import 'package:trivia_educativa/data/models/models.dart';
 
 import '../../main.dart';
 import '../home/home_imports.dart';
+import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -28,11 +30,16 @@ class _HomePageState extends State<HomePage> {
     await homeController.getAsignaturas(estudiante.annoCurso);
   }
 
+  late bool _welcomeMessageAlreadySeen;
   @override
   initState() {
     Future.delayed(const Duration(seconds: 1), () {
       //TODO Make only once like onboarding
-      showWelcomeBox();
+
+      (_welcomeMessageAlreadySeen =
+              context.read<WelcomeMessageCubit>().alreadySeen)
+          ? null
+          : showWelcomeBox();
     });
     _loadData();
     homeController.stateNotifier.addListener(() {
@@ -148,6 +155,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 40),
                 GestureDetector(
                   onTap: () async {
+                    context.read<WelcomeMessageCubit>().markAsViewed();
                     Navigator.pop(context);
                   },
                   child: Container(

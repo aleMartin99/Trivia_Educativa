@@ -29,15 +29,15 @@ class NivelCardWidget extends StatelessWidget {
         //color: Colors.amber,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          border: const Border.fromBorderSide(
-            BorderSide(
-              color: AppColors.border,
-            ),
-          ),
+          // border: const Border.fromBorderSide(
+          //   BorderSide(
+          //     color: AppColors.border,
+          //   ),
+          // ),
           color: isDone
               ? (Theme.of(context).brightness == Brightness.light)
                   ? Colors.black12
-                  : AppColors.selectedColorCardRight
+                  : AppColors.lightGrey
               : AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),

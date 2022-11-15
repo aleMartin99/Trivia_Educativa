@@ -4,6 +4,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
 import '../core/network_info/network_info.dart';
 import '../core/network_info/network_info_impl.dart';
+import '../presentation/home/widgets/welcome_message/cubit/welcome_message_cubit.dart';
 import '../presentation/onboarding/onboarding_imports.dart';
 
 import 'package:get_it/get_it.dart';
@@ -23,7 +24,9 @@ FutureOr<void> initCore(GetIt sl) async {
     )
     ..registerLazySingleton<SettingsController>(
         () => SettingsController(_sharedPreferences, sl))
-
+    ..registerLazySingleton<WelcomeMessageCubit>(
+      () => WelcomeMessageCubit(_sharedPreferences, sl),
+    )
     // ..registerLazySingleton<AppTourCubit>(
     //   () => AppTourCubit(_sharedPreferences, sl()),
     // )

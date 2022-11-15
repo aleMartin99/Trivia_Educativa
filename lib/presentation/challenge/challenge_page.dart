@@ -119,9 +119,7 @@ class _ChallengePageState extends State<ChallengePage> {
   void initState() {
     //TODO CHeck error tiempo set state con
     controller.stateNotifier.addListener(() {
-      // setState(() {});
       if (controller.state == ChallengeState.timeOut) {
-        //  setState(() {});
         QuickAlert.show(
           onConfirmBtnTap: () async {
             await player.release();
