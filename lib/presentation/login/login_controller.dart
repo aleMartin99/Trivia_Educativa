@@ -18,11 +18,6 @@ class LoginController {
   set state(LoginState state) => stateNotifier.value = state;
   LoginState get state => stateNotifier.value;
 
-  // final ValueNotifier<bool> loginNotifier = ValueNotifier<bool>(false);
-  // bool get isLoggedIn => loginNotifier.value;
-  // set isLoggedIn(bool value) => loginNotifier.value = value;
-
-  //late List<User> users;
   late User user;
   late Auth auth;
   var resp;
@@ -54,9 +49,46 @@ class LoginController {
         state = LoginState.notConnected;
       } else if (resp == InvalidCredentialsFailure) {
         state = LoginState.unauthorized;
+      } else if (resp == ServerFailure) {
+        state = LoginState.serverUnreachable;
       } else {
         state = LoginState.error;
       }
     }
   }
+
+  // Future<bool> timeout() async {
+  //   var result = await waitTask().timeout(const Duration(seconds: 10));
+  //   print(result); // 'completed'
+
+  //   result = await waitTask()
+  //       .timeout(const Duration(seconds: 1), onTimeout: () => 'timeout');
+  //   print(result); // 'timeout'
+
+  //   result = await waitTask().timeout(const Duration(seconds: 2)); // Throws.
+  // }
+
+  // Future<bool> waitTask() async {
+  //   bool timeout= false;
+  //   await Future.delayed(const Duration(seconds: 5));
+  //   return timeout;
+  // }
+
+  // Future checkServerResponse() async {
+  //   state = LoginState.loading;
+  //   final response = (await repository.bd());
+  //   if (response.isRight()) {
+  //     log('response right pringado');
+  //     //resp = (response as Right).value;
+  //     //log(resp.toString());
+  //     //return resp;
+  //   }
+
+  //   if (response.isLeft()) {
+  //     resp = (response as Left).value;
+  //     if (resp == ServerFailure) {
+  //       state = LoginState.serverUnreachable;
+  //     }
+  //   }
+  // }
 }

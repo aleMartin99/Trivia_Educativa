@@ -188,6 +188,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.3.3"
+  flutter_colorful_tab:
+    dependency: "direct main"
+    description:
+      name: flutter_colorful_tab
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -607,6 +614,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slide_countdown:
+    dependency: "direct main"
+    description:
+      name: slide_countdown
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4"
   smooth_page_indicator:
     dependency: "direct main"
     description:
@@ -635,6 +649,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  stream_duration:
+    dependency: transitive
+    description:
+      name: stream_duration
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   string_scanner:
     dependency: transitive
     description:

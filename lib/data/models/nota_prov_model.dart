@@ -65,16 +65,13 @@ class NotaProv {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    if (asignatura != null) {
-      data['asignatura'] = asignatura.map((v) => v.toJson()).toList();
-    }
 
-    if (tema != null) {
-      data['tema'] = tema.map((v) => v.toJson()).toList();
-    }
-    if (nivel != null) {
-      data['nivel'] = nivel.map((v) => v.toJson()).toList();
-    }
+    data['asignatura'] = asignatura.map((v) => v.toJson()).toList();
+
+    data['tema'] = tema.map((v) => v.toJson()).toList();
+
+    data['nivel'] = nivel.map((v) => v.toJson()).toList();
+
     // if (estudiante != null) {
     //   data['estudiante'] = estudiante!.map((v) => v.toJson()).toList();
     // }

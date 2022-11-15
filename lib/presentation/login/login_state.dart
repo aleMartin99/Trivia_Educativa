@@ -5,5 +5,6 @@ enum LoginState {
   empty,
   unauthorized,
   notConnected,
-  noPermits
+  noPermits,
+  serverUnreachable
 }

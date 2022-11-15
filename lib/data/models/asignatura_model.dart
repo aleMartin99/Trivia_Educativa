@@ -1,5 +1,4 @@
 //import 'package:educational_quiz_app/view/shared/models/answer_model.dart';
-import 'package:trivia_educativa/data/models/profesor_model.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 
 class Asignatura {

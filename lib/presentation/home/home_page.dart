@@ -1,18 +1,12 @@
-import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
-import 'package:trivia_educativa/presentation/home/widgets/appbar/menu_page.dart';
-import 'dart:math' show pi;
+
 import '../../main.dart';
 import '../home/home_imports.dart';
-
-//TODO check instancias user con getit
-//var user = sl<User>();
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -29,9 +23,7 @@ class _HomePageState extends State<HomePage> {
   void _loadData() async {
     //TODO implement subir nota local del offline
     await homeController.getEstudiante(user.ci);
-    //TODO check si pasar el estudiante completo hasta challenge
 
-    //TODO Checkear q no sea nulo desp de model modificar
     Estudiante estudiante = homeController.estudiante!;
     await homeController.getAsignaturas(estudiante.annoCurso);
   }
@@ -280,139 +272,5 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )),
     );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  //const HomeScreen({required this.user});
-
-  //TODO move to another place the List<MyMenuItem>
-  static List<MyMenuItem> mainMenu = [
-    MyMenuItem("Inicio", Icons.home_filled, 0),
-    MyMenuItem("Tabla de Posiciones", Icons.emoji_events, 1),
-  ];
-
-  const HomeScreen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final _drawerController = AwesomeDrawerBarController();
-
-  final int _currentPage = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return AwesomeDrawerBar(
-      isRTL: false,
-      controller: _drawerController,
-      type: StyleState.scaleRight,
-      menuScreen: MenuScreen(
-        HomeScreen.mainMenu,
-        callback: _updatePage,
-        current: _currentPage,
-        key: UniqueKey(),
-      ),
-      mainScreen: MainScreen(),
-      borderRadius: 24.0,
-      showShadow: false,
-      angle: 0.0,
-      //backgroundColor: Colors.purple,
-      //slideWidth: MediaQuery.of(context).size.width * .65,
-      // openCurve: Curves.fastOutSlowIn,
-      // closeCurve: Curves.bounceIn,
-      slideWidth: MediaQuery.of(context).size.width * (false ? .45 : 0.65),
-    );
-  }
-
-  void _updatePage(index) {
-    Provider.of<MenuProvider>(context, listen: false).updateCurrentPage(index);
-    _drawerController.toggle!();
-  }
-}
-
-//TODO move
-class MenuProvider extends ChangeNotifier {
-  int _currentPage = 0;
-
-  int get currentPage => _currentPage;
-
-  void updateCurrentPage(int index) {
-    if (index != currentPage) {
-      _currentPage = index;
-      notifyListeners();
-    }
-  }
-}
-
-//TODO move
-class MainScreen extends StatefulWidget {
-  const MainScreen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  @override
-  Widget build(BuildContext context) {
-    ValueNotifier<DrawerState>? listenable =
-        AwesomeDrawerBar.of(context)?.stateNotifier;
-    const rtl = false;
-    return ValueListenableBuilder<DrawerState>(
-        valueListenable: listenable!,
-        builder: (context, state, child) {
-          return AbsorbPointer(
-            absorbing: state != DrawerState.closed,
-            child: child,
-          );
-        },
-        child: GestureDetector(
-          child: (context.select<MenuProvider, int>(
-                      (provider) => provider.currentPage) ==
-                  0)
-              ? const HomePage(
-
-                  // key: UniqueKey(),
-                  )
-              //TODO implement escalafon page
-              : WillPopScope(
-                  onWillPop: () async => false,
-                  child: Scaffold(
-                      appBar: AppBar(
-                        automaticallyImplyLeading: false,
-                        backgroundColor: Colors.red,
-                        title: Text(
-                          Provider.of<MenuProvider>(context, listen: false)
-                              ._currentPage
-                              .toString(),
-                        ),
-                        leading: Transform.rotate(
-                          angle: 180 * pi / 180,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.menu,
-                            ),
-                            onPressed: () {
-                              AwesomeDrawerBar.of(context)?.toggle();
-                            },
-                          ),
-                        ),
-                        // trailingActions: actions,
-                      ),
-                      body: Text('data')))
-          // onPanUpdate: (details) {
-          //   if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
-          //     AwesomeDrawerBar.of(context)?.toggle();
-          //   }
-          // },
-          ,
-        ));
   }
 }

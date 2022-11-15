@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:fpdart/fpdart.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/core.dart';
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     //   _onboardingAlreadySeen = context.read<OnboardingCubit>().alreadySeen;
     // log('on boarding visto? ' + _onboardingAlreadySeen.toString());
     _loginController.stateNotifier.addListener(() {
-      setState(() {});
+      // setState(() {});
 
       if (_loginController.state == LoginState.loggedIn) {
         goHome();
@@ -62,6 +63,22 @@ class _LoginPageState extends State<LoginPage> {
           confirmBtnText: 'Ok',
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
+        _loginController.state = LoginState.empty;
+      } else if (_loginController.state == LoginState.serverUnreachable) {
+        Navigator.pop(context);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.warning,
+          title: 'Servidor no disponible',
+          confirmBtnText: 'Ok',
+          text: 'Al parecer el servidor no está disponible.',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+        );
+
+        _loginController.state = LoginState.empty;
       } else if (_loginController.state == LoginState.notConnected) {
         Navigator.pop(context);
         QuickAlert.show(
@@ -83,6 +100,15 @@ class _LoginPageState extends State<LoginPage> {
 
     super.initState();
   }
+
+  // void badServer() async {
+  //   var r = await Requests.get('https://google.com');
+  //   // r.throwForStatus();
+  //   // r.raiseForStatus();
+  //   String body = r.content();
+  //   log(r.statusCode.toString());
+  //   log(body.toString());
+  // }
 
   showLoginForm() {
     showLoginForm() {
@@ -229,6 +255,9 @@ class _LoginPageState extends State<LoginPage> {
                           ))
                         : GestureDetector(
                             onTap: () async {
+                              //*Method to close keyboard
+                              FocusScope.of(context).requestFocus(FocusNode());
+
                               await _loginController.signIn(
                                   usernameController.text,
                                   passwordController.text);
@@ -316,11 +345,21 @@ class _LoginPageState extends State<LoginPage> {
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.heading40.copyWith(
-                              color: Theme.of(context).primaryIconTheme.color,
-                              fontSize: 38
-
-                              //  settingsController.currentAppTheme.primaryColor,
-                              ),
+                            fontSize: 38,
+                            foreground: Paint()
+                              ..shader = Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const LinearGradient(colors: <Color>[
+                                      AppColors.lightPurple,
+                                      AppColors.purple,
+                                    ]).createShader(
+                                      const Rect.fromLTWH(100, 0, 400, 100.0))
+                                  : const LinearGradient(colors: <Color>[
+                                      AppColors.black,
+                                      AppColors.purple,
+                                    ]).createShader(
+                                      const Rect.fromLTWH(100, 0, 400, 100.0)),
+                          ),
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(

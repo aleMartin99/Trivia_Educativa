@@ -36,10 +36,6 @@ class NivelPage extends StatefulWidget {
 class _NivelPageState extends State<NivelPage> {
   final challengeController = ChallengeController();
 
-  void _loadData() async {
-    //await challengeController.getNotasProv();
-  }
-
   @override
   initState() {
     //TODO check notaProv
@@ -183,7 +179,7 @@ class _NivelPageState extends State<NivelPage> {
                                         quizTitle: nivel.descripcion,
                                         idAsignatura: widget.idAsignatura,
                                         idTema: widget.idTema,
-                                        idNivel: nivel.id),
+                                        nivel: nivel),
                                   )
                             :
                             // homeController.state = HomeState.empty;:

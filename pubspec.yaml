@@ -58,6 +58,10 @@ dependencies:
   glassmorphism_ui: ^0.3.0
   #flutter_sound: '8.5.0'
   audioplayers: ^1.1.1
+  #async: ^2.9.0
+  #requests: ^4.7.0
+  slide_countdown: ^0.3.4
+  flutter_colorful_tab: ^0.1.0
   
    
   #flutter_native_splash: ^2.2.9

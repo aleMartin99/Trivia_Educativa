@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main.dart';
-import '../presentation/home/home_page.dart';
+import '../presentation/home/widgets/menu/menu_provider.dart';
 import '../presentation/onboarding/cubit/onboarding_cubit.dart';
 
 class AppWidget extends StatelessWidget {
@@ -28,10 +28,11 @@ class AppWidget extends StatelessWidget {
         create: (context) => sl<OnboardingCubit>(),
       ),
       Provider<LoginController>(create: (context) => sl<LoginController>()),
-      //TODO check child in change notifierProvider
       ChangeNotifierProvider(
         create: (_) => MenuProvider(),
       ),
+      // ChangeNotifierProvider(create: (context) => TimerHelper()),
+
       Provider<SettingsController>(
         create: (context) => sl<SettingsController>(),
         builder: (context, _) => MaterialApp(

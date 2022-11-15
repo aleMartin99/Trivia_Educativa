@@ -8,7 +8,6 @@ export './app_text_styles.dart';
 export './app_theme.dart';
 export './app_widget.dart';
 export './core.dart';
-export './dialogs.dart';
 
 export 'error/analize_error.dart';
 export 'error/exceptions.dart';

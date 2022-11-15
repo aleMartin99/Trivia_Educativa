@@ -26,6 +26,7 @@ class AppImages {
   static String get icon_1 => 'assets/icons/Artboard-26.svg';
   static String get icon_2 => 'assets/icons/Artboard-1.svg';
   static String get icon_3 => 'assets/icons/Artboard-6.svg';
+  // ignore: non_constant_identifier_names
   static String get icon_trophy => 'assets/icons/Artboard-15.svg';
 }
 

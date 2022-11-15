@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:core';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'dart:developer';
 
 import 'package:quickalert/quickalert.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
@@ -15,12 +20,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
   final String quizTitle;
-
   final int nota5;
   final String idAsignatura;
   final String idEstudiante;
   final String idTema;
-  final String idNivel;
+  final Nivel nivel;
 
   const ChallengePage(
       {Key? key,
@@ -30,7 +34,7 @@ class ChallengePage extends StatefulWidget {
       required this.idTema,
       required this.idAsignatura,
       required this.idEstudiante,
-      required this.idNivel})
+      required this.nivel})
       : super(key: key);
 
   @override
@@ -44,6 +48,13 @@ class _ChallengePageState extends State<ChallengePage> {
   bool isPlaying = false;
 
   AudioPlayer player = AudioPlayer();
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
   Future loadMusic() async {
     //TODO change to url if doesn't work
     await player.play(
@@ -58,7 +69,7 @@ class _ChallengePageState extends State<ChallengePage> {
   void nextPage() {
     if (controller.currentPage < widget.preguntas.length) {
       pageController.nextPage(
-        duration: const Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.linear,
       );
     }
@@ -108,8 +119,51 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
-    //TODO add challengecontroller listener
-    //Todo implement quick dialog
+    //TODO CHeck error tiempo set state con
+    controller.stateNotifier.addListener(() {
+      // setState(() {});
+      if (controller.state == ChallengeState.timeOut) {
+        //  setState(() {});
+        QuickAlert.show(
+          onConfirmBtnTap: () async {
+            await player.release();
+
+            int nota = evaluarNivel(widget.preguntas.length,
+                controller.cantRightAnswers, widget.nota5);
+            log('la nota evaluada es' + nota.toString());
+
+            //*crearNota devuelve el id de la nota creada
+            //*asignarNota asigna esa nota a bd
+            controller.asignarNota(
+                await controller.crearNota(nota),
+                widget.idAsignatura,
+                widget.idTema,
+                widget.nivel.id,
+                widget.idEstudiante);
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutes.resultRoute,
+              arguments: ResultPageArgs(
+                quizTitle: widget.quizTitle,
+                questionsLenght: widget.preguntas.length,
+                result: controller.cantRightAnswers,
+                nota5: widget.nota5,
+              ),
+            );
+          },
+          context: context,
+          type: QuickAlertType.info,
+          title: 'Se agotó el tiempo',
+          text: 'Se ha acabado el tiempo para completar el nivel',
+          confirmBtnText: 'Ok',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+        );
+      }
+    });
+
     pageController.addListener(
       () {
         controller.currentPage = pageController.page!.toInt() + 1;
@@ -154,7 +208,7 @@ class _ChallengePageState extends State<ChallengePage> {
                                   await controller.crearNota(nota),
                                   widget.idAsignatura,
                                   widget.idTema,
-                                  widget.idNivel,
+                                  widget.nivel.id,
                                   widget.idEstudiante);
                               Navigator.pushReplacementNamed(
                                 context,
@@ -184,6 +238,26 @@ class _ChallengePageState extends State<ChallengePage> {
                           );
                         },
                         color: Theme.of(context).primaryIconTheme.color,
+                      ),
+                      SlideCountdown(
+                        //fade: true,
+                        icon: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            Icons.timer,
+                            size: 20,
+                            color: Theme.of(context).iconTheme.color,
+                          ),
+                        ),
+                        //showZeroValue: true,
+                        decoration: const BoxDecoration(
+                            color: AppColors.purple,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        duration: Duration(minutes: widget.nivel.duracion),
+
+                        onDone: () => controller.state = ChallengeState.timeOut,
+                        // countUp: true,
                       ),
                       IconButton(
                           isSelected: isPlaying,
@@ -266,7 +340,7 @@ class _ChallengePageState extends State<ChallengePage> {
                                 await controller.crearNota(nota),
                                 widget.idAsignatura,
                                 widget.idTema,
-                                widget.idNivel,
+                                widget.nivel.id,
                                 widget.idEstudiante);
                             Navigator.pushReplacementNamed(
                               context,
@@ -284,6 +358,7 @@ class _ChallengePageState extends State<ChallengePage> {
                           ? NextButtonWidget.transparent(
                               label: I10n.of(context).skipQuestion,
                               onTap: nextPage,
+                              fontColor: Theme.of(context).hintColor,
                             )
                           : const Text('')),
             ),

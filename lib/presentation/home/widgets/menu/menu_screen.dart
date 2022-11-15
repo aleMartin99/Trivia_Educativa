@@ -3,16 +3,18 @@ import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:trivia_educativa/presentation/home/home_imports.dart';
 
 import '../../../../core/core.dart';
+import '../../../../data/models/menu_item.dart';
 import '../../../../data/models/models.dart';
 import '../../../../main.dart';
 import '../../../settings/settings_imports.dart';
 import '../../../shared/shared_imports.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//TODO organice
+import 'menu_item_widget.dart';
+import 'menu_provider.dart';
+
 class MenuScreen extends StatefulWidget {
   final List<MyMenuItem> mainMenu;
   final Function(int) callback;
@@ -228,53 +230,4 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
     );
   }
-}
-
-//TODO move to widget
-class MenuItemWidget extends StatelessWidget {
-  final MyMenuItem item;
-  final Function callback;
-  final bool selected;
-
-  const MenuItemWidget(
-      {required Key key,
-      required this.item,
-      required this.callback,
-      required this.selected})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    //   //TODO I10n
-    //   //TODO change dialog to quick alert
-
-    return DedicatedListTile(
-      onPressed: () => callback(item.index),
-      color: selected ? const Color(0x44000000) : null,
-      leading: Icon(
-        item.icon,
-        color: Theme.of(context).iconTheme.color,
-        //size: 24,
-      ),
-      title: Text(
-        item.title,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.headline4?.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).iconTheme.color
-            //color: Theme.of(context).primaryColor,
-            ),
-      ),
-    );
-  }
-}
-
-//TODO move to model
-class MyMenuItem {
-  final String title;
-  final IconData icon;
-  final int index;
-
-  MyMenuItem(this.title, this.icon, this.index);
 }

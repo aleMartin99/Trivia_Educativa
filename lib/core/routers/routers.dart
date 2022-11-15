@@ -7,15 +7,14 @@ import 'package:trivia_educativa/presentation/tema/tema_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:trivia_educativa/presentation/challenge/challenge_page.dart';
-import 'package:trivia_educativa/presentation/home/home_page.dart';
 import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
 
+import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/cubit/onboarding_cubit.dart';
 import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';
 
-//TODO check routes and APP routes
-
+//TODO fix imports
 const String homeRoute = "/home";
 const String homeScreen = "/homeScreen";
 const String onboardingRoute = "/onboarding";
@@ -44,7 +43,7 @@ class AppRouter extends StatelessWidget {
               preguntas: args.preguntas,
               idAsignatura: args.idAsignatura,
               idTema: args.idTema,
-              idNivel: args.idNivel,
+              nivel: args.nivel,
               idEstudiante: args.idEstudiante,
             ),
           );
@@ -171,7 +170,7 @@ class ChallengePageArgs {
   final int nota5;
   final String idAsignatura;
   final String idTema;
-  final String idNivel;
+  final Nivel nivel;
   final String idEstudiante;
 
   ChallengePageArgs(
@@ -180,7 +179,7 @@ class ChallengePageArgs {
       required this.nota5,
       required this.idTema,
       required this.idAsignatura,
-      required this.idNivel,
+      required this.nivel,
       required this.idEstudiante});
 }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -35,7 +37,7 @@ class ChallengeController {
     final response = (await repository.addDatos(
         idNotaProv, idAsignatura, idTema, idNivel, idEstudiante));
 
-    state = ChallengeState.notasAsignadas;
+    // state = ChallengeState.notasAsignadas;
     if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {

@@ -48,9 +48,12 @@ class NextButtonWidget extends StatelessWidget {
         super(key: key);
 
   const NextButtonWidget.transparent(
-      {Key? key, required this.label, required this.onTap})
+      {Key? key,
+      required this.label,
+      required this.onTap,
+      required this.fontColor})
       : backgroundColor = Colors.transparent,
-        fontColor = AppColors.grey,
+        //fontColor = AppColors.grey,
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
         super(key: key);

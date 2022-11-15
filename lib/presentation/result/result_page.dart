@@ -136,6 +136,7 @@ class ResultPage extends StatelessWidget {
                           bottom: 8.0, left: 20, right: 20),
                       child: NextButtonWidget.transparent(
                         label: I10n.of(context).backTo_Home,
+                        fontColor: Theme.of(context).hintColor,
                         onTap: () async {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                             AppRoutes.homeScreen,

@@ -4,8 +4,6 @@ class Nivel {
   late String id;
   late String descripcion;
   late List<Pregunta> preguntas;
-  //TODO change rangos 3,4,5 y poner nota5
-  //todo check nota ewn porciento
 
   late int nota5;
   late int duracion;
