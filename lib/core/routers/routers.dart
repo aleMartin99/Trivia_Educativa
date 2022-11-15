@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivia_educativa/data/models/nivel_model.dart';
+import 'package:trivia_educativa/data/models/nota_prov_model.dart';
 import 'package:trivia_educativa/data/models/pregunta_model.dart';
 import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
@@ -57,6 +58,7 @@ class AppRouter extends StatelessWidget {
             builder: (_) => TemaPage(
               temas: args.temas, idAsignatura: args.idAsignatura,
               idEstudiante: args.idEstudiante,
+              notas: args.notas,
 
               // questions: args.questions,
             ),
@@ -73,6 +75,7 @@ class AppRouter extends StatelessWidget {
               idAsignatura: args.idAsignatura,
               idTema: args.idTema,
               idEstudiante: args.idEstudiante,
+              notas: args.notas,
             ),
           );
         } else {
@@ -187,11 +190,12 @@ class TemaPageArgs {
   final List<Tema> temas;
   final String idAsignatura;
   final String idEstudiante;
-
+  final List<NotaProv> notas;
   TemaPageArgs({
     required this.temas,
     required this.idAsignatura,
     required this.idEstudiante,
+    required this.notas,
   });
 }
 
@@ -214,10 +218,12 @@ class NivelPageArgs {
   final String idTema;
   final String idAsignatura;
   final String idEstudiante;
+  final List<NotaProv> notas;
 
   NivelPageArgs(
       {required this.niveles,
       required this.idTema,
       required this.idAsignatura,
-      required this.idEstudiante});
+      required this.idEstudiante,
+      required this.notas});
 }

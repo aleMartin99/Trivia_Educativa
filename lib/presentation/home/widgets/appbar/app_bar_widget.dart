@@ -1,8 +1,8 @@
 import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'package:trivia_educativa/data/models/models.dart';
-
+import '../../../../data/models/auth_model.dart';
+import '../../../../main.dart';
 import '../../home_imports.dart';
 import '/../core/core.dart';
 
@@ -10,11 +10,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:math' show pi;
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarWidget({
+  AppBarWidget({
     Key? key,
-    required this.user,
+    //  required this.user,
   }) : super(key: key);
-  final User user;
+  // final User user;
+  var auth = sl<Auth>();
   @override
   Widget build(BuildContext context) {
     const angle = 180 * pi / 180;
@@ -41,7 +42,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                       style: AppTextStyles.title,
                       children: [
                         TextSpan(
-                          text: user.username,
+                          text: auth.user.username,
                           style: AppTextStyles.titleBold,
                         ),
                       ],
@@ -89,7 +90,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             const Align(
               alignment: Alignment(0.0, 1.0),
               child: ScoreCardWidget(
-                  //scorePercentage:
+                  // scorePercentage:
                   ),
             ),
           ],

@@ -16,17 +16,20 @@ class HomeRepository with RequestErrorParser {
   String apiBaseUrl = kApiEmulatorBaseUrl;
   final NetworkInfo _networkInfo;
 
-  Future findEstudianteByCI(String cI) async {
+  Future findEstudianteByCI(String cI, String token) async {
     var uri = Uri.http(
-      apiBaseUrl,
-      kApiPath + "estudiante/byCI/" "$cI",
+      //'10.0.2.2:3000/api/v2/estudiante/byCI/$cI',
+
+      apiBaseUrl, kApiPath + "estudiante/byCI/" "$cI",
     );
 
     if (await _networkInfo.isConnected) {
       try {
-        final response = await http.get(
-          uri,
-        );
+        final response = await http.get(uri, headers: {
+          //'Content-Type': 'application/json',
+          //'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body);
           log(' ${jsonResponse.toString()}');
@@ -47,7 +50,7 @@ class HomeRepository with RequestErrorParser {
     }
   }
 
-  Future findByAnno(int annoCurso) async {
+  Future findByAnno(int annoCurso, String token) async {
 //
     var uri = Uri.http(
       apiBaseUrl,
@@ -55,7 +58,11 @@ class HomeRepository with RequestErrorParser {
     );
     if (await _networkInfo.isConnected) {
       try {
-        final response = await http.get(uri);
+        final response = await http.get(uri, headers: {
+          //'Content-Type': 'application/json',
+          //'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body) as List;
           log(' ${jsonResponse.toString()}');
@@ -78,14 +85,18 @@ class HomeRepository with RequestErrorParser {
     }
   }
 
-  Future getNotasProv(String cI) async {
+  Future getNotasProv(String cI, String token) async {
     var uri = Uri.http(
       apiBaseUrl,
       kApiPath + "notas/allNotas/" "$cI",
     );
     if (await _networkInfo.isConnected) {
       try {
-        final response = await http.get(uri);
+        final response = await http.get(uri, headers: {
+          //'Content-Type': 'application/json',
+          //'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body) as List;
           final notasProv =

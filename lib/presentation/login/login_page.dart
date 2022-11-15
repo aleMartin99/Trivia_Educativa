@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/core.dart';
+import 'package:trivia_educativa/data/models/auth_model.dart';
 import 'package:trivia_educativa/main.dart';
 import 'package:trivia_educativa/presentation/login/widgets/password_widget.dart';
 import 'login_imports.dart';
@@ -30,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void goHome() async {
     sl.pushNewScope();
-    User user = _loginController.user;
-    sl.registerSingleton<User>(user);
+    Auth auth = _loginController.auth;
+    sl.registerSingleton<Auth>(auth);
 
     await Navigator.of(context).pushReplacementNamed(
       AppRoutes.homeScreen,

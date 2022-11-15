@@ -7,8 +7,8 @@ import 'package:quickalert/quickalert.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
-import 'package:trivia_educativa/presentation/challenge/challenge_controller.dart';
 
+import '../../data/models/auth_model.dart';
 import '../../main.dart';
 import '../home/home_imports.dart';
 import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
@@ -24,15 +24,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homeController = HomeController();
-  var user = sl<User>();
+  var auth = sl<Auth>();
   void _loadData() async {
     //TODO implement subir nota local del offline
-    await homeController.getEstudiante(user.ci);
+    await homeController.getEstudiante(auth.user.ci, auth.token);
 
     Estudiante estudiante = homeController.estudiante!;
-    await homeController.getAsignaturas(estudiante.annoCurso);
-    await homeController.getNotasProv(user.ci);
+    await homeController.getAsignaturas(estudiante.annoCurso, auth.token);
+
+    await homeController.getNotasProv(auth.user.ci, auth.token);
+    // sl.pushNewScope();
+    // List<NotaProv> noticas = homeController.notas!;
+    // sl.registerSingleton<List<NotaProv>>(noticas);
   }
+
+// sl.pushNewScope();
+//     User user = _loginController.user;
+//     sl.registerSingleton<User>(user);
 
   late bool _welcomeMessageAlreadySeen;
   @override
@@ -44,8 +52,9 @@ class _HomePageState extends State<HomePage> {
           : showWelcomeBox();
     });
     _loadData();
+
     homeController.stateNotifier.addListener(() {
-      //  setState(() {});
+      setState(() {});
       if (homeController.state == HomeState.error) {
         QuickAlert.show(
           context: context,
@@ -61,21 +70,22 @@ class _HomePageState extends State<HomePage> {
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
       }
-      if (homeController.state == HomeState.notasLoaded) {
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.info,
-          title: 'Notas Prov cargads',
-          text: 'notas s s s s s',
-          confirmBtnText: 'Ok',
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          textColor: Theme.of(context).primaryIconTheme.color!,
-          titleColor: Theme.of(context).primaryIconTheme.color!,
-          confirmBtnColor: AppColors.purple,
-        );
-      }
+      // if (homeController.state == HomeState.notasLoaded) {
+      //   QuickAlert.show(
+      //     context: context,
+      //     type: QuickAlertType.info,
+      //     title: 'Notas Prov cargads',
+      //     text: 'notas s s s s s',
+      //     confirmBtnText: 'Ok',
+      //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      //     textColor: Theme.of(context).primaryIconTheme.color!,
+      //     titleColor: Theme.of(context).primaryIconTheme.color!,
+      //     confirmBtnColor: AppColors.purple,
+      //   );
+      //   homeController.state = HomeState.empty;
+      // }
+
       // else if (homeController.state == HomeState.unauthorized) {
-      //   //TODO make Quick alert theme proof
       //   QuickAlert.show(
       //     context: context,
       //     type: QuickAlertType.error,
@@ -91,7 +101,6 @@ class _HomePageState extends State<HomePage> {
       //   homeController.state = HomeState.empty;
       // }
 
-      //TODO si no internet tira cerrar sesion pal login
       else if (homeController.state == HomeState.notConnected) {
         QuickAlert.show(
           context: context,
@@ -220,9 +229,9 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBarWidget(
-            user: user,
-          ),
-          //TODO check loading condition
+              //user: user,
+              ),
+
           //! cuando carga el usuario pero se tumba el server se queda pegado el cargando, revisar y lanzar timeout y cartel
           body: (homeController.state == HomeState.loading)
               ? const Center(
@@ -284,6 +293,7 @@ class _HomePageState extends State<HomePage> {
                                           : Navigator.pushNamed(
                                               context, AppRoutes.temaRoute,
                                               arguments: TemaPageArgs(
+                                                  notas: homeController.notas!,
                                                   idEstudiante: homeController
                                                       .estudiante!.id,
                                                   idAsignatura: asignatura.id,

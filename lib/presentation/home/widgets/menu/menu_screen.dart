@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../../../core/core.dart';
+import '../../../../data/models/auth_model.dart';
 import '../../../../data/models/menu_item.dart';
 import '../../../../data/models/models.dart';
 import '../../../../main.dart';
@@ -34,7 +35,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  var user = sl<User>();
+  var auth = sl<Auth>();
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
@@ -99,7 +100,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           padding: const EdgeInsets.only(
                               bottom: 36.0, left: 24.0, right: 24.0),
                           child: Text(
-                            user.name,
+                            auth.user.name,
                             style: TextStyle(
                               fontSize: 22,
                               color: Theme.of(context).iconTheme.color,

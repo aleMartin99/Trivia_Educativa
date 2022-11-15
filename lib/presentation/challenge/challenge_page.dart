@@ -11,6 +11,8 @@ import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
+import '../../data/models/auth_model.dart';
+import '../../main.dart';
 import '/../core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,6 +44,7 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
   final pageController = PageController();
+  var auth = sl<Auth>();
 
   bool isPlaying = false;
 
@@ -130,12 +133,14 @@ class _ChallengePageState extends State<ChallengePage> {
 
             //*crearNota devuelve el id de la nota creada
             //*asignarNota asigna esa nota a bd
+            //TODO si no hay internet guardar local y pa fuera
             controller.asignarNota(
-                await controller.crearNota(nota),
+                await controller.crearNota(nota, auth.token),
                 widget.idAsignatura,
                 widget.idTema,
                 widget.nivel.id,
-                widget.idEstudiante);
+                widget.idEstudiante,
+                auth.token);
             Navigator.pushReplacementNamed(
               context,
               AppRoutes.resultRoute,
@@ -192,6 +197,8 @@ class _ChallengePageState extends State<ChallengePage> {
                         //TODO check x que si me voy a result page luego sale el timeout
                         onPressed: () async {
                           //TODO make a loader for go to result page
+
+                          //TODO si no hay internet guardar local y pa fuera
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
                               await player.release();
@@ -202,11 +209,12 @@ class _ChallengePageState extends State<ChallengePage> {
                               //*crearNota devuelve el id de la nota creada
                               //*asignarNota asigna esa nota a bd
                               controller.asignarNota(
-                                  await controller.crearNota(nota),
+                                  await controller.crearNota(nota, auth.token),
                                   widget.idAsignatura,
                                   widget.idTema,
                                   widget.nivel.id,
-                                  widget.idEstudiante);
+                                  widget.idEstudiante,
+                                  auth.token);
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
                                 context,
@@ -334,22 +342,31 @@ class _ChallengePageState extends State<ChallengePage> {
 
                             //*crearNota devuelve el id de la nota creada
                             //*asignarNota asigna esa nota a bd
+                            //TODO si no hay internet guardar local y pa fuera
                             controller.asignarNota(
-                                await controller.crearNota(nota),
+                                await controller.crearNota(nota, auth.token),
                                 widget.idAsignatura,
                                 widget.idTema,
                                 widget.nivel.id,
-                                widget.idEstudiante);
-                            Navigator.pushReplacementNamed(
-                              context,
-                              AppRoutes.resultRoute,
-                              arguments: ResultPageArgs(
-                                quizTitle: widget.quizTitle,
-                                questionsLenght: widget.preguntas.length,
-                                result: controller.cantRightAnswers,
-                                nota5: widget.nota5,
-                              ),
-                            );
+                                widget.idEstudiante,
+                                auth.token);
+                            //    Navigator.of(context).pushNamedAndRemoveUntil(
+                            //       '/login', (Route<dynamic> route) => false);
+                            // },''
+                            //  pushNamedAndRemoveUntil(
+                            //                 AppRoutes.homeScreen,
+                            //                 arguments: HomeScreenArgs(),
+                            //                 (Route<dynamic> route) => false,
+                            Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                AppRoutes.resultRoute,
+                                arguments: ResultPageArgs(
+                                  quizTitle: widget.quizTitle,
+                                  questionsLenght: widget.preguntas.length,
+                                  result: controller.cantRightAnswers,
+                                  nota5: widget.nota5,
+                                ),
+                                (Route<dynamic> route) => false);
                           },
                         )
                       : (value < widget.preguntas.length)

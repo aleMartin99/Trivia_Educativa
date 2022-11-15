@@ -1,10 +1,13 @@
 import 'dart:core';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import '../../core/network_info/network_info.dart';
 import '../../core/routers/routers.dart';
 
+import '../../main.dart';
 import '../home/home_imports.dart';
 import '/../core/core.dart';
 
@@ -213,12 +216,47 @@ class _ResultPageState extends State<ResultPage> {
                                     label: I10n.of(context).backTo_Home,
                                     fontColor: Theme.of(context).hintColor,
                                     onTap: () async {
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil(
-                                        AppRoutes.homeScreen,
-                                        arguments: HomeScreenArgs(),
-                                        (Route<dynamic> route) => false,
-                                      );
+                                      final NetworkInfo _networkInfo = sl();
+                                      (await _networkInfo.isConnected)
+                                          ? Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                              AppRoutes.homeScreen,
+                                              arguments: HomeScreenArgs(),
+                                              (Route<dynamic> route) => false,
+                                            )
+                                          : QuickAlert.show(
+                                              onConfirmBtnTap: () async {
+                                                // await sl.resetScope(dispose: false);
+                                                await sl.popScope();
+                                                // await sl.unregister<User>();
+                                                Navigator.of(context)
+                                                    .pushNamedAndRemoveUntil(
+                                                        '/login',
+                                                        (Route<dynamic>
+                                                                route) =>
+                                                            false);
+                                              },
+                                              context: context,
+                                              type: QuickAlertType.warning,
+                                              title:
+                                                  'No hay conexión a Internet',
+                                              confirmBtnText: 'Aceptar',
+                                              //cancelBtnText: 'Cancelar',
+                                              text:
+                                                  'Se le rediccionará al Login',
+                                              backgroundColor: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              textColor: Theme.of(context)
+                                                  .primaryIconTheme
+                                                  .color!,
+                                              titleColor: Theme.of(context)
+                                                  .primaryIconTheme
+                                                  .color!,
+                                              confirmBtnColor: AppColors.purple,
+                                              // showCancelBtn: true,
+
+                                              //Colors.transparent
+                                            );
                                     },
                                   ),
                                 ),

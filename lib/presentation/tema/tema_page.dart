@@ -7,22 +7,26 @@ import 'package:provider/provider.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import '../../core/network_info/network_info.dart';
+import '../../main.dart';
 import 'tema_imports.dart';
 import '/../core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TemaPage extends StatefulWidget {
-  const TemaPage({
-    Key? key,
-    required this.temas,
-    required this.idAsignatura,
-    required this.idEstudiante,
-  }) : super(key: key);
+  const TemaPage(
+      {Key? key,
+      required this.temas,
+      required this.idAsignatura,
+      required this.idEstudiante,
+      required this.notas})
+      : super(key: key);
   final List<Tema> temas;
   final String idAsignatura;
   //TODO pasArS asignaura completa para coger nombre y ID
   final String idEstudiante;
+  final List<NotaProv> notas;
 
   @override
   _TemaPageState createState() => _TemaPageState();
@@ -222,11 +226,15 @@ class _TemaPageState extends State<TemaPage> {
                                     nombre: tema.descripcion,
                                     cantNiveles: tema.niveles.length,
                                     onTap: () {
+                                      // final NetworkInfo _networkInfo = sl();
+                                      //TODO internet validation final NetworkInfo _networkInfo = sl();
+
                                       Navigator.pushNamed(
                                         context,
                                         AppRoutes.nivelRoute,
                                         arguments: NivelPageArgs(
                                             niveles: tema.niveles,
+                                            notas: widget.notas,
                                             idAsignatura: widget.idAsignatura,
                                             idEstudiante: widget.idEstudiante,
                                             idTema: tema.id),

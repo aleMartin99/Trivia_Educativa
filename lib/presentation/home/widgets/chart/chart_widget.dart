@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:trivia_educativa/core/core.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
-import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+
+import '../../../../data/models/auth_model.dart';
+import '../../../../main.dart';
+import '../../home_imports.dart';
 
 class ChartWidget extends StatefulWidget {
   const ChartWidget({
@@ -21,8 +24,11 @@ class _ChartWidgetState extends State<ChartWidget>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  final challengeController = ChallengeController();
+  final homeController = HomeController();
+  var auth = sl<Auth>();
 
+  ///TOdo check error de q se accede sin datos
+  //var notas = sl<List<NotaProv>>();
   void _initAnimation() {
     _controller = AnimationController(
       vsync: this,
@@ -37,6 +43,7 @@ class _ChartWidgetState extends State<ChartWidget>
     _controller.forward();
   }
 
+//TODO TESTEAr chart widget varias notas no hace nada se qeda en 0
   static int cantAprobados(List<NotaProv>? notasProv) {
     int cantAprobados = 0;
     for (int i = 0; i < notasProv!.length; i++) {
@@ -45,39 +52,48 @@ class _ChartWidgetState extends State<ChartWidget>
     return cantAprobados;
   }
 
+  // void _loadData() async {
+  //   await homeController.getNotasProv(user.ci);
+  // }
+
+  // sl.pushNewScope();
+  //   User user = _loginController.user;
+  //   sl.registerSingleton<User>(user);
+
   void _loadData() async {
-    // await challengeController.getNotasProv();
+    await homeController.getNotasProv(auth.user.ci, auth.token);
   }
 
   @override
   void initState() {
-    //TODO check this getNOtaProv
-    // _loadData();
+    _loadData();
+    //sl.pushNewScope();
+    // List<NotaProv> noticas = homeController.notas!;
+    // sl.registerSingleton<List<NotaProv>>(noticas);
     _initAnimation();
-    challengeController.stateNotifier.addListener(() {
-      if (challengeController.state == ChallengeState.notasLoaded) {
+    homeController.stateNotifier.addListener(() {
+      if (homeController.state == HomeState.notasLoaded) {
         setState(() {});
         _controller.reset();
         _initAnimation();
       }
     });
+
     super.initState();
   }
 
   double getScorePercentage() {
-    //*change score percentaje to uninitialized
-    // double scorePercentage;
+    double scorePercentage;
 
-    double scorePercentage = 0.6;
-    //TODO fix notas para chart widget
-    // if (challengeController.notasProv != null &&
-    //     challengeController.notasProv!.isNotEmpty) {
-    //   scorePercentage = (cantAprobados(challengeController.notasProv) /
-    //           challengeController.notasProv!.length)
-    //       .toDouble();
-    // } else {
-    //   scorePercentage = 0;
-    // }
+    //double scorePercentage = 0.6;
+
+    if (homeController.notas != null && homeController.notas!.isNotEmpty) {
+      scorePercentage =
+          (cantAprobados(homeController.notas) / homeController.notas!.length)
+              .toDouble();
+    } else {
+      scorePercentage = 0;
+    }
 
     return scorePercentage;
   }
@@ -88,6 +104,7 @@ class _ChartWidgetState extends State<ChartWidget>
     super.dispose();
   }
 
+  //var notas = sl<List<NotaProv>>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(

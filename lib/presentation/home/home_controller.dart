@@ -22,9 +22,9 @@ class HomeController {
 
   final repository = HomeRepository(sl());
 
-  Future getEstudiante(String cI) async {
+  Future getEstudiante(String cI, String token) async {
     state = HomeState.loading;
-    final response = (await repository.findEstudianteByCI(cI));
+    final response = (await repository.findEstudianteByCI(cI, token));
     if (response.isRight()) {
       estudiante = ((response as Right).value as Estudiante);
       //user = auth!.user;
@@ -42,9 +42,9 @@ class HomeController {
     }
   }
 
-  Future getAsignaturas(int annoCurso) async {
+  Future getAsignaturas(int annoCurso, String token) async {
     state = HomeState.loading;
-    final response = (await repository.findByAnno(annoCurso));
+    final response = (await repository.findByAnno(annoCurso, token));
     if (response.isRight()) {
       asignaturas =
           ((response as Right).value as List<Asignatura>).cast<Asignatura>();
@@ -60,9 +60,9 @@ class HomeController {
     }
   }
 
-  Future getNotasProv(String cI) async {
+  Future getNotasProv(String cI, String token) async {
     state = HomeState.loading;
-    final response = (await repository.getNotasProv(cI));
+    final response = (await repository.getNotasProv(cI, token));
     if (response.isRight()) {
       notas = ((response as Right).value as List<NotaProv>).cast<NotaProv>();
       state = HomeState.notasLoaded;

@@ -15,7 +15,7 @@ class ChallengeRepository with RequestErrorParser {
   final NetworkInfo _networkInfo;
 
   Future addDatos(String idNotaProv, String idAsignatura, String idTema,
-      String idNivel, String idEstudiante) async {
+      String idNivel, String idEstudiante, String token) async {
     var uri = Uri.http(
       // apiBaseUrl,
       apiBaseUrl,
@@ -25,7 +25,11 @@ class ChallengeRepository with RequestErrorParser {
 
     if (await _networkInfo.isConnected) {
       try {
-        final response = await http.post(uri);
+        final response = await http.post(uri, headers: {
+          //'Content-Type': 'application/json',
+          //'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
         log('status code from asignarNota');
         log(response.statusCode.toString());
         log('asignar nota ');
@@ -50,7 +54,7 @@ class ChallengeRepository with RequestErrorParser {
     }
   }
 
-  Future crearNota(int nota) async {
+  Future crearNota(int nota, String token) async {
     var uri = Uri.http(
       //apiBaseUrl,
       apiBaseUrl,
@@ -59,7 +63,13 @@ class ChallengeRepository with RequestErrorParser {
 
     if (await _networkInfo.isConnected) {
       try {
-        final response = await http.post(uri, body: {"nota": "$nota"});
+        final response = await http.post(uri, body: {
+          "nota": "$nota"
+        }, headers: {
+          //'Content-Type': 'application/json',
+          //'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
         log(' ${response.toString()}');
         if (response.statusCode == 201) {
           final jsonResponse = json.decode(response.body);

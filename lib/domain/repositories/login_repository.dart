@@ -15,7 +15,10 @@ class LoginRepository with RequestErrorParser {
   final NetworkInfo _networkInfo;
   String apiBaseUrl = kApiEmulatorBaseUrl;
 
-  Future signIn(String username, String password) async {
+  Future signIn(
+    String username,
+    String password,
+  ) async {
     var uri = Uri.http(
       apiBaseUrl,
       kApiPath + 'auth/signin',
