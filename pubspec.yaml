@@ -62,6 +62,7 @@ dependencies:
   #requests: ^4.7.0
   slide_countdown: ^0.3.4
   flutter_colorful_tab: ^0.1.0
+  confetti: ^0.7.0
   
    
   #flutter_native_splash: ^2.2.9

@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'dart:core';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'dart:developer';
 
@@ -193,6 +191,7 @@ class _ChallengePageState extends State<ChallengePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       BackButton(
+                        //TODO check x que si me voy a result page luego sale el timeout
                         onPressed: () async {
                           //TODO make a loader for go to result page
                           QuickAlert.show(
@@ -210,6 +209,7 @@ class _ChallengePageState extends State<ChallengePage> {
                                   widget.idTema,
                                   widget.nivel.id,
                                   widget.idEstudiante);
+                              Navigator.pop(context);
                               Navigator.pushReplacementNamed(
                                 context,
                                 AppRoutes.resultRoute,

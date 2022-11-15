@@ -8,9 +8,6 @@ import 'widgets/menu/menu_provider.dart';
 import 'widgets/menu/menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  //const HomeScreen({required this.user});
-
-  //TODO move to another place the List<MyMenuItem>
   static List<MyMenuItem> mainMenu = [
     MyMenuItem("Inicio", Icons.home_filled, 0),
     MyMenuItem("Tabla de Posiciones", Icons.emoji_events, 1),
