@@ -29,7 +29,6 @@ class ChallengeController {
 
   final repository = ChallengeRepository(sl());
 
-//TODO implement Quick dialogs system
   void asignarNota(String idNotaProv, String idAsignatura, String idTema,
       String idNivel, String idEstudiante) async {
     state = ChallengeState.loading;
@@ -57,23 +56,6 @@ class ChallengeController {
       notaProv = ((response as Right).value as NotaProv);
       state = ChallengeState.success;
       return notaProv!.id;
-    } else if (response.isLeft()) {
-      resp = (response as Left).value;
-      if (resp == NoInternetConnectionFailure) {
-        state = ChallengeState.notConnected;
-      }
-    } else {
-      state = ChallengeState.error;
-    }
-  }
-
-  Future getNotasProv() async {
-    state = ChallengeState.loading;
-    final response = (await repository.getNotasProv());
-    if (response.isRight()) {
-      notas = ((response as Right).value as List<NotaProv>).cast<NotaProv>();
-      state = ChallengeState.notasLoaded;
-      return notas;
     } else if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {

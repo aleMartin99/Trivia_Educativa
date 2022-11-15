@@ -15,6 +15,7 @@ class HomeRepository with RequestErrorParser {
   );
   String apiBaseUrl = kApiEmulatorBaseUrl;
   final NetworkInfo _networkInfo;
+
   Future findEstudianteByCI(String cI) async {
     var uri = Uri.http(
       apiBaseUrl,
@@ -36,7 +37,6 @@ class HomeRepository with RequestErrorParser {
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.
-          //TODO I10n
           throw Exception('Failed to find Estudiante by CI');
         }
       } catch (e) {
@@ -56,7 +56,6 @@ class HomeRepository with RequestErrorParser {
     if (await _networkInfo.isConnected) {
       try {
         final response = await http.get(uri);
-        log(' ${response.toString()}');
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body) as List;
           log(' ${jsonResponse.toString()}');
@@ -77,7 +76,31 @@ class HomeRepository with RequestErrorParser {
     } else {
       return left(NoInternetConnectionFailure);
     }
+  }
 
-    //return getJson(uri).then((value) => value);
+  Future getNotasProv(String cI) async {
+    var uri = Uri.http(
+      apiBaseUrl,
+      kApiPath + "notas/allNotas/" "$cI",
+    );
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await http.get(uri);
+        if (response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body) as List;
+          final notasProv =
+              jsonResponse.map((e) => NotaProv.fromJson(e)).toList();
+          return right(notasProv);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          throw Exception('Failed to load Notas');
+        }
+      } catch (e) {
+        return left(UnexpectedFailure(message: e.toString()));
+      }
+    } else {
+      return left(NoInternetConnectionFailure);
+    }
   }
 }

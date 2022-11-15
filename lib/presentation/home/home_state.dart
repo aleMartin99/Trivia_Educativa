@@ -5,5 +5,6 @@ enum HomeState {
   empty,
   notConnected,
   estudLoaded,
-  estudError
+  estudError,
+  notasLoaded
 }

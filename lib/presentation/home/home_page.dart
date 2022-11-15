@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/quickalert.dart';
@@ -5,6 +7,7 @@ import 'package:quickalert/quickalert.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/challenge/challenge_controller.dart';
 
 import '../../main.dart';
 import '../home/home_imports.dart';
@@ -28,14 +31,13 @@ class _HomePageState extends State<HomePage> {
 
     Estudiante estudiante = homeController.estudiante!;
     await homeController.getAsignaturas(estudiante.annoCurso);
+    await homeController.getNotasProv(user.ci);
   }
 
   late bool _welcomeMessageAlreadySeen;
   @override
   initState() {
     Future.delayed(const Duration(seconds: 1), () {
-      //TODO Make only once like onboarding
-
       (_welcomeMessageAlreadySeen =
               context.read<WelcomeMessageCubit>().alreadySeen)
           ? null
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     });
     _loadData();
     homeController.stateNotifier.addListener(() {
-      setState(() {});
+      //  setState(() {});
       if (homeController.state == HomeState.error) {
         QuickAlert.show(
           context: context,
@@ -57,6 +59,19 @@ class _HomePageState extends State<HomePage> {
           confirmBtnColor: AppColors.purple,
           confirmBtnText: 'Ok',
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
+        );
+      }
+      if (homeController.state == HomeState.notasLoaded) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.info,
+          title: 'Notas Prov cargads',
+          text: 'notas s s s s s',
+          confirmBtnText: 'Ok',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
         );
       }
       // else if (homeController.state == HomeState.unauthorized) {

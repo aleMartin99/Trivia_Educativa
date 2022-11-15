@@ -17,6 +17,7 @@ class HomeController {
 
   List<Asignatura>? asignaturas;
   Estudiante? estudiante;
+  List<NotaProv>? notas;
   var resp;
 
   final repository = HomeRepository(sl());
@@ -49,6 +50,23 @@ class HomeController {
           ((response as Right).value as List<Asignatura>).cast<Asignatura>();
       state = HomeState.success;
       return asignaturas;
+    } else if (response.isLeft()) {
+      resp = (response as Left).value;
+      if (resp == NoInternetConnectionFailure) {
+        state = HomeState.notConnected;
+      }
+    } else {
+      state = HomeState.error;
+    }
+  }
+
+  Future getNotasProv(String cI) async {
+    state = HomeState.loading;
+    final response = (await repository.getNotasProv(cI));
+    if (response.isRight()) {
+      notas = ((response as Right).value as List<NotaProv>).cast<NotaProv>();
+      state = HomeState.notasLoaded;
+      return notas;
     } else if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {

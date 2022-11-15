@@ -23,7 +23,7 @@ class Pregunta {
   }) : assert(
           answers.length == 4,
         );
-//TODO lenght == 4 revisar answers
+
   Pregunta.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     descripcion = json['descripcion'];
