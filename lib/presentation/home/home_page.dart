@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
     //TODO make validation for data to all pages like asignatura(home)
 
     //TODO validacion ara vacio como en niveles(revisar modelos con ?) o que no deje entrar
-    //TODO add subtitulo que diga asignaturas
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
           body: SmartRefresher(
             //st
             //footer: ,
-            header: MaterialClassicHeader(
+            header: const MaterialClassicHeader(
               // distance: 40,
               //backgroundColor: Colors.white,
               color: AppColors.purple,

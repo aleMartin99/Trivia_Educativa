@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
-import '../../core/network_info/network_info.dart';
-import '../../data/models/auth_model.dart';
-import '../../main.dart';
+
 import '../home/home_controller.dart';
 import '../shared/shared_imports.dart';
 import '/../core/core.dart';
@@ -112,7 +109,6 @@ class _NivelPageState extends State<NivelPage> {
           preferredSize: const Size.fromHeight(56),
         ),
 //TODO make validation for data to all pages like asignatura(home)
-//TODO change app bar to sliver
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,

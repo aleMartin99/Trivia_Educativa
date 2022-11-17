@@ -62,6 +62,8 @@ dependencies:
   confetti: ^0.7.0
   photo_view: ^0.14.0
   pull_to_refresh: ^2.0.0
+  bubble_tab_indicator: ^0.1.6
+  tab_indicator_styler: ^2.0.0
 flutter_colorful_tab: ^0.1.0
   
   #flutter_native_splash: ^2.2.9

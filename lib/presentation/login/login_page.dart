@@ -243,7 +243,6 @@ class _LoginPageState extends State<LoginPage> {
                   valueListenable: _loginController.stateNotifier,
                   builder: (ctx, loadingValue, _) => SizedBox(
                     height: 48,
-                    //TODO COGER CARGANDO TALLA PA CHALLENGE FINALIZAR< DIALGOO Y OK
                     child: loadingValue == LoginState.loading
                         ? const Center(
                             child: CircularProgressIndicator(
