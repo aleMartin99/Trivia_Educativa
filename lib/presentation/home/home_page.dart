@@ -12,6 +12,7 @@ import '../../data/models/auth_model.dart';
 import '../../main.dart';
 import '../home/home_imports.dart';
 import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -24,7 +25,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homeController = HomeController();
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   var auth = sl<Auth>();
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _loadData();
+    //setState(() {});
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    // _loadData();
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+  }
+
   void _loadData() async {
     //TODO implement subir nota local del offline
     await homeController.getEstudiante(auth.user.ci, auth.token);
@@ -69,6 +91,23 @@ class _HomePageState extends State<HomePage> {
           confirmBtnText: 'Ok',
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
+      }
+      //TODO change message
+      if (homeController.state == HomeState.serverError) {
+        QuickAlert.show(
+          context: context,
+
+          type: QuickAlertType.error,
+          title: 'Se exploto el servr',
+          text: 'Explotao, 500 papu',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+          confirmBtnText: 'Ok',
+          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
+        );
+        homeController.state = HomeState.empty;
       }
       // if (homeController.state == HomeState.notasLoaded) {
       //   QuickAlert.show(
@@ -218,8 +257,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-//TODO pull to refresh implement from recarguita
-
     //TODO make validation for data to all pages like asignatura(home)
 
     //TODO validacion ara vacio como en niveles(revisar modelos con ?) o que no deje entrar
@@ -228,82 +265,97 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async => false,
       child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          appBar: AppBarWidget(
-              //user: user,
-              ),
+          appBar: AppBarWidget(),
 
           //! cuando carga el usuario pero se tumba el server se queda pegado el cargando, revisar y lanzar timeout y cartel
-          body: (homeController.state == HomeState.loading)
-              ? const Center(
-                  child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
-                ))
-              : (homeController.asignaturas == null ||
-                      homeController.asignaturas!.isEmpty)
-                  ?
-                  //TODO I10n
-                  Center(
-                      child: Text(
-                      'No hay asignaturas disponibles',
-                      style: AppTextStyles.titleBold.copyWith(
-                        color: Theme.of(context).primaryIconTheme.color,
-                      ),
-                    ))
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: GridView.count(
-                          physics: const BouncingScrollPhysics(),
-                          childAspectRatio: 1.11,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 16,
-                          children: homeController.asignaturas!
-                              .map((asignatura) => AsignaturaCardWidget(
-                                    nombre: asignatura.descripcion,
-                                    //TODO hacer validaciones para cosas vacias
-                                    cantTemas: asignatura.temas.length,
-                                    onTap: () {
-                                      (asignatura.temas.isEmpty ||
-                                              asignatura.temas == null)
-                                          ? QuickAlert.show(
-                                              // barrierColor: Colors.red,
-                                              context: context,
-                                              type: QuickAlertType.warning,
-                                              title: 'No existen temas',
-                                              confirmBtnText: 'Ok',
-                                              text:
-                                                  'No hay temas disponibles por el momento',
-                                              backgroundColor: Theme.of(context)
-                                                  .scaffoldBackgroundColor,
-                                              textColor: Theme.of(context)
-                                                  .primaryIconTheme
-                                                  .color!,
-                                              titleColor: Theme.of(context)
-                                                  .primaryIconTheme
-                                                  .color!,
-                                              confirmBtnColor: AppColors.purple,
-                                            )
-                                          : Navigator.pushNamed(
-                                              context, AppRoutes.temaRoute,
-                                              arguments: TemaPageArgs(
-                                                  notas: homeController.notas!,
-                                                  idEstudiante: homeController
-                                                      .estudiante!.id,
-                                                  idAsignatura: asignatura.id,
-                                                  temas: asignatura.temas));
-                                    },
-                                  ))
-                              .toList(),
+          body: SmartRefresher(
+            //st
+            //footer: ,
+            header: MaterialClassicHeader(
+              // distance: 40,
+              //backgroundColor: Colors.white,
+              color: AppColors.purple,
+            ),
+            //header: WaterDropHeader(),
+            controller: _refreshController,
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
+            enablePullDown: true,
+            child: (homeController.state == HomeState.loading)
+                ? const Center(
+                    child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
+                  ))
+                : (homeController.asignaturas == null ||
+                        homeController.asignaturas!.isEmpty)
+                    ?
+                    //TODO I10n
+                    Center(
+                        child: Text(
+                        'No hay asignaturas disponibles',
+                        style: AppTextStyles.titleBold.copyWith(
+                          color: Theme.of(context).primaryIconTheme.color,
+                        ),
+                      ))
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: GridView.count(
+                            physics: const BouncingScrollPhysics(),
+                            childAspectRatio: 1.11,
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 16,
+                            children: homeController.asignaturas!
+                                .map((asignatura) => AsignaturaCardWidget(
+                                      nombre: asignatura.descripcion,
+                                      //TODO hacer validaciones para cosas vacias
+                                      cantTemas: asignatura.temas.length,
+                                      onTap: () {
+                                        (asignatura.temas.isEmpty ||
+                                                asignatura.temas == null)
+                                            ? QuickAlert.show(
+                                                // barrierColor: Colors.red,
+                                                context: context,
+                                                type: QuickAlertType.warning,
+                                                title: 'No existen temas',
+                                                confirmBtnText: 'Ok',
+                                                text:
+                                                    'No hay temas disponibles por el momento',
+                                                backgroundColor: Theme.of(
+                                                        context)
+                                                    .scaffoldBackgroundColor,
+                                                textColor: Theme.of(context)
+                                                    .primaryIconTheme
+                                                    .color!,
+                                                titleColor: Theme.of(context)
+                                                    .primaryIconTheme
+                                                    .color!,
+                                                confirmBtnColor:
+                                                    AppColors.purple,
+                                              )
+                                            : Navigator.pushNamed(
+                                                context, AppRoutes.temaRoute,
+                                                arguments: TemaPageArgs(
+                                                    notas:
+                                                        homeController.notas!,
+                                                    idEstudiante: homeController
+                                                        .estudiante!.id,
+                                                    idAsignatura: asignatura.id,
+                                                    temas: asignatura.temas));
+                                      },
+                                    ))
+                                .toList(),
+                          ),
                         ),
                       ),
-                    )),
+          )),
     );
   }
 }

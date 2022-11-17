@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../../../core/core.dart';
+
 import '../../../../data/models/auth_model.dart';
 import '../../../../data/models/menu_item.dart';
-import '../../../../data/models/models.dart';
 import '../../../../main.dart';
 import '../../../settings/settings_imports.dart';
 import '../../../shared/shared_imports.dart';
@@ -38,6 +38,7 @@ class _MenuScreenState extends State<MenuScreen> {
   var auth = sl<Auth>();
   @override
   Widget build(BuildContext context) {
+    //  auth = context.read<LoginController>().auth;
     Size deviceSize = MediaQuery.of(context).size;
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
@@ -172,6 +173,7 @@ class _MenuScreenState extends State<MenuScreen> {
                               onConfirmBtnTap: () async {
                                 // await sl.resetScope(dispose: false);
                                 await sl.popScope();
+
                                 // await sl.unregister<User>();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     '/login', (Route<dynamic> route) => false);

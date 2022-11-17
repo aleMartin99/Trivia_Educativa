@@ -218,11 +218,17 @@ class _ResultPageState extends State<ResultPage> {
                                     onTap: () async {
                                       final NetworkInfo _networkInfo = sl();
                                       (await _networkInfo.isConnected)
-                                          ? Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                              AppRoutes.homeScreen,
-                                              arguments: HomeScreenArgs(),
-                                              (Route<dynamic> route) => false,
+                                          //TODO make validation time no partirse
+                                          //TODO revisar por q no espera
+                                          ? Future.delayed(
+                                                  const Duration(seconds: 2))
+                                              .then(
+                                              (_) => Navigator.of(context)
+                                                  .pushNamedAndRemoveUntil(
+                                                AppRoutes.homeScreen,
+                                                arguments: HomeScreenArgs(),
+                                                (Route<dynamic> route) => false,
+                                              ),
                                             )
                                           : QuickAlert.show(
                                               onConfirmBtnTap: () async {

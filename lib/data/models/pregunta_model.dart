@@ -30,6 +30,7 @@ class Pregunta {
     answers = <AnswerModel>[];
 
     answers.add(AnswerModel(title: json['respuestaCorrecta'], isRight: true));
+
     answers.add(AnswerModel(
       title: json['respuestaIncorrecta'],
     ));
@@ -41,7 +42,10 @@ class Pregunta {
     ));
     imagen = json['imagen'];
     tiposDePregunta = json['tiposDePregunta'];
-    answers.shuffle();
+    if (tiposDePregunta.contains('V o F')) {
+    } else {
+      answers.shuffle();
+    }
   }
 
   Map<String, dynamic> toJson() {

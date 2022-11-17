@@ -24,7 +24,6 @@ class TemaPage extends StatefulWidget {
       : super(key: key);
   final List<Tema> temas;
   final String idAsignatura;
-  //TODO pasArS asignaura completa para coger nombre y ID
   final String idEstudiante;
   final List<NotaProv> notas;
 
@@ -45,47 +44,11 @@ class _TemaPageState extends State<TemaPage> {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
     bool _pinned = true;
-    bool _snap = false;
-    bool _floating = true;
+    //bool _snap = false;
+    //  bool _floating = true;
     return Scaffold(
         //TODO change app bar to sliver
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        // appBar: PreferredSize(
-        //   child: GradientAppBarWidget(
-        //     child: Align(
-        //       alignment: Alignment.bottomLeft,
-        //       child: Padding(
-        //         padding: const EdgeInsets.only(bottom: 6),
-        //         child: Row(
-        //           //crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             IconButton(
-        //                 onPressed: () => Navigator.of(context).pop(),
-        //                 alignment: Alignment.centerLeft,
-        //                 splashColor: Colors.transparent,
-        //                 hoverColor: Colors.transparent,
-        //                 highlightColor: Colors.transparent,
-        //                 padding: const EdgeInsets.all(0),
-        //                 icon: Icon(
-        //                   Icons.arrow_back,
-        //                   size: 25,
-        //                   color:
-        //                       settingsController.currentAppTheme.iconTheme.color,
-        //                 )),
-        //             Text(
-        //               I10n.of(context).topics,
-        //               style: AppTextStyles.titleBold.copyWith(
-        //                 color: AppColors.white,
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        //   preferredSize: const Size.fromHeight(56),
-        // ),
-
         body: CustomScrollView(
           slivers: [
             SliverAppBar(

@@ -7,5 +7,7 @@ enum ChallengeState {
   errorAsigNotas,
   notasAsignadas,
   notConnected,
-  timeOut
+  timeOut,
+  serverError,
+  evaluating
 }

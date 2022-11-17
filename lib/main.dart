@@ -15,7 +15,6 @@ void main() async {
   await initDependencies(
     sl,
     apiBaseUrl: kApiEmulatorBaseUrl,
-    //*Check when authetication carlos
     // apiBaseUrl: kApiProductionBaseUrl,
   );
 

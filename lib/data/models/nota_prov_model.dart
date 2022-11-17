@@ -7,7 +7,7 @@ class NotaProv {
   late List<Asignatura> asignatura;
   late List<Tema> tema;
   late List<Nivel> nivel;
-  late List<Pregunta> pregunta;
+
   late List<Estudiante> estudiante;
 // late List<Estudiante>? estudiante;
 
@@ -17,7 +17,6 @@ class NotaProv {
     required this.asignatura,
     required this.tema,
     required this.nivel,
-    required this.pregunta,
     required this.estudiante,
   });
 
@@ -44,12 +43,7 @@ class NotaProv {
         nivel.add(Nivel.fromJson(v));
       });
     }
-    if (json['pregunta'] != null) {
-      pregunta = <Pregunta>[];
-      json['pregunta'].forEach((v) {
-        nivel.add(Nivel.fromJson(v));
-      });
-    }
+
     if (json['estudiante'] != null) {
       estudiante = <Estudiante>[];
       json['estudiante'].forEach((v) {

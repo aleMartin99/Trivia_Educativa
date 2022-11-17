@@ -1,9 +1,9 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/theme/dark_theme.dart';
 import 'package:trivia_educativa/core/theme/light_theme.dart';
-import 'package:trivia_educativa/presentation/login/login_controller.dart';
 import 'package:trivia_educativa/presentation/settings/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +28,7 @@ class AppWidget extends StatelessWidget {
       BlocProvider(
         create: (context) => sl<OnboardingCubit>(),
       ),
-      Provider<LoginController>(create: (context) => sl<LoginController>()),
+      //  Provider<LoginController>(create: (context) => sl<LoginController>()),
       ChangeNotifierProvider(
         create: (_) => MenuProvider(),
       ),
@@ -37,16 +37,24 @@ class AppWidget extends StatelessWidget {
       ),
       Provider<SettingsController>(
         create: (context) => sl<SettingsController>(),
-        builder: (context, _) => MaterialApp(
-          localizationsDelegates: I10n.localizationsDelegates,
-          supportedLocales: I10n.supportedLocales,
-          onGenerateTitle: (context) => I10n.of(context).appTitle,
-          debugShowCheckedModeBanner: false,
-          home: const AppRouter(),
-          onGenerateRoute: AppRouter.generateRoute,
-          theme: themeLight,
-          darkTheme: themeDark,
-          themeMode: EasyDynamicTheme.of(context).themeMode,
+        builder: (context, _) => RefreshConfiguration(
+          enableLoadingWhenNoData: false,
+          //enableRefreshVibrate: false,
+          //enableLoadMoreVibrate: false,
+          footerTriggerDistance: 15,
+          dragSpeedRatio: 0.91,
+
+          child: MaterialApp(
+            localizationsDelegates: I10n.localizationsDelegates,
+            supportedLocales: I10n.supportedLocales,
+            onGenerateTitle: (context) => I10n.of(context).appTitle,
+            debugShowCheckedModeBanner: false,
+            home: const AppRouter(),
+            onGenerateRoute: AppRouter.generateRoute,
+            theme: themeLight,
+            darkTheme: themeDark,
+            themeMode: EasyDynamicTheme.of(context).themeMode,
+          ),
         ),
       ),
     ]);

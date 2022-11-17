@@ -32,13 +32,24 @@ class ChallengeRepository with RequestErrorParser {
         });
         log('status code from asignarNota');
         log(response.statusCode.toString());
-        log('asignar nota ');
-        // if (response.statusCode == 200) {
-        //         final jsonResponse = json.decode(response.body);
-        //         log(' ${jsonResponse.toString()}');
-        //         final estudiante = Estudiante.fromJson(jsonResponse);
-        //         return right(estudiante);
-        //       }
+
+        if (response.statusCode == 201) {
+          log('asignar nota ok');
+          //         final jsonResponse = json.decode(response.body);
+          //         log(' ${jsonResponse.toString()}');
+          //         final estudiante = Estudiante.fromJson(jsonResponse);
+          //         return right(estudiante);
+        }
+        if (response.statusCode == 500) {
+          log('error server');
+          return left(ServerFailure);
+          //         final jsonResponse = json.decode(response.body);
+          //         log(' ${jsonResponse.toString()}');
+          //         final estudiante = Estudiante.fromJson(jsonResponse);
+          //         return right(estudiante);
+
+        }
+
         if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);
         } else {
@@ -76,6 +87,15 @@ class ChallengeRepository with RequestErrorParser {
           log(' ${jsonResponse.toString()}');
           final notaProv = NotaProv.fromJson(jsonResponse);
           return right(notaProv);
+        }
+        if (response.statusCode == 500) {
+          log('error server');
+          return left(ServerFailure);
+          //         final jsonResponse = json.decode(response.body);
+          //         log(' ${jsonResponse.toString()}');
+          //         final estudiante = Estudiante.fromJson(jsonResponse);
+          //         return right(estudiante);
+
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.

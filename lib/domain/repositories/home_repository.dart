@@ -37,6 +37,8 @@ class HomeRepository with RequestErrorParser {
           return right(estudiante);
         } else if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);
+        } else if (response.statusCode == 500) {
+          return left(ServerFailure);
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.
@@ -71,6 +73,8 @@ class HomeRepository with RequestErrorParser {
           return right(asignaturas);
         } else if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);
+        } else if (response.statusCode == 500) {
+          return left(ServerFailure);
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.
@@ -102,6 +106,8 @@ class HomeRepository with RequestErrorParser {
           final notasProv =
               jsonResponse.map((e) => NotaProv.fromJson(e)).toList();
           return right(notasProv);
+        } else if (response.statusCode == 500) {
+          return left(ServerFailure);
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.

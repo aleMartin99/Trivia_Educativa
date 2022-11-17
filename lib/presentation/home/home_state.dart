@@ -6,5 +6,6 @@ enum HomeState {
   notConnected,
   estudLoaded,
   estudError,
-  notasLoaded
+  notasLoaded,
+  serverError
 }

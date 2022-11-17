@@ -29,18 +29,27 @@ class ChallengeController {
 
   final repository = ChallengeRepository(sl());
 
-  void asignarNota(String idNotaProv, String idAsignatura, String idTema,
+  Future asignarNota(String idNotaProv, String idAsignatura, String idTema,
       String idNivel, String idEstudiante, String token) async {
-    state = ChallengeState.loading;
+    state = ChallengeState.evaluating;
 
     final response = (await repository.addDatos(
         idNotaProv, idAsignatura, idTema, idNivel, idEstudiante, token));
+    if (response.isRight()) {
+      // notaProv = ((response as Right).value as NotaProv);
+      state = ChallengeState.notasAsignadas;
+      //return notaProv!.id;
+    }
+    // sta
+    //te = ChallengeState.notasAsignadas;
 
-    // state = ChallengeState.notasAsignadas;
     if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
         state = ChallengeState.notConnected;
+      }
+      if (resp == ServerFailure) {
+        state = ChallengeState.serverError;
       } else {
         state = ChallengeState.errorAsigNotas;
       }
@@ -50,7 +59,7 @@ class ChallengeController {
 
 //TODO make algun tipo de validacion para subir nota luego de offline
   Future crearNota(int nota, String token) async {
-    state = ChallengeState.loading;
+    state = ChallengeState.evaluating;
     final response = (await repository.crearNota(nota, token));
     if (response.isRight()) {
       notaProv = ((response as Right).value as NotaProv);

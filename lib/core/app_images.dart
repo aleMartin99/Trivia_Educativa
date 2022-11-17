@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -26,8 +28,10 @@ class AppImages {
   static String get icon_1 => 'assets/icons/Artboard-26.svg';
   static String get icon_2 => 'assets/icons/Artboard-1.svg';
   static String get icon_3 => 'assets/icons/Artboard-6.svg';
-  // ignore: non_constant_identifier_names
+
   static String get icon_trophy => 'assets/icons/Artboard-15.svg';
+  static String get dislike => 'assets/icons/dislike.svg';
+  static String get like => 'assets/icons/like.svg';
 }
 
 class CustomIconSVG extends StatelessWidget {
@@ -40,6 +44,8 @@ class CustomIconSVG extends StatelessWidget {
     return SvgPicture.asset(
       iconName.toString(),
       color: color,
+      fit: BoxFit.cover,
+      clipBehavior: Clip.antiAlias,
     );
   }
 }

@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         current: _currentPage,
         key: UniqueKey(),
       ),
-      mainScreen: MainScreen(),
+      mainScreen: const MainScreen(),
       borderRadius: 24.0,
       showShadow: false,
       angle: 0.0,

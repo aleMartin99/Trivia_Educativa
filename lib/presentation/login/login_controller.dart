@@ -25,8 +25,6 @@ class LoginController {
     state = LoginState.loading;
     final response = (await repository.signIn(username, password));
     if (response.isRight()) {
-      //TODO rol estudiante check and state, specific dialog
-      // resp = ((response as Right).value);
       auth = ((response as Right).value as Auth);
       // user = auth.user;
       if (auth.user.rol != 'Estudiante') {

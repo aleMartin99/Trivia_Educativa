@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_duration/stream_duration.dart';
 
 import 'dart:developer';
 
@@ -44,20 +45,22 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
   final pageController = PageController();
+  late final StreamDuration _streamDuration;
+  AudioPlayer player = AudioPlayer();
   var auth = sl<Auth>();
 
   bool isPlaying = false;
 
-  AudioPlayer player = AudioPlayer();
-
   @override
   void dispose() {
     player.dispose();
+    _streamDuration.dispose();
     super.dispose();
   }
 
   Future loadMusic() async {
     //TODO change to url if doesn't work
+    //todo Audio carga aqui de asignatura.audio
     await player.play(
       (AssetSource('audios/soundtrack_1.mp3')),
     );
@@ -86,8 +89,6 @@ class _ChallengePageState extends State<ChallengePage> {
     }
     nextPage();
   }
-
-//TODO make nota3 y nota4 automatic from nota5 (substracting 10)
 
   int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
     int nota = 2;
@@ -120,27 +121,32 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
-    //TODO CHeck error tiempo set state con
+    _streamDuration = StreamDuration(
+      Duration(
+        minutes: widget.nivel.duracion,
+      ),
+      onDone: () => controller.state = ChallengeState.timeOut,
+    );
+
     controller.stateNotifier.addListener(() {
       if (controller.state == ChallengeState.timeOut) {
         QuickAlert.show(
           onConfirmBtnTap: () async {
             await player.release();
-
             int nota = evaluarNivel(widget.preguntas.length,
                 controller.cantRightAnswers, widget.nota5);
             log('la nota evaluada es' + nota.toString());
 
             //*crearNota devuelve el id de la nota creada
             //*asignarNota asigna esa nota a bd
-            //TODO si no hay internet guardar local y pa fuera
-            controller.asignarNota(
+            await controller.asignarNota(
                 await controller.crearNota(nota, auth.token),
                 widget.idAsignatura,
                 widget.idTema,
                 widget.nivel.id,
                 widget.idEstudiante,
                 auth.token);
+            // Navigator.pop(context);
             Navigator.pushReplacementNamed(
               context,
               AppRoutes.resultRoute,
@@ -153,8 +159,9 @@ class _ChallengePageState extends State<ChallengePage> {
             );
           },
           context: context,
+          barrierDismissible: false,
           type: QuickAlertType.info,
-          title: 'Se agotó el tiempo',
+          title: 'Tiempo agotado',
           text: 'Se ha acabado el tiempo para completar el nivel',
           confirmBtnText: 'Ok',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -162,6 +169,50 @@ class _ChallengePageState extends State<ChallengePage> {
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
         );
+      }
+
+      if (controller.state == ChallengeState.serverError) {
+        QuickAlert.show(
+          onConfirmBtnTap: () async {
+            // await player.release();
+            // int nota = evaluarNivel(widget.preguntas.length,
+            //     controller.cantRightAnswers, widget.nota5);
+            // log('la nota evaluada es' + nota.toString());
+
+            // //*crearNota devuelve el id de la nota creada
+            // //*asignarNota asigna esa nota a bd
+            // controller.asignarNota(
+            //     await controller.crearNota(nota, auth.token),
+            //     widget.idAsignatura,
+            //     widget.idTema,
+            //     widget.nivel.id,
+            //     widget.idEstudiante,
+            //     auth.token);
+            // // Navigator.pop(context);
+            // Navigator.pushReplacementNamed(
+            //   context,
+            //   AppRoutes.resultRoute,
+            //   arguments: ResultPageArgs(
+            //     quizTitle: widget.quizTitle,
+            //     questionsLenght: widget.preguntas.length,
+            //     result: controller.cantRightAnswers,
+            //     nota5: widget.nota5,
+            //   ),
+            // );
+          },
+          //TODO change messages
+          context: context,
+          barrierDismissible: false,
+          type: QuickAlertType.info,
+          title: 'Internal server error',
+          text: 'Se ha explotado',
+          confirmBtnText: 'Ok',
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          textColor: Theme.of(context).primaryIconTheme.color!,
+          titleColor: Theme.of(context).primaryIconTheme.color!,
+          confirmBtnColor: AppColors.purple,
+        );
+        controller.state = ChallengeState.empty;
       }
     });
 
@@ -196,11 +247,10 @@ class _ChallengePageState extends State<ChallengePage> {
                       BackButton(
                         //TODO check x que si me voy a result page luego sale el timeout
                         onPressed: () async {
-                          //TODO make a loader for go to result page
-
                           //TODO si no hay internet guardar local y pa fuera
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
+                              _streamDuration.pause();
                               await player.release();
                               int nota = evaluarNivel(widget.preguntas.length,
                                   controller.cantRightAnswers, widget.nota5);
@@ -208,7 +258,7 @@ class _ChallengePageState extends State<ChallengePage> {
 
                               //*crearNota devuelve el id de la nota creada
                               //*asignarNota asigna esa nota a bd
-                              controller.asignarNota(
+                              await controller.asignarNota(
                                   await controller.crearNota(nota, auth.token),
                                   widget.idAsignatura,
                                   widget.idTema,
@@ -246,6 +296,7 @@ class _ChallengePageState extends State<ChallengePage> {
                         color: Theme.of(context).primaryIconTheme.color,
                       ),
                       SlideCountdown(
+                        streamDuration: _streamDuration,
                         //fade: true,
                         icon: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -288,7 +339,6 @@ class _ChallengePageState extends State<ChallengePage> {
                     ],
                   ),
                 ),
-                //the ValueListenableBuilder will only rebuild this component when there are updates
                 Expanded(
                   child: ValueListenableBuilder<int>(
                     valueListenable: controller.currentPageNotifier,
@@ -303,7 +353,6 @@ class _ChallengePageState extends State<ChallengePage> {
           ),
         ),
         body: PageView(
-          //TODO Check this property in case the question content is to big and there is need to scroll
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: widget.preguntas
@@ -325,57 +374,68 @@ class _ChallengePageState extends State<ChallengePage> {
               horizontal: 40,
               vertical: 20,
             ),
-            //TODO make a loader for go to result page
             child: ValueListenableBuilder(
               valueListenable: controller.currentPageNotifier,
               builder: (context, int value, _) => Padding(
                   padding:
                       const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
-                  child: (value == widget.preguntas.length)
-                      ? NextButtonWidget.green(
-                          label: I10n.of(context).finish,
-                          onTap: () async {
-                            await player.release();
-                            int nota = evaluarNivel(widget.preguntas.length,
-                                controller.cantRightAnswers, widget.nota5);
-                            log('la nota evaluada es' + nota.toString());
-
-                            //*crearNota devuelve el id de la nota creada
-                            //*asignarNota asigna esa nota a bd
-                            //TODO si no hay internet guardar local y pa fuera
-                            controller.asignarNota(
-                                await controller.crearNota(nota, auth.token),
-                                widget.idAsignatura,
-                                widget.idTema,
-                                widget.nivel.id,
-                                widget.idEstudiante,
-                                auth.token);
-                            //    Navigator.of(context).pushNamedAndRemoveUntil(
-                            //       '/login', (Route<dynamic> route) => false);
-                            // },''
-                            //  pushNamedAndRemoveUntil(
-                            //                 AppRoutes.homeScreen,
-                            //                 arguments: HomeScreenArgs(),
-                            //                 (Route<dynamic> route) => false,
-                            Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                AppRoutes.resultRoute,
-                                arguments: ResultPageArgs(
-                                  quizTitle: widget.quizTitle,
-                                  questionsLenght: widget.preguntas.length,
-                                  result: controller.cantRightAnswers,
-                                  nota5: widget.nota5,
-                                ),
-                                (Route<dynamic> route) => false);
-                          },
-                        )
-                      : (value < widget.preguntas.length)
-                          ? NextButtonWidget.transparent(
-                              label: I10n.of(context).skipQuestion,
-                              onTap: nextPage,
-                              fontColor: Theme.of(context).hintColor,
+                  child: ValueListenableBuilder<ChallengeState>(
+                      valueListenable: controller.stateNotifier,
+                      builder: (ctx, loadingValue, _) => (loadingValue ==
+                              ChallengeState.evaluating)
+                          ? const SizedBox(
+                              height: 48,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.green,
+                                backgroundColor: Colors.black12,
+                              )),
                             )
-                          : const Text('')),
+                          : (value == widget.preguntas.length)
+                              ? NextButtonWidget.green(
+                                  label: I10n.of(context).finish,
+                                  onTap: () async {
+                                    _streamDuration.pause();
+                                    await player.release();
+                                    int nota = evaluarNivel(
+                                        widget.preguntas.length,
+                                        controller.cantRightAnswers,
+                                        widget.nota5);
+                                    log('la nota evaluada es' +
+                                        nota.toString());
+
+                                    //*crearNota devuelve el id de la nota creada
+                                    //*asignarNota asigna esa nota a bd
+                                    //TODO si no hay internet guardar local y pa fuera
+                                    await controller.asignarNota(
+                                        await controller.crearNota(
+                                            nota, auth.token),
+                                        widget.idAsignatura,
+                                        widget.idTema,
+                                        widget.nivel.id,
+                                        widget.idEstudiante,
+                                        auth.token);
+
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        AppRoutes.resultRoute,
+                                        arguments: ResultPageArgs(
+                                          quizTitle: widget.quizTitle,
+                                          questionsLenght:
+                                              widget.preguntas.length,
+                                          result: controller.cantRightAnswers,
+                                          nota5: widget.nota5,
+                                        ),
+                                        (Route<dynamic> route) => false);
+                                  },
+                                )
+                              : (value < widget.preguntas.length)
+                                  ? NextButtonWidget.transparent(
+                                      label: I10n.of(context).skipQuestion,
+                                      onTap: nextPage,
+                                      fontColor: Theme.of(context).hintColor,
+                                    )
+                                  : const Text(''))),
             ),
           ),
         ),

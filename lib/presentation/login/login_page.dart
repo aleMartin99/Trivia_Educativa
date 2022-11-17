@@ -7,7 +7,6 @@ import 'package:trivia_educativa/data/models/auth_model.dart';
 import 'package:trivia_educativa/main.dart';
 import 'package:trivia_educativa/presentation/login/widgets/password_widget.dart';
 import 'login_imports.dart';
-import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -244,6 +243,7 @@ class _LoginPageState extends State<LoginPage> {
                   valueListenable: _loginController.stateNotifier,
                   builder: (ctx, loadingValue, _) => SizedBox(
                     height: 48,
+                    //TODO COGER CARGANDO TALLA PA CHALLENGE FINALIZAR< DIALGOO Y OK
                     child: loadingValue == LoginState.loading
                         ? const Center(
                             child: CircularProgressIndicator(

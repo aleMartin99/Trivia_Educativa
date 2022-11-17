@@ -1,7 +1,8 @@
 import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:math' show pi;
+import 'package:trivia_educativa/presentation/home/widgets/scoreboard_page.dart';
+
 import '../../home_imports.dart';
 import '../menu/menu_provider.dart';
 
@@ -36,30 +37,6 @@ class _MainScreenState extends State<MainScreen> {
                     // key: UniqueKey(),
                     )
                 //TODO implement escalafon page
-                : WillPopScope(
-                    onWillPop: () async => false,
-                    child: Scaffold(
-                        appBar: AppBar(
-                          automaticallyImplyLeading: false,
-                          backgroundColor: Colors.red,
-                          title: Text(
-                            Provider.of<MenuProvider>(context, listen: false)
-                                .currentPage
-                                .toString(),
-                          ),
-                          leading: Transform.rotate(
-                            angle: 180 * pi / 180,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.menu,
-                              ),
-                              onPressed: () {
-                                AwesomeDrawerBar.of(context)?.toggle();
-                              },
-                            ),
-                          ),
-                          // trailingActions: actions,
-                        ),
-                        body: Text('data')))));
+                : const ScoreBoardPage()));
   }
 }

@@ -34,6 +34,9 @@ class HomeController {
       return estudiante;
     } else if (response.isLeft()) {
       resp = (response as Left).value;
+      if (resp == ServerFailure) {
+        state = HomeState.serverError;
+      }
       if (resp == NoInternetConnectionFailure) {
         state = HomeState.notConnected;
       } else {
@@ -55,6 +58,9 @@ class HomeController {
       if (resp == NoInternetConnectionFailure) {
         state = HomeState.notConnected;
       }
+      if (resp == ServerFailure) {
+        state = HomeState.serverError;
+      }
     } else {
       state = HomeState.error;
     }
@@ -71,6 +77,9 @@ class HomeController {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
         state = HomeState.notConnected;
+      }
+      if (resp == ServerFailure) {
+        state = HomeState.serverError;
       }
     } else {
       state = HomeState.error;
