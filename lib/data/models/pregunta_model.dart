@@ -1,5 +1,7 @@
 import 'package:trivia_educativa/data/models/answer_model.dart';
 
+import '../../core/core.dart';
+
 class Pregunta {
   late String id;
   late String descripcion;
@@ -40,7 +42,14 @@ class Pregunta {
     answers.add(AnswerModel(
       title: json['respuestaIncorrecta2'],
     ));
+
+    //*Replaces image name from path to match the server path
+    const String apiPath = kApiEmulatorBaseUrl;
     imagen = json['imagen'];
+    if (imagen.contains('[::1]:3000')) {
+      imagen = imagen.replaceFirstMapped('[::1]:3000', (match) => apiPath);
+    }
+
     tiposDePregunta = json['tiposDePregunta'];
     if (tiposDePregunta.contains('V o F')) {
     } else {

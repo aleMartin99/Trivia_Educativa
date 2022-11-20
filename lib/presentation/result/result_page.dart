@@ -221,6 +221,8 @@ class _ResultPageState extends State<ResultPage> {
                                     fontColor: Theme.of(context).hintColor,
                                     onTap: () async {
                                       //  final NetworkInfo _networkInfo = sl();
+
+                                      //TODO ver xq me tiro pal login si tengo internet
                                       (widget.isConnected)
                                           ? QuickAlert.show(
                                               onConfirmBtnTap: () async {

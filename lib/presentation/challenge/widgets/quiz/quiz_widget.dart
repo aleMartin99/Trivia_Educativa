@@ -26,10 +26,8 @@ class _QuizWidgetState extends State<QuizWidget> {
   void openGalleryView() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => GalleryWidget(
-        //ToDO put widgte.preg.imagen
-        imagen: widget.pregunta.imagen,
-        //imagen: widget.pregunta.imagen
-      ),
+          // imagen: imagen,
+          imagen: widget.pregunta.imagen),
       //GalleryWidget(),
     ));
   }
@@ -90,13 +88,13 @@ class _QuizWidgetState extends State<QuizWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  (widget.pregunta.tiposDePregunta.contains('imagen'))
+                  (widget.pregunta.tiposDePregunta.contains('magen'))
                       ? Center(
                           child: InkWell(
                             child: Ink.image(
                               //ToDO put widgte.preg.imagen
                               image: NetworkImage(widget.pregunta.imagen),
-                              height: 200,
+                              height: 150,
                             ),
                             onTap: openGalleryView,
                           ),

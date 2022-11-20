@@ -72,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           type: QuickAlertType.loading,
           title: 'Servidor no disponible',
+          // onWillPop: false,
           confirmBtnText: 'Ok',
           text: 'Al parecer el servidor no está disponible.',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -209,7 +210,10 @@ class _LoginPageState extends State<LoginPage> {
                           QuickAlert.show(
                             context: context,
                             type: QuickAlertType.info,
+                            //TODO I10n
                             title: 'Ha olvidado su contraseña?',
+                            // onWillPop: false,
+                            animType: QuickAlertAnimType.scale,
                             text:
                                 'Contacte con el administrador designado para que le restablezca la contraseñna',
                             confirmBtnText: 'Ok',

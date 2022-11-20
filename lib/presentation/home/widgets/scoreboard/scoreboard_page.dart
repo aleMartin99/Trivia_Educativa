@@ -20,13 +20,19 @@ class ScoreBoardPage extends StatefulWidget {
   State<ScoreBoardPage> createState() => _ScoreBoardPageState();
 }
 
+// class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
+//   @override
+//   bool get wantKeepAlive => true;
 class _ScoreBoardPageState extends State<ScoreBoardPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool get wantKeepAlive => true;
+
   var auth = sl<Auth>();
   final scoreboardController = ScoreBoardController();
   final homeController = HomeController();
   late Estudiante estudiante;
+
   void _loadData() async {
     await scoreboardController.getScoreGeneral(auth.token);
     await homeController.getEstudiante(auth.user.ci, auth.token);
@@ -290,7 +296,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                       ),
                                       child: ListView(
                                         shrinkWrap: true,
-                                        // padding: EdgeInsets.only(bottom: 15),
+                                        //  padding: EdgeInsets.only(bottom: 1),
                                         clipBehavior: Clip.antiAlias,
                                         // useMagnifier: true,
                                         //itemExtent: height * 10,
@@ -300,9 +306,14 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                             .map((scoreboardCurso) {
                                           return ScoreBoardCard(
                                             //TODO activate checker user in escalafon
-                                            //isUser:(scoreboardGeneral.id==estudiante.id)?true:false ,
-                                            isUser: false,
-                                            name: scoreboardCurso.name,
+                                            isUser: (scoreboardCurso
+                                                        .estudiante.id ==
+                                                    estudiante.id)
+                                                ? true
+                                                : false,
+                                            //isUser: false,
+                                            name:
+                                                scoreboardCurso.estudiante.name,
                                             promedio: scoreboardCurso.promedio,
                                           );
                                         }).toList(),
@@ -316,6 +327,8 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                       ),
                                       child: ListView(
                                         shrinkWrap: true,
+                                        // padding: EdgeInsets.all(0),
+                                        // padding: EdgeInsets.only(bottom: 1),
                                         // padding: EdgeInsets.only(bottom: 15),
                                         clipBehavior: Clip.antiAlias,
                                         // useMagnifier: true,
@@ -326,9 +339,14 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                             .map((scoreboardGeneral) {
                                           return ScoreBoardCard(
                                             //TODO activate checker user in escalafon
-                                            //isUser:(scoreboardGeneral.id==estudiante.id)?true:false ,
-                                            isUser: false,
-                                            name: scoreboardGeneral.name,
+                                            isUser: (scoreboardGeneral
+                                                        .estudiante.id ==
+                                                    estudiante.id)
+                                                ? true
+                                                : false,
+                                            //isUser: false,
+                                            name: scoreboardGeneral
+                                                .estudiante.name,
                                             promedio:
                                                 scoreboardGeneral.promedio,
                                           );

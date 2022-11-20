@@ -17,9 +17,10 @@ class _GalleryWidgetState extends State<GalleryWidget> {
       body: PhotoViewGallery.builder(
         itemCount: 1,
         builder: (context, index) {
-          final image = widget.imagen;
+          //   final image = widget.imagen;
           return PhotoViewGalleryPageOptions(
-              imageProvider: AssetImage(image),
+              disableGestures: false,
+              imageProvider: NetworkImage(widget.imagen),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.contained * 4);
         },

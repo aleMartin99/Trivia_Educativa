@@ -67,7 +67,7 @@ class _ChallengePageState extends State<ChallengePage> {
     //TODO change to url if doesn't work
     //todo Audio carga aqui de asignatura.audio
     await player.play(
-      (AssetSource('audios/soundtrack_1.mp3')),
+      (AssetSource('sounds/soundtrack_2.wav')),
     );
 
     player.setReleaseMode(ReleaseMode.loop);
@@ -155,6 +155,8 @@ class _ChallengePageState extends State<ChallengePage> {
     controller.stateNotifier.addListener(() {
       if (controller.state == ChallengeState.timeOut) {
         QuickAlert.show(
+          onWillPop: false,
+
           onConfirmBtnTap: () async {
             await player.release();
             int nota = evaluarNivel(widget.preguntas.length,
@@ -183,6 +185,7 @@ class _ChallengePageState extends State<ChallengePage> {
           },
           context: context,
           barrierDismissible: false,
+          //  widget: ,
           type: QuickAlertType.info,
           //TODO I10n
           title: 'Tiempo agotado',
@@ -253,16 +256,6 @@ class _ChallengePageState extends State<ChallengePage> {
                               _streamDuration.pause();
                               await player.release();
                               await saveNota();
-
-                              //*crearNota devuelve el id de la nota creada
-                              //*asignarNota asigna esa nota a bd
-                              // await controller.asignarNota(
-                              //     await controller.crearNota(nota, auth.token),
-                              //     widget.asignatura.id,
-                              //     widget.idTema,
-                              //     widget.nivel.id,
-                              //     widget.idEstudiante,
-                              //     auth.token);
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
                                 context,
@@ -396,11 +389,6 @@ class _ChallengePageState extends State<ChallengePage> {
                                   onTap: () async {
                                     _streamDuration.pause();
                                     await player.release();
-                                    int nota = evaluarNivel(
-                                        widget.preguntas.length,
-                                        controller.cantRightAnswers,
-                                        widget.nota5);
-
                                     await saveNota();
                                     Navigator.pushNamedAndRemoveUntil(
                                         context,

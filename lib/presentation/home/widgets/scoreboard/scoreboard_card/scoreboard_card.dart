@@ -18,14 +18,14 @@ class ScoreBoardCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width / 100;
     return Container(
       height: height * 10,
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 16),
       //color: Colors.amber,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         // color: AppTheme.backgroundColors(Theme.of(context).brightness),
         //TODO validar si es el usuario
         color: isUser
-            ? AppColors.purple
+            ? AppColors.purple.withOpacity(0.16)
             : AppTheme.backgroundColors(Theme.of(context).brightness),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -49,7 +49,9 @@ class ScoreBoardCard extends StatelessWidget {
                         //color: Theme.of(context).primaryIconTheme.color,
                         //TODO Validar Si es el usuario
                         color: isUser
-                            ? AppColors.white
+                            ? Theme.of(context).brightness == Brightness.light
+                                ? AppColors.black
+                                : AppColors.white
                             : Theme.of(context).primaryIconTheme.color,
                       ),
                 ),
@@ -64,7 +66,9 @@ class ScoreBoardCard extends StatelessWidget {
                     // color: Theme.of(context).primaryIconTheme.color,
                     //TODO Validar Si es el usuario
                     color: isUser
-                        ? AppColors.white
+                        ? Theme.of(context).brightness == Brightness.light
+                            ? AppColors.black
+                            : AppColors.white
                         : Theme.of(context).primaryIconTheme.color,
                   ),
             ),

@@ -46,9 +46,6 @@ class LoginRepository with RequestErrorParser {
         } else if (response is TimeoutException) {
           return left(ServerFailure);
         } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
-
           throw Exception('Failed to load the user');
         }
       } on ClientException {
