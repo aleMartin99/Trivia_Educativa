@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:fpdart/fpdart.dart';
 
-import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/data/models/scoreboard.dart';
 import '../../core/core.dart';
 
@@ -68,10 +67,6 @@ class ScoreBoardRepository with RequestErrorParser {
               jsonResponse.map((e) => ScoreBoard.fromJson(e)).toList();
           //   final promedioEstudiantes = ScoreBoard.fromJson(jsonResponse);
           return right(scoreboardCurso);
-        } else if (response.statusCode == 401) {
-          return left(InvalidCredentialsFailure);
-        } else if (response.statusCode == 500) {
-          return left(ServerFailure);
         } else {
           throw Exception('Failed to load alumnos from promedio by Curso');
         }

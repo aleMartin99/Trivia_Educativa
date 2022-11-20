@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'dart:core';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -22,21 +24,23 @@ class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
   final String quizTitle;
   final int nota5;
-  final String idAsignatura;
+  final Asignatura asignatura;
   final String idEstudiante;
   final String idTema;
   final Nivel nivel;
+  //late final NetworkInfo networkInfo;
 
-  const ChallengePage(
-      {Key? key,
-      required this.preguntas,
-      required this.quizTitle,
-      required this.nota5,
-      required this.idTema,
-      required this.idAsignatura,
-      required this.idEstudiante,
-      required this.nivel})
-      : super(key: key);
+  ChallengePage({
+    Key? key,
+    required this.preguntas,
+    required this.quizTitle,
+    required this.nota5,
+    required this.idTema,
+    required this.asignatura,
+    required this.idEstudiante,
+    required this.nivel,
+    // required this.networkInfo
+  }) : super(key: key);
 
   @override
   _ChallengePageState createState() => _ChallengePageState();
@@ -48,6 +52,7 @@ class _ChallengePageState extends State<ChallengePage> {
   late final StreamDuration _streamDuration;
   AudioPlayer player = AudioPlayer();
   var auth = sl<Auth>();
+  bool isConnected = true;
 
   bool isPlaying = false;
 
@@ -84,10 +89,29 @@ class _ChallengePageState extends State<ChallengePage> {
   ) {
     if (isRight) {
       controller.cantRightAnswers++;
-      log('contador de cantidad de preguntas correctas ' +
-          controller.cantRightAnswers.toString());
     }
     nextPage();
+  }
+
+  Future saveNota() async {
+    int nota = evaluarNivel(
+        widget.preguntas.length, controller.cantRightAnswers, widget.nota5);
+    if (isConnected) {
+      //*crearNota devuelve el id de la nota creada
+      //*asignarNota asigna esa nota a bd
+      await controller.asignarNota(
+          await controller.crearNota(nota, auth.token),
+          widget.asignatura.id,
+          widget.idTema,
+          widget.nivel.id,
+          widget.idEstudiante,
+          auth.token);
+    }
+    //TODO si no hay internet guardar local y pa fuera
+    else {
+      //TODO implement local sotrage save
+      isConnected = false;
+    }
   }
 
   int evaluarNivel(int cantPreguntas, int cantRightAnswers, int nota5) {
@@ -135,22 +159,21 @@ class _ChallengePageState extends State<ChallengePage> {
             await player.release();
             int nota = evaluarNivel(widget.preguntas.length,
                 controller.cantRightAnswers, widget.nota5);
-            log('la nota evaluada es' + nota.toString());
 
             //*crearNota devuelve el id de la nota creada
             //*asignarNota asigna esa nota a bd
             await controller.asignarNota(
                 await controller.crearNota(nota, auth.token),
-                widget.idAsignatura,
+                widget.asignatura.id,
                 widget.idTema,
                 widget.nivel.id,
                 widget.idEstudiante,
                 auth.token);
-            // Navigator.pop(context);
             Navigator.pushReplacementNamed(
               context,
               AppRoutes.resultRoute,
               arguments: ResultPageArgs(
+                isConnected: isConnected,
                 quizTitle: widget.quizTitle,
                 questionsLenght: widget.preguntas.length,
                 result: controller.cantRightAnswers,
@@ -161,6 +184,7 @@ class _ChallengePageState extends State<ChallengePage> {
           context: context,
           barrierDismissible: false,
           type: QuickAlertType.info,
+          //TODO I10n
           title: 'Tiempo agotado',
           text: 'Se ha acabado el tiempo para completar el nivel',
           confirmBtnText: 'Ok',
@@ -173,37 +197,13 @@ class _ChallengePageState extends State<ChallengePage> {
 
       if (controller.state == ChallengeState.serverError) {
         QuickAlert.show(
-          onConfirmBtnTap: () async {
-            // await player.release();
-            // int nota = evaluarNivel(widget.preguntas.length,
-            //     controller.cantRightAnswers, widget.nota5);
-            // log('la nota evaluada es' + nota.toString());
-
-            // //*crearNota devuelve el id de la nota creada
-            // //*asignarNota asigna esa nota a bd
-            // controller.asignarNota(
-            //     await controller.crearNota(nota, auth.token),
-            //     widget.idAsignatura,
-            //     widget.idTema,
-            //     widget.nivel.id,
-            //     widget.idEstudiante,
-            //     auth.token);
-            // // Navigator.pop(context);
-            // Navigator.pushReplacementNamed(
-            //   context,
-            //   AppRoutes.resultRoute,
-            //   arguments: ResultPageArgs(
-            //     quizTitle: widget.quizTitle,
-            //     questionsLenght: widget.preguntas.length,
-            //     result: controller.cantRightAnswers,
-            //     nota5: widget.nota5,
-            //   ),
-            // );
-          },
+          onConfirmBtnTap: () async {},
           //TODO change messages
           context: context,
           barrierDismissible: false,
           type: QuickAlertType.info,
+          //TODO cambiar el mensjae
+          //TODO I10n
           title: 'Internal server error',
           text: 'Se ha explotado',
           confirmBtnText: 'Ok',
@@ -252,24 +252,23 @@ class _ChallengePageState extends State<ChallengePage> {
                             onConfirmBtnTap: () async {
                               _streamDuration.pause();
                               await player.release();
-                              int nota = evaluarNivel(widget.preguntas.length,
-                                  controller.cantRightAnswers, widget.nota5);
-                              log('la nota evaluada es' + nota.toString());
+                              await saveNota();
 
                               //*crearNota devuelve el id de la nota creada
                               //*asignarNota asigna esa nota a bd
-                              await controller.asignarNota(
-                                  await controller.crearNota(nota, auth.token),
-                                  widget.idAsignatura,
-                                  widget.idTema,
-                                  widget.nivel.id,
-                                  widget.idEstudiante,
-                                  auth.token);
+                              // await controller.asignarNota(
+                              //     await controller.crearNota(nota, auth.token),
+                              //     widget.asignatura.id,
+                              //     widget.idTema,
+                              //     widget.nivel.id,
+                              //     widget.idEstudiante,
+                              //     auth.token);
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
                                 context,
                                 AppRoutes.resultRoute,
                                 arguments: ResultPageArgs(
+                                  isConnected: isConnected,
                                   quizTitle: widget.quizTitle,
                                   questionsLenght: widget.preguntas.length,
                                   result: controller.cantRightAnswers,
@@ -401,25 +400,13 @@ class _ChallengePageState extends State<ChallengePage> {
                                         widget.preguntas.length,
                                         controller.cantRightAnswers,
                                         widget.nota5);
-                                    log('la nota evaluada es' +
-                                        nota.toString());
 
-                                    //*crearNota devuelve el id de la nota creada
-                                    //*asignarNota asigna esa nota a bd
-                                    //TODO si no hay internet guardar local y pa fuera
-                                    await controller.asignarNota(
-                                        await controller.crearNota(
-                                            nota, auth.token),
-                                        widget.idAsignatura,
-                                        widget.idTema,
-                                        widget.nivel.id,
-                                        widget.idEstudiante,
-                                        auth.token);
-
+                                    await saveNota();
                                     Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         AppRoutes.resultRoute,
                                         arguments: ResultPageArgs(
+                                          isConnected: isConnected,
                                           quizTitle: widget.quizTitle,
                                           questionsLenght:
                                               widget.preguntas.length,

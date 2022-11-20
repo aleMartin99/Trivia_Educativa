@@ -17,7 +17,6 @@ class ChallengeRepository with RequestErrorParser {
   Future addDatos(String idNotaProv, String idAsignatura, String idTema,
       String idNivel, String idEstudiante, String token) async {
     var uri = Uri.http(
-      // apiBaseUrl,
       apiBaseUrl,
       kApiPath +
           "notas/$idNotaProv/asignatura/$idAsignatura/tema/$idTema/nivel/$idNivel/estudiante/$idEstudiante",
@@ -26,8 +25,6 @@ class ChallengeRepository with RequestErrorParser {
     if (await _networkInfo.isConnected) {
       try {
         final response = await http.post(uri, headers: {
-          //'Content-Type': 'application/json',
-          //'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         });
         log('status code from asignarNota');
@@ -35,26 +32,15 @@ class ChallengeRepository with RequestErrorParser {
 
         if (response.statusCode == 201) {
           log('asignar nota ok');
-          //         final jsonResponse = json.decode(response.body);
-          //         log(' ${jsonResponse.toString()}');
-          //         final estudiante = Estudiante.fromJson(jsonResponse);
-          //         return right(estudiante);
         }
         if (response.statusCode == 500) {
           log('error server');
           return left(ServerFailure);
-          //         final jsonResponse = json.decode(response.body);
-          //         log(' ${jsonResponse.toString()}');
-          //         final estudiante = Estudiante.fromJson(jsonResponse);
-          //         return right(estudiante);
-
         }
 
         if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);
         } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
           throw Exception('Failed to asign to a Nota');
         }
       } catch (e) {
@@ -67,7 +53,6 @@ class ChallengeRepository with RequestErrorParser {
 
   Future crearNota(int nota, String token) async {
     var uri = Uri.http(
-      //apiBaseUrl,
       apiBaseUrl,
       kApiPath + "notas",
     );
@@ -77,8 +62,6 @@ class ChallengeRepository with RequestErrorParser {
         final response = await http.post(uri, body: {
           "nota": "$nota"
         }, headers: {
-          //'Content-Type': 'application/json',
-          //'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         });
         log(' ${response.toString()}');
@@ -91,14 +74,7 @@ class ChallengeRepository with RequestErrorParser {
         if (response.statusCode == 500) {
           log('error server');
           return left(ServerFailure);
-          //         final jsonResponse = json.decode(response.body);
-          //         log(' ${jsonResponse.toString()}');
-          //         final estudiante = Estudiante.fromJson(jsonResponse);
-          //         return right(estudiante);
-
         } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
           throw Exception('Failed to create a Nota');
         }
       } catch (e) {

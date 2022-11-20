@@ -20,13 +20,13 @@ class NivelPage extends StatefulWidget {
     Key? key,
     required this.niveles,
     required this.idTema,
-    required this.idAsignatura,
+    required this.asignatura,
     required this.idEstudiante,
     required this.notas,
   }) : super(key: key);
   final List<Nivel> niveles;
   final String idTema;
-  final String idAsignatura;
+  final Asignatura asignatura;
   final String idEstudiante;
   final List<NotaProv> notas;
 
@@ -139,7 +139,7 @@ class _NivelPageState extends State<NivelPage> {
                               idEstudiante: widget.idEstudiante,
                               nota5: nivel.nota5,
                               quizTitle: nivel.descripcion,
-                              idAsignatura: widget.idAsignatura,
+                              asignatura: widget.asignatura,
                               idTema: widget.idTema,
                               nivel: nivel),
                         );
@@ -175,7 +175,7 @@ class _NivelPageState extends State<NivelPage> {
                                       idEstudiante: widget.idEstudiante,
                                       nota5: nivel.nota5,
                                       quizTitle: nivel.descripcion,
-                                      idAsignatura: widget.idAsignatura,
+                                      asignatura: widget.asignatura,
                                       idTema: widget.idTema,
                                       nivel: nivel),
                                 );

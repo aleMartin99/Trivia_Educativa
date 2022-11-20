@@ -18,6 +18,7 @@ class LoginController {
 
   late User user;
   late Auth auth;
+  // ignore: prefer_typing_uninitialized_variables
   var resp;
   final repository = LoginRepository(sl());
 

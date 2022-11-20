@@ -4,18 +4,24 @@ import 'package:trivia_educativa/core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../core/app_icons.dart';
+
 class AsignaturaCardWidget extends StatelessWidget {
   final String nombre;
+  // final String icon;
 
   final int cantTemas;
 
   final VoidCallback onTap;
+
+//TODO add icon
 
   const AsignaturaCardWidget({
     Key? key,
     required this.nombre,
     required this.cantTemas,
     required this.onTap,
+    // required this.icon
   }) : super(key: key);
 
   @override
@@ -30,15 +36,16 @@ class AsignaturaCardWidget extends StatelessWidget {
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
         ),
         child: Column(
-          //TODO annadir cantidad items next page (temas)
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Center(
+              //todo coger de asignatura.config, si vacio de mi listado
               child: SizedBox(
                   height: 80,
                   child: CustomIconSVG(
-                    iconName: AppImages.icon_1,
+                    //iconName:widget.icon
+                    iconName: AppIcons.icon_6,
                   )),
             ),
             const SizedBox(

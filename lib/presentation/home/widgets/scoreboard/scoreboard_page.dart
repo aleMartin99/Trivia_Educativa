@@ -2,11 +2,14 @@ import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:trivia_educativa/presentation/home/home_controller.dart';
 import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_card/scoreboard_card.dart';
 import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_state.dart';
 import 'dart:math' show pi;
+import '../../../../core/app_icons.dart';
 import '../../../../core/core.dart';
 import '../../../../data/models/auth_model.dart';
+import '../../../../data/models/estudiante_model.dart';
 import '../../../../main.dart';
 import 'scoreboard_controller.dart';
 
@@ -22,16 +25,13 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
   late TabController _tabController;
   var auth = sl<Auth>();
   final scoreboardController = ScoreBoardController();
+  final homeController = HomeController();
+  late Estudiante estudiante;
   void _loadData() async {
     await scoreboardController.getScoreGeneral(auth.token);
-    //TODO pasar curso por el estudiante
-    await scoreboardController.getScorebyAnno(auth.token, 1);
-    // await homeController.getEstudiante(auth.user.ci, auth.token);
-
-    // Estudiante estudiante = homeController.estudiante!;
-    // await homeController.getAsignaturas(estudiante.annoCurso, auth.token);
-
-    // await homeController.getNotasProv(auth.user.ci, auth.token);
+    await homeController.getEstudiante(auth.user.ci, auth.token);
+    estudiante = homeController.estudiante!;
+    await scoreboardController.getScorebyAnno(auth.token, estudiante.annoCurso);
   }
 
   @override
@@ -45,6 +45,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
           context: context,
 
           type: QuickAlertType.error,
+          //TODO I10n
           title: 'Ha ocurrido un error',
           text: 'Ha ocurrido un error inesperado',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -60,7 +61,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
       if (scoreboardController.state == ScoreBoardState.serverError) {
         QuickAlert.show(
           context: context,
-
+          //TODO I10n
           type: QuickAlertType.error,
           title: 'Se exploto el servr',
           text: 'Explotao, 500 papu',
@@ -76,6 +77,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
+          //TODO I10n
           title: 'No hay conexión a Internet',
           confirmBtnText: 'Ok',
           text:
@@ -94,21 +96,23 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     const angle = 180 * pi / 180;
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(90),
+            preferredSize: Size.fromHeight(height * 20),
             child: SizedBox(
-              height: 270,
+              height: height * 20,
               child: Stack(
                 children: [
                   Container(
-                      height: 161,
+                      height: height * 20,
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 4.5,
                       ),
                       decoration: const BoxDecoration(
                         gradient: AppGradients.linear,
@@ -116,16 +120,14 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                       child: Column(
                         children: [
                           ListTile(
-                            contentPadding: const EdgeInsets.only(top: 60),
+                            contentPadding: EdgeInsets.only(top: height * 7.5),
                             title: Text(
+                              //TODO I10n
                               'Tabla de Posiciones',
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: AppTextStyles.titleBold,
                             ),
-
-                            //overflow: TextOverflow.ellipsis,
-
                             leading: Transform.rotate(
                               angle: angle,
                               child: IconButton(
@@ -138,27 +140,75 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                 },
                               ),
                             ),
-                            trailing: Container(
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? AppTheme.backgroundColors(
-                                          Brightness.dark)
-                                      : AppColors.lightPurple
-                                  //AppColors.lightPurple,
-
-                                  ),
-                              // color: Colors.blue,
-                              width: 75,
-                              height: 75,
-                              padding: const EdgeInsets.all(5),
-                              child: FittedBox(
-                                child: CustomIconSVG(
-                                  iconName: AppImages.icon_trophy,
-                                ),
+                            trailing: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? AppTheme.backgroundColors(
+                                        Theme.of(context).brightness)
+                                    : AppColors.lightPurple,
+                                child: SizedBox(
+                                    width: width * 18,
+                                    height: width * 18,
+                                    child: ClipOval(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(9.0),
+                                        child: CustomIconSVG(
+                                          iconName: AppIcons.trophy,
+                                        ),
+                                      ),
+                                    ))),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: height * 0.9,
+                            ),
+                            child: TabBar(
+                              padding: const EdgeInsets.all(0),
+                              splashFactory: NoSplash.splashFactory,
+                              overlayColor:
+                                  MaterialStateProperty.resolveWith<Color?>(
+                                (Set<MaterialState> states) {
+                                  return states.contains(MaterialState.focused)
+                                      ? null
+                                      : Colors.transparent;
+                                },
                               ),
+                              //indicatorPadding: EdgeInsets.all(0),
+                              indicator: MaterialIndicator(
+                                height: height / 3.5,
+                                horizontalPadding: width * 10,
+                                strokeWidth: 3,
+                                color: AppColors.lightPurple,
+                                tabPosition: TabPosition.bottom,
+                              ),
+                              automaticIndicatorColorAdjustment: true,
+                              controller: _tabController,
+                              splashBorderRadius: null,
+                              tabs: [
+                                //TODO I10n
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  //TODO I10n
+                                  child: Text("Mi Año",
+                                      //TextAlign.,
+
+                                      style: AppTextStyles.titleBold.copyWith(
+                                          // color: AppColors.black,
+                                          )
+                                      //.copyWith(color: Colors.black),
+                                      ),
+                                ),
+                                //TODO I10n
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text("General",
+                                      style: AppTextStyles.titleBold
+                                      //.copyWith(color: AppColors.black),
+                                      ),
+                                ),
+                              ],
+                              indicatorSize: TabBarIndicatorSize.tab,
                             ),
                           ),
                         ],
@@ -168,223 +218,126 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 15,
+            padding: EdgeInsets.only(
+              left: width * 2.25,
+              right: width * 2.25,
+              top: height * 2.5,
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: TabBar(
-                    indicator: MaterialIndicator(
-                        height: 4,
-                        bottomLeftRadius: 6,
-                        topLeftRadius: 8,
-                        topRightRadius: 8,
-                        horizontalPadding: 80,
-                        strokeWidth: 2,
-                        color: AppColors.purple,
-                        tabPosition: TabPosition.bottom
-                        //distanceFromCenter: 16,
-                        //radius: 3,
-                        // paintingStyle: PaintingStyle.fill,
-                        ),
-                    automaticIndicatorColorAdjustment: true,
-                    controller: _tabController,
-                    splashBorderRadius:
-                        const BorderRadius.all(Radius.circular(20)),
-                    tabs: [
-                      Text("Mi Año",
-                          style: AppTextStyles.titleBold
-                              .copyWith(color: AppColors.black)
-                          //.copyWith(color: Colors.black),
-                          ),
-                      Text(
-                        "General",
-                        style: AppTextStyles.titleBold
-                            .copyWith(color: AppColors.black),
-                      ),
-                    ],
-                    indicatorSize: TabBarIndicatorSize.tab,
-                  ),
-                ),
-
                 SizedBox(
-                  height: 24,
-                ),
-
-//TODO make validation for data to all pages like asignatura(home)
-//TODO change app bar to sliver
-
-                (scoreboardController.state == ScoreBoardState.loading)
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
-                      ))
-                    : (scoreboardController.scoreboardCurso == null ||
-                            scoreboardController.scoreboardCurso!.isEmpty)
-                        ?
-                        //TODO I10n
-                        Center(
-                            child: Text(
-                            'No hay tabla de posiciones por anno disponible',
-                            style: AppTextStyles.titleBold.copyWith(
-                              color: Theme.of(context).primaryIconTheme.color,
-                            ),
+                  height: height * 75,
+                  child: Center(
+                    child: (scoreboardController.state ==
+                            ScoreBoardState.loading)
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.darkGreen),
                           ))
-                        : SizedBox(
-                            height: 500,
-                            child: TabBarView(
+                        : (scoreboardController.scoreboardCurso == null ||
+                                scoreboardController.scoreboardCurso!.isEmpty)
+                            ?
+                            //TODO I10n
+                            TabBarView(
+                                physics: const BouncingScrollPhysics(),
                                 controller: _tabController,
                                 children: [
-                                  //*scoreboard anno
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 15,
+                                    Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: width * 4.5,
+                                        ),
+                                        child: Text(
+                                          //TODO I10n
+                                          'No hay tabla de posiciones por anno disponible',
+                                          style:
+                                              AppTextStyles.titleBold.copyWith(
+                                            color: Theme.of(context)
+                                                .primaryIconTheme
+                                                .color,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    child: ListView(
-                                      // padding: EdgeInsets.only(bottom: 15),
-                                      clipBehavior: Clip.antiAlias,
-                                      // useMagnifier: true,
-                                      itemExtent: 120,
-                                      physics: const BouncingScrollPhysics(),
-                                      children: scoreboardController
-                                          .scoreboardCurso!
-                                          .map((scoreboardGeneral) {
-                                        //   TODO check with nuevas notasProv
-                                        // TODO check is done level with notasProv, llamar methodo en init state cargar notasProv
-                                        //  if (doneLevel(nivel.id, widget.notas)) {
-                                        return ScoreBoardCard(
-                                          name: scoreboardGeneral.name,
-                                          promedio: scoreboardGeneral.promedio,
-                                        );
-                                        // } else {
-                                        //   return;
-                                        //   NivelCardWidget(
-                                        //       isDone: false,
-                                        //       nombre: nivel.descripcion,
-                                        //       preguntas: nivel.preguntas,
-                                        //       onTap: () async {
-                                        //         (nivel.preguntas.isEmpty)
-                                        //             ? QuickAlert.show(
-                                        //                 context: context,
-                                        //                 type: QuickAlertType.warning,
-                                        //                 title: 'No existen preguntas',
-                                        //                 confirmBtnText: 'Ok',
-                                        //                 text:
-                                        //                     'No hay preguntas disponibles por el momento',
-                                        //                 backgroundColor: Theme.of(context)
-                                        //                     .scaffoldBackgroundColor,
-                                        //                 textColor: Theme.of(context)
-                                        //                     .primaryIconTheme
-                                        //                     .color!,
-                                        //                 titleColor: Theme.of(context)
-                                        //                     .primaryIconTheme
-                                        //                     .color!,
-                                        //                 confirmBtnColor: AppColors.purple,
-                                        //               )
-                                        //             : Navigator.pushNamed(
-                                        //                 context,
-                                        //                 AppRoutes.challengeRoute,
-                                        //                 arguments: ChallengePageArgs(
-                                        //                     preguntas: nivel.preguntas,
-                                        //                     idEstudiante: widget.idEstudiante,
-                                        //                     nota5: nivel.nota5,
-                                        //                     quizTitle: nivel.descripcion,
-                                        //                     idAsignatura: widget.idAsignatura,
-                                        //                     idTema: widget.idTema,
-                                        //                     nivel: nivel),
-                                        //               );
-
-                                        //         // homeController.state = HomeState.empty;:
-                                        //       });
-                                        // }
-                                      }).toList(),
+                                    Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: width * 4.5,
+                                        ),
+                                        //TODO I10n
+                                        child: Text(
+                                          'No hay tabla de posiciones general disponible',
+                                          style:
+                                              AppTextStyles.titleBold.copyWith(
+                                            color: Theme.of(context)
+                                                .primaryIconTheme
+                                                .color,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  //*scoreboard general
-
-                                  ListView(
-                                    // padding: EdgeInsets.only(bottom: 15),
-                                    clipBehavior: Clip.antiAlias,
-                                    // useMagnifier: true,
-                                    itemExtent: 120,
-                                    physics: const BouncingScrollPhysics(),
-                                    // children:
-                                    // scoreboardController.scoreboardCurso.map((scoreboardGeneral) {
-
-                                    //   if (doneLevel(nivel.id, widget.notas)) {
-                                    //     return
-                                    //     //  NivelCardWidget(
-                                    //     //   isDone: true,
-                                    //     //   nombre: nivel.descripcion,
-                                    //     //   preguntas: nivel.preguntas,
-                                    //     //   onTap: () {
-                                    //     //     Navigator.pushNamed(
-                                    //     //       context,
-                                    //     //       AppRoutes.challengeRoute,
-                                    //     //       arguments: ChallengePageArgs(
-                                    //     //           preguntas: nivel.preguntas,
-                                    //     //           idEstudiante: widget.idEstudiante,
-                                    //     //           nota5: nivel.nota5,
-                                    //     //           quizTitle: nivel.descripcion,
-                                    //     //           idAsignatura: widget.idAsignatura,
-                                    //     //           idTema: widget.idTema,
-                                    //     //           nivel: nivel),
-                                    //     //     );
-                                    //     //   },
-                                    //     // );
-                                    //   }
-                                    //    else {
-                                    //     return ;
-                                    //     // NivelCardWidget(
-                                    //     //     isDone: false,
-                                    //     //     nombre: nivel.descripcion,
-                                    //     //     preguntas: nivel.preguntas,
-                                    //     //     onTap: () async {
-                                    //     //       (nivel.preguntas.isEmpty)
-                                    //     //           ? QuickAlert.show(
-                                    //     //               context: context,
-                                    //     //               type: QuickAlertType.warning,
-                                    //     //               title: 'No existen preguntas',
-                                    //     //               confirmBtnText: 'Ok',
-                                    //     //               text:
-                                    //     //                   'No hay preguntas disponibles por el momento',
-                                    //     //               backgroundColor: Theme.of(context)
-                                    //     //                   .scaffoldBackgroundColor,
-                                    //     //               textColor: Theme.of(context)
-                                    //     //                   .primaryIconTheme
-                                    //     //                   .color!,
-                                    //     //               titleColor: Theme.of(context)
-                                    //     //                   .primaryIconTheme
-                                    //     //                   .color!,
-                                    //     //               confirmBtnColor: AppColors.purple,
-                                    //     //             )
-                                    //     //           : Navigator.pushNamed(
-                                    //     //               context,
-                                    //     //               AppRoutes.challengeRoute,
-                                    //     //               arguments: ChallengePageArgs(
-                                    //     //                   preguntas: nivel.preguntas,
-                                    //     //                   idEstudiante: widget.idEstudiante,
-                                    //     //                   nota5: nivel.nota5,
-                                    //     //                   quizTitle: nivel.descripcion,
-                                    //     //                   idAsignatura: widget.idAsignatura,
-                                    //     //                   idTema: widget.idTema,
-                                    //     //                   nivel: nivel),
-                                    //     //             );
-
-                                    //     //       // homeController.state = HomeState.empty;:
-                                    //     //     });
-                                    //   }
-                                    // }
-
-                                    //  ).toList(),
-                                  )
-                                ]),
-                          )
+                                  ])
+                            : TabBarView(
+                                physics: const BouncingScrollPhysics(),
+                                controller: _tabController,
+                                children: [
+                                    //*scoreboard anno curso
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: width * 2.25,
+                                        vertical: height * 1,
+                                      ),
+                                      child: ListView(
+                                        shrinkWrap: true,
+                                        // padding: EdgeInsets.only(bottom: 15),
+                                        clipBehavior: Clip.antiAlias,
+                                        // useMagnifier: true,
+                                        //itemExtent: height * 10,
+                                        physics: const BouncingScrollPhysics(),
+                                        children: scoreboardController
+                                            .scoreboardCurso!
+                                            .map((scoreboardCurso) {
+                                          return ScoreBoardCard(
+                                            //TODO activate checker user in escalafon
+                                            //isUser:(scoreboardGeneral.id==estudiante.id)?true:false ,
+                                            isUser: false,
+                                            name: scoreboardCurso.name,
+                                            promedio: scoreboardCurso.promedio,
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                    //*scoreboard general
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: width * 2.25,
+                                        vertical: height * 1,
+                                      ),
+                                      child: ListView(
+                                        shrinkWrap: true,
+                                        // padding: EdgeInsets.only(bottom: 15),
+                                        clipBehavior: Clip.antiAlias,
+                                        // useMagnifier: true,
+                                        //itemExtent: height * 10,
+                                        physics: const BouncingScrollPhysics(),
+                                        children: scoreboardController
+                                            .scoreboardGeneral!
+                                            .map((scoreboardGeneral) {
+                                          return ScoreBoardCard(
+                                            //TODO activate checker user in escalafon
+                                            //isUser:(scoreboardGeneral.id==estudiante.id)?true:false ,
+                                            isUser: false,
+                                            name: scoreboardGeneral.name,
+                                            promedio:
+                                                scoreboardGeneral.promedio,
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ]),
+                  ),
+                )
               ],
             ),
           ),

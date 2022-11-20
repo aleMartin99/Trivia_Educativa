@@ -6,5 +6,6 @@ enum LoginState {
   unauthorized,
   notConnected,
   noPermits,
-  serverUnreachable
+  serverUnreachable,
+  timeout
 }

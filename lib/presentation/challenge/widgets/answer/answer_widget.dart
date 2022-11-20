@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
+import '../../../../core/app_icons.dart';
 import '/../core/core.dart';
 
 class AnswerWidget extends StatefulWidget {
@@ -71,8 +72,8 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                                   child: CustomIconSVG(
                                     iconName:
                                         (widget.answerModel.title.contains('V'))
-                                            ? AppImages.like
-                                            : AppImages.dislike,
+                                            ? AppIcons.like
+                                            : AppIcons.dislike,
                                   ),
                                 )),
                           ),

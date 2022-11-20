@@ -83,6 +83,8 @@ class _OnboardingState extends State<Onboarding> {
             style: Theme.of(context).textTheme.headline5?.copyWith(
                   color: Theme.of(context).primaryIconTheme.color,
                   fontSize: 16,
+                  decorationThickness: 1.5,
+                  decoration: TextDecoration.underline,
                 ),
           ),
         )),

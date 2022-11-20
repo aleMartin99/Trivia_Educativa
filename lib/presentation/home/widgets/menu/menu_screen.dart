@@ -39,14 +39,15 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     //  auth = context.read<LoginController>().auth;
-    Size deviceSize = MediaQuery.of(context).size;
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
 
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(
-          height: deviceSize.height,
+          height: height * 100,
         ),
         //width: 150,
         decoration: const BoxDecoration(
@@ -54,10 +55,9 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30.0),
+            padding: EdgeInsets.symmetric(vertical: height * 3.2),
             child: SingleChildScrollView(
               child: Column(
-                // mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,32 +70,31 @@ class _MenuScreenState extends State<MenuScreen> {
                         Padding(
                           padding: const EdgeInsets.only(
                               bottom: 24.0, left: 24.0, right: 24.0),
-                          child: Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? AppTheme.backgroundColors(Brightness.dark)
-                                    : AppColors.lightPurple
-                                //AppColors.lightPurple,
-
-                                ),
-                            // color: Colors.blue,
-                            width: 75,
-                            height: 75,
-                            padding: const EdgeInsets.all(5),
-                            child: FittedBox(
-                              child: Icon(
-                                Icons.person,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? AppColors.lightPurple
-                                    : AppColors.grey,
-                                //size: 30,
-                              ),
-                            ),
-                          ),
+                          child: CircleAvatar(
+                              radius: 45,
+                              backgroundColor: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? AppTheme.backgroundColors(Brightness.dark)
+                                  : AppColors.lightPurple,
+                              child: SizedBox(
+                                  width: width * 18,
+                                  height: width * 18,
+                                  child: ClipOval(
+                                    //clipBehavior: Clip.antiAlias,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: FittedBox(
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? AppColors.lightPurple
+                                              : AppColors.grey,
+                                          //size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                  ))),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -126,7 +125,6 @@ class _MenuScreenState extends State<MenuScreen> {
                             ],
                           ),
                         ),
-                        // const Spacer(),
                         ValueListenableBuilder(
                           valueListenable: settingsController.themeNotifier,
                           builder: (ctx, value, _) => DedicatedListTile(
@@ -171,14 +169,13 @@ class _MenuScreenState extends State<MenuScreen> {
                           onPressed: () async {
                             QuickAlert.show(
                               onConfirmBtnTap: () async {
-                                // await sl.resetScope(dispose: false);
                                 await sl.popScope();
-
-                                // await sl.unregister<User>();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/login', (Route<dynamic> route) => false);
+                                    AppRoutes.loginRoute,
+                                    (Route<dynamic> route) => false);
                               },
                               context: context,
+                              //TODO I10n
                               type: QuickAlertType.warning,
                               title: '¿Desea cerrar la sesión?',
                               confirmBtnText: 'Aceptar',
@@ -200,6 +197,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
                           leading: Icon(Icons.logout,
                               color: Theme.of(context).iconTheme.color),
+                          //TODO I10n
                           title: Text('Cerrar sesión',
                               style: Theme.of(context)
                                   .textTheme
@@ -215,8 +213,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ),
                   // SizedBox.expand(),
-                  const SizedBox(
-                    height: 270,
+                  SizedBox(
+                    height: height * 28.6,
                   ),
                   Row(
                     //crossAxisAlignment: CrossAxisAlignment.end,

@@ -46,7 +46,10 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       if (_loginController.state == LoginState.error) {
-        Navigator.pop(context);
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
@@ -59,12 +62,15 @@ class _LoginPageState extends State<LoginPage> {
           confirmBtnText: 'Ok',
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
+
         _loginController.state = LoginState.empty;
       } else if (_loginController.state == LoginState.serverUnreachable) {
-        Navigator.pop(context);
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
         QuickAlert.show(
           context: context,
-          type: QuickAlertType.warning,
+          type: QuickAlertType.loading,
           title: 'Servidor no disponible',
           confirmBtnText: 'Ok',
           text: 'Al parecer el servidor no está disponible.',
@@ -76,7 +82,9 @@ class _LoginPageState extends State<LoginPage> {
 
         _loginController.state = LoginState.empty;
       } else if (_loginController.state == LoginState.notConnected) {
-        Navigator.pop(context);
+        if (Navigator.canPop(context)) {
+          Navigator.canPop(context);
+        }
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
@@ -96,15 +104,6 @@ class _LoginPageState extends State<LoginPage> {
 
     super.initState();
   }
-
-  // void badServer() async {
-  //   var r = await Requests.get('https://google.com');
-  //   // r.throwForStatus();
-  //   // r.raiseForStatus();
-  //   String body = r.content();
-  //   log(r.statusCode.toString());
-  //   log(body.toString());
-  // }
 
   showLoginForm() {
     showLoginForm() {
@@ -133,8 +132,6 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "Iniciar sesión",
                         style: TextStyle(color: AppColors.white, fontSize: 24),
-                        //textAlign: TextAlign.end,
-                        // style: boldText(fSize: 30)
                       ),
                     ],
                   ),
@@ -257,6 +254,9 @@ class _LoginPageState extends State<LoginPage> {
                               await _loginController.signIn(
                                   usernameController.text,
                                   passwordController.text);
+                              // .timeout(const Duration(seconds: 15),
+                              //     onTimeout: () => _loginController.state =
+                              //         LoginState.serverUnreachable);
                             },
                             child: Padding(
                               padding:

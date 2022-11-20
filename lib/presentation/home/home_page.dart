@@ -1,22 +1,40 @@
 // ignore_for_file: unused_field
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
+import 'package:trivia_educativa/presentation/nota_local/cubit/nota_local_cubit.dart';
 
+import '../../data/datasources/nota_local_data_source.dart';
 import '../../data/models/auth_model.dart';
+import '../../data/models/nota_local.dart';
+import '../../data/nota_repository.dart';
 import '../../main.dart';
 import '../home/home_imports.dart';
 import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const String _kIdAsignaturaKey = '';
+const String _kIdEstudianteKey = '';
+const String _kIdNivelKey = '';
+const String _kIdNotaProvKey = '';
+const String _kIdTemaKey = '';
+const String _pNota = '0';
 
 class HomePage extends StatefulWidget {
+// final SharedPreferences _sharedPreferences
+
   const HomePage({
-    Key? key,
+    Key? key, //required this._sharedPreferences,
+    //   Object object,
   }) : super(key: key);
 
   @override
@@ -28,9 +46,54 @@ class _HomePageState extends State<HomePage> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   var auth = sl<Auth>();
+  late final NotaLocal notaLocal;
+
+//final _sharedPreferences = await SharedPreferences.getInstance();
+  // void saveIdsFromNota(String idAsignatura, String idEstudiante, String idNivel,
+  //     String idNotaProv, String idTema, int nota,// SharedPreferences a
+  //     ) async {
+  //   final _sharedPreferences = await SharedPreferences.getInstance();
+  //   await _sharedPreferences.setString(_kIdAsignaturaKey, idAsignatura);
+  //   await a.setString(_kIdEstudianteKey, idEstudiante);
+  //   await a.setString(_kIdNivelKey, idNivel);
+  //   await a.setString(_kIdNotaProvKey, idNotaProv);
+  //   await a.setString(_kIdTemaKey, idTema);
+  //   await a.setString(_pNota, nota.toString());
+  // }
+
+  // void saveNotaLocal ( NotaLocal notaLocal){
+
+  // }
+
+//* var one = int.parse('1');
+
+  // NotaLocal loadNota(SharedPreferences a) {
+  //   //final _sharedPreferences = await SharedPreferences.getInstance();
+
+  //   notaLocal.idAsignatura = a.getString(
+  //     _kIdAsignaturaKey,
+  //   );
+  //   notaLocal.idEstudiante = a.getString(
+  //     _kIdEstudianteKey,
+  //   );
+  //   notaLocal.idNivel = a.getString(
+  //     _kIdNivelKey,
+  //   );
+  //   notaLocal.idNotaProv = a.getString(
+  //     _kIdNotaProvKey,
+  //   );
+  //   notaLocal.idTema = a.getString(
+  //     _kIdTemaKey,
+  //   );
+
+  //   var notaParsedfromString = a.getString(_pNota);
+  //   notaLocal.nota = int.parse(notaParsedfromString.toString());
+  //   return notaLocal;
+  // }
 
   void _onRefresh() async {
     // monitor network fetch
+
     await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _loadData();
@@ -49,24 +112,50 @@ class _HomePageState extends State<HomePage> {
 
   void _loadData() async {
     //TODO implement subir nota local del offline
+
     await homeController.getEstudiante(auth.user.ci, auth.token);
 
     Estudiante estudiante = homeController.estudiante!;
     await homeController.getAsignaturas(estudiante.annoCurso, auth.token);
 
     await homeController.getNotasProv(auth.user.ci, auth.token);
-    // sl.pushNewScope();
-    // List<NotaProv> noticas = homeController.notas!;
-    // sl.registerSingleton<List<NotaProv>>(noticas);
   }
 
-// sl.pushNewScope();
-//     User user = _loginController.user;
-//     sl.registerSingleton<User>(user);
+  var db = sl<NotaRepository>();
+
+  void dataLocal() async {
+    //var box = Hive.box('notasBox');
+    //NotaLocalDataSource db = NotaLocalDataSource(cacheManager: cacheManager);
+    List<NotaLocal> a = await db.getNotas();
+    NotaLocal nota = NotaLocal(
+        idAsignatura: 'Mate',
+        idEstudiante: '222aaID',
+        idNivel: 'nivelID222',
+        idNotaProv: 'notaPRov222ID',
+        idTema: 'Hechosid222',
+        nota: 2);
+
+    await db.addNota(nota);
+    // a = await db.getNotas();
+    // db.deleteNota(2);
+    //  if()
+    print(a.length.toString());
+    // await db.deleteAllNotas();
+    //a = await db.getNotas();
+    // print(a.length.toString());
+    print(a.last.idAsignatura);
+  }
 
   late bool _welcomeMessageAlreadySeen;
+  late bool _pendingNota;
   @override
   initState() {
+    dataLocal();
+    // (_pendingNota =
+    //           context.read<NotaLocalCubit>().notaPending)
+    //       ?
+    //       : null;
+    //TODO comprobar que no hay nota local, si hay, mandar a server y limpiar bd
     Future.delayed(const Duration(seconds: 1), () {
       (_welcomeMessageAlreadySeen =
               context.read<WelcomeMessageCubit>().alreadySeen)
@@ -96,7 +185,6 @@ class _HomePageState extends State<HomePage> {
       if (homeController.state == HomeState.serverError) {
         QuickAlert.show(
           context: context,
-
           type: QuickAlertType.error,
           title: 'Se exploto el servr',
           text: 'Explotao, 500 papu',
@@ -105,42 +193,9 @@ class _HomePageState extends State<HomePage> {
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
           confirmBtnText: 'Ok',
-          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
         homeController.state = HomeState.empty;
-      }
-      // if (homeController.state == HomeState.notasLoaded) {
-      //   QuickAlert.show(
-      //     context: context,
-      //     type: QuickAlertType.info,
-      //     title: 'Notas Prov cargads',
-      //     text: 'notas s s s s s',
-      //     confirmBtnText: 'Ok',
-      //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //     textColor: Theme.of(context).primaryIconTheme.color!,
-      //     titleColor: Theme.of(context).primaryIconTheme.color!,
-      //     confirmBtnColor: AppColors.purple,
-      //   );
-      //   homeController.state = HomeState.empty;
-      // }
-
-      // else if (homeController.state == HomeState.unauthorized) {
-      //   QuickAlert.show(
-      //     context: context,
-      //     type: QuickAlertType.error,
-      //     title: 'Credenciales Inválidas',
-      //     text: 'Revise el usuario o la contraseña ',
-      //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //     textColor: Theme.of(context).primaryIconTheme.color!,
-      //     titleColor: Theme.of(context).primaryIconTheme.color!,
-      //     confirmBtnColor: AppColors.purple,
-      //     confirmBtnText: 'Ok',
-      //     //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
-      //   );
-      //   homeController.state = HomeState.empty;
-      // }
-
-      else if (homeController.state == HomeState.notConnected) {
+      } else if (homeController.state == HomeState.notConnected) {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
@@ -156,21 +211,6 @@ class _HomePageState extends State<HomePage> {
 
         homeController.state = HomeState.empty;
       }
-      // else if (homeController.state == HomeState.estudError) {
-      //   QuickAlert.show(
-      //     context: context,
-      //     type: QuickAlertType.warning,
-      //     title: 'Error con el estudiante',
-      //     confirmBtnText: 'Ok',
-      //     text: 'Al parecer esta x nicaragua',
-      //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //     textColor: Theme.of(context).primaryIconTheme.color!,
-      //     titleColor: Theme.of(context).primaryIconTheme.color!,
-      //     confirmBtnColor: AppColors.purple,
-      //   );
-
-      //   homeController.state = HomeState.empty;
-      // }
     });
     super.initState();
   }
@@ -197,10 +237,10 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
+                      //TODO I10n
                       Text(
                         "Bienvenido!",
                         style: TextStyle(color: AppColors.white, fontSize: 24),
-                        //  style: boldText(fSize: 40)
                       ),
                     ],
                   ),
@@ -208,6 +248,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.only(left: 2.0),
+                  //TODO I10n
                   child: Text(
                     "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales.\n\nAsí, los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas.\n\nDiviértete y aprende!",
                     textAlign: TextAlign.start,
@@ -229,6 +270,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: const Center(
                           child: Text(
+                        //TODO I10n
                         'OK', // style: boldText(fSize: 12)
                         style: TextStyle(
                             color: AppColors.white,
@@ -259,8 +301,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     //TODO make validation for data to all pages like asignatura(home)
 
-    //TODO validacion ara vacio como en niveles(revisar modelos con ?) o que no deje entrar
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -269,6 +309,9 @@ class _HomePageState extends State<HomePage> {
 
           //! cuando carga el usuario pero se tumba el server se queda pegado el cargando, revisar y lanzar timeout y cartel
           body: SmartRefresher(
+            enablePullUp: false,
+            physics: const BouncingScrollPhysics(),
+            primary: false,
             //st
             //footer: ,
             header: const MaterialClassicHeader(
@@ -315,7 +358,6 @@ class _HomePageState extends State<HomePage> {
                             children: homeController.asignaturas!
                                 .map((asignatura) => AsignaturaCardWidget(
                                       nombre: asignatura.descripcion,
-                                      //TODO hacer validaciones para cosas vacias
                                       cantTemas: asignatura.temas.length,
                                       onTap: () {
                                         (asignatura.temas.isEmpty ||
@@ -323,6 +365,7 @@ class _HomePageState extends State<HomePage> {
                                             ? QuickAlert.show(
                                                 // barrierColor: Colors.red,
                                                 context: context,
+                                                //TODO I10n
                                                 type: QuickAlertType.warning,
                                                 title: 'No existen temas',
                                                 confirmBtnText: 'Ok',
@@ -343,12 +386,12 @@ class _HomePageState extends State<HomePage> {
                                             : Navigator.pushNamed(
                                                 context, AppRoutes.temaRoute,
                                                 arguments: TemaPageArgs(
-                                                    notas:
-                                                        homeController.notas!,
-                                                    idEstudiante: homeController
-                                                        .estudiante!.id,
-                                                    idAsignatura: asignatura.id,
-                                                    temas: asignatura.temas));
+                                                  notas: homeController.notas!,
+                                                  idEstudiante: homeController
+                                                      .estudiante!.id,
+                                                  asignatura: asignatura,
+                                                  //temas: asignatura.temas
+                                                ));
                                       },
                                     ))
                                 .toList(),

@@ -9,6 +9,7 @@ import 'widgets/menu/menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static List<MyMenuItem> mainMenu = [
+    //TODO I10n
     MyMenuItem("Inicio", Icons.home_filled, 0),
     MyMenuItem("Tabla de Posiciones", Icons.emoji_events, 1),
   ];

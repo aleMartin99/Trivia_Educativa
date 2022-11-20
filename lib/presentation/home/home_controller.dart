@@ -27,7 +27,6 @@ class HomeController {
     final response = (await repository.findEstudianteByCI(cI, token));
     if (response.isRight()) {
       estudiante = ((response as Right).value as Estudiante);
-      //user = auth!.user;
       state = HomeState.estudLoaded;
       log('loaded estudiante byCI ${estudiante!.name}');
       log(state.name);

@@ -4,6 +4,8 @@ import 'package:trivia_educativa/core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../core/app_icons.dart';
+
 class TemaCardWidget extends StatelessWidget {
   final String nombre;
   final int cantNiveles;
@@ -38,7 +40,8 @@ class TemaCardWidget extends StatelessWidget {
             SizedBox(
                 height: 50,
                 child: CustomIconSVG(
-                  iconName: AppImages.icon_2,
+                  //TODO implement random
+                  iconName: AppIcons.icon_1,
                 )),
             const SizedBox(
               height: 15,

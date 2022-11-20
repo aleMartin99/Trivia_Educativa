@@ -21,14 +21,16 @@ class ResultPage extends StatefulWidget {
   final int questionsLenght;
   final int result;
   final int nota5;
+  final bool isConnected;
 
-  ResultPage({
-    Key? key,
-    required this.quizTitle,
-    required this.questionsLenght,
-    required this.result,
-    required this.nota5,
-  }) : super(
+  ResultPage(
+      {Key? key,
+      required this.quizTitle,
+      required this.questionsLenght,
+      required this.result,
+      required this.nota5,
+      required this.isConnected})
+      : super(
           key: key,
         ) {
     percent = result * 100 / questionsLenght;
@@ -42,6 +44,7 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   final controller = HomeController();
+  //TODO implement sounds for results like 2,3,4,5
 
   late ConfettiController _confettiController;
 
@@ -60,29 +63,29 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   /// A custom Path to paint stars.
-  Path drawStar(Size size) {
-    // Method to convert degree to radians
-    double degToRad(double deg) => deg * (pi / 180.0);
+  // Path drawStar(Size size) {
+  //   // Method to convert degree to radians
+  //   double degToRad(double deg) => deg * (pi / 180.0);
 
-    const numberOfPoints = 5;
-    final halfWidth = size.width / 2;
-    final externalRadius = halfWidth;
-    final internalRadius = halfWidth / 2.5;
-    final degreesPerStep = degToRad(360 / numberOfPoints);
-    final halfDegreesPerStep = degreesPerStep / 2;
-    final path = Path();
-    final fullAngle = degToRad(360);
-    path.moveTo(size.width, halfWidth);
+  //   const numberOfPoints = 5;
+  //   final halfWidth = size.width / 2;
+  //   final externalRadius = halfWidth;
+  //   final internalRadius = halfWidth / 2.5;
+  //   final degreesPerStep = degToRad(360 / numberOfPoints);
+  //   final halfDegreesPerStep = degreesPerStep / 2;
+  //   final path = Path();
+  //   final fullAngle = degToRad(360);
+  //   path.moveTo(size.width, halfWidth);
 
-    for (double step = 0; step < fullAngle; step += degreesPerStep) {
-      path.lineTo(halfWidth + externalRadius * cos(step),
-          halfWidth + externalRadius * sin(step));
-      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
-          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
-    }
-    path.close();
-    return path;
-  }
+  //   for (double step = 0; step < fullAngle; step += degreesPerStep) {
+  //     path.lineTo(halfWidth + externalRadius * cos(step),
+  //         halfWidth + externalRadius * sin(step));
+  //     path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+  //         halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+  //   }
+  //   path.close();
+  //   return path;
+  // }
 
   int get nota3 => widget.nota5 - 20;
 
@@ -135,6 +138,7 @@ class _ResultPageState extends State<ResultPage> {
                         shouldLoop:
                             true, // start again as soon as the animation is finished
                         colors: const [
+                          //TODO pasar para colores const
                           Colors.green,
                           Colors.blue,
                           Colors.pink,
@@ -216,40 +220,28 @@ class _ResultPageState extends State<ResultPage> {
                                     label: I10n.of(context).backTo_Home,
                                     fontColor: Theme.of(context).hintColor,
                                     onTap: () async {
-                                      final NetworkInfo _networkInfo = sl();
-                                      (await _networkInfo.isConnected)
-                                          //TODO make validation time no partirse
-                                          //TODO revisar por q no espera
-                                          ? Future.delayed(
-                                                  const Duration(seconds: 2))
-                                              .then(
-                                              (_) => Navigator.of(context)
-                                                  .pushNamedAndRemoveUntil(
-                                                AppRoutes.homeScreen,
-                                                arguments: HomeScreenArgs(),
-                                                (Route<dynamic> route) => false,
-                                              ),
-                                            )
-                                          : QuickAlert.show(
+                                      //  final NetworkInfo _networkInfo = sl();
+                                      (widget.isConnected)
+                                          ? QuickAlert.show(
                                               onConfirmBtnTap: () async {
-                                                // await sl.resetScope(dispose: false);
                                                 await sl.popScope();
-                                                // await sl.unregister<User>();
                                                 Navigator.of(context)
                                                     .pushNamedAndRemoveUntil(
-                                                        '/login',
+                                                        AppRoutes.loginRoute,
                                                         (Route<dynamic>
                                                                 route) =>
                                                             false);
                                               },
                                               context: context,
+                                              //TODO I10n
                                               type: QuickAlertType.warning,
+                                              barrierDismissible: false,
                                               title:
                                                   'No hay conexión a Internet',
                                               confirmBtnText: 'Aceptar',
                                               //cancelBtnText: 'Cancelar',
                                               text:
-                                                  'Se le rediccionará al Login',
+                                                  'Su nota ha sido guardada exitosamente. Se le rediccionará al Login',
                                               backgroundColor: Theme.of(context)
                                                   .scaffoldBackgroundColor,
                                               textColor: Theme.of(context)
@@ -262,6 +254,16 @@ class _ResultPageState extends State<ResultPage> {
                                               // showCancelBtn: true,
 
                                               //Colors.transparent
+                                            )
+                                          : Future.delayed(
+                                                  const Duration(seconds: 2))
+                                              .then(
+                                              (_) => Navigator.of(context)
+                                                  .pushNamedAndRemoveUntil(
+                                                AppRoutes.homeScreen,
+                                                //arguments: HomeScreenArgs(),
+                                                (Route<dynamic> route) => false,
+                                              ),
                                             );
                                     },
                                   ),

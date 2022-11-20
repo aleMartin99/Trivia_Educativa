@@ -18,16 +18,13 @@ class HomeRepository with RequestErrorParser {
 
   Future findEstudianteByCI(String cI, String token) async {
     var uri = Uri.http(
-      //'10.0.2.2:3000/api/v2/estudiante/byCI/$cI',
-
-      apiBaseUrl, kApiPath + "estudiante/byCI/" "$cI",
+      apiBaseUrl,
+      kApiPath + "estudiante/byCI/" "$cI",
     );
 
     if (await _networkInfo.isConnected) {
       try {
         final response = await http.get(uri, headers: {
-          //'Content-Type': 'application/json',
-          //'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         });
         if (response.statusCode == 200) {
@@ -40,8 +37,6 @@ class HomeRepository with RequestErrorParser {
         } else if (response.statusCode == 500) {
           return left(ServerFailure);
         } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
           throw Exception('Failed to find Estudiante by CI');
         }
       } catch (e) {
@@ -61,8 +56,6 @@ class HomeRepository with RequestErrorParser {
     if (await _networkInfo.isConnected) {
       try {
         final response = await http.get(uri, headers: {
-          //'Content-Type': 'application/json',
-          //'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         });
         if (response.statusCode == 200) {
@@ -76,9 +69,6 @@ class HomeRepository with RequestErrorParser {
         } else if (response.statusCode == 500) {
           return left(ServerFailure);
         } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
-
           throw Exception('Failed to load Asingaturas');
         }
       } catch (e) {
@@ -97,8 +87,6 @@ class HomeRepository with RequestErrorParser {
     if (await _networkInfo.isConnected) {
       try {
         final response = await http.get(uri, headers: {
-          //'Content-Type': 'application/json',
-          //'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         });
         if (response.statusCode == 200) {
@@ -109,8 +97,6 @@ class HomeRepository with RequestErrorParser {
         } else if (response.statusCode == 500) {
           return left(ServerFailure);
         } else {
-          // If the server did not return a 200 OK response,
-          // then throw an exception.
           throw Exception('Failed to load Notas');
         }
       } catch (e) {

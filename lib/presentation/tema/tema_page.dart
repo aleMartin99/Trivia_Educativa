@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
-import '../../core/network_info/network_info.dart';
-import '../../main.dart';
 import 'tema_imports.dart';
 import '/../core/core.dart';
 
@@ -17,13 +15,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TemaPage extends StatefulWidget {
   const TemaPage(
       {Key? key,
-      required this.temas,
-      required this.idAsignatura,
+      //required this.temas,
+      required this.asignatura,
       required this.idEstudiante,
       required this.notas})
       : super(key: key);
-  final List<Tema> temas;
-  final String idAsignatura;
+  // final List<Tema> temas;
+  final Asignatura asignatura;
   final String idEstudiante;
   final List<NotaProv> notas;
 
@@ -47,7 +45,6 @@ class _TemaPageState extends State<TemaPage> {
     //bool _snap = false;
     //  bool _floating = true;
     return Scaffold(
-        //TODO change app bar to sliver
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: CustomScrollView(
           slivers: [
@@ -96,8 +93,6 @@ class _TemaPageState extends State<TemaPage> {
               floating: true,
               flexibleSpace: Container(
                 padding: const EdgeInsets.only(top: 106),
-                //margin: EdgeInsets.all(0),
-                //  height: 2500,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
@@ -117,7 +112,7 @@ class _TemaPageState extends State<TemaPage> {
                     width: double.infinity,
                     blur: 2,
                     image: Image.asset(
-                      'assets/images/temas.jpg',
+                      widget.asignatura.image,
                       fit: BoxFit.cover,
                     ),
                     overlayColor: Colors.white.withOpacity(0.1),
@@ -138,17 +133,7 @@ class _TemaPageState extends State<TemaPage> {
               ),
             ),
 
-            // Text(
-            //   ' Historia de Cuba',
-            //   style: AppTextStyles.titleBold.copyWith(
-            //     color: AppColors.white,
-            //   ),
-            // ),
-
-            //hasScrollBody: false,
-            //  fillOverscroll: true,
-
-            (widget.temas.isNotEmpty)
+            (widget.asignatura.temas.isNotEmpty)
                 //  const EdgeInsets.symmetric(
                 //       horizontal: 20,
                 //       vertical: 15,
@@ -184,7 +169,7 @@ class _TemaPageState extends State<TemaPage> {
 
                             //TODO validaciones like home
 
-                            children: widget.temas
+                            children: widget.asignatura.temas
                                 .map((tema) => TemaCardWidget(
                                     nombre: tema.descripcion,
                                     cantNiveles: tema.niveles.length,
@@ -198,7 +183,7 @@ class _TemaPageState extends State<TemaPage> {
                                         arguments: NivelPageArgs(
                                             niveles: tema.niveles,
                                             notas: widget.notas,
-                                            idAsignatura: widget.idAsignatura,
+                                            asignatura: widget.asignatura,
                                             idEstudiante: widget.idEstudiante,
                                             idTema: tema.id),
                                       );

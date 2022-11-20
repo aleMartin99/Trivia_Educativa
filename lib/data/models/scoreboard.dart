@@ -1,16 +1,31 @@
 class ScoreBoard {
-  late int promedio;
+  late double promedio;
   late String name;
+  //TODO add scoreboard id
+  //late String id;
 
-//TODO make token global with shared preferences
   ScoreBoard({
     required this.promedio,
     required this.name,
+    //TODO add scoreboard id required this.id
     // this.imagen
   });
 
+  ScoreBoard.reciprocal(double d) {
+    1 / d;
+  }
+
   ScoreBoard.fromJson(Map<String, dynamic> json) {
-    promedio = json['promedio'];
+    if (json['promedio'] is int) {
+      int x = json['promedio'];
+
+      ScoreBoard.reciprocal(x.toDouble());
+      promedio = x.toDouble();
+    } else {
+      promedio = json['promedio'];
+    }
+
     name = (json['name']);
+    //TODO add scoreboard id   id = (json['name']);
   }
 }
