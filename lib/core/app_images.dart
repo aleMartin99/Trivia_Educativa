@@ -45,7 +45,7 @@ class AppImages {
     AppImages.tema_12,
   ];
 
-  static String randomTema() {
+  static String randomImageTema() {
     int a = Random().nextInt(12);
     return defaultImages[a];
   }

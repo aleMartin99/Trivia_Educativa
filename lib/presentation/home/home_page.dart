@@ -1,18 +1,12 @@
-// ignore_for_file: unused_field
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
+
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
-import 'package:trivia_educativa/presentation/nota_local/cubit/nota_local_cubit.dart';
 
-import '../../data/datasources/nota_local_data_source.dart';
 import '../../data/models/auth_model.dart';
 import '../../data/models/nota_local.dart';
 import '../../data/nota_repository.dart';
@@ -20,21 +14,10 @@ import '../../main.dart';
 import '../home/home_imports.dart';
 import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-const String _kIdAsignaturaKey = '';
-const String _kIdEstudianteKey = '';
-const String _kIdNivelKey = '';
-const String _kIdNotaProvKey = '';
-const String _kIdTemaKey = '';
-const String _pNota = '0';
 
 class HomePage extends StatefulWidget {
-// final SharedPreferences _sharedPreferences
-
   const HomePage({
-    Key? key, //required this._sharedPreferences,
-    //   Object object,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -47,49 +30,6 @@ class _HomePageState extends State<HomePage> {
       RefreshController(initialRefresh: false);
   var auth = sl<Auth>();
   late final NotaLocal notaLocal;
-
-//final _sharedPreferences = await SharedPreferences.getInstance();
-  // void saveIdsFromNota(String idAsignatura, String idEstudiante, String idNivel,
-  //     String idNotaProv, String idTema, int nota,// SharedPreferences a
-  //     ) async {
-  //   final _sharedPreferences = await SharedPreferences.getInstance();
-  //   await _sharedPreferences.setString(_kIdAsignaturaKey, idAsignatura);
-  //   await a.setString(_kIdEstudianteKey, idEstudiante);
-  //   await a.setString(_kIdNivelKey, idNivel);
-  //   await a.setString(_kIdNotaProvKey, idNotaProv);
-  //   await a.setString(_kIdTemaKey, idTema);
-  //   await a.setString(_pNota, nota.toString());
-  // }
-
-  // void saveNotaLocal ( NotaLocal notaLocal){
-
-  // }
-
-//* var one = int.parse('1');
-
-  // NotaLocal loadNota(SharedPreferences a) {
-  //   //final _sharedPreferences = await SharedPreferences.getInstance();
-
-  //   notaLocal.idAsignatura = a.getString(
-  //     _kIdAsignaturaKey,
-  //   );
-  //   notaLocal.idEstudiante = a.getString(
-  //     _kIdEstudianteKey,
-  //   );
-  //   notaLocal.idNivel = a.getString(
-  //     _kIdNivelKey,
-  //   );
-  //   notaLocal.idNotaProv = a.getString(
-  //     _kIdNotaProvKey,
-  //   );
-  //   notaLocal.idTema = a.getString(
-  //     _kIdTemaKey,
-  //   );
-
-  //   var notaParsedfromString = a.getString(_pNota);
-  //   notaLocal.nota = int.parse(notaParsedfromString.toString());
-  //   return notaLocal;
-  // }
 
   void _onRefresh() async {
     // monitor network fetch
@@ -124,38 +64,37 @@ class _HomePageState extends State<HomePage> {
   var db = sl<NotaRepository>();
 
   void dataLocal() async {
+    //TODO implemetn method to save local nota
+    //TODO check if nota local y subir
     //var box = Hive.box('notasBox');
     //NotaLocalDataSource db = NotaLocalDataSource(cacheManager: cacheManager);
     List<NotaLocal> a = await db.getNotas();
-    NotaLocal nota = NotaLocal(
-        idAsignatura: 'Mate',
-        idEstudiante: '222aaID',
-        idNivel: 'nivelID222',
-        idNotaProv: 'notaPRov222ID',
-        idTema: 'Hechosid222',
-        nota: 2);
+    // NotaLocal nota = NotaLocal(
+    //     idAsignatura: 'Mate',
+    //     idEstudiante: '222aaID',
+    //     idNivel: 'nivelID222',
+    //     idNotaProv: 'notaPRov222ID',
+    //     idTema: 'Hechosid222',
+    //     nota: 2);
 
-    await db.addNota(nota);
+    //  await db.addNota(nota);
     // a = await db.getNotas();
     // db.deleteNota(2);
     //  if()
     print(a.length.toString());
-    // await db.deleteAllNotas();
+    await db.deleteAllNotas();
     //a = await db.getNotas();
-    // print(a.length.toString());
-    print(a.last.idAsignatura);
+    print(a.length.toString());
+    //print(a.last.idAsignatura);
   }
 
   late bool _welcomeMessageAlreadySeen;
-  late bool _pendingNota;
+  // late bool _pendingNota;
   @override
   initState() {
-    dataLocal();
-    // (_pendingNota =
-    //           context.read<NotaLocalCubit>().notaPending)
-    //       ?
-    //       : null;
     //TODO comprobar que no hay nota local, si hay, mandar a server y limpiar bd
+
+    dataLocal();
     Future.delayed(const Duration(seconds: 1), () {
       (_welcomeMessageAlreadySeen =
               context.read<WelcomeMessageCubit>().alreadySeen)
@@ -357,8 +296,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSpacing: 16,
                             children: homeController.asignaturas!
                                 .map((asignatura) => AsignaturaCardWidget(
-                                      nombre: asignatura.descripcion,
-                                      cantTemas: asignatura.temas.length,
+                                      asignatura: asignatura,
                                       onTap: () {
                                         (asignatura.temas.isEmpty ||
                                                 asignatura.temas == null)

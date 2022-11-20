@@ -3,25 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:trivia_educativa/core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:trivia_educativa/data/models/asignatura_model.dart';
 
 import '../../../../core/app_icons.dart';
 
 class AsignaturaCardWidget extends StatelessWidget {
-  final String nombre;
-  // final String icon;
-
-  final int cantTemas;
+  final Asignatura asignatura;
 
   final VoidCallback onTap;
 
-//TODO add icon
-
   const AsignaturaCardWidget({
     Key? key,
-    required this.nombre,
-    required this.cantTemas,
+    required this.asignatura,
     required this.onTap,
-    // required this.icon
   }) : super(key: key);
 
   @override
@@ -45,7 +39,7 @@ class AsignaturaCardWidget extends StatelessWidget {
                   height: 80,
                   child: CustomIconSVG(
                     //iconName:widget.icon
-                    iconName: AppIcons.icon_6,
+                    iconName: asignatura.icon,
                   )),
             ),
             const SizedBox(
@@ -54,7 +48,7 @@ class AsignaturaCardWidget extends StatelessWidget {
             Flex(
               direction: Axis.vertical,
               children: [
-                Text(nombre,
+                Text(asignatura.descripcion,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
@@ -64,13 +58,8 @@ class AsignaturaCardWidget extends StatelessWidget {
                         color: Theme.of(context).primaryIconTheme.color)),
               ],
             ),
-            //fit: BoxFit.fitWidth,
-
-            // const SizedBox(
-            //   height: 10,
-            // ),
             Text(
-              "${I10n.of(context).topics}: $cantTemas",
+              "${I10n.of(context).topics}: ${asignatura.temas.length}",
               //textAlign: TextAlign.end,
               style: TextStyle(
                   fontFamily: 'PNRegular',

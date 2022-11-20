@@ -26,11 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final _drawerController = AwesomeDrawerBarController();
 
   final int _currentPage = 0;
-
+//TODO check marcar selected from other code
   @override
   Widget build(BuildContext context) {
     return AwesomeDrawerBar(
       isRTL: false,
+      shadowColor: Colors.red,
       controller: _drawerController,
       type: StyleState.scaleRight,
       menuScreen: MenuScreen(

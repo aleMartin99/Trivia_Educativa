@@ -25,13 +25,8 @@ class Asignatura {
       required this.icon,
       required this.soundtrack});
 
-//TOdo Annadir fromjson para imagen e icono,
-
-//TODO si esta vacio o null en imagen e icon pongo valor por defecto
   Asignatura.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
-    // icon = json['icon'];
-    // image = json['image'];
     descripcion = json['descripcion'];
     anno = json['anno'];
     if (json['temas'] != null) {
@@ -42,14 +37,15 @@ class Asignatura {
     }
     if (json['configuracion'] != null &&
         (json['configuracion'] as List).isNotEmpty) {
-      // List <String>  config = <String>[];
       image = json['configuracion'][0];
       icon = json['configuracion'][1];
       soundtrack = json['configuracion'][2];
-    } else {
-      image = AppImages.randomTema();
-      icon = AppIcons.icon_1;
-      soundtrack = AppSpunds.soundtrack_1;
+    }
+    //* Add data for image, icon, soundtrack in case that they are empty
+    else {
+      image = AppImages.randomImageTema();
+      icon = AppIcons.randomIcon();
+      soundtrack = AppSpunds.randomSoundTrack();
     }
   }
 
@@ -57,11 +53,8 @@ class Asignatura {
     final Map<String, dynamic> data = <String, dynamic>{};
 
     data['_id'] = id;
-    // data['icon'] = icon;
-    // data['image'] = image;
     data['descripcion'] = descripcion;
     data['anno'] = anno;
-    //  data['profesor'] = profesores.map((v) => v.toJson()).toList();
     data['temas'] = temas.map((v) => v.toJson()).toList();
 
     return data;

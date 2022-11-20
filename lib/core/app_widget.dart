@@ -10,11 +10,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../data/local_db/cache_manager.dart';
 import '../main.dart';
 import '../presentation/home/widgets/menu/menu_provider.dart';
 import '../presentation/home/widgets/welcome_message/cubit/welcome_message_cubit.dart';
-import '../presentation/nota_local/cubit/nota_local_cubit.dart';
 import '../presentation/onboarding/cubit/onboarding_cubit.dart';
 
 class AppWidget extends StatelessWidget {
@@ -30,10 +28,6 @@ class AppWidget extends StatelessWidget {
       BlocProvider(
         create: (context) => sl<OnboardingCubit>(),
       ),
-      // BlocProvider(
-      //   create: (context) => sl<CacheManager>(),
-      // ),
-      //  Provider<LoginController>(create: (context) => sl<LoginController>()),
       ChangeNotifierProvider(
         create: (_) => MenuProvider(),
       ),
