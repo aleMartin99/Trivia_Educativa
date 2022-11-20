@@ -111,6 +111,7 @@ class _TemaPageState extends State<TemaPage> {
                     // height: 200,
                     width: double.infinity,
                     blur: 2,
+                    //TODO change to network validar
                     image: Image.asset(
                       widget.asignatura.image,
                       fit: BoxFit.cover,

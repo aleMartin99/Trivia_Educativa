@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -67,15 +66,4 @@ class CacheManager {
     final box = _getBox(boxName);
     await box.put(id, item);
   }
-
-  // @override
-  // Future<void> onClose() async {
-  //   for (final item in CacheBoxes.allBoxes) {
-  //     if (Hive.isBoxOpen(item)) {
-  //       await Hive.box<dynamic>(item).compact();
-  //     }
-  //   }
-  //   await Hive.close();
-  //   super.onClose();
-  // }
 }

@@ -17,30 +17,27 @@ class NotaLocalAdaptAdapter extends TypeAdapter<NotaLocalAdapt> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return NotaLocalAdapt(
-      nota: fields[5] as int?,
-      idNotaProv: fields[0] as String?,
-      idAsignatura: fields[1] as String?,
-      idTema: fields[2] as String?,
-      idNivel: fields[3] as String?,
-      idEstudiante: fields[4] as String?,
+      nota: fields[4] as int?,
+      idAsignatura: fields[0] as String?,
+      idTema: fields[1] as String?,
+      idNivel: fields[2] as String?,
+      idEstudiante: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, NotaLocalAdapt obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.idNotaProv)
-      ..writeByte(1)
-      ..write(obj.idAsignatura)
-      ..writeByte(2)
-      ..write(obj.idTema)
-      ..writeByte(3)
-      ..write(obj.idNivel)
-      ..writeByte(4)
-      ..write(obj.idEstudiante)
       ..writeByte(5)
+      ..writeByte(0)
+      ..write(obj.idAsignatura)
+      ..writeByte(1)
+      ..write(obj.idTema)
+      ..writeByte(2)
+      ..write(obj.idNivel)
+      ..writeByte(3)
+      ..write(obj.idEstudiante)
+      ..writeByte(4)
       ..write(obj.nota);
   }
 

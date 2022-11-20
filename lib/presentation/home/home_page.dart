@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +13,7 @@ import '../../data/models/auth_model.dart';
 import '../../data/models/nota_local.dart';
 import '../../data/nota_repository.dart';
 import '../../main.dart';
+import '../challenge/challenge_controller.dart';
 import '../home/home_imports.dart';
 import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -26,6 +29,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homeController = HomeController();
+  final challengeController = ChallengeController();
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   var auth = sl<Auth>();
@@ -52,8 +56,8 @@ class _HomePageState extends State<HomePage> {
 
   void _loadData() async {
     //TODO implement subir nota local del offline
-
-    await homeController.getEstudiante(auth.user.ci, auth.token);
+    await uploadNotaLocal().then(
+        (value) => homeController.getEstudiante(auth.user.ci, auth.token));
 
     Estudiante estudiante = homeController.estudiante!;
     await homeController.getAsignaturas(estudiante.annoCurso, auth.token);
@@ -63,29 +67,24 @@ class _HomePageState extends State<HomePage> {
 
   var db = sl<NotaRepository>();
 
-  void dataLocal() async {
+  Future uploadNotaLocal() async {
     //TODO implemetn method to save local nota
     //TODO check if nota local y subir
-    //var box = Hive.box('notasBox');
-    //NotaLocalDataSource db = NotaLocalDataSource(cacheManager: cacheManager);
-    List<NotaLocal> a = await db.getNotas();
-    // NotaLocal nota = NotaLocal(
-    //     idAsignatura: 'Mate',
-    //     idEstudiante: '222aaID',
-    //     idNivel: 'nivelID222',
-    //     idNotaProv: 'notaPRov222ID',
-    //     idTema: 'Hechosid222',
-    //     nota: 2);
+    List<NotaLocal> notas = await db.getNotas();
 
-    //  await db.addNota(nota);
-    // a = await db.getNotas();
-    // db.deleteNota(2);
-    //  if()
-    print(a.length.toString());
-    await db.deleteAllNotas();
-    //a = await db.getNotas();
-    print(a.length.toString());
-    //print(a.last.idAsignatura);
+    if (notas.isNotEmpty) {
+      log('notas local con valores');
+      await challengeController
+          .asignarNota(
+              await challengeController.crearNota(notas[0].nota!, auth.token),
+              notas[0].idAsignatura!,
+              notas[0].idTema!,
+              notas[0].idNivel!,
+              notas[0].idEstudiante!,
+              auth.token)
+          .then((value) => db.deleteAllNotas());
+    }
+    homeController.state = HomeState.uploadedNotaLocal;
   }
 
   late bool _welcomeMessageAlreadySeen;
@@ -93,15 +92,14 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     //TODO comprobar que no hay nota local, si hay, mandar a server y limpiar bd
+    _loadData();
 
-    dataLocal();
     Future.delayed(const Duration(seconds: 1), () {
       (_welcomeMessageAlreadySeen =
               context.read<WelcomeMessageCubit>().alreadySeen)
           ? null
           : showWelcomeBox();
     });
-    _loadData();
 
     homeController.stateNotifier.addListener(() {
       setState(() {});
@@ -119,6 +117,12 @@ class _HomePageState extends State<HomePage> {
           confirmBtnText: 'Ok',
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
+        homeController.state = HomeState.empty;
+      }
+      if (homeController.state == HomeState.uploadedNotaLocal) {
+        setState(() {
+          homeController.state = HomeState.empty;
+        });
       }
       //TODO change message
       if (homeController.state == HomeState.serverError) {
@@ -289,11 +293,11 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.only(top: 10.0),
                           child: GridView.count(
                             physics: const BouncingScrollPhysics(),
-                            childAspectRatio: 1.11,
+                            childAspectRatio: 1,
                             shrinkWrap: true,
                             crossAxisCount: 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 12,
                             children: homeController.asignaturas!
                                 .map((asignatura) => AsignaturaCardWidget(
                                       asignatura: asignatura,

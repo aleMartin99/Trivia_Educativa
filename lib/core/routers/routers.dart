@@ -3,7 +3,6 @@ import 'package:trivia_educativa/data/models/asignatura_model.dart';
 import 'package:trivia_educativa/data/models/nivel_model.dart';
 import 'package:trivia_educativa/data/models/nota_prov_model.dart';
 import 'package:trivia_educativa/data/models/pregunta_model.dart';
-import 'package:trivia_educativa/data/models/tema_model.dart';
 import 'package:trivia_educativa/presentation/home/home_imports.dart';
 import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
 import 'package:trivia_educativa/presentation/tema/tema_page.dart';
@@ -13,7 +12,6 @@ import 'package:trivia_educativa/presentation/challenge/challenge_page.dart';
 import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
 
-import '../../main.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/cubit/onboarding_cubit.dart';
 import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';

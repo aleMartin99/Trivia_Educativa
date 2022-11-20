@@ -30,11 +30,11 @@ class AsignaturaCardWidget extends StatelessWidget {
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Center(
-              //todo coger de asignatura.config, si vacio de mi listado
+              //TODO CHange to network validation icon
               child: SizedBox(
                   height: 80,
                   child: CustomIconSVG(
@@ -49,7 +49,7 @@ class AsignaturaCardWidget extends StatelessWidget {
               direction: Axis.vertical,
               children: [
                 Text(asignatura.descripcion,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
@@ -60,7 +60,9 @@ class AsignaturaCardWidget extends StatelessWidget {
             ),
             Text(
               "${I10n.of(context).topics}: ${asignatura.temas.length}",
+              maxLines: 1,
               //textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontFamily: 'PNRegular',
                   fontSize: 14,

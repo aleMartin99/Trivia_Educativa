@@ -11,7 +11,7 @@ class NotaLocalAdapt extends HiveObject {
   NotaLocalAdapt({
     //required this.idNotaProv
     required this.nota,
-    required this.idNotaProv,
+    // required this.idNotaProv,
     required this.idAsignatura,
     required this.idTema,
     required this.idNivel,
@@ -22,33 +22,33 @@ class NotaLocalAdapt extends HiveObject {
       idAsignatura: response.idAsignatura,
       idEstudiante: response.idEstudiante,
       idNivel: response.idNivel,
-      idNotaProv: response.idNotaProv,
+      // idNotaProv: response.idNotaProv,
       idTema: response.idTema,
       nota: response.nota,
     );
   }
 
-  @HiveField(0)
-  final String? idNotaProv;
+  // @HiveField(0)
+  // final String? idNotaProv;
 
-  @HiveField(1)
+  @HiveField(0)
   final String? idAsignatura;
 
-  @HiveField(2)
+  @HiveField(1)
   final String? idTema;
 
-  @HiveField(3)
+  @HiveField(2)
   final String? idNivel;
 
-  @HiveField(4)
+  @HiveField(3)
   final String? idEstudiante;
 
-  @HiveField(5)
+  @HiveField(4)
   final int? nota;
 
   NotaLocal toDomain() {
     return NotaLocal(
-      idNotaProv: idNotaProv,
+      //idNotaProv: idNotaProv,
       idTema: idTema,
       nota: nota,
       idAsignatura: idAsignatura,

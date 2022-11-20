@@ -12,6 +12,8 @@ class AppIcons {
   static String get icon_6 => 'assets/icons/icon_6.svg';
   static String get icon_7 => 'assets/icons/icon_7.svg';
 
+  static String get icon_avatar => 'assets/icons/avatar_default.svg';
+
   static String get trophy => 'assets/icons/icon_trophy.svg';
   static String get dislike => 'assets/icons/icon_dislike.svg';
   static String get like => 'assets/icons/icon_like.svg';
@@ -39,6 +41,7 @@ class CustomIconSVG extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO CHange to network validation icon
     return SvgPicture.asset(
       iconName.toString(),
       color: color,

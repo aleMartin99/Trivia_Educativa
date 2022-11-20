@@ -10,11 +10,14 @@ import 'dart:developer';
 
 import 'package:quickalert/quickalert.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+import 'package:trivia_educativa/core/network_info/network_info.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
 import '../../data/models/auth_model.dart';
+import '../../data/models/nota_local.dart';
+import '../../data/nota_repository.dart';
 import '../../main.dart';
 import '/../core/core.dart';
 
@@ -66,8 +69,10 @@ class _ChallengePageState extends State<ChallengePage> {
   Future loadMusic() async {
     //TODO change to url if doesn't work
     //todo Audio carga aqui de asignatura.audio
+
+    //TODO CHange to network validation soundtrack
     await player.play(
-      (AssetSource('sounds/soundtrack_2.wav')),
+      (AssetSource(widget.asignatura.soundtrack)),
     );
 
     player.setReleaseMode(ReleaseMode.loop);
@@ -93,14 +98,17 @@ class _ChallengePageState extends State<ChallengePage> {
     nextPage();
   }
 
+//TODO pass to back button, timeout
+// TODO check por que pinga no se pasa q esta sin internet y llega a la otra vista y tira pal home
   Future saveNota() async {
-    int nota = evaluarNivel(
+    int notaValor = evaluarNivel(
         widget.preguntas.length, controller.cantRightAnswers, widget.nota5);
-    if (isConnected) {
+    var networkInfo = sl<NetworkInfo>();
+    if (await networkInfo.isConnected) {
       //*crearNota devuelve el id de la nota creada
       //*asignarNota asigna esa nota a bd
       await controller.asignarNota(
-          await controller.crearNota(nota, auth.token),
+          await controller.crearNota(notaValor, auth.token),
           widget.asignatura.id,
           widget.idTema,
           widget.nivel.id,
@@ -109,7 +117,16 @@ class _ChallengePageState extends State<ChallengePage> {
     }
     //TODO si no hay internet guardar local y pa fuera
     else {
+      var db = sl<NotaRepository>();
       //TODO implement local sotrage save
+      NotaLocal nota = NotaLocal(
+          idAsignatura: widget.asignatura.id,
+          idEstudiante: widget.idEstudiante,
+          idNivel: widget.nivel.id,
+          // idNotaProv: ,
+          idTema: widget.idTema,
+          nota: notaValor);
+      await db.addNota(nota);
       isConnected = false;
     }
   }
@@ -248,9 +265,7 @@ class _ChallengePageState extends State<ChallengePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       BackButton(
-                        //TODO check x que si me voy a result page luego sale el timeout
                         onPressed: () async {
-                          //TODO si no hay internet guardar local y pa fuera
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
                               _streamDuration.pause();

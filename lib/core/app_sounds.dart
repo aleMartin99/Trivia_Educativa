@@ -13,8 +13,8 @@ class AppSpunds {
   static String get nota5_1 => "assets/sounds/nota5_1.wav";
   static String get nota5_2 => "assets/sounds/nota5_2.wav";
 
-  static String get soundtrack_1 => "assets/sounds/soundtrack_1.mp3";
-  static String get soundtrack_2 => "assets/sounds/soundtrack_2.wav";
+  static String get soundtrack_1 => "sounds/soundtrack_1.mp3";
+  static String get soundtrack_2 => "sounds/soundtrack_2.wav";
 
   static final List<String> defaultSoundTracks = [
     AppSpunds.soundtrack_1,
