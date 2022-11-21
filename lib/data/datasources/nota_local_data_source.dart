@@ -9,22 +9,18 @@ class NotaLocalDataSource {
   NotaLocalDataSource(Object object);
   var cacheManager = sl<CacheManager>();
 
-  @override
   Future<List<NotaLocalAdapt>> getNotas() {
     return cacheManager.getAll(CacheBoxes.notasBox);
   }
 
-  @override
   Future<void> addNota(NotaLocalAdapt nota) async {
     await cacheManager.add<NotaLocalAdapt>(nota, CacheBoxes.notasBox);
   }
 
-  @override
   Future<void> deleteNota(int id) async {
     await cacheManager.delete<dynamic>(id, CacheBoxes.notasBox);
   }
 
-  @override
   Future<void> deleteAll() async {
     await cacheManager.deleteAll(CacheBoxes.notasBox);
   }

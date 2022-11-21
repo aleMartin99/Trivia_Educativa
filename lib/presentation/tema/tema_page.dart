@@ -110,7 +110,7 @@ class _TemaPageState extends State<TemaPage> {
                   background: GlassImage(
                     // height: 200,
                     width: double.infinity,
-                    blur: 2,
+                    blur: 1.5,
                     //TODO change to network validar
                     image: Image.asset(
                       widget.asignatura.image,

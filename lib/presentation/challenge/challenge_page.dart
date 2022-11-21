@@ -53,12 +53,12 @@ class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
   final pageController = PageController();
   late final StreamDuration _streamDuration;
-  AudioPlayer player = AudioPlayer();
+
   bool isConnected = true;
   var auth = sl<Auth>();
-
+  AudioPlayer player = AudioPlayer();
   bool isPlaying = false;
-
+  late int notaValor;
   @override
   void dispose() {
     player.dispose();
@@ -67,8 +67,6 @@ class _ChallengePageState extends State<ChallengePage> {
   }
 
   Future loadMusic() async {
-    //TODO change to url if doesn't work
-
     //TODO CHange to network validation soundtrack
     await player.play(
       (AssetSource(widget.asignatura.soundtrack)),
@@ -97,10 +95,8 @@ class _ChallengePageState extends State<ChallengePage> {
     nextPage();
   }
 
-//TODO pass to back button, timeout
-// TODO check por que pinga no se pasa q esta sin internet y llega a la otra vista y tira pal home
   Future saveNota() async {
-    int notaValor = evaluarNivel(
+    notaValor = evaluarNivel(
         widget.preguntas.length, controller.cantRightAnswers, widget.nota5);
     var networkInfo = sl<NetworkInfo>();
     if (await networkInfo.isConnected) {
@@ -168,7 +164,7 @@ class _ChallengePageState extends State<ChallengePage> {
 
     controller.stateNotifier.addListener(() {
       if (controller.state == ChallengeState.timeOut) {
-        //TODO poner salvar nota
+        //TODO poner notaValor por parametro
         QuickAlert.show(
           onWillPop: false,
 
@@ -180,11 +176,12 @@ class _ChallengePageState extends State<ChallengePage> {
               context,
               AppRoutes.resultRoute,
               arguments: ResultPageArgs(
+                notaValor: notaValor,
                 isConnected: isConnected,
                 quizTitle: widget.quizTitle,
                 questionsLenght: widget.preguntas.length,
                 result: controller.cantRightAnswers,
-                nota5: widget.nota5,
+                //  nota5: widget.nota5,
               ),
             );
           },
@@ -258,6 +255,7 @@ class _ChallengePageState extends State<ChallengePage> {
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
                               _streamDuration.pause();
+                              //TODO poner notaValor por parametro
                               await player.release();
                               await saveNota();
                               Navigator.pop(context);
@@ -265,11 +263,12 @@ class _ChallengePageState extends State<ChallengePage> {
                                 context,
                                 AppRoutes.resultRoute,
                                 arguments: ResultPageArgs(
+                                  notaValor: notaValor,
                                   isConnected: isConnected,
                                   quizTitle: widget.quizTitle,
                                   questionsLenght: widget.preguntas.length,
                                   result: controller.cantRightAnswers,
-                                  nota5: widget.nota5,
+                                  //  nota5: widget.nota5,
                                 ),
                               );
                             },
@@ -394,16 +393,18 @@ class _ChallengePageState extends State<ChallengePage> {
                                     _streamDuration.pause();
                                     await player.release();
                                     await saveNota();
+                                    //TODO poner notaValor por parametro
                                     Navigator.pushReplacementNamed(
                                       context,
                                       AppRoutes.resultRoute,
                                       arguments: ResultPageArgs(
+                                        notaValor: notaValor,
                                         isConnected: isConnected,
                                         quizTitle: widget.quizTitle,
                                         questionsLenght:
                                             widget.preguntas.length,
                                         result: controller.cantRightAnswers,
-                                        nota5: widget.nota5,
+                                        //nota5: widget.nota5,
                                       ),
                                     );
                                   },

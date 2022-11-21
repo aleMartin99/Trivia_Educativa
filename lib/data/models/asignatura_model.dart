@@ -9,12 +9,9 @@ class Asignatura {
   late String descripcion;
   late int anno;
   late List<Tema> temas;
-
-  // late String icon;
   late String image;
   late String icon;
   late String soundtrack;
-  //TODO annadir imagen e icono
 
   Asignatura(
       {required this.id,
@@ -37,6 +34,7 @@ class Asignatura {
     }
     if (json['configuracion'] != null &&
         (json['configuracion'] as List).isNotEmpty) {
+      //TODO change this to new model
       image = json['configuracion'][0];
       icon = json['configuracion'][1];
       soundtrack = json['configuracion'][2];
@@ -45,7 +43,7 @@ class Asignatura {
     else {
       image = AppImages.randomImageTema();
       icon = AppIcons.randomIcon();
-      soundtrack = AppSpunds.randomSoundTrack();
+      soundtrack = AppSounds.randomSoundTrack();
     }
   }
 

@@ -1,6 +1,8 @@
 import 'dart:core';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:trivia_educativa/core/app_sounds.dart';
 
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
@@ -17,7 +19,8 @@ class ResultPage extends StatefulWidget {
   final String quizTitle;
   final int questionsLenght;
   final int result;
-  final int nota5;
+  final int notaValor;
+  // final int nota5;
   final bool isConnected;
 
   ResultPage(
@@ -25,12 +28,13 @@ class ResultPage extends StatefulWidget {
       required this.quizTitle,
       required this.questionsLenght,
       required this.result,
-      required this.nota5,
+      required this.notaValor,
+      // required this.nota5,
       required this.isConnected})
       : super(
           key: key,
         ) {
-    percent = result * 100 / questionsLenght;
+    //percent = result * 100 / questionsLenght;
   }
 
   late double percent;
@@ -41,80 +45,75 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   final controller = HomeController();
-  //TODO implement sounds for results like 2,3,4,5
 
   late ConfettiController _confettiController;
+
+  AudioPlayer player = AudioPlayer();
+  //bool isPlaying = false;
+
+  Future loadResultSound() async {
+    // if (widget.result == 2) {
+    //   AppSounds.randomResultSoundNota2();
+    // }
+
+    await player.play(
+      (AssetSource((widget.notaValor == 2)
+          ? AppSounds.randomResultSoundNota2()
+          : (widget.notaValor == 3)
+              ? AppSounds.randomResultSoundNota3()
+              : (widget.notaValor == 4)
+                  ? AppSounds.nota4_1
+                  : AppSounds.randomResultSoundNota5())),
+    );
+
+    player.setReleaseMode(ReleaseMode.release);
+    // advancedPlayer = await AudioCache().loop("music/song3.mp3");
+    await AudioPlayer.global.changeLogLevel(LogLevel.info);
+  }
 
   @override
   void initState() {
     _confettiController =
         ConfettiController(duration: const Duration(seconds: 5));
     _confettiController.play();
+    loadResultSound();
     super.initState();
   }
 
   @override
   void dispose() {
+    player.dispose();
     _confettiController.dispose();
     super.dispose();
   }
 
-  /// A custom Path to paint stars.
-  // Path drawStar(Size size) {
-  //   // Method to convert degree to radians
-  //   double degToRad(double deg) => deg * (pi / 180.0);
+  // int get nota3 => widget.nota5 - 20;
 
-  //   const numberOfPoints = 5;
-  //   final halfWidth = size.width / 2;
-  //   final externalRadius = halfWidth;
-  //   final internalRadius = halfWidth / 2.5;
-  //   final degreesPerStep = degToRad(360 / numberOfPoints);
-  //   final halfDegreesPerStep = degreesPerStep / 2;
-  //   final path = Path();
-  //   final fullAngle = degToRad(360);
-  //   path.moveTo(size.width, halfWidth);
-
-  //   for (double step = 0; step < fullAngle; step += degreesPerStep) {
-  //     path.lineTo(halfWidth + externalRadius * cos(step),
-  //         halfWidth + externalRadius * sin(step));
-  //     path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
-  //         halfWidth + internalRadius * sin(step + halfDegreesPerStep));
-  //   }
-  //   path.close();
-  //   return path;
-  // }
-
-  int get nota3 => widget.nota5 - 20;
-
-  int get nota4 => widget.nota5 - 10;
-
-  String get resultImage => widget.percent < nota3
+  //int get nota4 => widget.nota5 - 10;
+  //TODO poner notaValor por parametro
+  String get resultImage => widget.notaValor == 2
       ? AppImages.badResult
-      : ((widget.percent >= nota3 && widget.percent < nota4)
+      : ((widget.notaValor == 3 || widget.notaValor == 4)
           ? AppImages.mediumResult
-          : ((widget.percent >= nota4 && widget.percent < widget.nota5)
-              ? AppImages.mediumResult
-              : ((widget.percent >= widget.nota5)
-                  ? AppImages.trophy
-                  : AppImages.error)));
+          : ((widget.notaValor == 5) ? AppImages.trophy : AppImages.error));
 
   @override
   Widget build(BuildContext context) {
-    String title = widget.percent < nota3
+    String title = widget.notaValor == 2
         ? "${I10n.of(context).score_title} 2. \n${I10n.of(context).score_Sad}!"
-        : ((widget.percent >= nota3 && widget.percent < nota4)
+        : ((widget.notaValor == 3)
             ? "${I10n.of(context).score_title} 3. \n${I10n.of(context).score_Passed}!"
-            : ((widget.percent >= nota4 && widget.percent < widget.nota5)
+            : ((widget.notaValor == 4)
                 ? "${I10n.of(context).score_title} 4. \n${I10n.of(context).score_VeryGood}!"
-                : ((widget.percent >= widget.nota5)
+                : ((widget.notaValor == 5)
                     ? "${I10n.of(context).score_title} 5. \n${I10n.of(context).score_Congrats}!"
                     : '')));
 
-    String subtitle = widget.percent < nota3
+    String subtitle = widget.notaValor == 2
         ? "${I10n.of(context).youGot} ${widget.result} ${I10n.of(context).of_} ${widget.questionsLenght} ${I10n.of(context).questions}. \n${I10n.of(context).score_tip_tryHarder}!"
-        : ((widget.percent >= nota3 && widget.percent < widget.nota5)
+        : ((widget.notaValor == 3 || widget.notaValor == 4)
             ? "${I10n.of(context).youGot} ${widget.result} ${I10n.of(context).of_} ${widget.questionsLenght} ${I10n.of(context).questions}. \n${I10n.of(context).score_tip_keepWorking}!"
-            : ((widget.percent >= widget.nota5)
+            : ((widget.notaValor == 5)
                 ? "${I10n.of(context).youGot} ${widget.result} ${I10n.of(context).of_} ${widget.questionsLenght} ${I10n.of(context).questions}. \n${I10n.of(context).score_tip_excellent}!!"
                 : ''));
 

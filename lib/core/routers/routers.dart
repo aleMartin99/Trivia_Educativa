@@ -88,8 +88,9 @@ class AppRouter extends StatelessWidget {
         if (args is ResultPageArgs) {
           return MaterialPageRoute(
             builder: (_) => ResultPage(
+              notaValor: args.notaValor,
               isConnected: args.isConnected,
-              nota5: args.nota5,
+              //nota5: args.nota5,
               quizTitle: args.quizTitle,
               result: args.result,
               questionsLenght: args.questionsLenght,
@@ -207,14 +208,16 @@ class ResultPageArgs {
   final String quizTitle;
   final int questionsLenght;
   final int result;
-  final int nota5;
+  final int notaValor;
+  //final int nota5;
   final bool isConnected;
 
   ResultPageArgs(
       {required this.quizTitle,
       required this.questionsLenght,
       required this.result,
-      required this.nota5,
+      required this.notaValor,
+      // required this.nota5,
       required this.isConnected});
 }
 
