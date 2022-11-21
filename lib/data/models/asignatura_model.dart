@@ -32,13 +32,15 @@ class Asignatura {
         temas.add(Tema.fromJson(v));
       });
     }
-    if (json['configuracion'] != null &&
+
+    if (json['configuracion'][0] != null &&
         (json['configuracion'] as List).isNotEmpty) {
-      //TODO change this to new model
-      image = json['configuracion'][0];
-      icon = json['configuracion'][1];
-      soundtrack = json['configuracion'][2];
+      //TODO check this when new commits
+      image = json['configuracion']['imagen'];
+      icon = json['configuracion']['icono'];
+      soundtrack = json['configuracion']['sonido'];
     }
+
     //* Add data for image, icon, soundtrack in case that they are empty
     else {
       image = AppImages.randomImageTema();
