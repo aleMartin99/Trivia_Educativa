@@ -55,7 +55,6 @@ class _ChallengePageState extends State<ChallengePage> {
   late final StreamDuration _streamDuration;
   AudioPlayer player = AudioPlayer();
   var auth = sl<Auth>();
-  bool isConnected = true;
 
   bool isPlaying = false;
 
@@ -114,11 +113,20 @@ class _ChallengePageState extends State<ChallengePage> {
           widget.nivel.id,
           widget.idEstudiante,
           auth.token);
-    }
-    //TODO si no hay internet guardar local y pa fuera
-    else {
+      Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.resultRoute,
+          arguments: ResultPageArgs(
+            isConnected: true,
+            quizTitle: widget.quizTitle,
+            questionsLenght: widget.preguntas.length,
+            result: controller.cantRightAnswers,
+            nota5: widget.nota5,
+          ),
+          (Route<dynamic> route) => false);
+    } else {
+      controller.state = ChallengeState.loading;
       var db = sl<NotaRepository>();
-      //TODO implement local sotrage save
       NotaLocal nota = NotaLocal(
           idAsignatura: widget.asignatura.id,
           idEstudiante: widget.idEstudiante,
@@ -126,8 +134,19 @@ class _ChallengePageState extends State<ChallengePage> {
           // idNotaProv: ,
           idTema: widget.idTema,
           nota: notaValor);
-      await db.addNota(nota);
-      isConnected = false;
+      await db.addNota(nota).then((value) {
+        Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.resultRoute,
+            arguments: ResultPageArgs(
+              isConnected: false,
+              quizTitle: widget.quizTitle,
+              questionsLenght: widget.preguntas.length,
+              result: controller.cantRightAnswers,
+              nota5: widget.nota5,
+            ),
+            (Route<dynamic> route) => false);
+      });
     }
   }
 
@@ -171,6 +190,7 @@ class _ChallengePageState extends State<ChallengePage> {
 
     controller.stateNotifier.addListener(() {
       if (controller.state == ChallengeState.timeOut) {
+        //TODO poner salvar nota
         QuickAlert.show(
           onWillPop: false,
 
@@ -192,7 +212,8 @@ class _ChallengePageState extends State<ChallengePage> {
               context,
               AppRoutes.resultRoute,
               arguments: ResultPageArgs(
-                isConnected: isConnected,
+                //TODO check is COnnected
+                isConnected: true,
                 quizTitle: widget.quizTitle,
                 questionsLenght: widget.preguntas.length,
                 result: controller.cantRightAnswers,
@@ -266,6 +287,7 @@ class _ChallengePageState extends State<ChallengePage> {
                     children: [
                       BackButton(
                         onPressed: () async {
+                          //TODO poner salvar nota
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
                               _streamDuration.pause();
@@ -276,7 +298,8 @@ class _ChallengePageState extends State<ChallengePage> {
                                 context,
                                 AppRoutes.resultRoute,
                                 arguments: ResultPageArgs(
-                                  isConnected: isConnected,
+                                  //TODO check is COnnected
+                                  isConnected: true,
                                   quizTitle: widget.quizTitle,
                                   questionsLenght: widget.preguntas.length,
                                   result: controller.cantRightAnswers,
@@ -405,18 +428,6 @@ class _ChallengePageState extends State<ChallengePage> {
                                     _streamDuration.pause();
                                     await player.release();
                                     await saveNota();
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        AppRoutes.resultRoute,
-                                        arguments: ResultPageArgs(
-                                          isConnected: isConnected,
-                                          quizTitle: widget.quizTitle,
-                                          questionsLenght:
-                                              widget.preguntas.length,
-                                          result: controller.cantRightAnswers,
-                                          nota5: widget.nota5,
-                                        ),
-                                        (Route<dynamic> route) => false);
                                   },
                                 )
                               : (value < widget.preguntas.length)

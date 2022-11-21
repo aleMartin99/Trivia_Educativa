@@ -223,8 +223,14 @@ class _ResultPageState extends State<ResultPage> {
                                       //  final NetworkInfo _networkInfo = sl();
 
                                       //TODO ver xq me tiro pal login si tengo internet
-                                      (widget.isConnected)
-                                          ? QuickAlert.show(
+                                      (widget.isConnected == true)
+                                          ? Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                              AppRoutes.homeScreen,
+                                              //arguments: HomeScreenArgs(),
+                                              (Route<dynamic> route) => false,
+                                            )
+                                          : QuickAlert.show(
                                               onConfirmBtnTap: () async {
                                                 await sl.popScope();
                                                 Navigator.of(context)
@@ -256,16 +262,6 @@ class _ResultPageState extends State<ResultPage> {
                                               // showCancelBtn: true,
 
                                               //Colors.transparent
-                                            )
-                                          : Future.delayed(
-                                                  const Duration(seconds: 2))
-                                              .then(
-                                              (_) => Navigator.of(context)
-                                                  .pushNamedAndRemoveUntil(
-                                                AppRoutes.homeScreen,
-                                                //arguments: HomeScreenArgs(),
-                                                (Route<dynamic> route) => false,
-                                              ),
                                             );
                                     },
                                   ),
@@ -346,11 +342,47 @@ class _ResultPageState extends State<ResultPage> {
                                 label: I10n.of(context).backTo_Home,
                                 fontColor: Theme.of(context).hintColor,
                                 onTap: () async {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                    AppRoutes.homeScreen,
-                                    arguments: HomeScreenArgs(),
-                                    (Route<dynamic> route) => false,
-                                  );
+                                  //  final NetworkInfo _networkInfo = sl();
+
+                                  //TODO ver xq me tiro pal login si tengo internet
+                                  (widget.isConnected == true)
+                                      ? Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                          AppRoutes.homeScreen,
+                                          //arguments: HomeScreenArgs(),
+                                          (Route<dynamic> route) => false,
+                                        )
+                                      : QuickAlert.show(
+                                          onConfirmBtnTap: () async {
+                                            await sl.popScope();
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    AppRoutes.loginRoute,
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                          },
+                                          context: context,
+                                          //TODO I10n
+                                          type: QuickAlertType.warning,
+                                          barrierDismissible: false,
+                                          title: 'No hay conexión a Internet',
+                                          confirmBtnText: 'Aceptar',
+                                          //cancelBtnText: 'Cancelar',
+                                          text:
+                                              'Su nota ha sido guardada exitosamente. Se le rediccionará al Login',
+                                          backgroundColor: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          textColor: Theme.of(context)
+                                              .primaryIconTheme
+                                              .color!,
+                                          titleColor: Theme.of(context)
+                                              .primaryIconTheme
+                                              .color!,
+                                          confirmBtnColor: AppColors.purple,
+                                          // showCancelBtn: true,
+
+                                          //Colors.transparent
+                                        );
                                 },
                               ),
                             ),

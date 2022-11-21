@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
         _loginController.state = LoginState.empty;
       } else if (_loginController.state == LoginState.notConnected) {
         if (Navigator.canPop(context)) {
-          Navigator.canPop(context);
+          Navigator.pop(context);
         }
         QuickAlert.show(
           context: context,
@@ -206,7 +206,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          if (Navigator.canPop(context)) {
+                            Navigator.pop(context);
+                          }
                           QuickAlert.show(
                             context: context,
                             type: QuickAlertType.info,

@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadData() async {
+    homeController.state = HomeState.loading;
     //TODO implement subir nota local del offline
     await uploadNotaLocal().then(
         (value) => homeController.getEstudiante(auth.user.ci, auth.token));
@@ -65,11 +66,8 @@ class _HomePageState extends State<HomePage> {
     await homeController.getNotasProv(auth.user.ci, auth.token);
   }
 
-  var db = sl<NotaRepository>();
-
   Future uploadNotaLocal() async {
-    //TODO implemetn method to save local nota
-    //TODO check if nota local y subir
+    var db = sl<NotaRepository>();
     List<NotaLocal> notas = await db.getNotas();
 
     if (notas.isNotEmpty) {
