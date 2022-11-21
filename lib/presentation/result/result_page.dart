@@ -1,11 +1,8 @@
 import 'dart:core';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
-import '../../core/network_info/network_info.dart';
-import '../../core/routers/routers.dart';
 
 import '../../main.dart';
 import '../home/home_imports.dart';

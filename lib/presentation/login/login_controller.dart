@@ -33,8 +33,6 @@ class LoginController {
       } else {
         state = LoginState.loggedIn;
       }
-
-      log('${auth.user}');
       return auth;
     }
 

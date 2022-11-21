@@ -54,6 +54,7 @@ class _ChallengePageState extends State<ChallengePage> {
   final pageController = PageController();
   late final StreamDuration _streamDuration;
   AudioPlayer player = AudioPlayer();
+  bool isConnected = true;
   var auth = sl<Auth>();
 
   bool isPlaying = false;
@@ -67,7 +68,6 @@ class _ChallengePageState extends State<ChallengePage> {
 
   Future loadMusic() async {
     //TODO change to url if doesn't work
-    //todo Audio carga aqui de asignatura.audio
 
     //TODO CHange to network validation soundtrack
     await player.play(
@@ -113,17 +113,6 @@ class _ChallengePageState extends State<ChallengePage> {
           widget.nivel.id,
           widget.idEstudiante,
           auth.token);
-      Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRoutes.resultRoute,
-          arguments: ResultPageArgs(
-            isConnected: true,
-            quizTitle: widget.quizTitle,
-            questionsLenght: widget.preguntas.length,
-            result: controller.cantRightAnswers,
-            nota5: widget.nota5,
-          ),
-          (Route<dynamic> route) => false);
     } else {
       controller.state = ChallengeState.loading;
       var db = sl<NotaRepository>();
@@ -134,19 +123,8 @@ class _ChallengePageState extends State<ChallengePage> {
           // idNotaProv: ,
           idTema: widget.idTema,
           nota: notaValor);
-      await db.addNota(nota).then((value) {
-        Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.resultRoute,
-            arguments: ResultPageArgs(
-              isConnected: false,
-              quizTitle: widget.quizTitle,
-              questionsLenght: widget.preguntas.length,
-              result: controller.cantRightAnswers,
-              nota5: widget.nota5,
-            ),
-            (Route<dynamic> route) => false);
-      });
+      await db.addNota(nota);
+      isConnected = false;
     }
   }
 
@@ -196,24 +174,13 @@ class _ChallengePageState extends State<ChallengePage> {
 
           onConfirmBtnTap: () async {
             await player.release();
-            int nota = evaluarNivel(widget.preguntas.length,
-                controller.cantRightAnswers, widget.nota5);
-
-            //*crearNota devuelve el id de la nota creada
-            //*asignarNota asigna esa nota a bd
-            await controller.asignarNota(
-                await controller.crearNota(nota, auth.token),
-                widget.asignatura.id,
-                widget.idTema,
-                widget.nivel.id,
-                widget.idEstudiante,
-                auth.token);
+            await saveNota();
+            Navigator.pop(context);
             Navigator.pushReplacementNamed(
               context,
               AppRoutes.resultRoute,
               arguments: ResultPageArgs(
-                //TODO check is COnnected
-                isConnected: true,
+                isConnected: isConnected,
                 quizTitle: widget.quizTitle,
                 questionsLenght: widget.preguntas.length,
                 result: controller.cantRightAnswers,
@@ -298,8 +265,7 @@ class _ChallengePageState extends State<ChallengePage> {
                                 context,
                                 AppRoutes.resultRoute,
                                 arguments: ResultPageArgs(
-                                  //TODO check is COnnected
-                                  isConnected: true,
+                                  isConnected: isConnected,
                                   quizTitle: widget.quizTitle,
                                   questionsLenght: widget.preguntas.length,
                                   result: controller.cantRightAnswers,
@@ -428,6 +394,18 @@ class _ChallengePageState extends State<ChallengePage> {
                                     _streamDuration.pause();
                                     await player.release();
                                     await saveNota();
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      AppRoutes.resultRoute,
+                                      arguments: ResultPageArgs(
+                                        isConnected: isConnected,
+                                        quizTitle: widget.quizTitle,
+                                        questionsLenght:
+                                            widget.preguntas.length,
+                                        result: controller.cantRightAnswers,
+                                        nota5: widget.nota5,
+                                      ),
+                                    );
                                   },
                                 )
                               : (value < widget.preguntas.length)

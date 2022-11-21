@@ -35,11 +35,10 @@ class LoginRepository with RequestErrorParser {
         );
 
         if (response.statusCode == 201) {
-          log(' ${response.statusCode.toString()}');
           final jsonResponse = json.decode(response.body);
           log(' ${jsonResponse.toString()}');
           final auth = Auth.fromJson(jsonResponse);
-          log('guardando el usuario ${auth.user.toString()}');
+
           return right(auth);
         } else if (response.statusCode == 401) {
           return left(InvalidCredentialsFailure);

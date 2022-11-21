@@ -22,7 +22,7 @@ class ScoreBoardController {
   final repository = ScoreBoardRepository(sl());
 
   Future getScoreGeneral(String token) async {
-    state = ScoreBoardState.loading;
+    state = ScoreBoardState.loadingGeneral;
     final response = (await repository.promedioGlobal(token));
     if (response.isRight()) {
       scoreboardGeneral =
@@ -45,7 +45,7 @@ class ScoreBoardController {
   }
 
   Future getScorebyAnno(String token, int curso) async {
-    state = ScoreBoardState.loading;
+    state = ScoreBoardState.loadingbyAnno;
     final response = (await repository.promedioAnnoCurso(token, curso));
     if (response.isRight()) {
       scoreboardCurso =

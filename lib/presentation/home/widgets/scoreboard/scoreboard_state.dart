@@ -6,5 +6,7 @@ enum ScoreBoardState {
   notConnected,
   scoreGeneral,
   scoreCurso,
-  serverError
+  serverError,
+  loadingbyAnno,
+  loadingGeneral
 }
