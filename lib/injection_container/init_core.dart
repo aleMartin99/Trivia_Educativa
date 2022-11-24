@@ -6,9 +6,8 @@ import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
 import '../core/network_info/network_info.dart';
 import '../core/network_info/network_info_impl.dart';
 import '../data/datasources/nota_local_data_source.dart';
-import '../data/nota_repository.dart';
+import '../domain/repositories/nota_repository.dart';
 import '../presentation/home/widgets/welcome_message/cubit/welcome_message_cubit.dart';
-import '../presentation/nota_local/cubit/nota_local_cubit.dart';
 import '../presentation/onboarding/onboarding_imports.dart';
 
 import 'package:get_it/get_it.dart';
@@ -28,9 +27,6 @@ FutureOr<void> initCore(GetIt sl) async {
     )
     ..registerLazySingleton<OnboardingCubit>(
       () => OnboardingCubit(_sharedPreferences, sl),
-    )
-    ..registerLazySingleton<NotaLocalCubit>(
-      () => NotaLocalCubit(_sharedPreferences, sl),
     )
     ..registerLazySingleton<SettingsController>(
         () => SettingsController(_sharedPreferences, sl))

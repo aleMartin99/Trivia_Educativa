@@ -12,6 +12,7 @@ class AppIcons {
   static String get icon_6 => 'assets/icons/icon_6.svg';
   static String get icon_7 => 'assets/icons/icon_7.svg';
 
+  // ignore: non_constant_identifier_names
   static String get icon_avatar => 'assets/icons/avatar_default.svg';
 
   static String get trophy => 'assets/icons/icon_trophy.svg';

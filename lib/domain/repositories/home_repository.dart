@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:fpdart/fpdart.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
@@ -26,7 +28,9 @@ class HomeRepository with RequestErrorParser {
       try {
         final response = await http.get(uri, headers: {
           'Authorization': 'Bearer $token',
-        });
+        }).timeout(
+          const Duration(seconds: 30),
+        );
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body);
           log(' ${jsonResponse.toString()}');
@@ -39,6 +43,16 @@ class HomeRepository with RequestErrorParser {
         } else {
           throw Exception('Failed to find Estudiante by CI');
         }
+      } on ClientException {
+        return left(ServerFailure);
+      } on TimeoutException {
+        return left(ServerFailure);
+      } on HttpException {
+        return left(ServerFailure);
+      } on SocketException {
+        return left(ServerFailure);
+      } on ServerException {
+        return left(ServerFailure);
       } catch (e) {
         return left(UnexpectedFailure(message: e.toString()));
       }
@@ -57,7 +71,9 @@ class HomeRepository with RequestErrorParser {
       try {
         final response = await http.get(uri, headers: {
           'Authorization': 'Bearer $token',
-        });
+        }).timeout(
+          const Duration(seconds: 30),
+        );
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body) as List;
           log(' ${jsonResponse.toString()}');
@@ -71,6 +87,16 @@ class HomeRepository with RequestErrorParser {
         } else {
           throw Exception('Failed to load Asingaturas');
         }
+      } on ClientException {
+        return left(ServerFailure);
+      } on TimeoutException {
+        return left(ServerFailure);
+      } on HttpException {
+        return left(ServerFailure);
+      } on SocketException {
+        return left(ServerFailure);
+      } on ServerException {
+        return left(ServerFailure);
       } catch (e) {
         return left(UnexpectedFailure(message: e.toString()));
       }
@@ -88,7 +114,9 @@ class HomeRepository with RequestErrorParser {
       try {
         final response = await http.get(uri, headers: {
           'Authorization': 'Bearer $token',
-        });
+        }).timeout(
+          const Duration(seconds: 30),
+        );
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body) as List;
           final notasProv =
@@ -99,6 +127,16 @@ class HomeRepository with RequestErrorParser {
         } else {
           throw Exception('Failed to load Notas');
         }
+      } on ClientException {
+        return left(ServerFailure);
+      } on TimeoutException {
+        return left(ServerFailure);
+      } on HttpException {
+        return left(ServerFailure);
+      } on SocketException {
+        return left(ServerFailure);
+      } on ServerException {
+        return left(ServerFailure);
       } catch (e) {
         return left(UnexpectedFailure(message: e.toString()));
       }

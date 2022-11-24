@@ -4,6 +4,7 @@ import '/../core/core.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class NextButtonWidget extends StatelessWidget {
   final String label;
   final Color backgroundColor;
@@ -60,15 +61,6 @@ class NextButtonWidget extends StatelessWidget {
           color: AppColors.white,
         ),
         super(key: key);
-
-  // const NextButtonWidget.gray(
-  //     {Key? key, required this.label, required this.onTap})
-  //     : backgroundColor = AppColors.darkGreen,
-  //       fontColor = AppColors.white,
-  //       borderColor = AppColors.darkGreen,
-  //       overlayColor = AppColors.lightGreen,
-  //       super(key: key);
-
   NextButtonWidget.transparent(
       {Key? key,
       required this.label,
@@ -101,24 +93,13 @@ class NextButtonWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          // side: this.borderColor!=Colors.transparent ? MaterialStateProperty.all(
-          //   BorderSide(
-          //     color: AppColors.border,
-          //   ),
-          // ) : null,
           overlayColor: MaterialStateProperty.all(overlayColor),
         ),
         onPressed: onTap,
         //TODO change textStyle
         child: Text(label,
             //TODO check font family and remove notoSans
-            style: textStyle
-            // GoogleFonts.notoSans(
-            //   fontWeight: FontWeight.w800,
-            //   fontSize: 18,
-            //   color: fontColor,
-            // ),
-            ),
+            style: textStyle),
       ),
     );
   }

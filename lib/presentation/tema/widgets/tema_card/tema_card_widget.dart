@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../core/app_icons.dart';
 
+//TODO change with scoreboard when ui changes
 class TemaCardWidget extends StatelessWidget {
   final String nombre;
   final int cantNiveles;
@@ -26,11 +27,6 @@ class TemaCardWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          // border: const Border.fromBorderSide(
-          //   BorderSide(
-          //     color: AppColors.border,
-          //   ),
-          // ),
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -40,7 +36,6 @@ class TemaCardWidget extends StatelessWidget {
             SizedBox(
                 height: 50,
                 child: CustomIconSVG(
-                  //TODO implement random
                   iconName: AppIcons.icon_1,
                 )),
             const SizedBox(

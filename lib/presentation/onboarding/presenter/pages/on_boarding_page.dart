@@ -90,7 +90,6 @@ class _OnboardingState extends State<Onboarding> {
         )),
         bottomAppBar: SafeArea(
           child: Padding(
-            //TODO check button size
             padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),
             child: ValueListenableBuilder(
               valueListenable: onBoardingController.currentPageNotifier,

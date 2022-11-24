@@ -19,8 +19,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // final controller = LoginController();
-
   final TextEditingController usernameController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
@@ -60,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
           confirmBtnText: 'Ok',
-          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
 
         _loginController.state = LoginState.empty;
@@ -72,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           type: QuickAlertType.loading,
           title: 'Servidor no disponible',
-          // onWillPop: false,
           confirmBtnText: 'Ok',
           text: 'Al parecer el servidor no está disponible.',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,

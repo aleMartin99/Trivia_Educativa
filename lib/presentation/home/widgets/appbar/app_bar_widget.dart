@@ -9,6 +9,7 @@ import '/../core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:math' show pi;
 
+// ignore: must_be_immutable
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   AppBarWidget({
     Key? key,
@@ -51,7 +52,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  //TODO make app bar for escalafon with this
                   leading: Transform.rotate(
                     angle: angle,
                     child: IconButton(
@@ -74,7 +74,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                           width: width * 18,
                           height: width * 18,
                           child: ClipOval(
-                            //clipBehavior: Clip.antiAlias,
                             child: Padding(
                               padding: const EdgeInsets.all(6.0),
                               child: FittedBox(
@@ -84,42 +83,14 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                                           Brightness.dark
                                       ? AppColors.lightPurple
                                       : AppColors.grey,
-                                  //size: 30,
                                 ),
                               ),
                             ),
                           ))),
-
-                  // Container(
-                  //   clipBehavior: Clip.antiAlias,
-                  //   decoration: BoxDecoration(
-                  //       shape: BoxShape.circle,
-                  //       color: Theme.of(context).brightness == Brightness.dark
-                  //           ? AppTheme.backgroundColors(Brightness.dark)
-                  //           : AppColors.lightPurple
-                  //       //AppColors.lightPurple,
-
-                  //       ),
-                  //   // color: Colors.blue,
-                  //   width: 75,
-                  //   height: 75,
-                  //   padding: const EdgeInsets.all(5),
-                  //   child: FittedBox(
-                  //     child: Icon(
-                  //       Icons.person,
-                  //       color: Theme.of(context).brightness == Brightness.dark
-                  //           ? AppColors.lightPurple
-                  //           : AppColors.grey,
-                  //       //size: 30,
-                  //     ),
-                  //   ),
-                  // ),
                 )),
             const Align(
               alignment: Alignment(0.0, 1.0),
-              child: ScoreCardWidget(
-                  // scorePercentage:
-                  ),
+              child: ScoreCardWidget(),
             ),
           ],
         ),

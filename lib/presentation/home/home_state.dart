@@ -7,6 +7,6 @@ enum HomeState {
   estudLoaded,
   estudError,
   notasLoaded,
-  serverError,
+  serverUnreachable,
   uploadedNotaLocal
 }

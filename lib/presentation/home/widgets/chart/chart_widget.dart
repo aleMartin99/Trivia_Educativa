@@ -11,7 +11,6 @@ import '../../home_imports.dart';
 class ChartWidget extends StatefulWidget {
   const ChartWidget({
     Key? key,
-    // required this.percent,
   }) : super(
           key: key,
         );
@@ -27,8 +26,6 @@ class _ChartWidgetState extends State<ChartWidget>
   final homeController = HomeController();
   var auth = sl<Auth>();
 
-  ///TOdo check error de q se accede sin datos
-  //var notas = sl<List<NotaProv>>();
   void _initAnimation() {
     _controller = AnimationController(
       vsync: this,
@@ -43,7 +40,6 @@ class _ChartWidgetState extends State<ChartWidget>
     _controller.forward();
   }
 
-//TODO TESTEAr chart widget varias notas no hace nada se qeda en 0
   static int cantAprobados(List<NotaProv>? notasProv) {
     int cantAprobados = 0;
     for (int i = 0; i < notasProv!.length; i++) {
@@ -52,14 +48,6 @@ class _ChartWidgetState extends State<ChartWidget>
     return cantAprobados;
   }
 
-  // void _loadData() async {
-  //   await homeController.getNotasProv(user.ci);
-  // }
-
-  // sl.pushNewScope();
-  //   User user = _loginController.user;
-  //   sl.registerSingleton<User>(user);
-
   void _loadData() async {
     await homeController.getNotasProv(auth.user.ci, auth.token);
   }
@@ -67,9 +55,6 @@ class _ChartWidgetState extends State<ChartWidget>
   @override
   void initState() {
     _loadData();
-    //sl.pushNewScope();
-    // List<NotaProv> noticas = homeController.notas!;
-    // sl.registerSingleton<List<NotaProv>>(noticas);
     _initAnimation();
     homeController.stateNotifier.addListener(() {
       if (homeController.state == HomeState.notasLoaded) {
@@ -84,8 +69,6 @@ class _ChartWidgetState extends State<ChartWidget>
 
   double getScorePercentage() {
     double scorePercentage;
-
-    //double scorePercentage = 0.6;
 
     if (homeController.notas != null && homeController.notas!.isNotEmpty) {
       scorePercentage =
@@ -104,7 +87,6 @@ class _ChartWidgetState extends State<ChartWidget>
     super.dispose();
   }
 
-  //var notas = sl<List<NotaProv>>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(

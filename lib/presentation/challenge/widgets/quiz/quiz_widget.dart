@@ -22,13 +22,9 @@ class _QuizWidgetState extends State<QuizWidget> {
 
   AnswerModel answer(int index) => widget.pregunta.answers[index];
 
-//AssetImage('assets/images/villena.jpg')
   void openGalleryView() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => GalleryWidget(
-          // imagen: imagen,
-          imagen: widget.pregunta.imagen),
-      //GalleryWidget(),
+      builder: (context) => GalleryWidget(imagen: widget.pregunta.imagen),
     ));
   }
 
@@ -47,8 +43,7 @@ class _QuizWidgetState extends State<QuizWidget> {
                   padding: const EdgeInsets.only(top: 20, left: 4),
                   child: Text(widget.pregunta.descripcion,
                       style: Theme.of(context).textTheme.headline2!.copyWith(
-                          fontSize:
-                              24, //color: settingsController.currentAppTheme.primaryColor,
+                          fontSize: 24,
                           color: Theme.of(context).primaryIconTheme.color)),
                 ),
                 const SizedBox(
@@ -64,7 +59,6 @@ class _QuizWidgetState extends State<QuizWidget> {
                     children: [
                       for (int i = 0; i < 2; i++)
                         AnswerWidget(
-                          // 1 = i
                           answerModel: answer(i),
                           isSelected: indexSelected == i,
                           isDisabled: indexSelected != -1,
@@ -86,7 +80,6 @@ class _QuizWidgetState extends State<QuizWidget> {
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   (widget.pregunta.tiposDePregunta.contains('magen'))
                       ? Center(
@@ -104,21 +97,17 @@ class _QuizWidgetState extends State<QuizWidget> {
                     padding: const EdgeInsets.only(top: 20, left: 4),
                     child: Text(widget.pregunta.descripcion,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
-                            fontSize:
-                                24, //color: settingsController.currentAppTheme.primaryColor,
+                            fontSize: 24,
                             color: Theme.of(context).primaryIconTheme.color)),
                   ),
                   const SizedBox(
                     height: 24,
                   ),
-                  //TODO <4
                   for (int i = 0;
-                      //TODO make bien q me pone a veces en blanco el titulo
                       (widget.pregunta.tiposDePregunta.contains('V o F'))
                           ? i < 2
                           : i < 4;
                       i++)
-                    //TODO change this for pregunta tipo v o f
                     AnswerWidget(
                       answerModel: answer(i),
                       isSelected: indexSelected == i,

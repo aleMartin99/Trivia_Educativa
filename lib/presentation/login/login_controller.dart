@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:trivia_educativa/core/core.dart';
@@ -27,18 +25,13 @@ class LoginController {
     final response = (await repository.signIn(username, password));
     if (response.isRight()) {
       auth = ((response as Right).value as Auth);
-      // user = auth.user;
       if (auth.user.rol != 'Estudiante') {
         state = LoginState.noPermits;
       } else {
         state = LoginState.loggedIn;
       }
       return auth;
-    }
-
-//TODO hacer estado timeout
-
-    if (response.isLeft()) {
+    } else if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
         state = LoginState.notConnected;

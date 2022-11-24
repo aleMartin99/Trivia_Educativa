@@ -18,6 +18,7 @@ class HomeController {
   List<Asignatura>? asignaturas;
   Estudiante? estudiante;
   List<NotaProv>? notas;
+  // ignore: prefer_typing_uninitialized_variables
   var resp;
 
   final repository = HomeRepository(sl());
@@ -33,11 +34,10 @@ class HomeController {
       return estudiante;
     } else if (response.isLeft()) {
       resp = (response as Left).value;
-      if (resp == ServerFailure) {
-        state = HomeState.serverError;
-      }
       if (resp == NoInternetConnectionFailure) {
         state = HomeState.notConnected;
+      } else if (resp == ServerFailure) {
+        state = HomeState.serverUnreachable;
       } else {
         state = HomeState.estudError;
       }
@@ -56,9 +56,8 @@ class HomeController {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
         state = HomeState.notConnected;
-      }
-      if (resp == ServerFailure) {
-        state = HomeState.serverError;
+      } else if (resp == ServerFailure) {
+        state = HomeState.serverUnreachable;
       }
     } else {
       state = HomeState.error;
@@ -76,9 +75,8 @@ class HomeController {
       resp = (response as Left).value;
       if (resp == NoInternetConnectionFailure) {
         state = HomeState.notConnected;
-      }
-      if (resp == ServerFailure) {
-        state = HomeState.serverError;
+      } else if (resp == ServerFailure) {
+        state = HomeState.serverUnreachable;
       }
     } else {
       state = HomeState.error;

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:trivia_educativa/data/models/models.dart';
@@ -26,7 +28,9 @@ class ChallengeRepository with RequestErrorParser {
       try {
         final response = await http.post(uri, headers: {
           'Authorization': 'Bearer $token',
-        });
+        }).timeout(
+          const Duration(seconds: 30),
+        );
         log('status code from asignarNota');
         log(response.statusCode.toString());
 
@@ -43,6 +47,16 @@ class ChallengeRepository with RequestErrorParser {
         } else {
           throw Exception('Failed to asign to a Nota');
         }
+      } on ClientException {
+        return left(ServerFailure);
+      } on TimeoutException {
+        return left(ServerFailure);
+      } on HttpException {
+        return left(ServerFailure);
+      } on SocketException {
+        return left(ServerFailure);
+      } on ServerException {
+        return left(ServerFailure);
       } catch (e) {
         return left(UnexpectedFailure(message: e.toString()));
       }
@@ -63,7 +77,9 @@ class ChallengeRepository with RequestErrorParser {
           "nota": "$nota"
         }, headers: {
           'Authorization': 'Bearer $token',
-        });
+        }).timeout(
+          const Duration(seconds: 30),
+        );
         log(' ${response.toString()}');
         if (response.statusCode == 201) {
           final jsonResponse = json.decode(response.body);
@@ -77,6 +93,16 @@ class ChallengeRepository with RequestErrorParser {
         } else {
           throw Exception('Failed to create a Nota');
         }
+      } on ClientException {
+        return left(ServerFailure);
+      } on TimeoutException {
+        return left(ServerFailure);
+      } on HttpException {
+        return left(ServerFailure);
+      } on SocketException {
+        return left(ServerFailure);
+      } on ServerException {
+        return left(ServerFailure);
       } catch (e) {
         return left(UnexpectedFailure(message: e.toString()));
       }

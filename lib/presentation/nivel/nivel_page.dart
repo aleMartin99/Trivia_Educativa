@@ -55,7 +55,6 @@ class _NivelPageState extends State<NivelPage> {
     super.initState();
   }
 
-//TODO fix method doneLevel
   bool doneLevel(String idNivel, List<NotaProv> notasProv) {
     bool isDone = false;
     if ((notasProv
@@ -123,8 +122,6 @@ class _NivelPageState extends State<NivelPage> {
                 itemExtent: 120,
                 physics: const BouncingScrollPhysics(),
                 children: widget.niveles.map((nivel) {
-                  //TODO check with nuevas notasProv
-                  //TODO check is done level with notasProv, llamar methodo en init state cargar notasProv
                   if (doneLevel(nivel.id, widget.notas)) {
                     return NivelCardWidget(
                       isDone: true,

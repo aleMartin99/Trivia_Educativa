@@ -16,8 +16,8 @@ import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
 import '../../data/models/auth_model.dart';
-import '../../data/models/nota_local.dart';
-import '../../data/nota_repository.dart';
+import '../../data/models/nota_local_model.dart';
+import '../../domain/repositories/nota_repository.dart';
 import '../../main.dart';
 import '/../core/core.dart';
 
@@ -31,7 +31,6 @@ class ChallengePage extends StatefulWidget {
   final String idEstudiante;
   final String idTema;
   final Nivel nivel;
-  //late final NetworkInfo networkInfo;
 
   ChallengePage({
     Key? key,
@@ -42,7 +41,6 @@ class ChallengePage extends StatefulWidget {
     required this.asignatura,
     required this.idEstudiante,
     required this.nivel,
-    // required this.networkInfo
   }) : super(key: key);
 
   @override
@@ -67,13 +65,20 @@ class _ChallengePageState extends State<ChallengePage> {
   }
 
   Future loadMusic() async {
-    //TODO CHange to network validation soundtrack
-    await player.play(
-      (AssetSource(widget.asignatura.soundtrack)),
-    );
-
+    //TODO checkear esta vaina
+    if (widget.asignatura.networkAudio) {
+      await player.play(UrlSource(
+          'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3'));
+      await player.resume(
+          // (UrlSource(
+          //     'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3')),
+          );
+    } else {
+      await player.play(
+        (AssetSource(widget.asignatura.soundtrack)),
+      );
+    }
     player.setReleaseMode(ReleaseMode.loop);
-    // advancedPlayer = await AudioCache().loop("music/song3.mp3");
     await AudioPlayer.global.changeLogLevel(LogLevel.info);
   }
 
@@ -164,7 +169,6 @@ class _ChallengePageState extends State<ChallengePage> {
 
     controller.stateNotifier.addListener(() {
       if (controller.state == ChallengeState.timeOut) {
-        //TODO poner notaValor por parametro
         QuickAlert.show(
           onWillPop: false,
 
@@ -181,7 +185,6 @@ class _ChallengePageState extends State<ChallengePage> {
                 quizTitle: widget.quizTitle,
                 questionsLenght: widget.preguntas.length,
                 result: controller.cantRightAnswers,
-                //  nota5: widget.nota5,
               ),
             );
           },
@@ -200,18 +203,18 @@ class _ChallengePageState extends State<ChallengePage> {
         );
       }
 
-      if (controller.state == ChallengeState.serverError) {
+      if (controller.state == ChallengeState.serverUnreachable) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
         QuickAlert.show(
-          onConfirmBtnTap: () async {},
-          //TODO change messages
           context: context,
           barrierDismissible: false,
           type: QuickAlertType.info,
-          //TODO cambiar el mensjae
           //TODO I10n
-          title: 'Internal server error',
-          text: 'Se ha explotado',
+          title: 'Servidor no disponible',
           confirmBtnText: 'Ok',
+          text: 'Al parecer el servidor no está disponible.',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -251,12 +254,11 @@ class _ChallengePageState extends State<ChallengePage> {
                     children: [
                       BackButton(
                         onPressed: () async {
-                          //TODO poner salvar nota
                           QuickAlert.show(
                             onConfirmBtnTap: () async {
                               _streamDuration.pause();
-                              //TODO poner notaValor por parametro
                               await player.release();
+
                               await saveNota();
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
@@ -268,7 +270,6 @@ class _ChallengePageState extends State<ChallengePage> {
                                   quizTitle: widget.quizTitle,
                                   questionsLenght: widget.preguntas.length,
                                   result: controller.cantRightAnswers,
-                                  //  nota5: widget.nota5,
                                 ),
                               );
                             },
@@ -301,7 +302,6 @@ class _ChallengePageState extends State<ChallengePage> {
                             color: Theme.of(context).iconTheme.color,
                           ),
                         ),
-                        //showZeroValue: true,
                         decoration: const BoxDecoration(
                             color: AppColors.purple,
                             borderRadius:
@@ -309,7 +309,6 @@ class _ChallengePageState extends State<ChallengePage> {
                         duration: Duration(minutes: widget.nivel.duracion),
 
                         onDone: () => controller.state = ChallengeState.timeOut,
-                        // countUp: true,
                       ),
                       IconButton(
                           isSelected: isPlaying,
@@ -393,7 +392,7 @@ class _ChallengePageState extends State<ChallengePage> {
                                     _streamDuration.pause();
                                     await player.release();
                                     await saveNota();
-                                    //TODO poner notaValor por parametro
+
                                     Navigator.pushReplacementNamed(
                                       context,
                                       AppRoutes.resultRoute,
@@ -404,7 +403,6 @@ class _ChallengePageState extends State<ChallengePage> {
                                         questionsLenght:
                                             widget.preguntas.length,
                                         result: controller.cantRightAnswers,
-                                        //nota5: widget.nota5,
                                       ),
                                     );
                                   },

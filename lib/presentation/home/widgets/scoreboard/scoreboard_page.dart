@@ -72,6 +72,9 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
     scoreboardController.stateNotifier.addListener(() {
       setState(() {});
       if (scoreboardController.state == ScoreBoardState.error) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
         QuickAlert.show(
           context: context,
 
@@ -87,22 +90,23 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
         scoreboardController.state = ScoreBoardState.empty;
-      }
-      //TODO change message
-      if (scoreboardController.state == ScoreBoardState.serverError) {
+      } else if (scoreboardController.state ==
+          ScoreBoardState.serverUnreachable) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
         QuickAlert.show(
           context: context,
-          //TODO I10n
-          type: QuickAlertType.error,
-          title: 'Se exploto el servr',
-          text: 'Explotao, 500 papu',
+          type: QuickAlertType.loading,
+          title: 'Servidor no disponible',
+          confirmBtnText: 'Ok',
+          text: 'Al parecer el servidor no está disponible.',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
-          confirmBtnText: 'Ok',
-          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
+
         scoreboardController.state = ScoreBoardState.empty;
       } else if (scoreboardController.state == ScoreBoardState.notConnected) {
         QuickAlert.show(

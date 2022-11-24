@@ -15,12 +15,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TemaPage extends StatefulWidget {
   const TemaPage(
       {Key? key,
-      //required this.temas,
       required this.asignatura,
       required this.idEstudiante,
       required this.notas})
       : super(key: key);
-  // final List<Tema> temas;
   final Asignatura asignatura;
   final String idEstudiante;
   final List<NotaProv> notas;
@@ -33,7 +31,6 @@ class _TemaPageState extends State<TemaPage> {
   @override
   initState() {
     setState(() {});
-
     super.initState();
   }
 
@@ -42,18 +39,13 @@ class _TemaPageState extends State<TemaPage> {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
     bool _pinned = true;
-    //bool _snap = false;
-    //  bool _floating = true;
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
               elevation: 0,
-              //stretch: false,
               automaticallyImplyLeading: false,
-              // backgroundColor: ,
-              // backgroundColor: AppColors.purple,
               expandedHeight: 220,
               title: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -77,9 +69,8 @@ class _TemaPageState extends State<TemaPage> {
                               color: settingsController
                                   .currentAppTheme.iconTheme.color,
                             )),
-                        //TODO poner nombre asignaura
                         Text(
-                          'Historia de Cuba',
+                          widget.asignatura.descripcion,
                           style: AppTextStyles.titleBold.copyWith(
                             color: AppColors.white,
                           ),
@@ -106,16 +97,19 @@ class _TemaPageState extends State<TemaPage> {
                   ], transform: const GradientRotation(2.13959913 * pi)),
                 ),
                 child: FlexibleSpaceBar(
-                  //   collapseMode: CollapseMode.pin,
                   background: GlassImage(
                     // height: 200,
                     width: double.infinity,
                     blur: 1.5,
-                    //TODO change to network validar
-                    image: Image.asset(
-                      widget.asignatura.image,
-                      fit: BoxFit.cover,
-                    ),
+                    image: widget.asignatura.networkImage
+                        ? Image.network(
+                            widget.asignatura.image,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            widget.asignatura.image,
+                            fit: BoxFit.cover,
+                          ),
                     overlayColor: Colors.white.withOpacity(0.1),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -125,29 +119,22 @@ class _TemaPageState extends State<TemaPage> {
                         Colors.blue.withOpacity(0.3),
                       ],
                     ),
-                    //border: Border.fromBorderSide(BorderSide.none),
-                    //shadowStrength: 5,
                     borderRadius: BorderRadius.circular(0),
                     shadowColor: Colors.white.withOpacity(0.24),
                   ),
                 ),
               ),
             ),
-
             (widget.asignatura.temas.isNotEmpty)
-                //  const EdgeInsets.symmetric(
-                //       horizontal: 20,
-                //       vertical: 15,
-                //     ),
                 ? SliverToBoxAdapter(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0, left: 20),
                           child: Text(
+                            //TODO I10n
                             'Temas',
                             style: AppTextStyles.titleBold.copyWith(
                               color: Theme.of(context).primaryIconTheme.color,
@@ -164,20 +151,14 @@ class _TemaPageState extends State<TemaPage> {
                             shrinkWrap: true,
                             padding: const EdgeInsets.only(top: 0),
                             crossAxisCount: 2,
-                            //16
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 10,
-
-                            //TODO validaciones like home
-
                             children: widget.asignatura.temas
                                 .map((tema) => TemaCardWidget(
                                     nombre: tema.descripcion,
                                     cantNiveles: tema.niveles.length,
                                     onTap: () {
-                                      // final NetworkInfo _networkInfo = sl();
-                                      //TODO internet validation final NetworkInfo _networkInfo = sl();
-
+                                      //TODO hacer validacion para tema vacio
                                       Navigator.pushNamed(
                                         context,
                                         AppRoutes.nivelRoute,
@@ -196,13 +177,6 @@ class _TemaPageState extends State<TemaPage> {
                     ),
                   )
                 : Text(I10n.of(context).noData),
-            // const SliverFillRemaining(
-            //   //hasScrollBody: false,
-            //   //  fillOverscroll: true,
-            //   child: Center(
-            //     child: Text(""),
-            //   ),
-            // )
           ],
         ));
   }

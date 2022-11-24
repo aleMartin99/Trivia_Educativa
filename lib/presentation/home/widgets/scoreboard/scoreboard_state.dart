@@ -8,5 +8,6 @@ enum ScoreBoardState {
   scoreCurso,
   serverError,
   loadingbyAnno,
-  loadingGeneral
+  loadingGeneral,
+  serverUnreachable
 }

@@ -10,8 +10,8 @@ import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 
 import '../../data/models/auth_model.dart';
-import '../../data/models/nota_local.dart';
-import '../../data/nota_repository.dart';
+import '../../data/models/nota_local_model.dart';
+import '../../domain/repositories/nota_repository.dart';
 import '../../main.dart';
 import '../challenge/challenge_controller.dart';
 import '../home/home_imports.dart';
@@ -36,33 +36,24 @@ class _HomePageState extends State<HomePage> {
   late final NotaLocal notaLocal;
 
   void _onRefresh() async {
-    // monitor network fetch
-
     await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
     _loadData();
-    //setState(() {});
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
-    // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    // _loadData();
     if (mounted) setState(() {});
     _refreshController.loadComplete();
   }
 
   void _loadData() async {
     homeController.state = HomeState.loading;
-    //TODO implement subir nota local del offline
     await uploadNotaLocal().then(
         (value) => homeController.getEstudiante(auth.user.ci, auth.token));
 
     Estudiante estudiante = homeController.estudiante!;
     await homeController.getAsignaturas(estudiante.annoCurso, auth.token);
-
     await homeController.getNotasProv(auth.user.ci, auth.token);
   }
 
@@ -85,13 +76,12 @@ class _HomePageState extends State<HomePage> {
     homeController.state = HomeState.uploadedNotaLocal;
   }
 
+  // ignore: unused_field
   late bool _welcomeMessageAlreadySeen;
   // late bool _pendingNota;
   @override
   initState() {
-    //TODO comprobar que no hay nota local, si hay, mandar a server y limpiar bd
     _loadData();
-
     Future.delayed(const Duration(seconds: 1), () {
       (_welcomeMessageAlreadySeen =
               context.read<WelcomeMessageCubit>().alreadySeen)
@@ -104,8 +94,7 @@ class _HomePageState extends State<HomePage> {
       if (homeController.state == HomeState.error) {
         QuickAlert.show(
           context: context,
-
-          type: QuickAlertType.error,
+          type: QuickAlertType.error, //TODO I10n
           title: 'Ha ocurrido un error',
           text: 'Ha ocurrido un error inesperado',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -113,7 +102,6 @@ class _HomePageState extends State<HomePage> {
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
           confirmBtnText: 'Ok',
-          //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
         homeController.state = HomeState.empty;
       }
@@ -122,24 +110,25 @@ class _HomePageState extends State<HomePage> {
           homeController.state = HomeState.empty;
         });
       }
-      //TODO change message
-      if (homeController.state == HomeState.serverError) {
+      if (homeController.state == HomeState.serverUnreachable) {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
-          title: 'Se exploto el servr',
-          text: 'Explotao, 500 papu',
+          //TODO I10n
+          title: 'Servidor no disponible',
+          confirmBtnText: 'Ok',
+          text: 'Al parecer el servidor no está disponible.',
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
-          confirmBtnText: 'Ok',
         );
         homeController.state = HomeState.empty;
       } else if (homeController.state == HomeState.notConnected) {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
+          //TODO I10n
           title: 'No hay conexión a Internet',
           confirmBtnText: 'Ok',
           text:
@@ -194,7 +183,6 @@ class _HomePageState extends State<HomePage> {
                     "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales.\n\nAsí, los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas.\n\nDiviértete y aprende!",
                     textAlign: TextAlign.start,
                     style: TextStyle(color: AppColors.white, fontSize: 18),
-                    //  style: regulerText
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -247,20 +235,13 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBarWidget(),
-
-          //! cuando carga el usuario pero se tumba el server se queda pegado el cargando, revisar y lanzar timeout y cartel
           body: SmartRefresher(
             enablePullUp: false,
             physics: const BouncingScrollPhysics(),
             primary: false,
-            //st
-            //footer: ,
             header: const MaterialClassicHeader(
-              // distance: 40,
-              //backgroundColor: Colors.white,
               color: AppColors.purple,
             ),
-            //header: WaterDropHeader(),
             controller: _refreshController,
             onRefresh: _onRefresh,
             onLoading: _onLoading,
@@ -301,9 +282,9 @@ class _HomePageState extends State<HomePage> {
                                       asignatura: asignatura,
                                       onTap: () {
                                         (asignatura.temas.isEmpty ||
+                                                // ignore: unnecessary_null_comparison
                                                 asignatura.temas == null)
                                             ? QuickAlert.show(
-                                                // barrierColor: Colors.red,
                                                 context: context,
                                                 //TODO I10n
                                                 type: QuickAlertType.warning,

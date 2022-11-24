@@ -8,6 +8,6 @@ enum ChallengeState {
   notasAsignadas,
   notConnected,
   timeOut,
-  serverError,
+  serverUnreachable,
   evaluating
 }

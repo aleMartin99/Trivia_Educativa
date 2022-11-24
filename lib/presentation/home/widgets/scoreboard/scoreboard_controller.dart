@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
-import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_state.dart';
 import '../../../../core/core.dart';
-import '../../../../data/models/scoreboard.dart';
+import '../../../../data/models/scoreboard_item_model.dart';
 import '../../../../domain/repositories/scoreboard_repository.dart';
 import '../../../../main.dart';
 
@@ -14,30 +13,30 @@ class ScoreBoardController {
   set state(ScoreBoardState state) => stateNotifier.value = state;
   ScoreBoardState get state => stateNotifier.value;
 
-  List<ScoreBoard>? scoreboardGeneral;
-  List<ScoreBoard>? scoreboardCurso;
+  List<ScoreBoardItem>? scoreboardGeneral;
+  List<ScoreBoardItem>? scoreboardCurso;
 
+  // ignore: prefer_typing_uninitialized_variables
   var resp;
-
   final repository = ScoreBoardRepository(sl());
 
   Future getScoreGeneral(String token) async {
     state = ScoreBoardState.loadingGeneral;
     final response = (await repository.promedioGlobal(token));
     if (response.isRight()) {
-      scoreboardGeneral =
-          ((response as Right).value as List<ScoreBoard>).cast<ScoreBoard>();
+      scoreboardGeneral = ((response as Right).value as List<ScoreBoardItem>)
+          .cast<ScoreBoardItem>();
 
       state = ScoreBoardState.scoreGeneral;
-
       return scoreboardGeneral;
     } else if (response.isLeft()) {
       resp = (response as Left).value;
       if (resp == ServerFailure) {
-        state = ScoreBoardState.serverError;
-      }
-      if (resp == NoInternetConnectionFailure) {
+        state = ScoreBoardState.serverUnreachable;
+      } else if (resp == NoInternetConnectionFailure) {
         state = ScoreBoardState.notConnected;
+      } else if (resp == ServerFailure) {
+        state = ScoreBoardState.serverUnreachable;
       } else {
         state = ScoreBoardState.error;
       }
@@ -48,8 +47,8 @@ class ScoreBoardController {
     state = ScoreBoardState.loadingbyAnno;
     final response = (await repository.promedioAnnoCurso(token, curso));
     if (response.isRight()) {
-      scoreboardCurso =
-          ((response as Right).value as List<ScoreBoard>).cast<ScoreBoard>();
+      scoreboardCurso = ((response as Right).value as List<ScoreBoardItem>)
+          .cast<ScoreBoardItem>();
 
       state = ScoreBoardState.scoreCurso;
 

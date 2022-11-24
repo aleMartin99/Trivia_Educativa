@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:trivia_educativa/core/core.dart';
 
@@ -34,11 +35,9 @@ class AsignaturaCardWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Center(
-              //TODO CHange to network validation icon
               child: SizedBox(
                   height: 80,
                   child: CustomIconSVG(
-                    //iconName:widget.icon
                     iconName: asignatura.icon,
                   )),
             ),

@@ -7,7 +7,7 @@ import 'package:quickalert/quickalert.dart';
 import '../../../../core/core.dart';
 
 import '../../../../data/models/auth_model.dart';
-import '../../../../data/models/menu_item.dart';
+import '../../../../data/models/menu_item_model.dart';
 import '../../../../main.dart';
 import '../../../settings/settings_imports.dart';
 import '../../../shared/shared_imports.dart';

@@ -110,6 +110,7 @@ flutter:
     - assets/lotties/
     - assets/onboarding/
     - assets/icons/
+    - assets/icons/fromNetwork/
     - assets/sounds/
   #   - images/a_dot_burr.jpeg  #   - images/a_dot_ham.jpeg
 animated_native_splash:

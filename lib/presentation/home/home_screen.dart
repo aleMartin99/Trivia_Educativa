@@ -2,7 +2,7 @@ import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../data/models/menu_item.dart';
+import '../../data/models/menu_item_model.dart';
 import 'widgets/main_screen/main_screen.dart';
 import 'widgets/menu/menu_provider.dart';
 import 'widgets/menu/menu_screen.dart';
@@ -31,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return AwesomeDrawerBar(
       isRTL: false,
-      shadowColor: Colors.red,
       controller: _drawerController,
       type: StyleState.scaleRight,
       menuScreen: MenuScreen(
@@ -44,10 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       borderRadius: 24.0,
       showShadow: false,
       angle: 0.0,
-      //backgroundColor: Colors.purple,
-      //slideWidth: MediaQuery.of(context).size.width * .65,
-      // openCurve: Curves.fastOutSlowIn,
-      // closeCurve: Curves.bounceIn,
+      // ignore: dead_code
       slideWidth: MediaQuery.of(context).size.width * (false ? .45 : 0.65),
     );
   }

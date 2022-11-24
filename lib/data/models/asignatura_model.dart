@@ -1,4 +1,5 @@
 //import 'package:educational_quiz_app/view/shared/models/answer_model.dart';
+import 'package:trivia_educativa/core/api_constants.dart';
 import 'package:trivia_educativa/core/app_icons.dart';
 import 'package:trivia_educativa/core/app_images.dart';
 import 'package:trivia_educativa/core/app_sounds.dart';
@@ -11,6 +12,8 @@ class Asignatura {
   late List<Tema> temas;
   late String image;
   late String icon;
+  bool networkImage = false;
+  bool networkAudio = false;
   late String soundtrack;
 
   Asignatura(
@@ -33,12 +36,33 @@ class Asignatura {
       });
     }
 
-    if (json['configuracion'][0] != null &&
+//TODO method to load icon from asset by network name  ex:Calendar.svg
+
+//TODO make validation for ASSet - Image
+    if (json['configuracion'] != null &&
         (json['configuracion'] as List).isNotEmpty) {
-      //TODO check this when new commits
-      image = json['configuracion']['imagen'];
-      icon = json['configuracion']['icono'];
-      soundtrack = json['configuracion']['sonido'];
+      if (json['configuracion'][0] != null) {
+        //TODO check this when new commits
+
+        //*Replaces image name from path to match the server path
+        const String apiPath = kApiEmulatorBaseUrl;
+        image = json['configuracion'][0]['imagen'];
+        if (image.contains('localhost:3000')) {
+          image =
+              image.replaceFirstMapped('localhost:3000', (match) => apiPath);
+        }
+        networkImage = true;
+
+        icon = json['configuracion'][0]['icono'];
+        icon = 'assets/icons/fromNetwork/' + icon;
+
+        soundtrack = json['configuracion'][0]['sonido'];
+        if (soundtrack.contains('localhost:3000')) {
+          soundtrack = soundtrack.replaceFirstMapped(
+              'localhost:3000', (match) => apiPath);
+        }
+        networkAudio = true;
+      }
     }
 
     //* Add data for image, icon, soundtrack in case that they are empty

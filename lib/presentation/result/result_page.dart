@@ -45,17 +45,10 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   final controller = HomeController();
-
   late ConfettiController _confettiController;
-
   AudioPlayer player = AudioPlayer();
-  //bool isPlaying = false;
 
   Future loadResultSound() async {
-    // if (widget.result == 2) {
-    //   AppSounds.randomResultSoundNota2();
-    // }
-
     await player.play(
       (AssetSource((widget.notaValor == 2)
           ? AppSounds.randomResultSoundNota2()
@@ -67,7 +60,6 @@ class _ResultPageState extends State<ResultPage> {
     );
 
     player.setReleaseMode(ReleaseMode.release);
-    // advancedPlayer = await AudioCache().loop("music/song3.mp3");
     await AudioPlayer.global.changeLogLevel(LogLevel.info);
   }
 
@@ -87,10 +79,6 @@ class _ResultPageState extends State<ResultPage> {
     super.dispose();
   }
 
-  // int get nota3 => widget.nota5 - 20;
-
-  //int get nota4 => widget.nota5 - 10;
-  //TODO poner notaValor por parametro
   String get resultImage => widget.notaValor == 2
       ? AppImages.badResult
       : ((widget.notaValor == 3 || widget.notaValor == 4)
@@ -128,21 +116,11 @@ class _ResultPageState extends State<ResultPage> {
                       alignment: Alignment.topCenter,
                       child: ConfettiWidget(
                         confettiController: _confettiController,
-                        //blastDirection: pi, // radial value - LEFT
                         blastDirectionality: BlastDirectionality
                             .explosive, // don't specify a direction, blast randomly
                         shouldLoop:
                             true, // start again as soon as the animation is finished
-                        colors: const [
-                          //TODO pasar para colores const
-                          Colors.green,
-                          Colors.blue,
-                          Colors.pink,
-                          Colors.orange,
-                          Colors.purple,
-                          AppColors.purple
-                        ], // manually specify the colors to be used
-                        // createParticlePath: drawStar,
+                        colors: AppColors.confettiColors,
                       ),
                     ),
                     Container(
@@ -216,9 +194,6 @@ class _ResultPageState extends State<ResultPage> {
                                     label: I10n.of(context).backTo_Home,
                                     fontColor: Theme.of(context).hintColor,
                                     onTap: () async {
-                                      //  final NetworkInfo _networkInfo = sl();
-
-                                      //TODO ver xq me tiro pal login si tengo internet
                                       (widget.isConnected == true)
                                           ? Navigator.of(context)
                                               .pushNamedAndRemoveUntil(
@@ -255,9 +230,6 @@ class _ResultPageState extends State<ResultPage> {
                                                   .primaryIconTheme
                                                   .color!,
                                               confirmBtnColor: AppColors.purple,
-                                              // showCancelBtn: true,
-
-                                              //Colors.transparent
                                             );
                                     },
                                   ),
@@ -338,14 +310,10 @@ class _ResultPageState extends State<ResultPage> {
                                 label: I10n.of(context).backTo_Home,
                                 fontColor: Theme.of(context).hintColor,
                                 onTap: () async {
-                                  //  final NetworkInfo _networkInfo = sl();
-
-                                  //TODO ver xq me tiro pal login si tengo internet
                                   (widget.isConnected == true)
                                       ? Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                           AppRoutes.homeScreen,
-                                          //arguments: HomeScreenArgs(),
                                           (Route<dynamic> route) => false,
                                         )
                                       : QuickAlert.show(
@@ -375,9 +343,6 @@ class _ResultPageState extends State<ResultPage> {
                                               .primaryIconTheme
                                               .color!,
                                           confirmBtnColor: AppColors.purple,
-                                          // showCancelBtn: true,
-
-                                          //Colors.transparent
                                         );
                                 },
                               ),

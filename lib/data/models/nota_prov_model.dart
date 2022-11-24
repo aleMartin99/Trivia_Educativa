@@ -1,15 +1,12 @@
 import 'models.dart';
 
-//TODO remove pregunta and from jason pregunta
 class NotaProv {
   late String id;
   late int nota;
   late List<Asignatura> asignatura;
   late List<Tema> tema;
   late List<Nivel> nivel;
-
   late List<Estudiante> estudiante;
-// late List<Estudiante>? estudiante;
 
   NotaProv({
     required this.id,

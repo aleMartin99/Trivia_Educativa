@@ -19,11 +19,8 @@ class ScoreBoardCard extends StatelessWidget {
     return Container(
       height: height * 10,
       margin: const EdgeInsets.only(bottom: 16),
-      //color: Colors.amber,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
-        // color: AppTheme.backgroundColors(Theme.of(context).brightness),
-        //TODO validar si es el usuario
         color: isUser
             ? AppColors.purple.withOpacity(0.16)
             : AppTheme.backgroundColors(Theme.of(context).brightness),
@@ -46,8 +43,6 @@ class ScoreBoardCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                         fontSize: 21,
-                        //color: Theme.of(context).primaryIconTheme.color,
-                        //TODO Validar Si es el usuario
                         color: isUser
                             ? Theme.of(context).brightness == Brightness.light
                                 ? AppColors.black
@@ -63,8 +58,6 @@ class ScoreBoardCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.headline2!.copyWith(
                     fontSize: 21,
-                    // color: Theme.of(context).primaryIconTheme.color,
-                    //TODO Validar Si es el usuario
                     color: isUser
                         ? Theme.of(context).brightness == Brightness.light
                             ? AppColors.black

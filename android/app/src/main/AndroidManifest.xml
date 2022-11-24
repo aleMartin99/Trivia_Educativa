@@ -5,7 +5,7 @@
         android:name="${applicationName}"
         android:roundIcon="@mipmap/round_launcher"
         android:icon="@mipmap/launcher_icon"
-    
+        android:usesCleartextTraffic="true"
         >
         <activity
             android:name=".MainActivity"

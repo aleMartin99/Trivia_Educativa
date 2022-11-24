@@ -7,13 +7,6 @@ class Pregunta {
   late String descripcion;
   late String tiposDePregunta;
   late String imagen;
-
-  //TODO add tipo pregunta
-  //V o F, 4 x 1, imagen
-
-//vof => resp correcta e incorrecta
-// 4 x 1 => como ahora
-//image => change imagen x descripcion y resto como ahora
   late List<AnswerModel> answers;
 
   Pregunta({

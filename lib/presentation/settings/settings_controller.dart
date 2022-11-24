@@ -9,11 +9,7 @@ class SettingsController {
   SettingsController(
     this._sharedPreferences,
     Object object,
-  )
-  //TODO check here storaged theme
-  //: super(_sharedPreferences.getString(_kThemeKey)?? false )
-  {
-    //Object object;
+  ) {
     init();
   }
 
