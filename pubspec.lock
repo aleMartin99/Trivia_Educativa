@@ -293,13 +293,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.3.3"
-  flutter_colorful_tab:
-    dependency: "direct main"
-    description:
-      name: flutter_colorful_tab
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:

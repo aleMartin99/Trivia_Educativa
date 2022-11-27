@@ -22,55 +22,46 @@ class TemaCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        height: height * 11,
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-                height: 50,
-                child: CustomIconSVG(
-                  iconName: AppIcons.icon_1,
-                )),
-            const SizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: Text(
-                nombre,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline2!.copyWith(
-                    fontSize:
-                        21, //color: settingsController.currentAppTheme.primaryColor,
-                    color: Theme.of(context).primaryIconTheme.color),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    "${I10n.of(context).levels}: $cantNiveles",
-                    style: const TextStyle(
-                      fontFamily: 'PNRegular',
-                      fontSize: 14,
-                      // fontWeight: FontWeight.w100,
-                    ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 2),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                title: Text(
+                  nombre,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                      fontSize:
+                          21, //color: settingsController.currentAppTheme.primaryColor,
+                      color: Theme.of(context).primaryIconTheme.color),
+                ),
+                subtitle: Text(
+                  "${I10n.of(context).levels}: $cantNiveles",
+                  style: TextStyle(
+                    fontFamily: 'PNRegular',
+                    fontSize: 16,
+                    color: Theme.of(context).primaryIconTheme.color,
+                    // fontWeight: FontWeight.w100,
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

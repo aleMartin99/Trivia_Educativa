@@ -22,6 +22,7 @@ import '../../main.dart';
 import '/../core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:just_audio/just_audio.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<Pregunta> preguntas;
@@ -64,15 +65,22 @@ class _ChallengePageState extends State<ChallengePage> {
     super.dispose();
   }
 
+  //final player = AudioPlayer();
   Future loadMusic() async {
     //TODO checkear esta vaina
     if (widget.asignatura.networkAudio) {
-      await player.play(UrlSource(
-          'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3'));
-      await player.resume(
-          // (UrlSource(
-          //     'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3')),
-          );
+      // Create a player
+      // final duration = await player.setUrl(// Load a URL
+      //     'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3'); // Schemes: (https: | file: | asset: )
+      // // Play without waiting for completion
+      // await player.play();
+      await player.setSourceUrl(
+          'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3');
+
+      // await player.resume(
+      //     // (UrlSource(
+      //     //     'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3')),
+      //     );
     } else {
       await player.play(
         (AssetSource(widget.asignatura.soundtrack)),

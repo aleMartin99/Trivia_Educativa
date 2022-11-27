@@ -1,7 +1,7 @@
 import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_page.dart';
+import 'package:trivia_educativa/presentation/scoreboard/scoreboard_page.dart';
 
 import '../../home_imports.dart';
 import '../menu/menu_provider.dart';

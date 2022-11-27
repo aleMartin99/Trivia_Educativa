@@ -24,8 +24,6 @@ class MenuScreen extends StatefulWidget {
   const MenuScreen(
     this.mainMenu, {
     super.key,
-    // super.key,
-    //  required Key key,
     required this.callback,
     required this.current,
   });

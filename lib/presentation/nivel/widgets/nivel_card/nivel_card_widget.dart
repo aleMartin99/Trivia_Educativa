@@ -21,13 +21,14 @@ class NivelCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return GestureDetector(
       onTap: isDone ? () {} : onTap,
       child: Container(
-        height: 150,
-        margin: const EdgeInsets.only(bottom: 20),
-        //color: Colors.amber,
-        padding: const EdgeInsets.all(10),
+        height: height * 11,
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           // border: const Border.fromBorderSide(
           //   BorderSide(
@@ -41,14 +42,37 @@ class NivelCardWidget extends StatelessWidget {
               : AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 2),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                subtitle: Text(
+                  "Cant. de preguntas: ${preguntas.length}",
+                  style: TextStyle(
+                    fontFamily: 'PNRegular',
+                    fontSize: 16,
+                    color: isDone
+                        ? AppColors.black
+                        : Theme.of(context).primaryIconTheme.color,
+                    // fontWeight: FontWeight.w100,
+                  ),
+                ),
+                trailing: isDone
+                    ? const Icon(
+                        Icons.check_circle,
+                        color: AppColors.chartPrimary,
+                      )
+                    : Icon(
+                        Icons.circle_outlined,
+                        color:
+                            (Theme.of(context).brightness == Brightness.light)
+                                ? AppColors.lightPurple
+                                : Colors.grey[600],
+                      ),
+                title: Text(
                   nombre,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -60,43 +84,9 @@ class NivelCardWidget extends StatelessWidget {
                         //color: settingsController.currentAppTheme.primaryColor,
                       ),
                 ),
-                isDone
-                    ? const Icon(
-                        Icons.check_box,
-                        color: AppColors.chartPrimary,
-                      )
-                    : Icon(
-                        Icons.check_box_outline_blank,
-                        color:
-                            (Theme.of(context).brightness == Brightness.light)
-                                ? AppColors.lightPurple
-                                : Colors.grey[600],
-                      )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  //Todo I10n
-                  child: Text(
-                    "Cant. de preguntas: ${preguntas.length}",
-                    style: TextStyle(
-                      fontFamily: 'PNRegular',
-                      fontSize: 14,
-                      color: isDone
-                          ? AppColors.black
-                          : Theme.of(context).primaryIconTheme.color,
-                      // fontWeight: FontWeight.w100,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

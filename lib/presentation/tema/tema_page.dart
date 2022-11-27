@@ -145,14 +145,17 @@ class _TemaPageState extends State<TemaPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
-                          child: GridView.count(
+                          child: ListView(
                             primary: false,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
                             padding: const EdgeInsets.only(top: 0),
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 10,
+                            // crossAxisCount: 2,
+                            // crossAxisSpacing: 16,
+                            // mainAxisSpacing: 10,
+                            // shrinkWrap: true,
+                            //  padding: EdgeInsets.only(bottom: 1),
+                            clipBehavior: Clip.antiAlias,
                             children: widget.asignatura.temas
                                 .map((tema) => TemaCardWidget(
                                     nombre: tema.descripcion,

@@ -4,14 +4,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:trivia_educativa/presentation/home/home_controller.dart';
-import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_card/scoreboard_card.dart';
-import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_state.dart';
+import 'package:trivia_educativa/presentation/scoreboard/scoreboard_card/scoreboard_card.dart';
+import 'package:trivia_educativa/presentation/scoreboard/scoreboard_state.dart';
 import 'dart:math' show pi;
-import '../../../../core/app_icons.dart';
-import '../../../../core/core.dart';
-import '../../../../data/models/auth_model.dart';
-import '../../../../data/models/estudiante_model.dart';
-import '../../../../main.dart';
+import '../../core/app_icons.dart';
+import '../../core/core.dart';
+import '../../data/models/auth_model.dart';
+import '../../data/models/estudiante_model.dart';
+import '../../main.dart';
 import 'scoreboard_controller.dart';
 
 class ScoreBoardPage extends StatefulWidget {

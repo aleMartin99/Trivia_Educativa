@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
-import 'package:trivia_educativa/presentation/home/widgets/scoreboard/scoreboard_state.dart';
-import '../../../../core/core.dart';
-import '../../../../data/models/scoreboard_item_model.dart';
-import '../../../../domain/repositories/scoreboard_repository.dart';
-import '../../../../main.dart';
+import 'package:trivia_educativa/presentation/scoreboard/scoreboard_state.dart';
+import '../../core/core.dart';
+import '../../data/models/scoreboard_item_model.dart';
+import '../../domain/repositories/scoreboard_repository.dart';
+import '../../main.dart';
 
 class ScoreBoardController {
   final ValueNotifier<ScoreBoardState> stateNotifier =
