@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
@@ -31,14 +30,9 @@ class ChallengeRepository with RequestErrorParser {
         }).timeout(
           const Duration(seconds: 30),
         );
-        log('status code from asignarNota');
-        log(response.statusCode.toString());
 
-        if (response.statusCode == 201) {
-          log('asignar nota ok');
-        }
+        if (response.statusCode == 201) {}
         if (response.statusCode == 500) {
-          log('error server');
           return left(ServerFailure);
         }
 
@@ -80,15 +74,12 @@ class ChallengeRepository with RequestErrorParser {
         }).timeout(
           const Duration(seconds: 30),
         );
-        log(' ${response.toString()}');
         if (response.statusCode == 201) {
           final jsonResponse = json.decode(response.body);
-          log(' ${jsonResponse.toString()}');
           final notaProv = NotaProv.fromJson(jsonResponse);
           return right(notaProv);
         }
         if (response.statusCode == 500) {
-          log('error server');
           return left(ServerFailure);
         } else {
           throw Exception('Failed to create a Nota');

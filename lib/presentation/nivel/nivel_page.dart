@@ -36,17 +36,10 @@ class NivelPage extends StatefulWidget {
 
 class _NivelPageState extends State<NivelPage> {
   final challengeController = ChallengeController();
-  // var notas = sl<List<NotaProv>>();
   final homeController = HomeController();
-  // var auth = sl<Auth>();
-  // void _loadData() async {
-  //   await homeController.getNotasProv(user.ci);
-  // }
 
   @override
   initState() {
-    //_loadData();
-
     challengeController.stateNotifier.addListener(() {
       if (challengeController.state == ChallengeState.notasLoaded) {
         setState(() {});
@@ -79,7 +72,6 @@ class _NivelPageState extends State<NivelPage> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Row(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
                         onPressed: () => Navigator.of(context).pop(),
@@ -116,15 +108,14 @@ class _NivelPageState extends State<NivelPage> {
           child: Padding(
             padding: const EdgeInsets.only(top: 24.0),
             child: ListView(
-                // padding: EdgeInsets.only(bottom: 15),
                 clipBehavior: Clip.antiAlias,
-                // useMagnifier: true,
                 itemExtent: 120,
                 physics: const BouncingScrollPhysics(),
                 children: widget.niveles.map((nivel) {
                   if (doneLevel(nivel.id, widget.notas)) {
                     return NivelCardWidget(
                       isDone: true,
+                      duracion: nivel.duracion,
                       nombre: nivel.descripcion,
                       preguntas: nivel.preguntas,
                       onTap: () {
@@ -132,18 +123,20 @@ class _NivelPageState extends State<NivelPage> {
                           context,
                           AppRoutes.challengeRoute,
                           arguments: ChallengePageArgs(
-                              preguntas: nivel.preguntas,
-                              idEstudiante: widget.idEstudiante,
-                              nota5: nivel.nota5,
-                              quizTitle: nivel.descripcion,
-                              asignatura: widget.asignatura,
-                              idTema: widget.idTema,
-                              nivel: nivel),
+                            preguntas: nivel.preguntas,
+                            idEstudiante: widget.idEstudiante,
+                            nota5: nivel.nota5,
+                            quizTitle: nivel.descripcion,
+                            asignatura: widget.asignatura,
+                            idTema: widget.idTema,
+                            nivel: nivel,
+                          ),
                         );
                       },
                     );
                   } else {
                     return NivelCardWidget(
+                        duracion: nivel.duracion,
                         isDone: false,
                         nombre: nivel.descripcion,
                         preguntas: nivel.preguntas,
@@ -152,10 +145,10 @@ class _NivelPageState extends State<NivelPage> {
                               ? QuickAlert.show(
                                   context: context,
                                   type: QuickAlertType.warning,
-                                  title: 'No existen preguntas',
-                                  confirmBtnText: 'Ok',
-                                  text:
-                                      'No hay preguntas disponibles por el momento',
+                                  title:
+                                      I10n.of(context).noQuestionsDialogTitle,
+                                  confirmBtnText: I10n.of(context).ok,
+                                  text: I10n.of(context).noQuestionsDialogBody,
                                   backgroundColor:
                                       Theme.of(context).scaffoldBackgroundColor,
                                   textColor:
@@ -176,8 +169,6 @@ class _NivelPageState extends State<NivelPage> {
                                       idTema: widget.idTema,
                                       nivel: nivel),
                                 );
-
-                          // homeController.state = HomeState.empty;:
                         });
                   }
                 }).toList()),

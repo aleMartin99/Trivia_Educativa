@@ -14,10 +14,6 @@ import '../../onboarding_imports.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//I10n.of(context).topics
-
-//TODO change text style and make I10n
-
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key}) : super(key: key);
 
@@ -77,9 +73,8 @@ class _OnboardingState extends State<Onboarding> {
               AppRoutes.loginRoute,
             );
           },
-          //TODO I10n
           child: Text(
-            'Saltar',
+            I10n.of(context).skip,
             style: Theme.of(context).textTheme.headline5?.copyWith(
                   color: Theme.of(context).primaryIconTheme.color,
                   fontSize: 16,
@@ -100,8 +95,8 @@ class _OnboardingState extends State<Onboarding> {
                   //inactiveColor: Colors.grey,
 
                   label: value == kOnboardingLightItems.length
-                      ? 'Continuar'
-                      : 'Siguiente',
+                      ? I10n.of(context).continueText
+                      : I10n.of(context).next,
                   onTap: () {
                     if (value != kOnboardingLightItems.length) {
                       nextPage();

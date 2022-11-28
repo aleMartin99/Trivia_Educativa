@@ -18,17 +18,14 @@ class NextButtonWidget extends StatelessWidget {
     Key? key,
     required this.label,
     required this.backgroundColor,
-    // required this.fontColor,
     required this.borderColor,
     required this.overlayColor,
     required this.onTap,
-    //  this.textStyle
   }) : super(key: key);
 
   // Creando constructores con nombre para diferentes situaciones
   NextButtonWidget.green({Key? key, required this.label, required this.onTap})
       : backgroundColor = AppColors.darkGreen,
-        //fontColor = ,
         borderColor = AppColors.darkGreen,
         overlayColor = AppColors.lightGreen,
         textStyle = GoogleFonts.notoSans(
@@ -40,7 +37,6 @@ class NextButtonWidget extends StatelessWidget {
 
   NextButtonWidget.white({Key? key, required this.label, required this.onTap})
       : backgroundColor = AppColors.white,
-        //  fontColor = ,
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
         textStyle = GoogleFonts.notoSans(
@@ -52,7 +48,6 @@ class NextButtonWidget extends StatelessWidget {
 
   NextButtonWidget.purple({Key? key, required this.label, required this.onTap})
       : backgroundColor = AppColors.purple,
-        //fontColor = ,
         borderColor = AppColors.purple,
         overlayColor = AppColors.purple,
         textStyle = GoogleFonts.notoSans(
@@ -67,8 +62,6 @@ class NextButtonWidget extends StatelessWidget {
       required this.onTap,
       required this.fontColor})
       : backgroundColor = Colors.transparent,
-        //fontColor = AppColors.grey,
-
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
         textStyle = GoogleFonts.notoSans(
@@ -96,7 +89,6 @@ class NextButtonWidget extends StatelessWidget {
           overlayColor: MaterialStateProperty.all(overlayColor),
         ),
         onPressed: onTap,
-        //TODO change textStyle
         child: Text(label,
             //TODO check font family and remove notoSans
             style: textStyle),

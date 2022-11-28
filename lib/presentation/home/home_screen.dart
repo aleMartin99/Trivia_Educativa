@@ -6,14 +6,9 @@ import '../../data/models/menu_item_model.dart';
 import 'widgets/main_screen/main_screen.dart';
 import 'widgets/menu/menu_provider.dart';
 import 'widgets/menu/menu_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
-  static List<MyMenuItem> mainMenu = [
-    //TODO I10n
-    MyMenuItem("Inicio", Icons.home_filled, 0),
-    MyMenuItem("Tabla de Posiciones", Icons.emoji_events, 1),
-  ];
-
   const HomeScreen({
     Key? key,
   }) : super(key: key);
@@ -26,15 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final _drawerController = AwesomeDrawerBarController();
 
   final int _currentPage = 0;
-//TODO check marcar selected from other code
   @override
   Widget build(BuildContext context) {
+    List<MyMenuItem> mainMenu = [
+      MyMenuItem(I10n.of(context).homeMenuOption, Icons.home_filled, 0),
+      MyMenuItem(I10n.of(context).scoreboardMenuOption, Icons.emoji_events, 1),
+    ];
     return AwesomeDrawerBar(
       isRTL: false,
       controller: _drawerController,
       type: StyleState.scaleRight,
       menuScreen: MenuScreen(
-        HomeScreen.mainMenu,
+        mainMenu,
         callback: _updatePage,
         current: _currentPage,
         key: UniqueKey(),

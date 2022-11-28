@@ -17,7 +17,6 @@ class AppInformationWidget extends StatelessWidget {
         if (snapshot.hasData) {
           final _data = snapshot.data;
           final appName = _data?.appName;
-          // final packageName = _data?.packageName;
           final version = _data?.version;
           final buildNumber = _data?.buildNumber;
           return Column(
@@ -25,6 +24,7 @@ class AppInformationWidget extends StatelessWidget {
             children: [
               Text(
                 '$appName ${Platform.isAndroid ? "Android" : "iOS"} v$version ($buildNumber)',
+                //todo textstyle for app information
                 style: TextStyle(
                   fontFamily: 'PNRegular',
                   fontSize: 14,
@@ -35,36 +35,35 @@ class AppInformationWidget extends StatelessWidget {
               (I10n.of(context).localeName == 'es')
                   ? Text(
                       'Español',
+                      //todo textstyle for app information
                       style: TextStyle(
                         fontFamily: 'PNRegular',
                         fontSize: 14,
-
                         color: Theme.of(context).iconTheme.color,
                         fontWeight: FontWeight.w400,
-                        // fontWeight: FontWeight.w100,
                       ),
                       textAlign: TextAlign.center,
                     )
                   : (I10n.of(context).localeName == 'en')
                       ? Text(
                           'English',
+                          //todo textstyle for app information
                           style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,
                             color: Theme.of(context).iconTheme.color,
                             fontWeight: FontWeight.w400,
-                            // fontWeight: FontWeight.w100,
                           ),
                           textAlign: TextAlign.center,
                         )
                       : Text(
                           'Other Language',
+                          //todo textstyle for app information
                           style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,
                             color: Theme.of(context).iconTheme.color,
                             fontWeight: FontWeight.w400,
-                            // fontWeight: FontWeight.w100,
                           ),
                           textAlign: TextAlign.center,
                         ),

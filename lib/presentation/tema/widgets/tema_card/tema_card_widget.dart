@@ -4,9 +4,6 @@ import 'package:trivia_educativa/core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../../core/app_icons.dart';
-
-//TODO change with scoreboard when ui changes
 class TemaCardWidget extends StatelessWidget {
   final String nombre;
   final int cantNiveles;
@@ -46,17 +43,16 @@ class TemaCardWidget extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline2!.copyWith(
-                      fontSize:
-                          21, //color: settingsController.currentAppTheme.primaryColor,
+                      fontSize: 21,
                       color: Theme.of(context).primaryIconTheme.color),
                 ),
                 subtitle: Text(
                   "${I10n.of(context).levels}: $cantNiveles",
                   style: TextStyle(
+                    //TODO check textStyle
                     fontFamily: 'PNRegular',
                     fontSize: 16,
                     color: Theme.of(context).primaryIconTheme.color,
-                    // fontWeight: FontWeight.w100,
                   ),
                 ),
               ),

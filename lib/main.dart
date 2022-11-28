@@ -21,6 +21,4 @@ void main() async {
   runApp(EasyDynamicThemeWidget(
     child: const AppWidget(),
   ));
-
-  //runApp(const AppWidget());
 }

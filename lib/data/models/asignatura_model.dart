@@ -36,14 +36,9 @@ class Asignatura {
       });
     }
 
-//TODO method to load icon from asset by network name  ex:Calendar.svg
-
-//TODO make validation for ASSet - Image
     if (json['configuracion'] != null &&
         (json['configuracion'] as List).isNotEmpty) {
       if (json['configuracion'][0] != null) {
-        //TODO check this when new commits
-
         //*Replaces image name from path to match the server path
         const String apiPath = kApiEmulatorBaseUrl;
         image = json['configuracion'][0]['imagen'];

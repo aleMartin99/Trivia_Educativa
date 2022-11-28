@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app_colors.dart';
 import '../../../core/core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PasswordWidget extends StatefulWidget {
   const PasswordWidget({Key? key, required this.passwordController})
@@ -23,8 +24,6 @@ class _PasswordWidgetState extends State<PasswordWidget> {
             color: Theme.of(context).primaryIconTheme.color, fontSize: 16),
         obscureText: !_passwordVisible,
         decoration: InputDecoration(
-            //  contentPadding: const EdgeInsets.all(15),
-            // icon: Icons.lock,
             suffixIcon: IconButton(
               onPressed: () {
                 setState(() {
@@ -44,7 +43,7 @@ class _PasswordWidgetState extends State<PasswordWidget> {
                   width: 3,
                   color: AppColors.purple,
                 )),
-            hintText: "Contraseña",
+            hintText: I10n.of(context).password,
             //  hintStyle: ,
             //label: Text('Pinga'),
             // errorText: 'Carepito',

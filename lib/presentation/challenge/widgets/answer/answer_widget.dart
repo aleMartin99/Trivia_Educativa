@@ -25,12 +25,11 @@ class AnswerWidget extends StatefulWidget {
 }
 
 class _AnswerWidgetState extends State<AnswerWidget> {
+  //todo create textstyle
   TextStyle get _selectedTextStyleRight => TextStyle(
       fontFamily: 'PNRegular',
       fontSize: 16,
-      color: Theme.of(context).primaryIconTheme.color
-      // fontWeight: FontWeight.w100,
-      );
+      color: Theme.of(context).primaryIconTheme.color);
 
   IconData get _selectedIconRight =>
       widget.answerModel.isRight ? Icons.close : Icons.close;

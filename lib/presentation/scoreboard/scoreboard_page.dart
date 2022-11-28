@@ -13,6 +13,7 @@ import '../../data/models/auth_model.dart';
 import '../../data/models/estudiante_model.dart';
 import '../../main.dart';
 import 'scoreboard_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScoreBoardPage extends StatefulWidget {
   const ScoreBoardPage({Key? key}) : super(key: key);
@@ -35,19 +36,14 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
-    // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
     _loadDataCurso();
     _loadDataGeneral();
-
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
-    // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
     if (mounted) setState(() {});
     _refreshController.loadComplete();
   }
@@ -77,16 +73,15 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
         }
         QuickAlert.show(
           context: context,
-
           type: QuickAlertType.error,
-          //TODO I10n
-          title: 'Ha ocurrido un error',
-          text: 'Ha ocurrido un error inesperado',
+
+          title: I10n.of(context).errorTitle,
+          text: I10n.of(context).errorBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
-          confirmBtnText: 'Ok',
+          confirmBtnText: I10n.of(context).ok,
           //confirmBtnTextStyle: const TextStyle(color: AppColors.white),
         );
         scoreboardController.state = ScoreBoardState.empty;
@@ -98,9 +93,9 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
         QuickAlert.show(
           context: context,
           type: QuickAlertType.loading,
-          title: 'Servidor no disponible',
-          confirmBtnText: 'Ok',
-          text: 'Al parecer el servidor no está disponible.',
+          title: I10n.of(context).serverUnavailableTitle,
+          confirmBtnText: I10n.of(context).ok,
+          text: I10n.of(context).serverUnavailableBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -112,11 +107,9 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
-          //TODO I10n
-          title: 'No hay conexión a Internet',
-          confirmBtnText: 'Ok',
-          text:
-              'Al parecer no tiene conexión a internet. Revise en los ajustes del teléfono',
+          title: I10n.of(context).noInternetConnectionTitle,
+          text: I10n.of(context).noInternetConnectionBody,
+          confirmBtnText: I10n.of(context).ok,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -157,8 +150,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                           ListTile(
                             contentPadding: EdgeInsets.only(top: height * 7.5),
                             title: Text(
-                              //TODO I10n
-                              'Tabla de Posiciones',
+                              I10n.of(context).scoreboardMenuOption,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: AppTextStyles.titleBold,
@@ -209,7 +201,6 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                       : Colors.transparent;
                                 },
                               ),
-                              //indicatorPadding: EdgeInsets.all(0),
                               indicator: MaterialIndicator(
                                 height: height / 3.5,
                                 horizontalPadding: width * 10,
@@ -221,26 +212,16 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                               controller: _tabController,
                               splashBorderRadius: null,
                               tabs: [
-                                //TODO I10n
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 4.0),
-                                  //TODO I10n
-                                  child: Text("Mi Año",
-                                      //TextAlign.,
-
-                                      style: AppTextStyles.titleBold.copyWith(
-                                          // color: AppColors.black,
-                                          )
-                                      //.copyWith(color: Colors.black),
-                                      ),
+                                  child: Text(I10n.of(context).myYear,
+                                      style:
+                                          AppTextStyles.titleBold.copyWith()),
                                 ),
-                                //TODO I10n
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text("General",
-                                      style: AppTextStyles.titleBold
-                                      //.copyWith(color: AppColors.black),
-                                      ),
+                                  child: Text(I10n.of(context).general,
+                                      style: AppTextStyles.titleBold),
                                 ),
                               ],
                               indicatorSize: TabBarIndicatorSize.tab,
@@ -266,14 +247,9 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                       enablePullUp: false,
                       physics: const BouncingScrollPhysics(),
                       primary: false,
-                      //st
-                      //footer: ,
                       header: const MaterialClassicHeader(
-                        // distance: 40,
-                        //backgroundColor: Colors.white,
                         color: AppColors.purple,
                       ),
-                      //header: WaterDropHeader(),
                       controller: _refreshController,
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
@@ -305,8 +281,8 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                               horizontal: width * 4.5,
                                             ),
                                             child: Text(
-                                              //TODO I10n
-                                              'No hay tabla de posiciones por anno disponible',
+                                              I10n.of(context)
+                                                  .noLocalScoreBoardAvailable,
                                               style: AppTextStyles.titleBold
                                                   .copyWith(
                                                 color: Theme.of(context)
@@ -318,10 +294,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                         )
                                       : ListView(
                                           shrinkWrap: true,
-                                          //  padding: EdgeInsets.only(bottom: 1),
                                           clipBehavior: Clip.antiAlias,
-                                          // useMagnifier: true,
-                                          //itemExtent: height * 10,
                                           physics:
                                               const BouncingScrollPhysics(),
                                           children: scoreboardController
@@ -333,7 +306,6 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                                       estudiante.id)
                                                   ? true
                                                   : false,
-                                              //isUser: false,
                                               name: scoreboardCurso
                                                   .estudiante.name,
                                               promedio:
@@ -344,7 +316,6 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                             ),
 
                             //*scoreboard general
-
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: width * 2.25,
@@ -367,8 +338,8 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                             horizontal: width * 4.5,
                                           ),
                                           child: Text(
-                                            //TODO I10n
-                                            'No hay tabla de posiciones gerenal disponible',
+                                            I10n.of(context)
+                                                .noGeneralScoreBoardAvailable,
                                             style: AppTextStyles.titleBold
                                                 .copyWith(
                                               color: Theme.of(context)
@@ -379,12 +350,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                         ))
                                       : ListView(
                                           shrinkWrap: true,
-                                          // padding: EdgeInsets.all(0),
-                                          // padding: EdgeInsets.only(bottom: 1),
-                                          // padding: EdgeInsets.only(bottom: 15),
                                           clipBehavior: Clip.antiAlias,
-                                          // useMagnifier: true,
-                                          //itemExtent: height * 10,
                                           physics:
                                               const BouncingScrollPhysics(),
                                           children: scoreboardController
@@ -396,7 +362,6 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                                       estudiante.id)
                                                   ? true
                                                   : false,
-                                              //isUser: false,
                                               name: scoreboardGeneral
                                                   .estudiante.name,
                                               promedio:

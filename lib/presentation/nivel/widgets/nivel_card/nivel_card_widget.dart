@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NivelCardWidget extends StatelessWidget {
-  //bool isDone = false;
   final String nombre;
-  // late String subtitle;
   final List<Pregunta> preguntas;
   final bool isDone;
   final VoidCallback onTap;
+  final int duracion;
 
   const NivelCardWidget({
     Key? key,
     required this.isDone,
+    required this.duracion,
     required this.nombre,
     required this.onTap,
     required this.preguntas,
@@ -28,13 +29,8 @@ class NivelCardWidget extends StatelessWidget {
       child: Container(
         height: height * 11,
         margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(2),
+        padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          // border: const Border.fromBorderSide(
-          //   BorderSide(
-          //     color: AppColors.border,
-          //   ),
-          // ),
           color: isDone
               ? (Theme.of(context).brightness == Brightness.light)
                   ? Colors.black12
@@ -50,17 +46,17 @@ class NivelCardWidget extends StatelessWidget {
             children: [
               ListTile(
                 subtitle: Text(
-                  "Cant. de preguntas: ${preguntas.length}",
+                  " ${I10n.of(context).numberOfQuestions}${preguntas.length}",
+                  //TODO check textSTyle
                   style: TextStyle(
                     fontFamily: 'PNRegular',
                     fontSize: 16,
                     color: isDone
                         ? AppColors.black
                         : Theme.of(context).primaryIconTheme.color,
-                    // fontWeight: FontWeight.w100,
                   ),
                 ),
-                trailing: isDone
+                leading: isDone
                     ? const Icon(
                         Icons.check_circle,
                         color: AppColors.chartPrimary,
@@ -72,16 +68,40 @@ class NivelCardWidget extends StatelessWidget {
                                 ? AppColors.lightPurple
                                 : Colors.grey[600],
                       ),
+                horizontalTitleGap: 10,
+                isThreeLine: true,
+                dense: true,
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.timer,
+                      size: 20,
+                      color: Theme.of(context).primaryIconTheme.color,
+                    ),
+                    Text(
+                      '$duracion min',
+                      //TODO check textSTyle
+                      style: TextStyle(
+                        fontFamily: 'PNRegular',
+                        fontSize: 14,
+                        color: isDone
+                            ? AppColors.black
+                            : Theme.of(context).primaryIconTheme.color,
+                      ),
+                    )
+                  ],
+                ),
                 title: Text(
                   nombre,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
+                  //TODO check textSTyle
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                         fontSize: 21,
                         color: isDone
                             ? AppColors.black
                             : Theme.of(context).primaryIconTheme.color,
-                        //color: settingsController.currentAppTheme.primaryColor,
                       ),
                 ),
               )

@@ -27,6 +27,7 @@ class QuestionIndicatorWidget extends StatelessWidget {
             children: [
               Text(
                 "${I10n.of(context).question} $currentPage",
+                //TODO ver textstyle
                 style: TextStyle(
                     fontFamily: 'PNRegular',
                     fontSize: 14,
@@ -36,6 +37,7 @@ class QuestionIndicatorWidget extends StatelessWidget {
               ),
               Text(
                 "${I10n.of(context).of_} $pagesLenght",
+                //TODO ver textstyle
                 style: TextStyle(
                     fontFamily: 'PNRegular',
                     fontSize: 14,

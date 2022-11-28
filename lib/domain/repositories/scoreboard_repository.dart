@@ -83,7 +83,6 @@ class ScoreBoardRepository with RequestErrorParser {
           log(' ${jsonResponse.toString()}');
           final scoreboardCurso =
               jsonResponse.map((e) => ScoreBoardItem.fromJson(e)).toList();
-          //   final promedioEstudiantes = ScoreBoard.fromJson(jsonResponse);
           return right(scoreboardCurso);
         } else {
           throw Exception('Failed to load alumnos from promedio by Curso');

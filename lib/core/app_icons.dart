@@ -42,7 +42,6 @@ class CustomIconSVG extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO CHange to network validation icon
     return SvgPicture.asset(
       iconName.toString(),
       color: color,

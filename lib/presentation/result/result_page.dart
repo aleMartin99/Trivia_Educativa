@@ -20,7 +20,6 @@ class ResultPage extends StatefulWidget {
   final int questionsLenght;
   final int result;
   final int notaValor;
-  // final int nota5;
   final bool isConnected;
 
   ResultPage(
@@ -29,13 +28,10 @@ class ResultPage extends StatefulWidget {
       required this.questionsLenght,
       required this.result,
       required this.notaValor,
-      // required this.nota5,
       required this.isConnected})
       : super(
           key: key,
-        ) {
-    //percent = result * 100 / questionsLenght;
-  }
+        );
 
   late double percent;
 
@@ -153,6 +149,7 @@ class _ResultPageState extends State<ResultPage> {
                                 child: Text(
                                   subtitle,
                                   textAlign: TextAlign.center,
+                                  //TODO check  textstyle
                                   style: TextStyle(
                                       fontFamily: 'PNRegular',
                                       fontSize: 18,
@@ -172,7 +169,7 @@ class _ResultPageState extends State<ResultPage> {
                                   padding: const EdgeInsets.only(
                                       bottom: .0, left: 20, right: 20),
                                   child: NextButtonWidget.purple(
-                                    label: "${I10n.of(context).share} ",
+                                    label: I10n.of(context).share,
                                     onTap: () {
                                       //TODO checkear en telef fisico que funcione sin pedir contactos
                                       Share.share(
@@ -198,7 +195,6 @@ class _ResultPageState extends State<ResultPage> {
                                           ? Navigator.of(context)
                                               .pushNamedAndRemoveUntil(
                                               AppRoutes.homeScreen,
-                                              //arguments: HomeScreenArgs(),
                                               (Route<dynamic> route) => false,
                                             )
                                           : QuickAlert.show(
@@ -212,15 +208,14 @@ class _ResultPageState extends State<ResultPage> {
                                                             false);
                                               },
                                               context: context,
-                                              //TODO I10n
                                               type: QuickAlertType.warning,
                                               barrierDismissible: false,
-                                              title:
-                                                  'No hay conexión a Internet',
-                                              confirmBtnText: 'Aceptar',
-                                              //cancelBtnText: 'Cancelar',
-                                              text:
-                                                  'Su nota ha sido guardada exitosamente. Se le rediccionará al Login',
+                                              title: I10n.of(context)
+                                                  .noInternetConnectionTitle,
+                                              confirmBtnText:
+                                                  I10n.of(context).ok,
+                                              text: I10n.of(context)
+                                                  .scoreDialogNoInternet,
                                               backgroundColor: Theme.of(context)
                                                   .scaffoldBackgroundColor,
                                               textColor: Theme.of(context)
@@ -270,6 +265,7 @@ class _ResultPageState extends State<ResultPage> {
                             child: Text(
                               subtitle,
                               textAlign: TextAlign.center,
+                              //TODO chech text Style
                               style: TextStyle(
                                   fontFamily: 'PNRegular',
                                   fontSize: 18,
@@ -288,7 +284,7 @@ class _ResultPageState extends State<ResultPage> {
                               padding: const EdgeInsets.only(
                                   bottom: .0, left: 20, right: 20),
                               child: NextButtonWidget.purple(
-                                label: "${I10n.of(context).share} ",
+                                label: I10n.of(context).share,
                                 onTap: () {
                                   //TODO checkear en telef fisico que funcione sin pedir contactos
                                   Share.share(
@@ -326,14 +322,13 @@ class _ResultPageState extends State<ResultPage> {
                                                         false);
                                           },
                                           context: context,
-                                          //TODO I10n
                                           type: QuickAlertType.warning,
                                           barrierDismissible: false,
-                                          title: 'No hay conexión a Internet',
-                                          confirmBtnText: 'Aceptar',
-                                          //cancelBtnText: 'Cancelar',
-                                          text:
-                                              'Su nota ha sido guardada exitosamente. Se le rediccionará al Login',
+                                          title: I10n.of(context)
+                                              .noInternetConnectionTitle,
+                                          confirmBtnText: I10n.of(context).ok,
+                                          text: I10n.of(context)
+                                              .scoreDialogNoInternet,
                                           backgroundColor: Theme.of(context)
                                               .scaffoldBackgroundColor,
                                           textColor: Theme.of(context)

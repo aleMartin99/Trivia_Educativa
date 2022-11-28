@@ -13,9 +13,7 @@ import 'dart:math' show pi;
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   AppBarWidget({
     Key? key,
-    //  required this.user,
   }) : super(key: key);
-  // final User user;
   var auth = sl<Auth>();
   @override
   Widget build(BuildContext context) {

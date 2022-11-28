@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:fpdart/fpdart.dart';
 import 'package:quickalert/quickalert.dart';
 
 import 'package:trivia_educativa/core/core.dart';
@@ -23,8 +22,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController passwordController = TextEditingController();
   final _loginController = LoginController();
-
-//TODO I10n
 
   void goHome() async {
     sl.pushNewScope();
@@ -51,13 +48,13 @@ class _LoginPageState extends State<LoginPage> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
-          title: 'Ha ocurrido un error',
-          text: 'Ha ocurrido un error inesperado',
+          title: I10n.of(context).errorTitle,
+          text: I10n.of(context).errorBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
-          confirmBtnText: 'Ok',
+          confirmBtnText: I10n.of(context).ok,
         );
 
         _loginController.state = LoginState.empty;
@@ -68,9 +65,9 @@ class _LoginPageState extends State<LoginPage> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.loading,
-          title: 'Servidor no disponible',
-          confirmBtnText: 'Ok',
-          text: 'Al parecer el servidor no está disponible.',
+          title: I10n.of(context).serverUnavailableTitle,
+          confirmBtnText: I10n.of(context).ok,
+          text: I10n.of(context).serverUnavailableBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -85,10 +82,9 @@ class _LoginPageState extends State<LoginPage> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
-          title: 'No hay conexión a Internet',
-          confirmBtnText: 'Ok',
-          text:
-              'Al parecer no tiene conexión a internet. Revise en los ajustes del teléfono',
+          title: I10n.of(context).noInternetConnectionTitle,
+          confirmBtnText: I10n.of(context).ok,
+          text: I10n.of(context).noInternetConnectionBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -106,7 +102,6 @@ class _LoginPageState extends State<LoginPage> {
     showLoginForm() {
       return Container(
         alignment: Alignment.center,
-        //margin: EdgeInsets.all(0),
         height: 400,
         width: 500,
         decoration: BoxDecoration(
@@ -117,18 +112,18 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
           child: SingleChildScrollView(
             child: Column(
-              //  mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //const SizedBox(height: 0),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        "Iniciar sesión",
-                        style: TextStyle(color: AppColors.white, fontSize: 24),
+                        I10n.of(context).login,
+                        //todo check textstyle font family
+                        style: const TextStyle(
+                            color: AppColors.white, fontSize: 24),
                       ),
                     ],
                   ),
@@ -138,15 +133,16 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (ctx, state, _) => Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: state == LoginState.unauthorized
-                            ? const Text("* Credenciales inválidas",
-                                //selectionColor: Colors.red,
-                                style: TextStyle(
+                            ? Text(I10n.of(context).invalidCredentials,
+                                //todo check textstyle font family
+                                style: const TextStyle(
                                   color: AppColors.white,
                                   fontSize: 16,
                                 ))
                             : (state == LoginState.noPermits)
-                                ? const Text("* Usuario sin permisos",
-                                    style: TextStyle(
+                                ? Text(I10n.of(context).noPermissionsUser,
+                                    //todo check textstyle font family
+                                    style: const TextStyle(
                                       color: AppColors.white,
                                       fontSize: 16,
                                     ))
@@ -167,14 +163,13 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 16),
                         decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(15),
-                            // border: InputBorder.none,
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                   width: 3,
                                   color: AppColors.purple,
                                 )),
-                            hintText: "Nombre de usuario",
+                            hintText: I10n.of(context).username,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: BorderSide(
@@ -196,7 +191,6 @@ class _LoginPageState extends State<LoginPage> {
                         PasswordWidget(passwordController: passwordController),
                   ),
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -208,13 +202,10 @@ class _LoginPageState extends State<LoginPage> {
                           QuickAlert.show(
                             context: context,
                             type: QuickAlertType.info,
-                            //TODO I10n
-                            title: 'Ha olvidado su contraseña?',
-                            // onWillPop: false,
+                            title: I10n.of(context).forgottenPasswordTitle,
                             animType: QuickAlertAnimType.scale,
-                            text:
-                                'Contacte con el administrador designado para que le restablezca la contraseñna',
-                            confirmBtnText: 'Ok',
+                            text: I10n.of(context).forgottenPasswordBody,
+                            confirmBtnText: I10n.of(context).ok,
                             backgroundColor:
                                 Theme.of(context).scaffoldBackgroundColor,
                             textColor:
@@ -224,16 +215,15 @@ class _LoginPageState extends State<LoginPage> {
                             confirmBtnColor: AppColors.purple,
                           );
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Text("Olvidó su contraseña?",
-                              style: TextStyle(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text(I10n.of(context).forgottenPasswordButton,
+                              //todo check textstyle font family
+                              style: const TextStyle(
                                 color: AppColors.white,
                                 fontSize: 16,
                                 decoration: TextDecoration.underline,
-                              )
-                              // regulerText
-                              ),
+                              )),
                         )),
                   ],
                 ),
@@ -252,13 +242,9 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () async {
                               //*Method to close keyboard
                               FocusScope.of(context).requestFocus(FocusNode());
-
                               await _loginController.signIn(
                                   usernameController.text,
                                   passwordController.text);
-                              // .timeout(const Duration(seconds: 15),
-                              //     onTimeout: () => _loginController.state =
-                              //         LoginState.serverUnreachable);
                             },
                             child: Padding(
                               padding:
@@ -269,10 +255,10 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration: BoxDecoration(
                                       color: AppColors.purple,
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: const Center(
+                                  child: Center(
                                       child: Text(
-                                    'Continuar', // style: boldText(fSize: 12)
-                                    style: TextStyle(
+                                    I10n.of(context).continueText,
+                                    style: const TextStyle(
                                         color: AppColors.white,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
@@ -313,8 +299,6 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.only(
               left: deviceSize.width * 0.1,
               right: deviceSize.width * 0.1,
-              // top: deviceSize.width * 0.1,
-              // vertical: deviceSize.height * 0.1,
             ),
             child: ConstrainedBox(
               constraints: BoxConstraints(maxHeight: deviceSize.height / 1),
@@ -331,14 +315,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(
-                    //width: deviceSize.width * 0.6,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "${I10n.of(context).welcome} ${I10n.of(context).to} ${I10n.of(context).appTitle}",
-                          //${_local.}
                           textAlign: TextAlign.center,
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
@@ -370,12 +352,11 @@ class _LoginPageState extends State<LoginPage> {
                         Text(
                           I10n.of(context).appDescription,
                           textAlign: TextAlign.center,
+                          //todo check textstyle font family
                           style: TextStyle(
                               fontFamily: 'PNRegular',
                               fontSize: 18,
-                              color: Theme.of(context).primaryIconTheme.color
-                              // fontWeight: FontWeight.w100,
-                              ),
+                              color: Theme.of(context).primaryIconTheme.color),
                         ),
                       ],
                     ),
@@ -383,7 +364,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: NextButtonWidget.purple(
-                        label: "Iniciar sesión",
+                        label: I10n.of(context).login,
                         onTap: () {
                           showLoginForm();
                         }),

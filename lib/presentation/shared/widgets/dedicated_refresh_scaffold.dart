@@ -42,8 +42,6 @@ class DedicatedScaffold extends StatelessWidget {
             floatingActionButtonLocation: floatingActionButtonLocation,
             floatingActionButton: floatingActionButton,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            // backgroundColor:
-            //     settingsController.currentAppTheme.scaffoldBackgroundColor,
             extendBodyBehindAppBar: true,
             extendBody: true,
             bottomNavigationBar: bottomAppBar,

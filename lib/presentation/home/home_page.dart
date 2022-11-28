@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +15,7 @@ import '../challenge/challenge_controller.dart';
 import '../home/home_imports.dart';
 import 'widgets/welcome_message/cubit/welcome_message_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -62,7 +61,6 @@ class _HomePageState extends State<HomePage> {
     List<NotaLocal> notas = await db.getNotas();
 
     if (notas.isNotEmpty) {
-      log('notas local con valores');
       await challengeController
           .asignarNota(
               await challengeController.crearNota(notas[0].nota!, auth.token),
@@ -78,7 +76,6 @@ class _HomePageState extends State<HomePage> {
 
   // ignore: unused_field
   late bool _welcomeMessageAlreadySeen;
-  // late bool _pendingNota;
   @override
   initState() {
     _loadData();
@@ -94,14 +91,14 @@ class _HomePageState extends State<HomePage> {
       if (homeController.state == HomeState.error) {
         QuickAlert.show(
           context: context,
-          type: QuickAlertType.error, //TODO I10n
-          title: 'Ha ocurrido un error',
-          text: 'Ha ocurrido un error inesperado',
+          type: QuickAlertType.error,
+          title: I10n.of(context).errorTitle,
+          text: I10n.of(context).errorBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
           confirmBtnColor: AppColors.purple,
-          confirmBtnText: 'Ok',
+          confirmBtnText: I10n.of(context).ok,
         );
         homeController.state = HomeState.empty;
       }
@@ -114,10 +111,9 @@ class _HomePageState extends State<HomePage> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
-          //TODO I10n
-          title: 'Servidor no disponible',
-          confirmBtnText: 'Ok',
-          text: 'Al parecer el servidor no está disponible.',
+          title: I10n.of(context).serverUnavailableTitle,
+          confirmBtnText: I10n.of(context).ok,
+          text: I10n.of(context).serverUnavailableBody,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -128,11 +124,9 @@ class _HomePageState extends State<HomePage> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.warning,
-          //TODO I10n
-          title: 'No hay conexión a Internet',
-          confirmBtnText: 'Ok',
-          text:
-              'Al parecer no tiene conexión a internet. Revise en los ajustes del teléfono',
+          title: I10n.of(context).noInternetConnectionTitle,
+          text: I10n.of(context).noInternetConnectionBody,
+          confirmBtnText: I10n.of(context).ok,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           textColor: Theme.of(context).primaryIconTheme.color!,
           titleColor: Theme.of(context).primaryIconTheme.color!,
@@ -166,23 +160,25 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(top: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      //TODO I10n
+                    children: [
+                      //TODO ver text Style tipo de letra
                       Text(
-                        "Bienvenido!",
-                        style: TextStyle(color: AppColors.white, fontSize: 24),
+                        I10n.of(context).welcome,
+                        style: const TextStyle(
+                            color: AppColors.white, fontSize: 24),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 2.0),
-                  //TODO I10n
+                Padding(
+                  padding: const EdgeInsets.only(left: 2.0),
                   child: Text(
-                    "Esta aplicación está destinada al apoyo del proceso educativo como alternativa a los métodos convencionales.\n\nAsí, los profesores podrán medir sus conocimientos y conocer su dominio acerca de ciertos temas y diferentes asignaturas.\n\nDiviértete y aprende!",
+                    I10n.of(context).welcomeMessageBody,
                     textAlign: TextAlign.start,
-                    style: TextStyle(color: AppColors.white, fontSize: 18),
+                    //TODO check textStyle familia de text
+                    style:
+                        const TextStyle(color: AppColors.white, fontSize: 18),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -197,11 +193,11 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                           color: AppColors.purple,
                           borderRadius: BorderRadius.circular(10)),
-                      child: const Center(
+                      child: Center(
                           child: Text(
-                        //TODO I10n
-                        'OK', // style: boldText(fSize: 12)
-                        style: TextStyle(
+                        I10n.of(context).ok,
+                        //TODO check textStyle familia de text
+                        style: const TextStyle(
                             color: AppColors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold),
@@ -254,11 +250,9 @@ class _HomePageState extends State<HomePage> {
                   ))
                 : (homeController.asignaturas == null ||
                         homeController.asignaturas!.isEmpty)
-                    ?
-                    //TODO I10n
-                    Center(
+                    ? Center(
                         child: Text(
-                        'No hay asignaturas disponibles',
+                        I10n.of(context).noSubjectsAvailable,
                         style: AppTextStyles.titleBold.copyWith(
                           color: Theme.of(context).primaryIconTheme.color,
                         ),
@@ -286,12 +280,13 @@ class _HomePageState extends State<HomePage> {
                                                 asignatura.temas == null)
                                             ? QuickAlert.show(
                                                 context: context,
-                                                //TODO I10n
                                                 type: QuickAlertType.warning,
-                                                title: 'No existen temas',
-                                                confirmBtnText: 'Ok',
-                                                text:
-                                                    'No hay temas disponibles por el momento',
+                                                title: I10n.of(context)
+                                                    .noTopicsDialogTitle,
+                                                confirmBtnText:
+                                                    I10n.of(context).ok,
+                                                text: I10n.of(context)
+                                                    .noTopicsDialogBody,
                                                 backgroundColor: Theme.of(
                                                         context)
                                                     .scaffoldBackgroundColor,
@@ -311,7 +306,6 @@ class _HomePageState extends State<HomePage> {
                                                   idEstudiante: homeController
                                                       .estudiante!.id,
                                                   asignatura: asignatura,
-                                                  //temas: asignatura.temas
                                                 ));
                                       },
                                     ))

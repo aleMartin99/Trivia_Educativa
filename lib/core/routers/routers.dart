@@ -31,16 +31,13 @@ class AppRouter extends StatelessWidget {
   const AppRouter({super.key});
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments; // pegando os argumentos caso haja
+    final args = settings.arguments;
 
     switch (settings.name) {
-      // case splashRoute:
-      //   return MaterialPageRoute(builder: (_) => const SplashPage());
       case challengeRoute:
         if (args is ChallengePageArgs) {
           return MaterialPageRoute(
             builder: (_) => ChallengePage(
-              //  networkInfo: sl(),
               nota5: args.nota5,
               quizTitle: args.quizTitle,
               preguntas: args.preguntas,
@@ -61,8 +58,6 @@ class AppRouter extends StatelessWidget {
               asignatura: args.asignatura,
               idEstudiante: args.idEstudiante,
               notas: args.notas,
-
-              // questions: args.questions,
             ),
           );
         } else {
@@ -90,7 +85,6 @@ class AppRouter extends StatelessWidget {
             builder: (_) => ResultPage(
               notaValor: args.notaValor,
               isConnected: args.isConnected,
-              //nota5: args.nota5,
               quizTitle: args.quizTitle,
               result: args.result,
               questionsLenght: args.questionsLenght,
@@ -101,14 +95,6 @@ class AppRouter extends StatelessWidget {
         }
       case loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginPage());
-      // case settingsRoute:
-      //   if (args is SettingsPageArgs) {
-      //     return MaterialPageRoute(
-      //       builder: (_) => const SettingsPage(),
-      //     );
-      //   } else {
-      //     return _errorRoute();
-      //   }
 
 //*OnBoarding
       case onboardingRoute:
@@ -120,24 +106,8 @@ class AppRouter extends StatelessWidget {
       case homeRoute:
         return MaterialPageRoute(builder: (_) => const HomePage());
 
-      // case homeScreen:
-      //   if (args is HomeScreenArgs) {
-      //     return MaterialPageRoute(
-      //       builder: (_) => const HomeScreen(),
-      //     );
-      //   } else {
-      //     return _errorRoute();
-      //   }
-
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      // if (args is HomeScreenArgs) {
-      //   return MaterialPageRoute(
-      //     builder: (_) => const HomeScreen(),
-      //   );
-      // } else {
-      //   return _errorRoute();
-      // }
     }
   }
 
@@ -159,8 +129,7 @@ Route<dynamic> _errorRoute() {
         title: const Text('Error'),
       ),
       body: const Center(
-        //TODO I10n
-        child: Text('Ha ocurrido un error inesperado'),
+        child: Text('Error'),
       ),
     );
   });
@@ -169,10 +138,6 @@ Route<dynamic> _errorRoute() {
 class HomePageArgs {}
 
 class HomeScreenArgs {}
-
-// class SettingsPageArgs {
-//   SettingsPageArgs();
-// }
 
 class ChallengePageArgs {
   final List<Pregunta> preguntas;
@@ -209,7 +174,6 @@ class ResultPageArgs {
   final int questionsLenght;
   final int result;
   final int notaValor;
-  //final int nota5;
   final bool isConnected;
 
   ResultPageArgs(
@@ -217,7 +181,6 @@ class ResultPageArgs {
       required this.questionsLenght,
       required this.result,
       required this.notaValor,
-      // required this.nota5,
       required this.isConnected});
 }
 

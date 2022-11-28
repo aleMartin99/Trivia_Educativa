@@ -34,10 +34,8 @@ class _QuizWidgetState extends State<QuizWidget> {
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
       ),
-      //
       child: (widget.pregunta.tiposDePregunta.contains('V o F'))
           ? Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 20, left: 4),

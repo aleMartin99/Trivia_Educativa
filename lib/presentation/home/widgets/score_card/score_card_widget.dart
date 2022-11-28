@@ -8,7 +8,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ScoreCardWidget extends StatelessWidget {
   const ScoreCardWidget({
     Key? key,
-    //required this.scorePercentage,
   }) : super(key: key);
 
   @override
@@ -17,7 +16,6 @@ class ScoreCardWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: 20,
         right: 20,
-        // top: 14,
       ),
       child: Container(
         height: 136,
@@ -36,9 +34,7 @@ class ScoreCardWidget extends StatelessWidget {
             children: [
               const Expanded(
                 flex: 1,
-                child: ChartWidget(
-                    // percent: scorePercentage,
-                    ),
+                child: ChartWidget(),
               ),
               Expanded(
                 flex: 3,
@@ -54,8 +50,7 @@ class ScoreCardWidget extends StatelessWidget {
                         I10n.of(context).passedTests,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                             fontSize: 21,
-                            fontWeight: FontWeight
-                                .bold, //color: settingsController.currentAppTheme.primaryColor,
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryIconTheme.color),
                       ),
                       Text(
@@ -64,9 +59,7 @@ class ScoreCardWidget extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,
-                            color: Theme.of(context).primaryIconTheme.color
-                            // fontWeight: FontWeight.w100,
-                            ),
+                            color: Theme.of(context).primaryIconTheme.color),
                       ),
                     ],
                   ),

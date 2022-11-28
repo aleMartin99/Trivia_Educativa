@@ -54,7 +54,6 @@ class _TemaPageState extends State<TemaPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Row(
-                      //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         IconButton(
                             onPressed: () => Navigator.of(context).pop(),
@@ -98,7 +97,6 @@ class _TemaPageState extends State<TemaPage> {
                 ),
                 child: FlexibleSpaceBar(
                   background: GlassImage(
-                    // height: 200,
                     width: double.infinity,
                     blur: 1.5,
                     image: widget.asignatura.networkImage
@@ -134,8 +132,7 @@ class _TemaPageState extends State<TemaPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0, left: 20),
                           child: Text(
-                            //TODO I10n
-                            'Temas',
+                            I10n.of(context).topics,
                             style: AppTextStyles.titleBold.copyWith(
                               color: Theme.of(context).primaryIconTheme.color,
                               fontSize: 24,
@@ -150,11 +147,6 @@ class _TemaPageState extends State<TemaPage> {
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
                             padding: const EdgeInsets.only(top: 0),
-                            // crossAxisCount: 2,
-                            // crossAxisSpacing: 16,
-                            // mainAxisSpacing: 10,
-                            // shrinkWrap: true,
-                            //  padding: EdgeInsets.only(bottom: 1),
                             clipBehavior: Clip.antiAlias,
                             children: widget.asignatura.temas
                                 .map((tema) => TemaCardWidget(

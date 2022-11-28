@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:trivia_educativa/core/core.dart';
 
@@ -60,14 +59,12 @@ class AsignaturaCardWidget extends StatelessWidget {
             Text(
               "${I10n.of(context).topics}: ${asignatura.temas.length}",
               maxLines: 1,
-              //textAlign: TextAlign.end,
               overflow: TextOverflow.ellipsis,
+              //TODO check textstyle
               style: TextStyle(
                   fontFamily: 'PNRegular',
                   fontSize: 14,
-                  color: Theme.of(context).primaryIconTheme.color
-                  // fontWeight: FontWeight.w100,
-                  ),
+                  color: Theme.of(context).primaryIconTheme.color),
             ),
           ],
         ),

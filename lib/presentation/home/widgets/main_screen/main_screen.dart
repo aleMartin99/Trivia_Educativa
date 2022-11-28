@@ -32,10 +32,7 @@ class _MainScreenState extends State<MainScreen> {
             child: (context.select<MenuProvider, int>(
                         (provider) => provider.currentPage) ==
                     0)
-                ? const HomePage(
-
-                    // key: UniqueKey(),
-                    )
+                ? const HomePage()
                 : const ScoreBoardPage()));
   }
 }

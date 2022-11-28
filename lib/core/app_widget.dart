@@ -38,11 +38,8 @@ class AppWidget extends StatelessWidget {
         create: (context) => sl<SettingsController>(),
         builder: (context, _) => RefreshConfiguration(
           enableLoadingWhenNoData: false,
-          //enableRefreshVibrate: false,
-          //enableLoadMoreVibrate: false,
           footerTriggerDistance: 15,
           dragSpeedRatio: 0.91,
-
           child: MaterialApp(
             localizationsDelegates: I10n.localizationsDelegates,
             supportedLocales: I10n.supportedLocales,

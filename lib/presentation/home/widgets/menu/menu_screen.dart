@@ -36,7 +36,6 @@ class _MenuScreenState extends State<MenuScreen> {
   var auth = sl<Auth>();
   @override
   Widget build(BuildContext context) {
-    //  auth = context.read<LoginController>().auth;
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
     double height = MediaQuery.of(context).size.height / 100;
@@ -47,7 +46,6 @@ class _MenuScreenState extends State<MenuScreen> {
         constraints: BoxConstraints.expand(
           height: height * 100,
         ),
-        //width: 150,
         decoration: const BoxDecoration(
           gradient: AppGradients.linear,
         ),
@@ -60,7 +58,6 @@ class _MenuScreenState extends State<MenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    //height: 652,
                     width: 260,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +75,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                   width: width * 18,
                                   height: width * 18,
                                   child: ClipOval(
-                                    //clipBehavior: Clip.antiAlias,
                                     child: Padding(
                                       padding: const EdgeInsets.all(6.0),
                                       child: FittedBox(
@@ -88,7 +84,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                                   Brightness.dark
                                               ? AppColors.lightPurple
                                               : AppColors.grey,
-                                          //size: 30,
                                         ),
                                       ),
                                     ),
@@ -161,9 +156,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     }
                                   })),
                         ),
-                        // const Spacer(),
                         DedicatedListTile(
-                          //TODO I10n
                           onPressed: () async {
                             QuickAlert.show(
                               onConfirmBtnTap: () async {
@@ -173,13 +166,11 @@ class _MenuScreenState extends State<MenuScreen> {
                                     (Route<dynamic> route) => false);
                               },
                               context: context,
-                              //TODO I10n
                               type: QuickAlertType.warning,
-                              title: '¿Desea cerrar la sesión?',
-                              confirmBtnText: 'Aceptar',
-                              cancelBtnText: 'Cancelar',
-                              text:
-                                  'Tendrá que volver a autenticarse para acceder al sistema',
+                              title: I10n.of(context).logOutDialogTitle,
+                              confirmBtnText: I10n.of(context).ok,
+                              cancelBtnText: I10n.of(context).cancel,
+                              text: I10n.of(context).logOutDialogBody,
                               backgroundColor:
                                   Theme.of(context).scaffoldBackgroundColor,
                               textColor:
@@ -188,24 +179,19 @@ class _MenuScreenState extends State<MenuScreen> {
                                   Theme.of(context).primaryIconTheme.color!,
                               confirmBtnColor: AppColors.purple,
                               showCancelBtn: true,
-
-                              //Colors.transparent
                             );
                           },
-
                           leading: Icon(Icons.logout,
                               color: Theme.of(context).iconTheme.color),
-                          //TODO I10n
-                          title: Text('Cerrar sesión',
+                          title: Text(I10n.of(context).logOutMenuOption,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4
                                   ?.copyWith(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
-                                      color: Theme.of(context).iconTheme.color
-                                      //color: Theme.of(context).primaryColor,
-                                      )),
+                                      color:
+                                          Theme.of(context).iconTheme.color)),
                         ),
                       ],
                     ),
@@ -215,7 +201,6 @@ class _MenuScreenState extends State<MenuScreen> {
                     height: height * 28.6,
                   ),
                   Row(
-                    //crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       AppInformationWidget(),
