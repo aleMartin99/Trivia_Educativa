@@ -13,7 +13,7 @@ class GradientAppBarWidget extends StatelessWidget {
     double height = MediaQuery.of(context).size.height / 100;
     double width = MediaQuery.of(context).size.width / 100;
     return Container(
-      height: 161,
+      height: height * 20,
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(
         horizontal: width * 5,

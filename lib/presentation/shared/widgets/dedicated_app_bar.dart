@@ -35,7 +35,8 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
-
+    double myHeight = MediaQuery.of(context).size.height / 100;
+    double myWidth = MediaQuery.of(context).size.width / 100;
     final bool canPop = parentRoute?.canPop ?? false;
     if (forceAndroid || Theme.of(context).platform == TargetPlatform.android) {
       return AppBar(
@@ -49,7 +50,7 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           if (trailing != null)
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: EdgeInsets.only(right: myWidth * 1.9),
               child: trailing!,
             )
         ],
@@ -67,7 +68,8 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: CupertinoNavigationBar(
                   automaticallyImplyLeading: false,
-                  padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+                  padding: EdgeInsetsDirectional.only(
+                      start: myWidth * 1.9, end: myWidth * 1.9),
                   border: border ??
                       (bottom != null
                           ? Border.all(color: Colors.transparent)
@@ -109,7 +111,8 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
         );
       } else {
         return CupertinoNavigationBar(
-          padding: const EdgeInsetsDirectional.only(start: 8, end: 8),
+          padding: EdgeInsetsDirectional.only(
+              start: myWidth * 1.9, end: myWidth * 1.9),
           automaticallyImplyLeading: false,
           border: border ??
               (bottom != null

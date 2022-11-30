@@ -76,9 +76,11 @@ class NextButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Container(
-      height: 48,
-      width: 400,
+      height: height * 6,
+      width: width * 73.3,
       decoration: const BoxDecoration(),
       child: TextButton(
         style: ButtonStyle(
