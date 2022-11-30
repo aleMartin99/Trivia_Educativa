@@ -30,8 +30,9 @@ class NivelCardWidget extends StatelessWidget {
       onTap: isDone ? () {} : onTap,
       child: Container(
         height: height * 11,
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(1),
+        margin: EdgeInsets.only(bottom: height * 2),
+        padding: EdgeInsets.symmetric(
+            vertical: height * 1 / 8, horizontal: width * 0.95 / 4),
         decoration: BoxDecoration(
           color: isDone
               ? (Theme.of(context).brightness == Brightness.light)
@@ -47,8 +48,9 @@ class NivelCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                minLeadingWidth: 33,
-                contentPadding: const EdgeInsets.only(left: 8, right: 8),
+                minLeadingWidth: width * 7.7,
+                contentPadding:
+                    EdgeInsets.only(left: width * 1.9, right: width * 1.9),
                 subtitle: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -92,7 +94,7 @@ class NivelCardWidget extends StatelessWidget {
                                 ? AppColors.lightPurple
                                 : Colors.grey[600],
                       ),
-                horizontalTitleGap: 8,
+                horizontalTitleGap: width * 1.9,
                 isThreeLine: true,
                 dense: true,
                 title: Text(

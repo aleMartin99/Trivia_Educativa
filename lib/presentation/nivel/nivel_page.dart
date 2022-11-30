@@ -70,11 +70,11 @@ class _NivelPageState extends State<NivelPage> {
         appBar: PreferredSize(
           child: GradientAppBarWidget(
             child: Padding(
-              padding: const EdgeInsets.only(left: 4.0),
+              padding: EdgeInsets.only(left: width * 0.95),
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
+                  padding: EdgeInsets.only(bottom: height * 0.7),
                   child: Row(
                     children: [
                       IconButton(
@@ -102,20 +102,20 @@ class _NivelPageState extends State<NivelPage> {
               ),
             ),
           ),
-          preferredSize: const Size.fromHeight(56),
+          preferredSize: Size.fromHeight(height * 7),
         ),
 //TODO make validation for data to all pages like asignatura(home)
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: width * 5,
-            vertical: 15,
+            vertical: height * 1.875,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 0.0, left: 2),
+                padding: EdgeInsets.only(top: 0.0, left: width * 0.475),
                 child: Text(
                   I10n.of(context).levelS,
                   style: AppTextStyles.titleBold.copyWith(
@@ -125,11 +125,11 @@ class _NivelPageState extends State<NivelPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 18.0),
+                padding: EdgeInsets.only(top: height * 2.3),
                 child: ListView(
                     shrinkWrap: true,
                     clipBehavior: Clip.antiAlias,
-                    itemExtent: 120,
+                    itemExtent: height * 15,
                     physics: const BouncingScrollPhysics(),
                     children: widget.niveles.map((nivel) {
                       if (doneLevel(nivel.id, widget.notas)) {
