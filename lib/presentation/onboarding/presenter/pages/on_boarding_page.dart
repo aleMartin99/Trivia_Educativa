@@ -88,15 +88,14 @@ class _OnboardingState extends State<Onboarding> {
         )),
         bottomAppBar: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),
+            padding: EdgeInsets.symmetric(
+                vertical: height * 2.5, horizontal: width * 10),
             child: ValueListenableBuilder(
               valueListenable: onBoardingController.currentPageNotifier,
               builder: (context, int value, _) => Padding(
                 padding: EdgeInsets.only(
-                    bottom: 8.0, left: width * 5, right: width * 5),
+                    bottom: height * 1, left: width * 5, right: width * 5),
                 child: (NextButtonWidget.purple(
-                  //inactiveColor: Colors.grey,
-
                   label: value == kOnboardingLightItems.length
                       ? I10n.of(context).continueText
                       : I10n.of(context).next,
@@ -105,7 +104,6 @@ class _OnboardingState extends State<Onboarding> {
                       nextPage();
                     } else {
                       context.read<OnboardingCubit>().markAsViewed();
-
                       Navigator.of(context).pushReplacementNamed(
                         AppRoutes.loginRoute,
                       );
@@ -132,8 +130,11 @@ class _OnboardingState extends State<Onboarding> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(
-                                top: 25.0, left: 40, right: 40, bottom: 20),
+                            padding: EdgeInsets.only(
+                                top: height * 3.125,
+                                left: width * 10,
+                                right: width * 10,
+                                bottom: height * 2.5),
                             child: SizedBox(
                               height: _totalHeight / 10 * 5.5,
                               child: Stack(
@@ -157,7 +158,7 @@ class _OnboardingState extends State<Onboarding> {
                             height: _totalHeight / 10 * 1,
                             child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 40.0),
+                                  EdgeInsets.symmetric(horizontal: width * 10),
                               child: Center(
                                 child: Text(
                                   e.text,
