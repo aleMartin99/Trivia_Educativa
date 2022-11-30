@@ -68,32 +68,35 @@ class _NivelPageState extends State<NivelPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: PreferredSize(
           child: GradientAppBarWidget(
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        alignment: Alignment.centerLeft,
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        padding: const EdgeInsets.all(0),
-                        icon: Icon(
-                          Icons.arrow_back,
-                          size: 25,
-                          color: settingsController
-                              .currentAppTheme.iconTheme.color,
-                        )),
-                    Text(
-                      widget.tema.descripcion,
-                      style: AppTextStyles.titleBold.copyWith(
-                        color: AppColors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          alignment: Alignment.centerLeft,
+                          splashColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          padding: const EdgeInsets.all(0),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            size: 25,
+                            color: settingsController
+                                .currentAppTheme.iconTheme.color,
+                          )),
+                      Text(
+                        widget.tema.descripcion,
+                        style: AppTextStyles.titleBold.copyWith(
+                          color: AppColors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
