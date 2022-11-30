@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:trivia_educativa/core/theme/page_transitions.dart';
 import 'package:trivia_educativa/core/theme/text_theme.dart';
 
-//Brightness.dark color = 0xFF333333
 ///Theme Dark
 final ThemeData themeDark = ThemeData(
   errorColor: const Color(0xffFF6666),
@@ -23,15 +22,11 @@ final ThemeData themeDark = ThemeData(
   primaryIconTheme: const IconThemeData(
     color: Colors.white,
   ),
-
+  listTileTheme: const ListTileThemeData(textColor: Colors.white),
   splashFactory: InkRipple.splashFactory,
   canvasColor: const Color(0xff121212),
   textTheme: textDarkTheme,
-  // textTheme: textTheme,
   primaryColor: const Color(0xFF57B6E0),
-
-  // tabBarTheme: tabBarThemeLight,
-  // platform: TargetPlatform.android,
   cupertinoOverrideTheme: const CupertinoThemeData(
     primaryColor: Color(0xFF57B6E0),
     textTheme: CupertinoTextThemeData(
@@ -76,7 +71,6 @@ final ThemeData themeDark = ThemeData(
       fontFamily: 'PNRegular',
     ),
   ),
-
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: Color(0xFF57B6E0),
   ),
@@ -87,8 +81,6 @@ final ThemeData themeDark = ThemeData(
     endIndent: 20,
   ),
   dividerColor: const Color(0xff696969),
-  // dividerColor: const Color(0xffD2D2D2),
-
   iconTheme: iconThemeDataDark,
   appBarTheme: appBarThemeDark,
   pageTransitionsTheme: pageTransitions,

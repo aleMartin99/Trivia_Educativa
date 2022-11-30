@@ -1,12 +1,15 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
+import '../../core/theme/text_theme.dart';
 import 'tema_imports.dart';
 import '/../core/core.dart';
 
@@ -96,29 +99,33 @@ class _TemaPageState extends State<TemaPage> {
                   ], transform: const GradientRotation(2.13959913 * pi)),
                 ),
                 child: FlexibleSpaceBar(
-                  background: GlassImage(
-                    width: double.infinity,
-                    blur: 1.5,
-                    image: widget.asignatura.networkImage
-                        ? Image.network(
-                            widget.asignatura.image,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            widget.asignatura.image,
-                            fit: BoxFit.cover,
+                  background: Stack(
+                    fit: StackFit.passthrough,
+                    children: [
+                      const Align(
+                        //heightFactor: 1,
+                        alignment: Alignment(0.0, -0.6),
+                        child: SizedBox(
+                          height: 48,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.green,
+                              backgroundColor: Colors.black12,
+                            ),
                           ),
-                    overlayColor: Colors.white.withOpacity(0.1),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withOpacity(0.2),
-                        Colors.blue.withOpacity(0.3),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(0),
-                    shadowColor: Colors.white.withOpacity(0.24),
+                        ),
+                      ),
+                      widget.asignatura.networkImage
+                          ? FadeInImage.memoryNetwork(
+                              fit: BoxFit.cover,
+                              placeholder: kTransparentImage,
+                              image: widget.asignatura.image,
+                            )
+                          : Image.asset(
+                              widget.asignatura.image,
+                              fit: BoxFit.cover,
+                            ),
+                    ],
                   ),
                 ),
               ),
@@ -130,7 +137,7 @@ class _TemaPageState extends State<TemaPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20),
+                          padding: const EdgeInsets.only(top: 15.0, left: 20),
                           child: Text(
                             I10n.of(context).topics,
                             style: AppTextStyles.titleBold.copyWith(
@@ -158,11 +165,12 @@ class _TemaPageState extends State<TemaPage> {
                                         context,
                                         AppRoutes.nivelRoute,
                                         arguments: NivelPageArgs(
-                                            niveles: tema.niveles,
-                                            notas: widget.notas,
-                                            asignatura: widget.asignatura,
-                                            idEstudiante: widget.idEstudiante,
-                                            idTema: tema.id),
+                                          niveles: tema.niveles,
+                                          tema: tema,
+                                          notas: widget.notas,
+                                          asignatura: widget.asignatura,
+                                          idEstudiante: widget.idEstudiante,
+                                        ),
                                       );
                                     }))
                                 .toList(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:trivia_educativa/core/core.dart';
+import '../../../../core/theme/text_theme.dart';
 import '../../settings_imports.dart';
 
 class SettingsTile extends StatelessWidget {

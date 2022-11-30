@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:trivia_educativa/core/core.dart';
+import '../../../../core/theme/text_theme.dart';
 import '../../home_imports.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -48,18 +49,14 @@ class ScoreCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         I10n.of(context).passedTests,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                        style: AppTextStyles.titleBold.copyWith(
                             fontSize: 21,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: Theme.of(context).primaryIconTheme.color),
                       ),
                       Text(
                         I10n.of(context).improveScore,
-                        //TODO make this body text style
-                        style: TextStyle(
-                            fontFamily: 'PNRegular',
-                            fontSize: 14,
-                            color: Theme.of(context).primaryIconTheme.color),
+                        style: AppTextStyles.regularText16,
                       ),
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trivia_educativa/core/app_colors.dart';
 
-const black = Color(0xff1E1E1E);
+const black = AppColors.black;
 const white = Colors.white;
 
 const TextTheme textLightTheme = TextTheme(
@@ -110,3 +111,38 @@ const TextTheme textDarkTheme = TextTheme(
     fontFamily: 'PNRegular',
   ),
 );
+
+class AppTextStyles {
+  static const TextStyle title = TextStyle(
+    fontFamily: 'PNRegular',
+    color: AppColors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const TextStyle titleBold = TextStyle(
+    fontFamily: 'PNRegular',
+    color: AppColors.white,
+    fontSize: 21,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle heading = TextStyle(
+    fontFamily: 'PNRegular',
+    color: AppColors.black,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle heading40 = TextStyle(
+    fontFamily: 'PNRegular',
+    color: AppColors.black,
+    fontSize: 40,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle regularText16 = TextStyle(
+    fontFamily: 'PNRegular',
+    fontSize: 16,
+    //color: AppColors.black,
+  );
+}

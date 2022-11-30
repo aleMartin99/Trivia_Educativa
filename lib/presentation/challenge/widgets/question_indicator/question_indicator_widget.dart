@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:trivia_educativa/core/theme/text_theme.dart';
 import 'package:trivia_educativa/presentation/shared/shared_imports.dart';
 
 class QuestionIndicatorWidget extends StatelessWidget {
@@ -27,23 +28,15 @@ class QuestionIndicatorWidget extends StatelessWidget {
             children: [
               Text(
                 "${I10n.of(context).question} $currentPage",
-                //TODO ver textstyle
-                style: TextStyle(
-                    fontFamily: 'PNRegular',
-                    fontSize: 14,
-                    color: Theme.of(context).primaryIconTheme.color
-                    // fontWeight: FontWeight.w100,
-                    ),
+                style: AppTextStyles.regularText16.copyWith(
+                  fontSize: 14,
+                ),
               ),
               Text(
                 "${I10n.of(context).of_} $pagesLenght",
-                //TODO ver textstyle
-                style: TextStyle(
-                    fontFamily: 'PNRegular',
-                    fontSize: 14,
-                    color: Theme.of(context).primaryIconTheme.color
-                    // fontWeight: FontWeight.w100,
-                    ),
+                style: AppTextStyles.regularText16.copyWith(
+                  fontSize: 14,
+                ),
               ),
             ],
           ),

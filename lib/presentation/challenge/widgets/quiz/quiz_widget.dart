@@ -83,7 +83,6 @@ class _QuizWidgetState extends State<QuizWidget> {
                       ? Center(
                           child: InkWell(
                             child: Ink.image(
-                              //ToDO put widgte.preg.imagen
                               image: NetworkImage(widget.pregunta.imagen),
                               height: 150,
                             ),
@@ -95,7 +94,7 @@ class _QuizWidgetState extends State<QuizWidget> {
                     padding: const EdgeInsets.only(top: 20, left: 4),
                     child: Text(widget.pregunta.descripcion,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
-                            fontSize: 24,
+                            fontSize: 21,
                             color: Theme.of(context).primaryIconTheme.color)),
                   ),
                   const SizedBox(

@@ -4,6 +4,8 @@ import 'package:trivia_educativa/core/core.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../core/theme/text_theme.dart';
+
 class TemaCardWidget extends StatelessWidget {
   final String nombre;
   final int cantNiveles;
@@ -47,13 +49,10 @@ class TemaCardWidget extends StatelessWidget {
                       color: Theme.of(context).primaryIconTheme.color),
                 ),
                 subtitle: Text(
-                  "${I10n.of(context).levels}: $cantNiveles",
-                  style: TextStyle(
-                    //TODO check textStyle
-                    fontFamily: 'PNRegular',
-                    fontSize: 16,
-                    color: Theme.of(context).primaryIconTheme.color,
-                  ),
+                  (cantNiveles == 1)
+                      ? "$cantNiveles ${I10n.of(context).level}"
+                      : "$cantNiveles ${I10n.of(context).levels}",
+                  style: AppTextStyles.regularText16,
                 ),
               ),
             ],

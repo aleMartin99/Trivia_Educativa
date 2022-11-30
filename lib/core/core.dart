@@ -4,8 +4,7 @@ export './app_gradients.dart';
 export './app_images.dart';
 export '../presentation/home/widgets/menu/app_information_widget.dart';
 export './app_routes.dart';
-export './app_text_styles.dart';
-export './app_theme.dart';
+export 'theme/app_theme.dart';
 export './app_widget.dart';
 export './core.dart';
 

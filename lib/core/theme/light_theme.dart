@@ -7,8 +7,6 @@ import 'package:trivia_educativa/core/theme/text_theme.dart';
 
 import '../app_colors.dart';
 
-//TODO fix colors, modes and test
-
 class AppTheme {
   static Color backgroundColors(Brightness brightness) =>
       brightness == Brightness.light
@@ -36,9 +34,11 @@ Color backgroundColors(Brightness brightness) =>
 ///Theme Light
 final ThemeData themeLight = ThemeData(
   errorColor: const Color(0xffFF6666),
-  // cupertinoOverrideTheme: CupertinoThemeData(),
   primaryIconTheme: const IconThemeData(
     color: AppColors.black,
+  ),
+  listTileTheme: const ListTileThemeData(
+    textColor: AppColors.black,
   ),
   brightness: Brightness.light,
 
@@ -46,13 +46,8 @@ final ThemeData themeLight = ThemeData(
   textTheme: textLightTheme,
   splashFactory: InkRipple.splashFactory,
   canvasColor: const Color(0xffF9F9F9),
-  // textTheme: textTheme,
-  // platform: TargetPlatform.android,
   cardColor: const Color(0xffF9F9F9),
-  // cardTheme: const CardTheme(
-  //   color: Color(0xffF9F9F9),
-  //   elevation: 0,
-  // ),685639373
+
   cupertinoOverrideTheme: const CupertinoThemeData(
     primaryColor: Color(0xFF57B6E0),
     textTheme: CupertinoTextThemeData(
@@ -71,8 +66,6 @@ final ThemeData themeLight = ThemeData(
   dividerColor: const Color(0xffD2D2D2),
   fontFamily: 'PNRegular',
   primaryColor: const Color(0xFF57B6E0),
-// primaryColor: const Color(0xff1D99DD),
-  // tabBarTheme: tabBarThemeLight,
 
   dividerTheme: const DividerThemeData(
     color: Color(0xffF9F9F9),
@@ -82,7 +75,6 @@ final ThemeData themeLight = ThemeData(
   ),
   //? commented
   iconTheme: iconThemeDataLight,
-  // appBarTheme: appBarThemeLight,
   inputDecorationTheme: const InputDecorationTheme(
     filled: false,
     border: UnderlineInputBorder(
@@ -119,9 +111,6 @@ final ThemeData themeLight = ThemeData(
 
   pageTransitionsTheme: pageTransitions,
   backgroundColor: Colors.white,
-  //bottomAppBarTheme: bottomAppBarThemeLight,
-  // cupertinoOverrideTheme: CupertinoTheme(),
-
   colorScheme: ColorScheme.fromSwatch(
     accentColor: const Color(0xff1FD970),
     primarySwatch: const MaterialColor(

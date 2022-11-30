@@ -7,6 +7,7 @@ import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 import 'package:trivia_educativa/presentation/settings/settings_imports.dart';
 
+import '../../core/theme/text_theme.dart';
 import '../home/home_controller.dart';
 import '../shared/shared_imports.dart';
 import '/../core/core.dart';
@@ -19,13 +20,13 @@ class NivelPage extends StatefulWidget {
   const NivelPage({
     Key? key,
     required this.niveles,
-    required this.idTema,
+    required this.tema,
     required this.asignatura,
     required this.idEstudiante,
     required this.notas,
   }) : super(key: key);
   final List<Nivel> niveles;
-  final String idTema;
+  final Tema tema;
   final Asignatura asignatura;
   final String idEstudiante;
   final List<NotaProv> notas;
@@ -87,7 +88,7 @@ class _NivelPageState extends State<NivelPage> {
                               .currentAppTheme.iconTheme.color,
                         )),
                     Text(
-                      I10n.of(context).levels,
+                      widget.tema.descripcion,
                       style: AppTextStyles.titleBold.copyWith(
                         color: AppColors.white,
                       ),
@@ -105,73 +106,93 @@ class _NivelPageState extends State<NivelPage> {
             horizontal: 20,
             vertical: 15,
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: ListView(
-                clipBehavior: Clip.antiAlias,
-                itemExtent: 120,
-                physics: const BouncingScrollPhysics(),
-                children: widget.niveles.map((nivel) {
-                  if (doneLevel(nivel.id, widget.notas)) {
-                    return NivelCardWidget(
-                      isDone: true,
-                      duracion: nivel.duracion,
-                      nombre: nivel.descripcion,
-                      preguntas: nivel.preguntas,
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.challengeRoute,
-                          arguments: ChallengePageArgs(
-                            preguntas: nivel.preguntas,
-                            idEstudiante: widget.idEstudiante,
-                            nota5: nivel.nota5,
-                            quizTitle: nivel.descripcion,
-                            asignatura: widget.asignatura,
-                            idTema: widget.idTema,
-                            nivel: nivel,
-                          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 0.0, left: 2),
+                child: Text(
+                  I10n.of(context).levelS,
+                  style: AppTextStyles.titleBold.copyWith(
+                    color: Theme.of(context).primaryIconTheme.color,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: ListView(
+                    shrinkWrap: true,
+                    clipBehavior: Clip.antiAlias,
+                    itemExtent: 120,
+                    physics: const BouncingScrollPhysics(),
+                    children: widget.niveles.map((nivel) {
+                      if (doneLevel(nivel.id, widget.notas)) {
+                        return NivelCardWidget(
+                          isDone: true,
+                          duracion: nivel.duracion,
+                          nombre: nivel.descripcion,
+                          preguntas: nivel.preguntas,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.challengeRoute,
+                              arguments: ChallengePageArgs(
+                                preguntas: nivel.preguntas,
+                                idEstudiante: widget.idEstudiante,
+                                nota5: nivel.nota5,
+                                quizTitle: nivel.descripcion,
+                                asignatura: widget.asignatura,
+                                idTema: widget.tema.id,
+                                nivel: nivel,
+                              ),
+                            );
+                          },
                         );
-                      },
-                    );
-                  } else {
-                    return NivelCardWidget(
-                        duracion: nivel.duracion,
-                        isDone: false,
-                        nombre: nivel.descripcion,
-                        preguntas: nivel.preguntas,
-                        onTap: () async {
-                          (nivel.preguntas.isEmpty)
-                              ? QuickAlert.show(
-                                  context: context,
-                                  type: QuickAlertType.warning,
-                                  title:
-                                      I10n.of(context).noQuestionsDialogTitle,
-                                  confirmBtnText: I10n.of(context).ok,
-                                  text: I10n.of(context).noQuestionsDialogBody,
-                                  backgroundColor:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  textColor:
-                                      Theme.of(context).primaryIconTheme.color!,
-                                  titleColor:
-                                      Theme.of(context).primaryIconTheme.color!,
-                                  confirmBtnColor: AppColors.purple,
-                                )
-                              : Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.challengeRoute,
-                                  arguments: ChallengePageArgs(
-                                      preguntas: nivel.preguntas,
-                                      idEstudiante: widget.idEstudiante,
-                                      nota5: nivel.nota5,
-                                      quizTitle: nivel.descripcion,
-                                      asignatura: widget.asignatura,
-                                      idTema: widget.idTema,
-                                      nivel: nivel),
-                                );
-                        });
-                  }
-                }).toList()),
+                      } else {
+                        return NivelCardWidget(
+                            duracion: nivel.duracion,
+                            isDone: false,
+                            nombre: nivel.descripcion,
+                            preguntas: nivel.preguntas,
+                            onTap: () async {
+                              (nivel.preguntas.isEmpty)
+                                  ? QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.warning,
+                                      title: I10n.of(context)
+                                          .noQuestionsDialogTitle,
+                                      confirmBtnText: I10n.of(context).ok,
+                                      text: I10n.of(context)
+                                          .noQuestionsDialogBody,
+                                      backgroundColor: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      textColor: Theme.of(context)
+                                          .primaryIconTheme
+                                          .color!,
+                                      titleColor: Theme.of(context)
+                                          .primaryIconTheme
+                                          .color!,
+                                      confirmBtnColor: AppColors.purple,
+                                    )
+                                  : Navigator.pushNamed(
+                                      context,
+                                      AppRoutes.challengeRoute,
+                                      arguments: ChallengePageArgs(
+                                          preguntas: nivel.preguntas,
+                                          idEstudiante: widget.idEstudiante,
+                                          nota5: nivel.nota5,
+                                          quizTitle: nivel.descripcion,
+                                          asignatura: widget.asignatura,
+                                          idTema: widget.tema.id,
+                                          nivel: nivel),
+                                    );
+                            });
+                      }
+                    }).toList()),
+              ),
+            ],
           ),
         ));
   }

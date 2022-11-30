@@ -4,6 +4,7 @@ import 'package:trivia_educativa/core/core.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
 
+import '../../../../core/theme/text_theme.dart';
 import '../../../../data/models/auth_model.dart';
 import '../../../../main.dart';
 import '../../home_imports.dart';

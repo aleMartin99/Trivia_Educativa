@@ -1,8 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trivia_educativa/data/models/asignatura_model.dart';
-import 'package:trivia_educativa/data/models/nivel_model.dart';
-import 'package:trivia_educativa/data/models/nota_prov_model.dart';
-import 'package:trivia_educativa/data/models/pregunta_model.dart';
 import 'package:trivia_educativa/presentation/home/home_imports.dart';
 import 'package:trivia_educativa/presentation/nivel/nivel_page.dart';
 import 'package:trivia_educativa/presentation/tema/tema_page.dart';
@@ -12,11 +8,11 @@ import 'package:trivia_educativa/presentation/challenge/challenge_page.dart';
 import 'package:trivia_educativa/presentation/login/login_page.dart';
 import 'package:trivia_educativa/presentation/result/result_page.dart';
 
+import '../../data/models/models.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/cubit/onboarding_cubit.dart';
 import '../../presentation/onboarding/presenter/pages/on_boarding_page.dart';
 
-//TODO fix imports
 const String homeRoute = "/home";
 const String homeScreenRoute = "/homeScreen";
 const String onboardingRoute = "/onboarding";
@@ -68,9 +64,9 @@ class AppRouter extends StatelessWidget {
         if (args is NivelPageArgs) {
           return MaterialPageRoute(
             builder: (_) => NivelPage(
+              tema: args.tema,
               niveles: args.niveles,
               asignatura: args.asignatura,
-              idTema: args.idTema,
               idEstudiante: args.idEstudiante,
               notas: args.notas,
             ),
@@ -186,14 +182,14 @@ class ResultPageArgs {
 
 class NivelPageArgs {
   final List<Nivel> niveles;
-  final String idTema;
+  final Tema tema;
   final Asignatura asignatura;
   final String idEstudiante;
   final List<NotaProv> notas;
 
   NivelPageArgs(
       {required this.niveles,
-      required this.idTema,
+      required this.tema,
       required this.asignatura,
       required this.idEstudiante,
       required this.notas});

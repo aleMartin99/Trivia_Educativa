@@ -7,6 +7,7 @@ import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 
+import '../../core/theme/text_theme.dart';
 import '../../data/models/auth_model.dart';
 import '../../data/models/nota_local_model.dart';
 import '../../domain/repositories/nota_repository.dart';
@@ -79,6 +80,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _loadData();
+
     Future.delayed(const Duration(seconds: 1), () {
       (_welcomeMessageAlreadySeen =
               context.read<WelcomeMessageCubit>().alreadySeen)
@@ -161,11 +163,12 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //TODO ver text Style tipo de letra
                       Text(
                         I10n.of(context).welcome,
-                        style: const TextStyle(
-                            color: AppColors.white, fontSize: 24),
+                        style: AppTextStyles.regularText16.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.white,
+                            fontSize: 24),
                       ),
                     ],
                   ),
@@ -176,9 +179,8 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     I10n.of(context).welcomeMessageBody,
                     textAlign: TextAlign.start,
-                    //TODO check textStyle familia de text
-                    style:
-                        const TextStyle(color: AppColors.white, fontSize: 18),
+                    style: AppTextStyles.regularText16
+                        .copyWith(color: AppColors.white, fontSize: 18),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -196,8 +198,7 @@ class _HomePageState extends State<HomePage> {
                       child: Center(
                           child: Text(
                         I10n.of(context).ok,
-                        //TODO check textStyle familia de text
-                        style: const TextStyle(
+                        style: AppTextStyles.regularText16.copyWith(
                             color: AppColors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold),
@@ -266,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.only(top: 10.0),
                           child: GridView.count(
                             physics: const BouncingScrollPhysics(),
-                            childAspectRatio: 1,
+                            childAspectRatio: 0.95,
                             shrinkWrap: true,
                             crossAxisCount: 2,
                             crossAxisSpacing: 15,

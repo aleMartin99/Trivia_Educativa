@@ -4,6 +4,8 @@ import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../core/theme/text_theme.dart';
+
 class NivelCardWidget extends StatelessWidget {
   final String nombre;
   final List<Pregunta> preguntas;
@@ -45,46 +47,30 @@ class NivelCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                subtitle: Text(
-                  " ${I10n.of(context).numberOfQuestions}${preguntas.length}",
-                  //TODO check textSTyle
-                  style: TextStyle(
-                    fontFamily: 'PNRegular',
-                    fontSize: 16,
-                    color: isDone
-                        ? AppColors.black
-                        : Theme.of(context).primaryIconTheme.color,
-                  ),
-                ),
-                leading: isDone
-                    ? const Icon(
-                        Icons.check_circle,
-                        color: AppColors.chartPrimary,
-                      )
-                    : Icon(
-                        Icons.circle_outlined,
-                        color:
-                            (Theme.of(context).brightness == Brightness.light)
-                                ? AppColors.lightPurple
-                                : Colors.grey[600],
-                      ),
-                horizontalTitleGap: 10,
-                isThreeLine: true,
-                dense: true,
-                trailing: Row(
+                minLeadingWidth: 33,
+                contentPadding: const EdgeInsets.only(left: 8, right: 8),
+                subtitle: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.timer,
-                      size: 20,
-                      color: Theme.of(context).primaryIconTheme.color,
+                    Text(
+                      "${preguntas.length} ${I10n.of(context).questions}",
+                      style: AppTextStyles.regularText16.copyWith(
+                        color: isDone
+                            ? AppColors.black
+                            : Theme.of(context).primaryIconTheme.color,
+                      ),
+                    ),
+                    Text(
+                      ' ● ',
+                      style: AppTextStyles.regularText16.copyWith(
+                        color: isDone
+                            ? AppColors.black
+                            : Theme.of(context).primaryIconTheme.color,
+                      ),
                     ),
                     Text(
                       '$duracion min',
-                      //TODO check textSTyle
-                      style: TextStyle(
-                        fontFamily: 'PNRegular',
-                        fontSize: 14,
+                      style: AppTextStyles.regularText16.copyWith(
                         color: isDone
                             ? AppColors.black
                             : Theme.of(context).primaryIconTheme.color,
@@ -92,11 +78,25 @@ class NivelCardWidget extends StatelessWidget {
                     )
                   ],
                 ),
+                leading: isDone
+                    ? const Icon(
+                        Icons.check_box_rounded,
+                        color: AppColors.chartPrimary,
+                      )
+                    : Icon(
+                        Icons.check_box_outline_blank,
+                        color:
+                            (Theme.of(context).brightness == Brightness.light)
+                                ? AppColors.lightPurple
+                                : Colors.grey[600],
+                      ),
+                horizontalTitleGap: 8,
+                isThreeLine: true,
+                dense: true,
                 title: Text(
                   nombre,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  //TODO check textSTyle
                   style: Theme.of(context).textTheme.headline2!.copyWith(
                         fontSize: 21,
                         color: isDone

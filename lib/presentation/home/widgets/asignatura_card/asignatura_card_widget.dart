@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:trivia_educativa/data/models/asignatura_model.dart';
 
 import '../../../../core/app_icons.dart';
+import '../../../../core/theme/text_theme.dart';
 
 class AsignaturaCardWidget extends StatelessWidget {
   final Asignatura asignatura;
@@ -23,6 +24,7 @@ class AsignaturaCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        // height: 500,
         clipBehavior: Clip.antiAlias,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -33,15 +35,16 @@ class AsignaturaCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Center(
-              child: SizedBox(
-                  height: 80,
-                  child: CustomIconSVG(
-                    iconName: asignatura.icon,
-                  )),
-            ),
-            const SizedBox(
-              height: 8,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Center(
+                child: SizedBox(
+                    height: 80,
+                    //color: Colors.red,
+                    child: CustomIconSVG(
+                      iconName: asignatura.icon,
+                    )),
+              ),
             ),
             Flex(
               direction: Axis.vertical,
@@ -49,23 +52,17 @@ class AsignaturaCardWidget extends StatelessWidget {
                 Text(asignatura.descripcion,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryIconTheme.color)),
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.regularText16.copyWith(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    )),
               ],
             ),
-            Text(
-              "${I10n.of(context).topics}: ${asignatura.temas.length}",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              //TODO check textstyle
-              style: TextStyle(
-                  fontFamily: 'PNRegular',
-                  fontSize: 14,
-                  color: Theme.of(context).primaryIconTheme.color),
-            ),
+            Text("${I10n.of(context).topics}: ${asignatura.temas.length}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.regularText16.copyWith(fontSize: 16)),
           ],
         ),
       ),

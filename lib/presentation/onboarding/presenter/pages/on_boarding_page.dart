@@ -8,6 +8,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/core.dart';
 import 'package:trivia_educativa/data/models/models.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
+import '../../../../core/theme/text_theme.dart';
 import '../../../login/login_imports.dart';
 import '../../../shared/shared_imports.dart';
 import '../../onboarding_imports.dart';
@@ -75,12 +76,11 @@ class _OnboardingState extends State<Onboarding> {
           },
           child: Text(
             I10n.of(context).skip,
-            style: Theme.of(context).textTheme.headline5?.copyWith(
-                  color: Theme.of(context).primaryIconTheme.color,
-                  fontSize: 16,
-                  decorationThickness: 1.5,
-                  decoration: TextDecoration.underline,
-                ),
+            style: AppTextStyles.regularText16.copyWith(
+              color: Theme.of(context).primaryIconTheme.color,
+              decorationThickness: 1.5,
+              decoration: TextDecoration.underline,
+            ),
           ),
         )),
         bottomAppBar: SafeArea(

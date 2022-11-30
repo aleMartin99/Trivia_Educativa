@@ -1,6 +1,7 @@
 import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/text_theme.dart';
 import '../../../../data/models/auth_model.dart';
 import '../../../../main.dart';
 import '../../home_imports.dart';

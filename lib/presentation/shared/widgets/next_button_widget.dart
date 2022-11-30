@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '/../core/core.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 // ignore: must_be_immutable
 class NextButtonWidget extends StatelessWidget {
   final String label;
@@ -28,8 +26,9 @@ class NextButtonWidget extends StatelessWidget {
       : backgroundColor = AppColors.darkGreen,
         borderColor = AppColors.darkGreen,
         overlayColor = AppColors.lightGreen,
-        textStyle = GoogleFonts.notoSans(
-          fontWeight: FontWeight.w800,
+        textStyle = const TextStyle(
+          fontFamily: 'PNBold',
+          fontWeight: FontWeight.bold,
           fontSize: 18,
           color: AppColors.white,
         ),
@@ -39,8 +38,9 @@ class NextButtonWidget extends StatelessWidget {
       : backgroundColor = AppColors.white,
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
-        textStyle = GoogleFonts.notoSans(
-          fontWeight: FontWeight.w800,
+        textStyle = const TextStyle(
+          fontFamily: 'PNBold',
+          fontWeight: FontWeight.bold,
           fontSize: 18,
           color: AppColors.grey,
         ),
@@ -50,8 +50,9 @@ class NextButtonWidget extends StatelessWidget {
       : backgroundColor = AppColors.purple,
         borderColor = AppColors.purple,
         overlayColor = AppColors.purple,
-        textStyle = GoogleFonts.notoSans(
-          fontWeight: FontWeight.w800,
+        textStyle = const TextStyle(
+          fontFamily: 'PNBold',
+          fontWeight: FontWeight.bold,
           fontSize: 18,
           color: AppColors.white,
         ),
@@ -64,12 +65,13 @@ class NextButtonWidget extends StatelessWidget {
       : backgroundColor = Colors.transparent,
         borderColor = Colors.transparent,
         overlayColor = AppColors.lightGrey,
-        textStyle = GoogleFonts.notoSans(
-            fontWeight: FontWeight.w800,
+        textStyle = TextStyle(
+            fontFamily: 'PNBold',
             fontSize: 18,
+            fontWeight: FontWeight.bold,
             color: fontColor,
             decoration: TextDecoration.underline,
-            decorationThickness: 2),
+            decorationThickness: 1.5),
         super(key: key);
 
   @override
@@ -89,9 +91,7 @@ class NextButtonWidget extends StatelessWidget {
           overlayColor: MaterialStateProperty.all(overlayColor),
         ),
         onPressed: onTap,
-        child: Text(label,
-            //TODO check font family and remove notoSans
-            style: textStyle),
+        child: Text(label, style: textStyle),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:trivia_educativa/data/models/models.dart';
 import '../../../../core/app_icons.dart';
+import '../../../../core/theme/text_theme.dart';
 import '/../core/core.dart';
 
 class AnswerWidget extends StatefulWidget {
@@ -26,10 +27,7 @@ class AnswerWidget extends StatefulWidget {
 
 class _AnswerWidgetState extends State<AnswerWidget> {
   //todo create textstyle
-  TextStyle get _selectedTextStyleRight => TextStyle(
-      fontFamily: 'PNRegular',
-      fontSize: 16,
-      color: Theme.of(context).primaryIconTheme.color);
+  TextStyle get _selectedTextStyleRight => AppTextStyles.regularText16;
 
   IconData get _selectedIconRight =>
       widget.answerModel.isRight ? Icons.close : Icons.close;
@@ -88,19 +86,11 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.start,
                                 style: widget.isSelected
-                                    ? Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.white)
-                                    : AppTextStyles.body.copyWith(
-                                        fontSize: 16,
-                                        color: Theme.of(context)
-                                            .primaryIconTheme
-                                            .color,
-                                      ),
+                                    ? AppTextStyles.regularText16.copyWith(
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.white)
+                                    : AppTextStyles.regularText16,
                               ),
                             ],
                           ),
@@ -129,12 +119,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                             style: widget.isSelected
                                 ? _selectedTextStyleRight.copyWith(
                                     color: AppColors.white)
-                                : AppTextStyles.body.copyWith(
-                                    fontSize: 16,
-                                    color: Theme.of(context)
-                                        .primaryIconTheme
-                                        .color,
-                                  ),
+                                : AppTextStyles.regularText16,
                           ),
                         ),
                         Container(

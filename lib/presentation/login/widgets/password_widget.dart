@@ -4,6 +4,8 @@ import '../../../core/app_colors.dart';
 import '../../../core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../core/theme/text_theme.dart';
+
 class PasswordWidget extends StatefulWidget {
   const PasswordWidget({Key? key, required this.passwordController})
       : super(key: key);
@@ -20,8 +22,8 @@ class _PasswordWidgetState extends State<PasswordWidget> {
     return TextFormField(
         keyboardType: TextInputType.text,
         controller: widget.passwordController,
-        style: TextStyle(
-            color: Theme.of(context).primaryIconTheme.color, fontSize: 16),
+        style: AppTextStyles.regularText16
+            .copyWith(color: Theme.of(context).primaryIconTheme.color),
         obscureText: !_passwordVisible,
         decoration: InputDecoration(
             suffixIcon: IconButton(

@@ -5,6 +5,7 @@ import 'package:trivia_educativa/core/core.dart';
 import 'package:trivia_educativa/data/models/auth_model.dart';
 import 'package:trivia_educativa/main.dart';
 import 'package:trivia_educativa/presentation/login/widgets/password_widget.dart';
+import '../../core/theme/text_theme.dart';
 import 'login_imports.dart';
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
@@ -135,17 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                         child: state == LoginState.unauthorized
                             ? Text(I10n.of(context).invalidCredentials,
                                 //todo check textstyle font family
-                                style: const TextStyle(
-                                  color: AppColors.white,
-                                  fontSize: 16,
-                                ))
+                                style: AppTextStyles.regularText16
+                                    .copyWith(color: Colors.white))
                             : (state == LoginState.noPermits)
                                 ? Text(I10n.of(context).noPermissionsUser,
                                     //todo check textstyle font family
-                                    style: const TextStyle(
-                                      color: AppColors.white,
-                                      fontSize: 16,
-                                    ))
+                                    style: AppTextStyles.regularText16
+                                        .copyWith(color: Colors.white))
                                 : const Text(
                                     '',
                                     style: TextStyle(height: 0),
@@ -158,9 +155,8 @@ class _LoginPageState extends State<LoginPage> {
                     height: 65,
                     child: TextField(
                         controller: usernameController,
-                        style: TextStyle(
-                            color: Theme.of(context).primaryIconTheme.color,
-                            fontSize: 16),
+                        style: AppTextStyles.regularText16.copyWith(
+                            color: Theme.of(context).primaryIconTheme.color),
                         decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(15),
                             focusedBorder: OutlineInputBorder(
@@ -218,12 +214,10 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Text(I10n.of(context).forgottenPasswordButton,
-                              //todo check textstyle font family
-                              style: const TextStyle(
-                                color: AppColors.white,
-                                fontSize: 16,
-                                decoration: TextDecoration.underline,
-                              )),
+                              style: AppTextStyles.regularText16.copyWith(
+                                  color: Colors.white,
+                                  decorationThickness: 1.5,
+                                  decoration: TextDecoration.underline)),
                         )),
                   ],
                 ),
@@ -256,13 +250,14 @@ class _LoginPageState extends State<LoginPage> {
                                       color: AppColors.purple,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
-                                      child: Text(
-                                    I10n.of(context).continueText,
-                                    style: const TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ))),
+                                      child: Text(I10n.of(context).continueText,
+                                          style: const TextStyle(
+                                              color: AppColors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'PNExtraBold')
+                                          // fontWeight: FontWeight.bold),
+                                          ))),
                             ),
                           ),
                   ),
@@ -320,7 +315,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "${I10n.of(context).welcome} ${I10n.of(context).to} ${I10n.of(context).appTitle}",
+                          "${I10n.of(context).welcome} ${I10n.of(context).to} \n${I10n.of(context).appTitle}",
                           textAlign: TextAlign.center,
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,

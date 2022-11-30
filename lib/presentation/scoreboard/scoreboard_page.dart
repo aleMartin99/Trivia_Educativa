@@ -9,6 +9,7 @@ import 'package:trivia_educativa/presentation/scoreboard/scoreboard_state.dart';
 import 'dart:math' show pi;
 import '../../core/app_icons.dart';
 import '../../core/core.dart';
+import '../../core/theme/text_theme.dart';
 import '../../data/models/auth_model.dart';
 import '../../data/models/estudiante_model.dart';
 import '../../main.dart';

@@ -6,6 +6,7 @@ import 'package:trivia_educativa/core/app_sounds.dart';
 
 import 'package:trivia_educativa/presentation/challenge/challenge_imports.dart';
 
+import '../../core/theme/text_theme.dart';
 import '../../main.dart';
 import '../home/home_imports.dart';
 import '/../core/core.dart';
@@ -149,13 +150,9 @@ class _ResultPageState extends State<ResultPage> {
                                 child: Text(
                                   subtitle,
                                   textAlign: TextAlign.center,
-                                  //TODO check  textstyle
-                                  style: TextStyle(
-                                      fontFamily: 'PNRegular',
-                                      fontSize: 18,
-                                      color: Theme.of(context)
-                                          .primaryIconTheme
-                                          .color),
+                                  style: AppTextStyles.regularText16.copyWith(
+                                    fontSize: 18,
+                                  ),
                                 ),
                               ),
                             ],
@@ -265,12 +262,9 @@ class _ResultPageState extends State<ResultPage> {
                             child: Text(
                               subtitle,
                               textAlign: TextAlign.center,
-                              //TODO chech text Style
-                              style: TextStyle(
-                                  fontFamily: 'PNRegular',
-                                  fontSize: 18,
-                                  color:
-                                      Theme.of(context).primaryIconTheme.color),
+                              style: AppTextStyles.regularText16.copyWith(
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ],
