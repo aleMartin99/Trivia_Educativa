@@ -49,13 +49,13 @@ class _TemaPageState extends State<TemaPage> {
             SliverAppBar(
               elevation: 0,
               automaticallyImplyLeading: false,
-              expandedHeight: 220,
+              expandedHeight: height * 27.5,
               title: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: width * 1.9),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 6),
+                    padding: EdgeInsets.only(bottom: height * 0.7),
                     child: Row(
                       children: [
                         IconButton(
@@ -85,7 +85,7 @@ class _TemaPageState extends State<TemaPage> {
               pinned: _pinned,
               floating: true,
               flexibleSpace: Container(
-                padding: const EdgeInsets.only(top: 106),
+                padding: EdgeInsets.only(top: height * 13.2),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
@@ -102,12 +102,12 @@ class _TemaPageState extends State<TemaPage> {
                   background: Stack(
                     fit: StackFit.passthrough,
                     children: [
-                      const Align(
+                      Align(
                         //heightFactor: 1,
-                        alignment: Alignment(0.0, -0.6),
+                        alignment: const Alignment(0.0, -0.6),
                         child: SizedBox(
-                          height: 48,
-                          child: Center(
+                          height: height * 6,
+                          child: const Center(
                             child: CircularProgressIndicator(
                               color: Colors.green,
                               backgroundColor: Colors.black12,
@@ -137,7 +137,8 @@ class _TemaPageState extends State<TemaPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 15.0, left: width * 5),
+                          padding: EdgeInsets.only(
+                              top: height * 1.875, left: width * 5),
                           child: Text(
                             I10n.of(context).topicS,
                             style: AppTextStyles.titleBold.copyWith(
@@ -148,7 +149,7 @@ class _TemaPageState extends State<TemaPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: width * 5, vertical: 15),
+                              horizontal: width * 5, vertical: height * 1.875),
                           child: ListView(
                             primary: false,
                             physics: const BouncingScrollPhysics(),

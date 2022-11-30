@@ -27,8 +27,11 @@ class TemaCardWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height * 11,
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(2),
+        margin: EdgeInsets.only(bottom: height * 2),
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.475,
+          vertical: height * 0.25,
+        ),
         decoration: BoxDecoration(
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
           borderRadius: BorderRadius.circular(10),
