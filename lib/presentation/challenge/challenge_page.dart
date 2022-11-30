@@ -227,19 +227,21 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height / 100;
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(deviceHeight * 15),
+          preferredSize: Size.fromHeight(height * 15),
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: EdgeInsets.symmetric(horizontal: width * 2.45),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -284,9 +286,8 @@ class _ChallengePageState extends State<ChallengePage> {
                       ),
                       SlideCountdown(
                         streamDuration: _streamDuration,
-                        //fade: true,
                         icon: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
+                          padding: EdgeInsets.only(right: width * 1.9),
                           child: Icon(
                             Icons.timer,
                             size: 20,
@@ -298,7 +299,6 @@ class _ChallengePageState extends State<ChallengePage> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         duration: Duration(minutes: widget.nivel.duracion),
-
                         onDone: () => controller.state = ChallengeState.timeOut,
                       ),
                       IconButton(
@@ -355,22 +355,22 @@ class _ChallengePageState extends State<ChallengePage> {
         ),
         bottomNavigationBar: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 40,
-              vertical: 20,
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 10,
+              vertical: height * 2.5,
             ),
             child: ValueListenableBuilder(
               valueListenable: controller.currentPageNotifier,
               builder: (context, int value, _) => Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
+                  padding: EdgeInsets.only(
+                      bottom: height * 1, left: width * 5, right: width * 5),
                   child: ValueListenableBuilder<ChallengeState>(
                       valueListenable: controller.stateNotifier,
                       builder: (ctx, loadingValue, _) => (loadingValue ==
                               ChallengeState.evaluating)
-                          ? const SizedBox(
-                              height: 48,
-                              child: Center(
+                          ? SizedBox(
+                              height: height * 6,
+                              child: const Center(
                                   child: CircularProgressIndicator(
                                 color: Colors.green,
                                 backgroundColor: Colors.black12,

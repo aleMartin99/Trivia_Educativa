@@ -30,6 +30,8 @@ class _QuizWidgetState extends State<QuizWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -38,14 +40,15 @@ class _QuizWidgetState extends State<QuizWidget> {
           ? Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 4),
+                  padding:
+                      EdgeInsets.only(top: height * 2.5, left: width * 0.95),
                   child: Text(widget.pregunta.descripcion,
                       style: Theme.of(context).textTheme.headline2!.copyWith(
                           fontSize: 24,
                           color: Theme.of(context).primaryIconTheme.color)),
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: height * 3,
                 ),
                 GridView.count(
                     physics: const BouncingScrollPhysics(),
@@ -84,21 +87,22 @@ class _QuizWidgetState extends State<QuizWidget> {
                           child: InkWell(
                             child: Ink.image(
                               image: NetworkImage(widget.pregunta.imagen),
-                              height: 150,
+                              height: height * 19,
                             ),
                             onTap: openGalleryView,
                           ),
                         )
                       : const Text(''),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 4),
+                    padding:
+                        EdgeInsets.only(top: height * 2.5, left: width * 0.95),
                     child: Text(widget.pregunta.descripcion,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                             fontSize: 21,
                             color: Theme.of(context).primaryIconTheme.color)),
                   ),
-                  const SizedBox(
-                    height: 24,
+                  SizedBox(
+                    height: height * 3,
                   ),
                   for (int i = 0;
                       (widget.pregunta.tiposDePregunta.contains('V o F'))

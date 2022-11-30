@@ -16,12 +16,14 @@ class QuestionIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: width * 5),
       child: Column(
         children: [
-          const SizedBox(
-            height: 16,
+          SizedBox(
+            height: height * 2.1,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,8 +42,8 @@ class QuestionIndicatorWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 16,
+          SizedBox(
+            height: height * 2.1,
           ),
           ProgressIndicatorWidget(
             value: currentPage / pagesLenght,

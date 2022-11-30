@@ -34,8 +34,10 @@ class _AnswerWidgetState extends State<AnswerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: height * 0.5),
       child: IgnorePointer(
         ignoring: widget.isDisabled,
         child: GestureDetector(
@@ -49,7 +51,8 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                     },
                     child: Container(
                       clipBehavior: Clip.antiAlias,
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 3.8, vertical: height * 2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: widget.isSelected
@@ -63,8 +66,8 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                         children: [
                           Center(
                             child: SizedBox(
-                                height: 80,
-                                width: 80,
+                                height: height * 10,
+                                width: width * 19.5,
                                 child: FittedBox(
                                   child: CustomIconSVG(
                                     iconName:
@@ -73,9 +76,6 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                                             : AppIcons.dislike,
                                   ),
                                 )),
-                          ),
-                          const SizedBox(
-                            height: 8,
                           ),
                           Flex(
                             direction: Axis.vertical,
@@ -106,9 +106,9 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                               Theme.of(context).brightness),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 3.8,
+                      vertical: height * 2,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,8 +123,8 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                           ),
                         ),
                         Container(
-                          width: 24,
-                          height: 24,
+                          width: width * 5.7,
+                          height: height * 3,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: widget.isSelected
