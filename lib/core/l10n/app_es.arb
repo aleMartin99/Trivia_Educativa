@@ -66,6 +66,8 @@
     "noTopicsDialogBody":"No hay temas disponibles por el momento",
     "noQuestionsDialogTitle":"No existen preguntas",
     "noQuestionsDialogBody":"No hay preguntas disponibles por el momento",
+    "noLevelsDialogTitle":"No existen niveles",
+    "noLevelsDialogBody":"No hay niveles disponibles por el momento",
     "homeMenuOption":"Inicio",
     "scoreboardMenuOption":"Tabla de Posiciones",
     "password":"Contraseña",

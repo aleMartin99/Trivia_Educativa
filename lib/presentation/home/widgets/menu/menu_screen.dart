@@ -51,20 +51,22 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: height * 3.2),
+            padding: EdgeInsets.symmetric(vertical: height * 3.5),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: 260,
+                    width: width * 55.35,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 24.0, left: 24.0, right: 24.0),
+                          padding: EdgeInsets.only(
+                              bottom: height * 3,
+                              left: width * 5.95,
+                              right: width * 5.95),
                           child: CircleAvatar(
                               radius: 45,
                               backgroundColor: Theme.of(context).brightness ==
@@ -76,7 +78,10 @@ class _MenuScreenState extends State<MenuScreen> {
                                   height: width * 18,
                                   child: ClipOval(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: width * 1.225,
+                                        vertical: height * 0.7,
+                                      ),
                                       child: FittedBox(
                                         child: Icon(
                                           Icons.person,
@@ -90,8 +95,10 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ))),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 36.0, left: 24.0, right: 24.0),
+                          padding: EdgeInsets.only(
+                              bottom: height * 3.7,
+                              left: width * 5.7,
+                              right: width * 0.2),
                           child: Text(
                             auth.user.name,
                             style: TextStyle(
@@ -106,7 +113,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           builder: (_, index, __) => Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
+                            children: [
                               ...widget.mainMenu
                                   .map((item) => MenuItemWidget(
                                         key: Key(item.index.toString()),
@@ -160,6 +167,9 @@ class _MenuScreenState extends State<MenuScreen> {
                           onPressed: () async {
                             QuickAlert.show(
                               onConfirmBtnTap: () async {
+                                Provider.of<MenuProvider>(context,
+                                        listen: false)
+                                    .currentPage = 0;
                                 await sl.popScope();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     AppRoutes.loginRoute,
@@ -198,7 +208,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                   // SizedBox.expand(),
                   SizedBox(
-                    height: height * 28.6,
+                    height: height * 29.6,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

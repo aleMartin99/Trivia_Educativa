@@ -66,6 +66,8 @@
      "noTopicsDialogBody":"There are no topics available at the moment",
      "noQuestionsDialogTitle":"No questions",
      "noQuestionsDialogBody":"There are no questions available at the moment",
+     "noLevelsDialogTitle":"No levels",
+     "noLevelsDialogBody":"There are no levels available at the moment",
      "homeMenuOption":"Home",
      "scoreboardMenuOption":"Scoreboard",
      "password":"Password",

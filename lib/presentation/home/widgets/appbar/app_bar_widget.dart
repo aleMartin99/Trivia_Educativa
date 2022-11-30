@@ -22,13 +22,13 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     double width = MediaQuery.of(context).size.width / 100;
     const angle = 180 * pi / 180;
     return PreferredSize(
-      preferredSize: const Size.fromHeight(250),
+      preferredSize: Size.fromHeight(height * 31.25),
       child: SizedBox(
-        height: 270,
+        height: height * 33.75,
         child: Stack(
           children: [
             Container(
-                height: 161,
+                height: height * 20.125,
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(
                   horizontal: width * 5,
@@ -37,7 +37,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   gradient: AppGradients.linear,
                 ),
                 child: ListTile(
-                  contentPadding: const EdgeInsets.only(top: 60),
+                  contentPadding: EdgeInsets.only(top: height * 7.5),
                   title: Text.rich(
                     TextSpan(
                       text: "${I10n.of(context).hello}, ",
@@ -70,11 +70,13 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                               ? AppTheme.backgroundColors(Brightness.dark)
                               : AppColors.lightPurple,
                       child: SizedBox(
-                          width: width * 18,
-                          height: width * 18,
+                          width: double.infinity,
+                          height: double.infinity,
                           child: ClipOval(
                             child: Padding(
-                              padding: const EdgeInsets.all(6.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width * 1.1375,
+                                  vertical: height * 1),
                               child: FittedBox(
                                 child: Icon(
                                   Icons.person,

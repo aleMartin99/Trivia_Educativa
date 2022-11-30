@@ -147,8 +147,8 @@ class _HomePageState extends State<HomePage> {
     showWelcomeBox() {
       return Container(
         alignment: Alignment.topLeft,
-        height: 440,
-        width: 500,
+        height: height * 55,
+        width: width * 83.3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: AppGradients.linear,
@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: height * 2.5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -175,9 +175,9 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: height * 2.5),
                 Padding(
-                  padding: const EdgeInsets.only(left: 2.0),
+                  padding: EdgeInsets.only(left: width * 0.475),
                   child: Text(
                     I10n.of(context).welcomeMessageBody,
                     textAlign: TextAlign.start,
@@ -185,15 +185,15 @@ class _HomePageState extends State<HomePage> {
                         .copyWith(color: AppColors.white, fontSize: 18),
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: height * 5),
                 GestureDetector(
                   onTap: () async {
                     context.read<WelcomeMessageCubit>().markAsViewed();
                     Navigator.pop(context);
                   },
                   child: Container(
-                      width: 400,
-                      height: 48,
+                      width: width * 73.3,
+                      height: height * 6,
                       decoration: BoxDecoration(
                           color: AppColors.purple,
                           borderRadius: BorderRadius.circular(10)),
@@ -227,7 +227,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO make validation for data to all pages like asignatura(home)
     double height = MediaQuery.of(context).size.height / 100;
     double width = MediaQuery.of(context).size.width / 100;
     return WillPopScope(
@@ -264,10 +263,10 @@ class _HomePageState extends State<HomePage> {
                     : Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 5,
-                          vertical: 15,
+                          vertical: height * 1.875,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
+                          padding: EdgeInsets.only(top: height * 1.25),
                           child: GridView.count(
                             physics: const BouncingScrollPhysics(),
                             childAspectRatio: 0.95,

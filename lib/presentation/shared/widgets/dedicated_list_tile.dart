@@ -30,6 +30,8 @@ class DedicatedListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     if (Platform.isIOS) {
       return GestureDetector(
         onLongPress: onLongPressed,
@@ -58,8 +60,8 @@ class DedicatedListTile extends StatelessWidget {
         onTap: onPressed,
         trailing: trailing,
         leading: SizedBox(
-          width: size,
-          height: size,
+          width: width * 8.55,
+          height: height * 4,
           child: Center(
             child: leading,
           ),

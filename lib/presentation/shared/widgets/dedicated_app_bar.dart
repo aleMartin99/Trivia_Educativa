@@ -35,7 +35,6 @@ class DedicatedAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
-    double myHeight = MediaQuery.of(context).size.height / 100;
     double myWidth = MediaQuery.of(context).size.width / 100;
     final bool canPop = parentRoute?.canPop ?? false;
     if (forceAndroid || Theme.of(context).platform == TargetPlatform.android) {

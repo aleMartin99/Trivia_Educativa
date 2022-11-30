@@ -24,7 +24,6 @@ class AppInformationWidget extends StatelessWidget {
             children: [
               Text(
                 '$appName ${Platform.isAndroid ? "Android" : "iOS"} v$version ($buildNumber)',
-                //todo textstyle for app information
                 style: TextStyle(
                   fontFamily: 'PNRegular',
                   fontSize: 14,
@@ -35,7 +34,6 @@ class AppInformationWidget extends StatelessWidget {
               (I10n.of(context).localeName == 'es')
                   ? Text(
                       'Español',
-                      //todo textstyle for app information
                       style: TextStyle(
                         fontFamily: 'PNRegular',
                         fontSize: 14,
@@ -47,7 +45,6 @@ class AppInformationWidget extends StatelessWidget {
                   : (I10n.of(context).localeName == 'en')
                       ? Text(
                           'English',
-                          //todo textstyle for app information
                           style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,
@@ -58,7 +55,6 @@ class AppInformationWidget extends StatelessWidget {
                         )
                       : Text(
                           'Other Language',
-                          //todo textstyle for app information
                           style: TextStyle(
                             fontFamily: 'PNRegular',
                             fontSize: 14,

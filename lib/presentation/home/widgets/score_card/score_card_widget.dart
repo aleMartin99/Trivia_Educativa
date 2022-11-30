@@ -21,7 +21,7 @@ class ScoreCardWidget extends StatelessWidget {
         right: width * 5,
       ),
       child: Container(
-        height: 136,
+        height: height * 16.95,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
@@ -32,7 +32,7 @@ class ScoreCardWidget extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: EdgeInsets.symmetric(horizontal: width * 5.7),
           child: Row(
             children: [
               const Expanded(
@@ -42,8 +42,8 @@ class ScoreCardWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 24,
+                  padding: EdgeInsets.only(
+                    left: width * 5.7,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

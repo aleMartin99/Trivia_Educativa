@@ -21,12 +21,17 @@ class AsignaturaCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         // height: 500,
         clipBehavior: Clip.antiAlias,
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 3.8,
+          vertical: height * 2,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: AppTheme.backgroundColors(Theme.of(context).brightness),
@@ -36,10 +41,10 @@ class AsignaturaCardWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
+              padding: EdgeInsets.only(bottom: height * 0.50),
               child: Center(
                 child: SizedBox(
-                    height: 80,
+                    height: height * 10,
                     //color: Colors.red,
                     child: CustomIconSVG(
                       iconName: asignatura.icon,

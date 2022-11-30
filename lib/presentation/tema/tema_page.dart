@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import 'package:trivia_educativa/core/routers/routers.dart';
@@ -161,18 +162,41 @@ class _TemaPageState extends State<TemaPage> {
                                     nombre: tema.descripcion,
                                     cantNiveles: tema.niveles.length,
                                     onTap: () {
-                                      //TODO hacer validacion para tema vacio
-                                      Navigator.pushNamed(
-                                        context,
-                                        AppRoutes.nivelRoute,
-                                        arguments: NivelPageArgs(
-                                          niveles: tema.niveles,
-                                          tema: tema,
-                                          notas: widget.notas,
-                                          asignatura: widget.asignatura,
-                                          idEstudiante: widget.idEstudiante,
-                                        ),
-                                      );
+                                      (tema.niveles.isEmpty ||
+                                              // ignore: unnecessary_null_comparison
+                                              tema.niveles == null)
+                                          ? QuickAlert.show(
+                                              context: context,
+                                              type: QuickAlertType.warning,
+                                              title: I10n.of(context)
+                                                  //TODO no levels dialog
+                                                  .noLevelsDialogTitle,
+                                              confirmBtnText:
+                                                  I10n.of(context).ok,
+                                              text: I10n.of(context)
+                                                  .noLevelsDialogBody,
+                                              backgroundColor: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              textColor: Theme.of(context)
+                                                  .primaryIconTheme
+                                                  .color!,
+                                              titleColor: Theme.of(context)
+                                                  .primaryIconTheme
+                                                  .color!,
+                                              confirmBtnColor: AppColors.purple,
+                                            )
+                                          : Navigator.pushNamed(
+                                              context,
+                                              AppRoutes.nivelRoute,
+                                              arguments: NivelPageArgs(
+                                                niveles: tema.niveles,
+                                                tema: tema,
+                                                notas: widget.notas,
+                                                asignatura: widget.asignatura,
+                                                idEstudiante:
+                                                    widget.idEstudiante,
+                                              ),
+                                            );
                                     }))
                                 .toList(),
                           ),

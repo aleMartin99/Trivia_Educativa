@@ -90,17 +90,19 @@ class _ChartWidgetState extends State<ChartWidget>
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return SizedBox(
-      height: 80,
-      width: 80,
+      height: height * 10,
+      width: width * 20,
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, _) => Stack(
           children: [
             Center(
               child: SizedBox(
-                height: 80,
-                width: 80,
+                height: height * 10,
+                width: width * 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 10,
                   value: _animation.value,

@@ -104,7 +104,6 @@ class _NivelPageState extends State<NivelPage> {
           ),
           preferredSize: Size.fromHeight(height * 7),
         ),
-//TODO make validation for data to all pages like asignatura(home)
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: width * 5,
@@ -139,19 +138,40 @@ class _NivelPageState extends State<NivelPage> {
                           nombre: nivel.descripcion,
                           preguntas: nivel.preguntas,
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.challengeRoute,
-                              arguments: ChallengePageArgs(
-                                preguntas: nivel.preguntas,
-                                idEstudiante: widget.idEstudiante,
-                                nota5: nivel.nota5,
-                                quizTitle: nivel.descripcion,
-                                asignatura: widget.asignatura,
-                                idTema: widget.tema.id,
-                                nivel: nivel,
-                              ),
-                            );
+                            (nivel.preguntas.isEmpty ||
+                                    // ignore: unnecessary_null_comparison
+                                    nivel.preguntas == null)
+                                ? QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.warning,
+                                    title:
+                                        I10n.of(context).noQuestionsDialogTitle,
+                                    confirmBtnText: I10n.of(context).ok,
+                                    text:
+                                        I10n.of(context).noQuestionsDialogBody,
+                                    backgroundColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    textColor: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color!,
+                                    titleColor: Theme.of(context)
+                                        .primaryIconTheme
+                                        .color!,
+                                    confirmBtnColor: AppColors.purple,
+                                  )
+                                : Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.challengeRoute,
+                                    arguments: ChallengePageArgs(
+                                      preguntas: nivel.preguntas,
+                                      idEstudiante: widget.idEstudiante,
+                                      nota5: nivel.nota5,
+                                      quizTitle: nivel.descripcion,
+                                      asignatura: widget.asignatura,
+                                      idTema: widget.tema.id,
+                                      nivel: nivel,
+                                    ),
+                                  );
                           },
                         );
                       } else {
@@ -161,7 +181,9 @@ class _NivelPageState extends State<NivelPage> {
                             nombre: nivel.descripcion,
                             preguntas: nivel.preguntas,
                             onTap: () async {
-                              (nivel.preguntas.isEmpty)
+                              (nivel.preguntas.isEmpty ||
+                                      // ignore: unnecessary_null_comparison
+                                      nivel.preguntas == null)
                                   ? QuickAlert.show(
                                       context: context,
                                       type: QuickAlertType.warning,
