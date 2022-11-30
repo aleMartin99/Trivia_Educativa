@@ -102,6 +102,8 @@ class _ResultPageState extends State<ResultPage> {
                 ? "${I10n.of(context).youGot} ${widget.result} ${I10n.of(context).of_} ${widget.questionsLenght} ${I10n.of(context).questions}. \n${I10n.of(context).score_tip_excellent}!!"
                 : ''));
 
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -122,14 +124,14 @@ class _ResultPageState extends State<ResultPage> {
                     ),
                     Container(
                       width: double.maxFinite,
-                      padding: const EdgeInsets.only(top: 100),
+                      padding: EdgeInsets.only(top: height * 12.5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
                             resultImage,
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: width * 80,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,7 +148,7 @@ class _ResultPageState extends State<ResultPage> {
                                     fontSize: 38),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(top: height * 1.25),
                                 child: Text(
                                   subtitle,
                                   textAlign: TextAlign.center,
@@ -160,11 +162,11 @@ class _ResultPageState extends State<ResultPage> {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 40.0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width * 10),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: .0, left: 20, right: 20),
+                                  padding: EdgeInsets.only(
+                                      left: width * 5, right: width * 5),
                                   child: NextButtonWidget.purple(
                                     label: I10n.of(context).share,
                                     onTap: () {
@@ -175,15 +177,17 @@ class _ResultPageState extends State<ResultPage> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 16,
+                              SizedBox(
+                                height: height * 2,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 40.0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width * 10),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 8.0, left: 20, right: 20),
+                                  padding: EdgeInsets.only(
+                                      bottom: height * 1,
+                                      left: width * 5,
+                                      right: width * 5),
                                   child: NextButtonWidget.transparent(
                                     label: I10n.of(context).backTo_Home,
                                     fontColor: Theme.of(context).hintColor,
@@ -236,14 +240,14 @@ class _ResultPageState extends State<ResultPage> {
                 )
               : Container(
                   width: double.maxFinite,
-                  padding: const EdgeInsets.only(top: 100),
+                  padding: EdgeInsets.only(top: height * 12.5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
                         resultImage,
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: width * 80,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -258,7 +262,7 @@ class _ResultPageState extends State<ResultPage> {
                                 fontSize: 38),
                           ),
                           Container(
-                            padding: const EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.only(top: height * 1.25),
                             child: Text(
                               subtitle,
                               textAlign: TextAlign.center,
@@ -273,10 +277,10 @@ class _ResultPageState extends State<ResultPage> {
                         children: [
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 40.0),
+                                EdgeInsets.symmetric(horizontal: width * 10),
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: .0, left: 20, right: 20),
+                              padding: EdgeInsets.only(
+                                  left: width * 5, right: width * 5),
                               child: NextButtonWidget.purple(
                                 label: I10n.of(context).share,
                                 onTap: () {
@@ -287,15 +291,17 @@ class _ResultPageState extends State<ResultPage> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 16,
+                          SizedBox(
+                            height: height * 2,
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 40.0),
+                                EdgeInsets.symmetric(horizontal: width * 10),
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 8.0, left: 20, right: 20),
+                              padding: EdgeInsets.only(
+                                  bottom: height * 1,
+                                  left: width * 5,
+                                  right: width * 5),
                               child: NextButtonWidget.transparent(
                                 label: I10n.of(context).backTo_Home,
                                 fontColor: Theme.of(context).hintColor,

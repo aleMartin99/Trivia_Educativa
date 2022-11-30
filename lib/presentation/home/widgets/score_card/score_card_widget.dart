@@ -13,10 +13,12 @@ class ScoreCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
+      padding: EdgeInsets.only(
+        left: width * 5,
+        right: width * 5,
       ),
       child: Container(
         height: 136,

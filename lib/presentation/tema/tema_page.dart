@@ -40,6 +40,8 @@ class _TemaPageState extends State<TemaPage> {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
     bool _pinned = true;
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: CustomScrollView(
@@ -135,7 +137,7 @@ class _TemaPageState extends State<TemaPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 15.0, left: 20),
+                          padding: EdgeInsets.only(top: 15.0, left: width * 5),
                           child: Text(
                             I10n.of(context).topicS,
                             style: AppTextStyles.titleBold.copyWith(
@@ -145,8 +147,8 @@ class _TemaPageState extends State<TemaPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: width * 5, vertical: 15),
                           child: ListView(
                             primary: false,
                             physics: const BouncingScrollPhysics(),

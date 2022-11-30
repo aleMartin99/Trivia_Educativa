@@ -10,11 +10,13 @@ class GradientAppBarWidget extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Container(
       height: 161,
       width: double.maxFinite,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
+      padding: EdgeInsets.symmetric(
+        horizontal: width * 5,
       ),
       decoration: const BoxDecoration(
         gradient: AppGradients.linear,

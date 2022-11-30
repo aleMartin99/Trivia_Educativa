@@ -142,6 +142,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   showWelcomeBox() {
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     showWelcomeBox() {
       return Container(
         alignment: Alignment.topLeft,
@@ -152,7 +154,7 @@ class _HomePageState extends State<HomePage> {
           gradient: AppGradients.linear,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20, top: 15),
+          padding: EdgeInsets.only(left: width * 5, right: width * 5, top: 15),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -226,7 +228,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //TODO make validation for data to all pages like asignatura(home)
-
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -259,8 +262,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ))
                     : Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: width * 5,
                           vertical: 15,
                         ),
                         child: Padding(

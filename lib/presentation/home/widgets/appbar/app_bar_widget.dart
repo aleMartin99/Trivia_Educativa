@@ -30,8 +30,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             Container(
                 height: 161,
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 5,
                 ),
                 decoration: const BoxDecoration(
                   gradient: AppGradients.linear,

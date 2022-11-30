@@ -63,6 +63,9 @@ class _OnboardingState extends State<Onboarding> {
     List<OnboardingItem> items = Theme.of(context).brightness == Brightness.dark
         ? kOnboardingDarkItems
         : kOnboardingLightItems;
+
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return WillPopScope(
       onWillPop: () async => false,
       child: DedicatedScaffold(
@@ -89,8 +92,8 @@ class _OnboardingState extends State<Onboarding> {
             child: ValueListenableBuilder(
               valueListenable: onBoardingController.currentPageNotifier,
               builder: (context, int value, _) => Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
+                padding: EdgeInsets.only(
+                    bottom: 8.0, left: width * 5, right: width * 5),
                 child: (NextButtonWidget.purple(
                   //inactiveColor: Colors.grey,
 

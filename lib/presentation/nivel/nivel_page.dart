@@ -63,7 +63,8 @@ class _NivelPageState extends State<NivelPage> {
   Widget build(BuildContext context) {
     SettingsController settingsController =
         Provider.of<SettingsController>(context);
-
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: PreferredSize(
@@ -105,8 +106,8 @@ class _NivelPageState extends State<NivelPage> {
         ),
 //TODO make validation for data to all pages like asignatura(home)
         body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: width * 5,
             vertical: 15,
           ),
           child: Column(

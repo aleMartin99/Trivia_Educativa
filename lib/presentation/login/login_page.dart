@@ -283,7 +283,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size deviceSize = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height / 100;
+    double width = MediaQuery.of(context).size.width / 100;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -292,11 +293,12 @@ class _LoginPageState extends State<LoginPage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-              left: deviceSize.width * 0.1,
-              right: deviceSize.width * 0.1,
+              left: width * 10,
+              right: width * 10,
             ),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: deviceSize.height / 1),
+              //TODO estaba deviceSize height /1
+              constraints: BoxConstraints(maxHeight: height * 1),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -338,7 +340,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(
-                            maxHeight: deviceSize.height * 0.04,
+                            maxHeight: height * 4,
                           ),
                         ),
                         const SizedBox(
@@ -357,7 +359,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: EdgeInsets.symmetric(horizontal: width * 5),
                     child: NextButtonWidget.purple(
                         label: I10n.of(context).login,
                         onTap: () {
