@@ -59,7 +59,10 @@ class AsignaturaCardWidget extends StatelessWidget {
                     )),
               ],
             ),
-            Text("${I10n.of(context).topics}: ${asignatura.temas.length}",
+            Text(
+                (asignatura.temas.length == 1)
+                    ? "${asignatura.temas.length} ${I10n.of(context).topic}"
+                    : "${asignatura.temas.length} ${I10n.of(context).topics}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.regularText16.copyWith(fontSize: 16)),

@@ -53,7 +53,9 @@ class NivelCardWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "${preguntas.length} ${I10n.of(context).questions}",
+                      (preguntas.length == 1)
+                          ? "${preguntas.length} ${I10n.of(context).question}"
+                          : "${preguntas.length} ${I10n.of(context).questions}",
                       style: AppTextStyles.regularText16.copyWith(
                         color: isDone
                             ? AppColors.black

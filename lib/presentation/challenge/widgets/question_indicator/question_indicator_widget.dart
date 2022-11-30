@@ -27,7 +27,7 @@ class QuestionIndicatorWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${I10n.of(context).question} $currentPage",
+                "${I10n.of(context).questioN} $currentPage",
                 style: AppTextStyles.regularText16.copyWith(
                   fontSize: 14,
                 ),

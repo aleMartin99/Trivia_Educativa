@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -139,7 +137,7 @@ class _TemaPageState extends State<TemaPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 15.0, left: 20),
                           child: Text(
-                            I10n.of(context).topics,
+                            I10n.of(context).topicS,
                             style: AppTextStyles.titleBold.copyWith(
                               color: Theme.of(context).primaryIconTheme.color,
                               fontSize: 24,
