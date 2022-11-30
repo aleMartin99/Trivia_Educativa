@@ -26,6 +26,7 @@ class MenuItemWidget extends StatelessWidget {
       ),
       title: Text(
         item.title,
+        maxLines: 2,
         overflow: TextOverflow.ellipsis,
         style: Theme.of(context).textTheme.headline4?.copyWith(
             fontSize: 18,

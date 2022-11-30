@@ -58,7 +58,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: width * 55.35,
+                    width: width * 63,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -98,9 +98,10 @@ class _MenuScreenState extends State<MenuScreen> {
                           padding: EdgeInsets.only(
                               bottom: height * 3.7,
                               left: width * 5.7,
-                              right: width * 0.2),
+                              right: width * 5.7),
                           child: Text(
                             auth.user.name,
+                            maxLines: 2,
                             style: TextStyle(
                               fontSize: 22,
                               color: Theme.of(context).iconTheme.color,
@@ -130,6 +131,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           builder: (ctx, value, _) => DedicatedListTile(
                               title: Text(
                                 I10n.of(context).darkTheme,
+                                maxLines: 2,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline4
