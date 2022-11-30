@@ -169,7 +169,6 @@ class _TemaPageState extends State<TemaPage> {
                                               context: context,
                                               type: QuickAlertType.warning,
                                               title: I10n.of(context)
-                                                  //TODO no levels dialog
                                                   .noLevelsDialogTitle,
                                               confirmBtnText:
                                                   I10n.of(context).ok,
