@@ -176,11 +176,13 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                                         Theme.of(context).brightness)
                                     : AppColors.lightPurple,
                                 child: SizedBox(
-                                    width: width * 18,
-                                    height: width * 18,
+                                    width: double.infinity,
+                                    height: double.infinity,
                                     child: ClipOval(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(9.0),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: width * 2.1375,
+                                            vertical: height * 1.125),
                                         child: CustomIconSVG(
                                           iconName: AppIcons.trophy,
                                         ),
@@ -214,13 +216,15 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                               splashBorderRadius: null,
                               tabs: [
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  padding:
+                                      EdgeInsets.only(bottom: height * 0.5),
                                   child: Text(I10n.of(context).myYear,
                                       style:
                                           AppTextStyles.titleBold.copyWith()),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  padding:
+                                      EdgeInsets.only(bottom: height * 0.5),
                                   child: Text(I10n.of(context).general,
                                       style: AppTextStyles.titleBold),
                                 ),

@@ -18,8 +18,9 @@ class ScoreBoardCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width / 100;
     return Container(
       height: height * 10,
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(2),
+      margin: EdgeInsets.only(bottom: height * 2),
+      padding: EdgeInsets.symmetric(
+          horizontal: width * 0.475, vertical: height * 0.25),
       decoration: BoxDecoration(
         color: isUser
             ? AppColors.purple.withOpacity(0.16)
