@@ -101,30 +101,35 @@ class _LoginPageState extends State<LoginPage> {
 
   showLoginForm() {
     showLoginForm() {
+      double height = MediaQuery.of(context).size.height / 100;
+      double width = MediaQuery.of(context).size.width / 100;
       return Container(
         alignment: Alignment.center,
-        height: 400,
-        width: 500,
+        height: height * 50,
+        width: width * 83.3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: AppGradients.linear,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
+          padding: EdgeInsets.only(
+              left: width * 1.9, right: width * 1.9, top: height * 1),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
+                  padding: EdgeInsets.only(bottom: height * 2.5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         I10n.of(context).login,
-                        //todo check textstyle font family
                         style: const TextStyle(
-                            color: AppColors.white, fontSize: 24),
+                            color: AppColors.white,
+                            fontSize: 24,
+                            fontFamily: 'PNRegular',
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -132,33 +137,33 @@ class _LoginPageState extends State<LoginPage> {
                 ValueListenableBuilder<LoginState>(
                     valueListenable: _loginController.stateNotifier,
                     builder: (ctx, state, _) => Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                        padding: EdgeInsets.only(left: width * 4.275),
                         child: state == LoginState.unauthorized
                             ? Text(I10n.of(context).invalidCredentials,
-                                //todo check textstyle font family
                                 style: AppTextStyles.regularText16
                                     .copyWith(color: Colors.white))
                             : (state == LoginState.noPermits)
                                 ? Text(I10n.of(context).noPermissionsUser,
-                                    //todo check textstyle font family
                                     style: AppTextStyles.regularText16
                                         .copyWith(color: Colors.white))
                                 : const Text(
                                     '',
                                     style: TextStyle(height: 0),
                                   ))),
-                const SizedBox(height: 20),
+                SizedBox(height: height * 2.5),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: EdgeInsets.symmetric(horizontal: width * 2.85),
                   child: SizedBox(
-                    width: 400,
-                    height: 65,
+                    width: width * 73.3,
+                    height: height * 8.125,
                     child: TextField(
                         controller: usernameController,
                         style: AppTextStyles.regularText16.copyWith(
                             color: Theme.of(context).primaryIconTheme.color),
                         decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(15),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: height * 1.875,
+                                horizontal: width * 3.7),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -179,10 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: EdgeInsets.symmetric(horizontal: width * 2.85),
                   child: SizedBox(
-                    width: 400,
-                    height: 65,
+                    width: width * 73.3,
+                    height: height * 8.125,
                     child:
                         PasswordWidget(passwordController: passwordController),
                   ),
@@ -212,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
+                          padding: EdgeInsets.only(left: width * 2.85),
                           child: Text(I10n.of(context).forgottenPasswordButton,
                               style: AppTextStyles.regularText16.copyWith(
                                   color: Colors.white,
@@ -221,11 +226,11 @@ class _LoginPageState extends State<LoginPage> {
                         )),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: height * 2.5),
                 ValueListenableBuilder<LoginState>(
                   valueListenable: _loginController.stateNotifier,
                   builder: (ctx, loadingValue, _) => SizedBox(
-                    height: 48,
+                    height: height * 6,
                     child: loadingValue == LoginState.loading
                         ? const Center(
                             child: CircularProgressIndicator(
@@ -241,11 +246,11 @@ class _LoginPageState extends State<LoginPage> {
                                   passwordController.text);
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width * 2.85),
                               child: Container(
-                                  width: 400,
-                                  height: 48,
+                                  width: width * 73.3,
+                                  height: height * 6,
                                   decoration: BoxDecoration(
                                       color: AppColors.purple,
                                       borderRadius: BorderRadius.circular(10)),
@@ -297,17 +302,16 @@ class _LoginPageState extends State<LoginPage> {
               right: width * 10,
             ),
             child: ConstrainedBox(
-              //TODO estaba deviceSize height /1
-              constraints: BoxConstraints(maxHeight: height * 1),
+              constraints: BoxConstraints(maxHeight: height * 100),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 25.0),
+                    padding: EdgeInsets.only(top: height * 3.125),
                     child: SizedBox(
-                      height: 185,
-                      width: 115,
+                      height: height * 22.88,
+                      width: width * 30.26,
                       child: Image.asset(AppImages.colorfulLogo),
                     ),
                   ),
@@ -343,17 +347,15 @@ class _LoginPageState extends State<LoginPage> {
                             maxHeight: height * 4,
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: height * 1.25,
                         ),
                         Text(
                           I10n.of(context).appDescription,
                           textAlign: TextAlign.center,
-                          //todo check textstyle font family
-                          style: TextStyle(
-                              fontFamily: 'PNRegular',
-                              fontSize: 18,
-                              color: Theme.of(context).primaryIconTheme.color),
+                          style: AppTextStyles.regularText16.copyWith(
+                            fontSize: 18,
+                          ),
                         ),
                       ],
                     ),
