@@ -146,67 +146,79 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width / 100;
     showWelcomeBox() {
       return Container(
-        alignment: Alignment.topLeft,
-        height: height * 55,
+        // height: height * 60,
+        // alignment: Alignment.topLeft,
+        // height: height * 55,
         width: width * 83.3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: AppGradients.linear,
         ),
         child: Padding(
-          padding: EdgeInsets.only(left: width * 5, right: width * 5, top: 15),
+          padding: EdgeInsets.only(
+              left: width * 5,
+              right: width * 5,
+              top: height * 1.875,
+              bottom: height * 1.875),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: height * 2.5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        I10n.of(context).welcome,
-                        style: AppTextStyles.regularText16.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.white,
-                            fontSize: 24),
-                      ),
-                    ],
+            physics: const BouncingScrollPhysics(),
+            child: ClipRect(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    //Height 2.5
+                    padding: EdgeInsets.only(top: height * 2.5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          I10n.of(context).welcome,
+                          style: AppTextStyles.regularText16.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.white,
+                              fontSize: 24),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: height * 2.5),
-                Padding(
-                  padding: EdgeInsets.only(left: width * 0.475),
-                  child: Text(
-                    I10n.of(context).welcomeMessageBody,
-                    textAlign: TextAlign.start,
-                    style: AppTextStyles.regularText16
-                        .copyWith(color: AppColors.white, fontSize: 18),
+                  SizedBox(height: height * 2.5),
+                  Padding(
+                    padding: EdgeInsets.only(left: width * 0.475),
+                    child: Text(
+                      I10n.of(context).welcomeMessageBody,
+                      textAlign: TextAlign.start,
+                      style: AppTextStyles.regularText16
+                          .copyWith(color: AppColors.white, fontSize: 18),
+                    ),
                   ),
-                ),
-                SizedBox(height: height * 5),
-                GestureDetector(
-                  onTap: () async {
-                    context.read<WelcomeMessageCubit>().markAsViewed();
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                      width: width * 73.3,
-                      height: height * 6,
-                      decoration: BoxDecoration(
-                          color: AppColors.purple,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                          child: Text(
-                        I10n.of(context).ok,
-                        style: AppTextStyles.regularText16.copyWith(
-                            color: AppColors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ))),
-                ),
-              ],
+                  SizedBox(height: height * 5),
+                  GestureDetector(
+                    onTap: () async {
+                      context.read<WelcomeMessageCubit>().markAsViewed();
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(bottom: height * 2.5),
+                        width: width * 73.3,
+                        height: height * 6,
+                        decoration: BoxDecoration(
+                            color: AppColors.purple,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                          I10n.of(context).ok,
+                          style: AppTextStyles.regularText16.copyWith(
+                              color: AppColors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ))),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -214,13 +226,17 @@ class _HomePageState extends State<HomePage> {
     }
 
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-            contentPadding: EdgeInsets.zero,
-            content: showWelcomeBox(),
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
+              contentPadding: EdgeInsets.zero,
+              content: showWelcomeBox(),
+            ),
           );
         });
   }
@@ -268,8 +284,9 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 1.25),
                           child: GridView.count(
+                            clipBehavior: Clip.antiAlias,
                             physics: const BouncingScrollPhysics(),
-                            childAspectRatio: 0.95,
+                            childAspectRatio: 0.8,
                             shrinkWrap: true,
                             crossAxisCount: 2,
                             crossAxisSpacing: 15,

@@ -16,6 +16,5 @@ const String kApiCarlos = '192.168.42.203:3000';
 //*Test
 const String kApiProduct = 'localhost:3000';
 
-
-// mi pc
-//'192.168.1.100:3000'
+//* mi pc
+const String kApiAlePC = '192.168.1.102:3000';

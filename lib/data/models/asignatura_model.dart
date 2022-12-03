@@ -40,7 +40,7 @@ class Asignatura {
         (json['configuracion'] as List).isNotEmpty) {
       if (json['configuracion'][0] != null) {
         //*Replaces image name from path to match the server path
-        const String apiPath = kApiEmulatorBaseUrl;
+        const String apiPath = kApiAlePC;
         image = json['configuracion'][0]['imagen'];
         if (image.contains('localhost:3000')) {
           image =

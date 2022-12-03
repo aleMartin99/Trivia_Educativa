@@ -15,7 +15,7 @@ class LoginRepository with RequestErrorParser {
     this._networkInfo,
   );
   final NetworkInfo _networkInfo;
-  String apiBaseUrl = kApiEmulatorBaseUrl;
+  String apiBaseUrl = kApiAlePC;
 
   Future signIn(
     String username,

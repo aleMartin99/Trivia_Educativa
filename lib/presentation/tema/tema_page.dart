@@ -52,11 +52,14 @@ class _TemaPageState extends State<TemaPage> {
               automaticallyImplyLeading: false,
               expandedHeight: height * 27.5,
               title: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 1.9),
+                padding: EdgeInsets.only(left: width * 1.5),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: height * 0.7),
+                    padding: EdgeInsets.only(
+                      bottom: height * 1,
+                      //  left: width * 0.5
+                    ),
                     child: Row(
                       children: [
                         IconButton(
@@ -86,7 +89,7 @@ class _TemaPageState extends State<TemaPage> {
               pinned: _pinned,
               floating: true,
               flexibleSpace: Container(
-                padding: EdgeInsets.only(top: height * 13.2),
+                padding: EdgeInsets.only(top: height * 10.9),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [

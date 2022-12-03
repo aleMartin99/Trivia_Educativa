@@ -15,7 +15,7 @@ class HomeRepository with RequestErrorParser {
   HomeRepository(
     this._networkInfo,
   );
-  String apiBaseUrl = kApiEmulatorBaseUrl;
+  String apiBaseUrl = kApiAlePC;
   final NetworkInfo _networkInfo;
 
   Future findEstudianteByCI(String cI, String token) async {

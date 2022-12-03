@@ -14,7 +14,7 @@ void main() async {
   // Initialize all dependencies with the given GetIt service locator as
   await initDependencies(
     sl,
-    apiBaseUrl: kApiEmulatorBaseUrl,
+    apiBaseUrl: kApiAlePC,
     // apiBaseUrl: kApiProductionBaseUrl,
   );
 

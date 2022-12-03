@@ -286,7 +286,7 @@ class _ResultPageState extends State<ResultPage> {
                                 onTap: () {
                                   //TODO checkear en telef fisico que funcione sin pedir contactos
                                   Share.share(
-                                      "${I10n.of(context).i_got} ${widget.result} ${I10n.of(context).of_} ${widget.questionsLenght} ${I10n.of(context).questions} ${I10n.of(context).in_} ${widget.quizTitle} ${I10n.of(context).in_} ${I10n.of(context).the_app} ${I10n.of(context).appTitle}");
+                                      "${I10n.of(context).i_got} ${widget.result} ${I10n.of(context).of_} ${widget.questionsLenght} ${I10n.of(context).questions} ${I10n.of(context).in_} ${widget.quizTitle} ${I10n.of(context).in_} ${I10n.of(context).the_app} ${I10n.of(context).appTitle}. ${I10n.of(context).linkToDownloadBody}");
                                 },
                               ),
                             ),

@@ -115,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.only(
               left: width * 1.9, right: width * 1.9, top: height * 1),
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -296,6 +297,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.only(
               left: width * 10,

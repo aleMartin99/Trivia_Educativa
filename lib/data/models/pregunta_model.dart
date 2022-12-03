@@ -37,7 +37,7 @@ class Pregunta {
     ));
 
     //*Replaces image name from path to match the server path
-    const String apiPath = kApiEmulatorBaseUrl;
+    const String apiPath = kApiAlePC;
     imagen = json['imagen'];
     if (imagen.contains('[::1]:3000')) {
       imagen = imagen.replaceFirstMapped('[::1]:3000', (match) => apiPath);

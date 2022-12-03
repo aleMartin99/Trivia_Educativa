@@ -26,7 +26,7 @@ class AsignaturaCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        // height: 500,
+        //height: 500,
         clipBehavior: Clip.antiAlias,
         padding: EdgeInsets.symmetric(
           horizontal: width * 3.8,
@@ -44,26 +44,21 @@ class AsignaturaCardWidget extends StatelessWidget {
               padding: EdgeInsets.only(bottom: height * 0.50),
               child: Center(
                 child: SizedBox(
-                    height: height * 10,
+                    //height: height * 10,
                     //color: Colors.red,
                     child: CustomIconSVG(
-                      iconName: asignatura.icon,
-                    )),
+                  iconName: asignatura.icon,
+                )),
               ),
             ),
-            Flex(
-              direction: Axis.vertical,
-              children: [
-                Text(asignatura.descripcion,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.regularText16.copyWith(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ],
-            ),
+            Text(asignatura.descripcion,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.regularText16.copyWith(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                )),
             Text(
                 (asignatura.temas.length == 1)
                     ? "${asignatura.temas.length} ${I10n.of(context).topic}"

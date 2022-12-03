@@ -85,5 +85,6 @@
      "noGeneralScoreBoardAvailable":"There is no general scoreboard available at the moment",
      "noLocalScoreBoardAvailable":"There is no leaderboard for your year available at the moment",
      "myYear":"My Year",
-     "general":"General"
+     "general":"General",
+     "linkToDownloadBody":"Here you can download the app (*link*)"
 }

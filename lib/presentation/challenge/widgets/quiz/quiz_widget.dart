@@ -79,6 +79,7 @@ class _QuizWidgetState extends State<QuizWidget> {
               ],
             )
           : SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

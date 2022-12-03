@@ -85,5 +85,6 @@
     "noGeneralScoreBoardAvailable":"No hay tabla de posiciones gerenal disponible por el momento",
     "noLocalScoreBoardAvailable":"No hay tabla de posiciones de tu año disponible por el momento",
     "myYear":"Mi Año",
-    "general":"General"
+    "general":"General",
+    "linkToDownloadBody":"Puedes descargar la aplicación aquí (*link*)"
 }
