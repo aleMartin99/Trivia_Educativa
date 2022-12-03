@@ -123,7 +123,7 @@ class AppTextStyles {
   static const TextStyle titleBold = TextStyle(
     fontFamily: 'PNRegular',
     color: AppColors.white,
-    fontSize: 21,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
   );
 

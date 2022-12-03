@@ -153,7 +153,7 @@ class _ScoreBoardPageState extends State<ScoreBoardPage>
                             title: Text(
                               I10n.of(context).scoreboardMenuOption,
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                              maxLines: 1,
                               style: AppTextStyles.titleBold,
                             ),
                             leading: Transform.rotate(
