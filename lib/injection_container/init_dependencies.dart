@@ -8,7 +8,7 @@ import 'init_core.dart';
 
 FutureOr<void> initDependencies(
   GetIt sl, {
-  String apiBaseUrl = kApiAlePC,
+  String apiBaseUrl = kApiEmulatorBaseUrl,
 }) async {
   await initCore(sl);
   await Hive.initFlutter();

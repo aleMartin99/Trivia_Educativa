@@ -12,7 +12,7 @@ import '../../core/network_info/network_info.dart';
 
 class ChallengeRepository with RequestErrorParser {
   ChallengeRepository(this._networkInfo);
-  String apiBaseUrl = kApiAlePC;
+  String apiBaseUrl = kApiEmulatorBaseUrl;
   final NetworkInfo _networkInfo;
 
   Future addDatos(String idNotaProv, String idAsignatura, String idTema,

@@ -270,10 +270,15 @@ class _HomePageState extends State<HomePage> {
                 : (homeController.asignaturas == null ||
                         homeController.asignaturas!.isEmpty)
                     ? Center(
+                        child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: width * 4.5,
+                        ),
                         child: Text(
-                        I10n.of(context).noSubjectsAvailable,
-                        style: AppTextStyles.titleBold.copyWith(
-                          color: Theme.of(context).primaryIconTheme.color,
+                          I10n.of(context).noSubjectsAvailable,
+                          style: AppTextStyles.titleBold.copyWith(
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
                         ),
                       ))
                     : Padding(

@@ -15,7 +15,7 @@ class ScoreBoardRepository with RequestErrorParser {
   ScoreBoardRepository(
     this._networkInfo,
   );
-  String apiBaseUrl = kApiAlePC;
+  String apiBaseUrl = kApiEmulatorBaseUrl;
   final NetworkInfo _networkInfo;
 
   Future promedioGlobal(String token) async {
