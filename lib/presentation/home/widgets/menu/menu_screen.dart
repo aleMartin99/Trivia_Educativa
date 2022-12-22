@@ -99,13 +99,17 @@ class _MenuScreenState extends State<MenuScreen> {
                               bottom: height * 3.7,
                               left: width * 5.7,
                               right: width * 5.7),
-                          child: Text(
-                            auth.user.name,
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Theme.of(context).iconTheme.color,
-                              fontWeight: FontWeight.w900,
+                          child: SizedBox(
+                            height: height * 6.2,
+                            child: Text(
+                              auth.user.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Theme.of(context).iconTheme.color,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
                           ),
                         ),
@@ -209,8 +213,9 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ),
                   // SizedBox.expand(),
-                  SizedBox(
-                    height: height * 29.6,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: height * 31.5, minHeight: height * 29.6),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
