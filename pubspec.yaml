@@ -51,7 +51,7 @@ dependencies:
   easy_dynamic_theme: ^2.2.0
   internet_connection_checker: ^0.0.1+2
   awesome_drawer_bar: ^1.0.0
-  audioplayers: ^1.1.1
+  audioplayers: ^1.2.0
   #just_audio: ^0.9.30
   slide_countdown: ^0.3.4
   confetti: ^0.7.0

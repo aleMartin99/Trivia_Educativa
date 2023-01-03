@@ -89,7 +89,7 @@ class _TemaPageState extends State<TemaPage> {
               pinned: _pinned,
               floating: true,
               flexibleSpace: Container(
-                padding: EdgeInsets.only(top: height * 10.7),
+                padding: EdgeInsets.only(top: height * 13),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [

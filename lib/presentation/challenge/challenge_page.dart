@@ -10,7 +10,6 @@ import 'dart:developer';
 
 import 'package:quickalert/quickalert.dart';
 import 'package:slide_countdown/slide_countdown.dart';
-import 'package:trivia_educativa/core/app_sounds.dart';
 import 'package:trivia_educativa/core/network_info/network_info.dart';
 import 'package:trivia_educativa/core/routers/routers.dart';
 import 'package:trivia_educativa/data/models/models.dart';
@@ -66,19 +65,16 @@ class _ChallengePageState extends State<ChallengePage> {
   }
 
   Future loadMusic() async {
-    await player.play(
-      (AssetSource(AppSounds.randomSoundTrack())),
-    );
-
-    //TODO fix music from network
-    //   if (widget.asignatura.networkAudio) {
-    //     await player.setSourceUrl(
-    //         'http://localhost:3000/uploads/sonido/soundtrack_1-887fsoundtrack_1.mp3');
-    // } else {
-    // await player.play(
-    //   (AssetSource(widget.asignatura.soundtrack)),
-    // );
-    //  }
+    if (widget.asignatura.networkAudio) {
+      String url = widget.asignatura.soundtrack;
+      log(url);
+      await player.setSourceUrl(url);
+      await player.resume();
+    } else {
+      await player.play(
+        (AssetSource(widget.asignatura.soundtrack)),
+      );
+    }
     player.setReleaseMode(ReleaseMode.loop);
     await AudioPlayer.global.changeLogLevel(LogLevel.info);
   }

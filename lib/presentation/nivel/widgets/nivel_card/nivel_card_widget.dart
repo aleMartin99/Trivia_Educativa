@@ -34,7 +34,6 @@ class NivelCardWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: height * 1 / 8, horizontal: width * 0.95 / 4),
         decoration: BoxDecoration(
-          //TODO change color is done
           color: isDone
               ? (Theme.of(context).brightness == Brightness.light)
                   ? Colors.black12
