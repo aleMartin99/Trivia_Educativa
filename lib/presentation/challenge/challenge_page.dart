@@ -165,8 +165,9 @@ class _ChallengePageState extends State<ChallengePage> {
 
     controller.stateNotifier.addListener(() {
       if (controller.state == ChallengeState.timeOut) {
-        QuickAlert.show(
-          onWillPop: false,
+        QuickAlert.show(         
+          //TODO fix quick alert dialog and make a package
+         // onWillPop: false,
           onConfirmBtnTap: () async {
             await player.release();
             await saveNota();
